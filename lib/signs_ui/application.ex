@@ -1,13 +1,9 @@
 defmodule SignsUi.Application do
   use Application
 
-  @env Mix.env
-  def env, do: @env
-
   def start(_type, _args) do
     import Supervisor.Spec
 
-    set_runtime_config()
     # Define workers and child supervisors to be supervised
     children = [
       # Start the endpoint when the application starts
@@ -27,9 +23,5 @@ defmodule SignsUi.Application do
   def config_change(changed, _new, removed) do
     SignsUiWeb.Endpoint.config_change(changed, removed)
     :ok
-  end
-
-  defp set_runtime_config do
-    Application.put_env(:phoenix, :serve_endpoints, true, persistent: true)
   end
 end
