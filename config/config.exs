@@ -13,6 +13,11 @@ config :signs_ui, SignsUiWeb.Endpoint,
   pubsub: [name: SignsUi.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
+# Internal configuration
+config :signs_ui,
+  http_client: HTTPoison,
+  signs_url: System.get_env("SIGNS_URL")
+
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
