@@ -5,8 +5,8 @@ defmodule SignsUI.Signs.SignTest do
 
   describe "from_json" do
     test "builds a Sign struct from json" do
-      values = %{"disabled" => false}
-      expected = %Sign{id: "Sign", disabled?: false}
+      values = %{"enabled" => true}
+      expected = %Sign{id: "Sign", enabled?: true}
       assert from_json("Sign", values) == expected
     end
   end

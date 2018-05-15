@@ -8,7 +8,7 @@ defmodule SignsUI.Signs.RequestTest do
       signs = get_signs("valid_json_response")
       assert Enum.count(signs) == 2
       first_sign = Enum.at(signs, 0)
-      assert {"sign1", %SignsUI.Signs.Sign{id: "sign1", disabled?: true}} = first_sign
+      assert {"sign1", %SignsUI.Signs.Sign{id: "sign1", enabled?: true}} = first_sign
     end
 
     test "Logs warning when receiving a 500" do

@@ -2,7 +2,7 @@
 <div>
   <ul>
     <%= for {sign_id, sign} <- @signs do %>
-    <li><%= sign_id%> : <%= if sign.disabled?, do: "Disabled", else: "Enabled" %></li>
+    <li><%= sign_id%> : <%= if sign.enabled?, do: "Enabled", else: "Disabled" %></li>
   <% end %>
   </ul>
 </div>

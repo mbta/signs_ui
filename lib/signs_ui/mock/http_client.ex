@@ -19,8 +19,8 @@ defmodule SignsUI.Mock.HttpClient do
   defp valid_json() do
     json = %{
       "data"=> %{
-        "sign1" => %{"disabled" => true},
-        "sign2" => %{"disabled" => false}
+        "sign1" => %{"enabled" => true},
+        "sign2" => %{"enabled" => false}
       }
     }
     Poison.encode!(json)
