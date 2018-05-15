@@ -10,4 +10,9 @@ defmodule SignsUI.Signs.Sign do
       enabled?: Map.get(values, "enabled")
     }
   end
+
+  def update_enabled(sign, enabled_string) do
+    enabled? = enabled_string == "true"
+    %{sign | enabled?: enabled?}
+  end
 end

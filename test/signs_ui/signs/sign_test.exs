@@ -10,4 +10,12 @@ defmodule SignsUI.Signs.SignTest do
       assert from_json("Sign", values) == expected
     end
   end
+
+  describe "update_enabled/2" do
+    test "updates with boolean of enabled_string" do
+      sign = %Sign{id: "sign", enabled?: false}
+      updated = update_enabled(sign, "true")
+      assert updated.enabled?
+    end
+  end
 end

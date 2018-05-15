@@ -1,8 +1,12 @@
 <h3>Countdown Signs</h3>
 <div>
-  <ul>
+  <%= form_for @conn, signs_path(@conn, :update), [as: :signs], fn f -> %>
     <%= for {sign_id, sign} <- @signs do %>
-    <li><%= sign_id%> : <%= if sign.enabled?, do: "Enabled", else: "Disabled" %></li>
+      <div>
+        <label><%= sign_id %></label>
+        <%= checkbox(f, sign_id, value: sign.enabled?) %>
+      </div>
+    <% end %>
+    <%= submit "Submit" %>
   <% end %>
-  </ul>
 </div>
