@@ -6,5 +6,8 @@ config :signs_ui, SignsUiWeb.Endpoint,
   http: [port: 4001],
   server: false
 
+config :signs_ui,
+  http_client: SignsUI.Mock.HttpClient
+
 # Print only warnings and errors during test
 config :logger, level: :warn

@@ -16,7 +16,7 @@ defmodule SignsUiWeb.Router do
   scope "/", SignsUiWeb do
     pipe_through :browser # Use the default browser stack
 
-    get "/", PageController, :index
+    get "/", SignsController, :index
   end
 
   # Other scopes may use custom stacks.
