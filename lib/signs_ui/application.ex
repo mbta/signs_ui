@@ -1,8 +1,12 @@
 defmodule SignsUi.Application do
   use Application
 
+  alias SignsUi.Utilities.Config
+
   def start(_type, _args) do
     import Supervisor.Spec
+
+    set_runtime_config()
 
     # Define workers and child supervisors to be supervised
     children = [
@@ -24,5 +28,9 @@ defmodule SignsUi.Application do
   def config_change(changed, _new, removed) do
     SignsUiWeb.Endpoint.config_change(changed, removed)
     :ok
+  end
+
+  defp set_runtime_config do
+    Config.update_env(:s3_bucket, System.get_env("SIGNS_URL"))
   end
 end
