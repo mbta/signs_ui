@@ -7,17 +7,28 @@ defmodule SignsUiWeb.SignsController do
   end
 
   def update(conn, params) do
-    updated_signs = params
-                    |> get_enabled_map()
-                    |> SignsUI.Signs.State.update()
-    conn
-    |> put_flash(:success, "Signs updated successfully")
-    |> render("index.html", signs: updated_signs)
+    conn = perform_update(conn, params)
+    redirect(conn, to: "/")
   end
 
-  defp get_enabled_map(params) do
+  defp perform_update(conn, params) do
     params
-    |> Map.get("signs")
-    |> Map.new(fn {sign_id, value} -> {sign_id, value == "true"} end)
+    |> get_enabled_map
+    |> SignsUI.Signs.State.update()
+    |> handle_update_response(conn)
+  end
+
+  defp handle_update_response(:ok, conn) do
+    put_flash(conn, :success, "Signs updated successfully")
+  end
+  defp handle_update_response(:error, conn) do
+    put_flash(conn, :error, "Signs could not be updated")
+  end
+
+  defp get_enabled_map(%{"signs" => signs}) do
+    Map.new(signs, fn {sign_id, value} -> {sign_id, value == "true"} end)
+  end
+  defp get_enabled_map(_params) do
+    %{}
   end
 end

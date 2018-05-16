@@ -32,5 +32,7 @@ defmodule SignsUi.Application do
 
   defp set_runtime_config do
     Config.update_env(:s3_bucket, System.get_env("SIGNS_URL"))
+    Config.update_env(:s3_bucket, System.get_env("AWS_SIGNS_BUCKET"))
+    Config.update_env(:s3_bucket, System.get_env("AWS_SIGNS_PATH"))
   end
 end

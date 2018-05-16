@@ -20,9 +20,10 @@ defmodule SignsUI.Signs.StateTest do
       enabled_map = %{
         "sign_1" => "true"
       }
-      update(signs_server, enabled_map)
+      status = update(signs_server, enabled_map)
       state = :sys.get_state(signs_server)
       assert Map.get(state, "sign_1").enabled?
+      assert status == :ok
     end
   end
 end

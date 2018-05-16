@@ -21,6 +21,10 @@ config :signs_ui, SignsUiWeb.Endpoint,
 # Do not print debug messages in production
 config :logger, level: :info
 
+config :ex_aws,
+  access_key_id: [{:system, "AWS_ACCESS_KEY_ID"}, {:awscli, "default", 30}, :instance_role],
+  secret_access_key: [{:system, "AWS_SECRET_ACCESS_KEY"}, {:awscli, "default", 30}, :instance_role]
+
 # ## SSL Support
 #
 # To get SSL working, you will need to add the `https` key

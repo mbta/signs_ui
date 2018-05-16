@@ -7,7 +7,10 @@ config :signs_ui, SignsUiWeb.Endpoint,
   server: false
 
 config :signs_ui,
-  http_client: SignsUI.Mock.HttpClient
+  http_client: SignsUI.Mock.HttpClient,
+  signs_external_post_mod: SignsUI.Mock.Write,
+  local_write_path: "test/mock_write.json",
+  aws_requestor: SignsUI.Mock.AwsRequest
 
 # Print only warnings and errors during test
 config :logger, level: :warn
