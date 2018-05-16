@@ -3,8 +3,8 @@
   <%= form_for @conn, signs_path(@conn, :update), [as: :signs], fn f -> %>
     <%= for {sign_id, sign} <- @signs do %>
       <div>
-        <label><%= sign_id %></label>
-        <%= checkbox(f, sign_id, value: sign.enabled?) %>
+        <label for=<%= sign_id %>><%= sign_id %></label>
+        <%= checkbox(f, sign_id, value: sign.enabled?, id: sign_id) %>
       </div>
     <% end %>
     <%= submit "Submit" %>
