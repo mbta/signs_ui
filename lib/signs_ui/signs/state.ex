@@ -20,9 +20,7 @@ defmodule SignsUI.Signs.State do
   end
 
   def init(_) do
-    signs_url = Application.get_env(:signs_ui, :signs_url)
-    signs = Signs.Request.get_signs(signs_url)
-    {:ok, signs}
+    {:ok, Signs.Request.get_signs()}
   end
 
   def handle_call(:get_all, _from, signs) do
