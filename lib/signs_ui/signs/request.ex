@@ -8,6 +8,7 @@ defmodule SignsUI.Signs.Request do
         parse(json)
       {:error, reason} ->
         Logger.warn("Could not load Signs config from AWS: #{inspect reason}")
+        %{}
     end
   end
 
