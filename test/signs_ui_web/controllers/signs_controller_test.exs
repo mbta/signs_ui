@@ -7,7 +7,7 @@ defmodule SignsUiWeb.SignsControllerTest do
   end
 
   test "POST /", %{conn: conn} do
-    conn = post conn, "/"
+    conn = post conn, "/", %{"signs" => %{"sign1" => "true"}}
     assert html_response(conn, 200) =~ "updated successfully"
   end
 end

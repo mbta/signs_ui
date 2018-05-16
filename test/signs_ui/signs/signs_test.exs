@@ -11,9 +11,9 @@ defmodule SignsUI.Signs.SignsTest do
         "sign3" => %Sign{id: "sign3", enabled?: true}
       }
       enabled_map = %{
-        "sign1" => "false",
-        "sign2" => "true",
-        "sign3" => "true"
+        "sign1" => false,
+        "sign2" => true,
+        "sign3" => true
       }
       expected = %{
         "sign1" => %Sign{id: "sign1", enabled?: false},
