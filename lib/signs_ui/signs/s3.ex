@@ -25,11 +25,4 @@ defmodule SignsUI.Signs.S3 do
     aws_requestor = Application.get_env(:signs_ui, :aws_requestor)
     {aws_requestor, bucket_name, path_name}
   end
-
-  def handle_response({:error, _reason}, old_signs, _updated_signs) do
-    {:error, old_signs}
-  end
-  def handle_response({:ok, _}, _old_signs, updated_signs) do
-    {:ok, updated_signs}
-  end
 end

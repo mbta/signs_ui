@@ -26,12 +26,11 @@ defmodule SignsUI.Signs.State do
   def handle_call(:get_all, _from, signs) do
     {:reply, signs, signs}
   end
-  def handle_call({:update, enabled_values}, _from, signs) do
+  def handle_call({:update, updated_signs}, _from, old_signs) do
     external_post_mod = Application.get_env(:signs_ui, :signs_external_post_mod)
-    updated_signs = Signs.Signs.update_enabled_flags(enabled_values, signs)
-    {status, new_sign_state} =  updated_signs
-                                |> external_post_mod.update()
-                                |> handle_response(signs, updated_signs)
+    {status, new_sign_state} = updated_signs
+                               |> external_post_mod.update()
+                               |> handle_response(old_signs, updated_signs)
 
     {:reply, status, new_sign_state}
   end
