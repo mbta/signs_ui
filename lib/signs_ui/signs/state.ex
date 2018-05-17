@@ -20,16 +20,28 @@ defmodule SignsUI.Signs.State do
   end
 
   def init(_) do
-    signs_url = Application.get_env(:signs_ui, :signs_url)
-    signs = Signs.Request.get_signs(signs_url)
-    {:ok, signs}
+    case Signs.Request.get_signs() do
+      {:ok, state} -> {:ok, state}
+      {:error, reason} -> {:stop, reason}
+    end
   end
 
   def handle_call(:get_all, _from, signs) do
     {:reply, signs, signs}
   end
-  def handle_call({:update, enabled_values}, _from, signs) do
-    updated_signs = Signs.Signs.update_enabled_flags(enabled_values, signs)
-    {:reply, updated_signs, updated_signs}
+  def handle_call({:update, updated_signs}, _from, old_signs) do
+    external_post_mod = Application.get_env(:signs_ui, :signs_external_post_mod)
+    {status, new_sign_state} = updated_signs
+                               |> external_post_mod.update()
+                               |> handle_response(old_signs, updated_signs)
+
+    {:reply, status, new_sign_state}
+  end
+
+  defp handle_response({:error, _reason}, old_signs, _updated_signs) do
+    {:error, old_signs}
+  end
+  defp handle_response({:ok, _}, _old_signs, updated_signs) do
+    {:ok, updated_signs}
   end
 end

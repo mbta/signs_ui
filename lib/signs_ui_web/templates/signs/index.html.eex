@@ -7,6 +7,6 @@
         &nbsp<label for=<%= sign_id %>><%= sign_id %></label>
       </div>
     <% end %>
-    <%= submit "Submit" %>
+    <%= submit "Submit", class: "btn btn-primary" %>
   <% end %>
 </div>

@@ -15,7 +15,8 @@ config :signs_ui, SignsUiWeb.Endpoint,
 
 # Internal configuration
 config :signs_ui,
-  http_client: HTTPoison
+  signs_external_post_mod: SignsUI.Signs.S3,
+  aws_requestor: ExAws
 
 # Configures Elixir's Logger
 config :logger, :console,

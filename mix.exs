@@ -23,6 +23,8 @@ defmodule SignsUi.Mixfile do
         :logger,
         :parse_trans,
         :runtime_tools,
+        :ex_aws,
+        :ex_aws_s3
       ]
     ]
   end
@@ -44,7 +46,9 @@ defmodule SignsUi.Mixfile do
       {:gettext, "~> 0.11"},
       {:cowboy, "~> 1.0"},
       {:poison, "~> 3.1"},
-      {:httpoison, "~> 1.0"}
+      {:httpoison, "~> 1.0"},
+      {:ex_aws, "~> 2.0"},
+      {:ex_aws_s3, "~> 2.0"}
     ]
   end
 end

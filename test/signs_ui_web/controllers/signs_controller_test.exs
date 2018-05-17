@@ -8,6 +8,7 @@ defmodule SignsUiWeb.SignsControllerTest do
 
   test "POST /", %{conn: conn} do
     conn = post conn, "/", %{"signs" => %{"sign1" => "true"}}
-    assert html_response(conn, 200) =~ "updated successfully"
+    assert redirected_to(conn, 302) =~ "/"
+    assert conn.private.phoenix_flash == %{"success" => "Signs updated successfully"}
   end
 end
