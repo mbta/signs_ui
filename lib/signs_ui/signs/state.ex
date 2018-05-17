@@ -20,7 +20,10 @@ defmodule SignsUI.Signs.State do
   end
 
   def init(_) do
-    Signs.Request.get_signs()
+    case Signs.Request.get_signs() do
+      {:ok, state} -> {:ok, state}
+      {:error, reason} -> {:stop, reason}
+    end
   end
 
   def handle_call(:get_all, _from, signs) do
