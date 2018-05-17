@@ -6,8 +6,9 @@ defmodule SignsUI.Mock.Write do
     |> SignsUI.Signs.Signs.format_signs_for_json
     |> Poison.encode!()
 
-    File.write(file_path, json)
+    case File.write(file_path, json) do
+      :ok -> {:ok, :success}
+      error -> error
+    end
   end
-
-  def handle_response(_, _old_signs, new_signs), do: {:ok, new_signs}
 end

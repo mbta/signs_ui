@@ -31,8 +31,15 @@ defmodule SignsUI.Signs.State do
     updated_signs = Signs.Signs.update_enabled_flags(enabled_values, signs)
     {status, new_sign_state} =  updated_signs
                                 |> external_post_mod.update()
-                                |> external_post_mod.handle_response(signs, updated_signs)
+                                |> handle_response(signs, updated_signs)
 
     {:reply, status, new_sign_state}
+  end
+
+  defp handle_response({:error, _reason}, old_signs, _updated_signs) do
+    {:error, old_signs}
+  end
+  defp handle_response({:ok, _}, _old_signs, updated_signs) do
+    {:ok, updated_signs}
   end
 end
