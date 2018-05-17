@@ -58,7 +58,3 @@ config :phoenix, :serve_endpoints, true
 #
 #     config :signs_ui, SignsUiWeb.Endpoint, server: true
 #
-
-# Finally import the config/prod.secret.exs
-# which should be versioned separately.
-import_config "prod.secret.exs"

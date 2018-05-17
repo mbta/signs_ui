@@ -15,8 +15,7 @@ config :signs_ui, SignsUiWeb.Endpoint,
 
 # Internal configuration
 config :signs_ui,
-  http_client: HTTPoison,
-  signs_url: System.get_env("SIGNS_URL")
+  http_client: HTTPoison
 
 # Configures Elixir's Logger
 config :logger, :console,
