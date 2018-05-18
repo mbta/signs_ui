@@ -5,7 +5,6 @@ defmodule BasicAuth do
   def init(opts), do: opts
 
   def call(conn, _) do
-
     case get_req_header(conn, "authorization") do
       ["Basic " <> attempted_auth] -> verify(conn, attempted_auth, correct_auth())
       _ -> unauthorized(conn)

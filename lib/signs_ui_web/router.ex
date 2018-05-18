@@ -15,7 +15,6 @@ defmodule SignsUiWeb.Router do
 
   pipeline :basic_auth do
     plug BasicAuth, username: Application.get_env(:signs_ui, :username), password: Application.get_env(:signs_ui, :password)
-    #plug BasicAuth, username: "admin", password: "password"
   end
 
   scope "/", SignsUiWeb do
