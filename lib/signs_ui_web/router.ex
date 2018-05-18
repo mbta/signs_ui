@@ -13,8 +13,13 @@ defmodule SignsUiWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :basic_auth do
+    plug BasicAuth, username: Application.get_env(:signs_ui, :username), password: Application.get_env(:signs_ui, :password)
+    #plug BasicAuth, username: "admin", password: "password"
+  end
+
   scope "/", SignsUiWeb do
-    pipe_through :browser # Use the default browser stack
+    pipe_through [:browser, :basic_auth] # Use the default browser stack
 
     get "/", SignsController, :index
     post "/", SignsController, :update
