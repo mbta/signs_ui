@@ -18,7 +18,7 @@ config :signs_ui, SignsUiWeb.Endpoint,
   url: [host: "example.com", port: 80],
   cache_static_manifest: "priv/static/cache_manifest.json"
 
-config :signs_ui, :redirect_http?, false
+config :signs_ui, :redirect_http?, true
 
 # Do not print debug messages in production
 config :logger, level: :info
