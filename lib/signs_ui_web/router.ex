@@ -17,11 +17,21 @@ defmodule SignsUiWeb.Router do
     plug BasicAuth
   end
 
+  pipeline :redirect_prod_http do
+    if Application.get_env(:signs_ui, :redirect_http?) do
+      plug Plug.SSL, rewrite_on: [:x_forwarded_proto]
+    end
+  end
+
   scope "/", SignsUiWeb do
-    pipe_through [:browser, :basic_auth]
+    pipe_through [:redirect_prod_http, :browser, :basic_auth]
 
     get "/", SignsController, :index
     post "/", SignsController, :update
+  end
+
+  scope "/", SignsUiWeb do
+    get "/_health", HealthController, :index
   end
 
   # Other scopes may use custom stacks.
