@@ -13,8 +13,12 @@ defmodule SignsUiWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :basic_auth do
+    plug BasicAuth
+  end
+
   scope "/", SignsUiWeb do
-    pipe_through :browser # Use the default browser stack
+    pipe_through [:browser, :basic_auth]
 
     get "/", SignsController, :index
     post "/", SignsController, :update

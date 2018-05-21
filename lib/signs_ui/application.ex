@@ -33,5 +33,7 @@ defmodule SignsUi.Application do
   defp set_runtime_config do
     Config.update_env(:aws_signs_bucket, System.get_env("AWS_SIGNS_BUCKET"))
     Config.update_env(:aws_signs_path, System.get_env("AWS_SIGNS_PATH"))
+    Config.update_env(:username, System.get_env("USERNAME"))
+    Config.update_env(:password, System.get_env("PASSWORD"))
   end
 end
