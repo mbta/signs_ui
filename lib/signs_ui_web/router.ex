@@ -18,7 +18,7 @@ defmodule SignsUiWeb.Router do
   end
 
   scope "/", SignsUiWeb do
-    pipe_through [:browser, :basic_auth] # Use the default browser stack
+    pipe_through [:browser, :basic_auth]
 
     get "/", SignsController, :index
     post "/", SignsController, :update
