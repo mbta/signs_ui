@@ -1,10 +1,19 @@
 <h3>Countdown Signs</h3>
-<div>
-  <%= form_for @conn, signs_path(@conn, :update), [as: :signs], fn f -> %>
+<div class="container signs-container">
+  <%= form_for @conn, signs_path(@conn, :update), [as: :signs, class: "signs-form"], fn f -> %>
+  <div class="row signs-headers-row">
+    <div class="col-md-1 col-xs-2 sign-header">
+      <b class="pull-right">Status</b>
+    </div>
+    <div class="col-md-11 col-xs-10">
+      <b>Sign</b>
+    </div>
+  </div>
     <%= for {sign_id, sign} <- @signs do %>
-      <div>
-        <%= checkbox(f, sign_id, value: sign.enabled?, id: sign_id) %>
-        &nbsp
+      <div class="col-md-1 col-xs-2">
+        <%= checkbox(f, sign_id, value: sign.enabled?, id: sign_id, class: "pull-right") %>
+      </div>
+      <div class="col-md-11 col-xs-10">
         <%= content_tag :label, sign_id,
         for: sign_id,
         class: if !sign.enabled?, do: "text-muted" %>
