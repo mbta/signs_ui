@@ -20,7 +20,6 @@ RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - && \
     npm install -g brunch
 
 RUN npm install
-RUN brunch build --production
 
 WORKDIR /root
 RUN mix phx.digest
