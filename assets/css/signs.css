@@ -15,3 +15,51 @@
 .sign-header {
   padding: 0;
 }
+
+input[type="checkbox"].ios8-switch {
+  position: absolute;
+  margin: 8px 0 0 16px;
+  visibility: hidden;
+}
+input[type="checkbox"].ios8-switch + label {
+  position: relative;
+  padding: 0 0 0 50px;
+  line-height: 2.0em;
+}
+input[type="checkbox"].ios8-switch + label:before {
+  content: "";
+  position: absolute;
+  display: block;
+  left: 0;
+  top: 4px;
+  width: 40px; /* x*5 */
+  height: 24px; /* x*3 */
+  border-radius: 16px; /* x*2 */
+  background: #fff;
+  border: 1px solid #d9d9d9;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+input[type="checkbox"].ios8-switch + label:after {
+  content: "";
+  position: absolute;
+  display: block;
+  left: 0px;
+  top: 4px;
+  width: 24px; /* x*3 */
+  height: 24px; /* x*3 */
+  border-radius: 16px; /* x*2 */
+  background: #fff;
+  border: 1px solid #d9d9d9;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+input[type="checkbox"].ios8-switch + label:hover:after {
+  box-shadow: 0 0 5px rgba(0,0,0,0.3);
+}
+input[type="checkbox"].ios8-switch:checked + label:after {
+  margin-left: 16px;
+}
+input[type="checkbox"].ios8-switch:checked + label:before {
+  background: #386BB2;
+}
