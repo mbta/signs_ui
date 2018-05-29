@@ -4,11 +4,11 @@ defmodule SignsUI.Mock.AwsRequest do
   end
   def request(%{http_method: :get}) do
     signs = %{
-      "test_sign_1" => %{"enabled" => true},
-      "test_sign_2" => %{"enabled" => false},
-      "test_sign_3" => %{"enabled" => true},
-      "test_sign_4" => %{"enabled" => false},
-      "test_sign_5" => %{"enabled" => true}
+      "ashmont_mezzanine" => %{"enabled" => "true"},
+      "cedar_grove_outbound" => %{"enabled" => "true"},
+      "cedar_grove_inbound" => %{"enabled" => "true"},
+      "butler_outbound" => %{"enabled" => "true"},
+      "butler_inbound" => %{"enabled" => "true"}
     }
     {:ok, %{body: Poison.encode!(signs)}}
   end

@@ -9,11 +9,109 @@
         <b>Sign</b>
       </div>
     </div>
-    <%= for {sign_id, sign} <- @signs do %>
-      <%= checkbox(f, sign_id, value: sign.enabled?, id: sign_id, class: "col-md-1 col-xs-2 pull-right ios8-switch") %>
-      <%= content_tag :label, sign_id,
-        for: sign_id,
-        class: if !sign.enabled?, do: "text-muted col-md-11 col-xs-10", else: "col-md-11 col-xs-10" %>
+    <%= if @signs["ashmont_mezzanine"] do %>
+        <%= checkbox(f, "ashmont_mezzanine", value: @signs["ashmont_mezzanine"].enabled?, id: "ashmont_mezzanine", class: "col-md-1 col-xs-2 pull-right ios8-switch") %>
+        <%= content_tag :label, "Ashmont Mezzanine", for: "ashmont_mezzanine", class: if !@signs["ashmont_mezzanine"].enabled?, do: "text-muted col-md-11 col-xs-10", else: "col-md-11 col-xs-10" %>
+    <% end %>
+    <%= if @signs["cedar_grove_outbound"] do %>
+      <%= checkbox(f,"cedar_grove_outbound", value: @signs["cedar_grove_outbound"].enabled?, id: "cedar_grove_outbound", class: "col-md-1 col-xs-2 pull-right ios8-switch") %>
+_     <%= content_tag :label,"Cedar Grove Outbound", for: "cedar_grove_outbound", class: if !@signs["cedar_grove_outbound"].enabled?, do: "text-muted col-md-11 col-xs-10", else: "col-md-11 col-xs-10" %>
+    <% end %>
+    <%= if @signs["cedar_grove_inbound"] do %>
+      <%= checkbox(f,"cedar_grove_inbound", value: @signs["cedar_grove_inbound"].enabled?, id: "cedar_grove_inbound", class: "col-md-1 col-xs-2 pull-right ios8-switch") %>
+      <%= content_tag :label,"Cedar Grove Inbound", for: "cedar_grove_inbound", class: if !@signs["cedar_grove_inbound"].enabled?, do: "text-muted col-md-11 col-xs-10", else: "col-md-11 col-xs-10" %>
+    <% end %>
+    <%= if @signs["butler_outbound"] do %>
+      <%= checkbox(f,"butler_outbound", value: @signs["butler_outbound"].enabled?, id: "butler_outbound", class: "col-md-1 col-xs-2 pull-right ios8-switch") %>
+      <%= content_tag :label,"Butler Outbound", for: "butler_outbound", class: if !@signs["butler_outbound"].enabled?, do: "text-muted col-md-11 col-xs-10", else: "col-md-11 col-xs-10" %>
+    <% end %>
+    <%= if @signs["butler_inbound"] do %>
+      <%= checkbox(f,"butler_inbound", value: @signs["butler_inbound"].enabled?, id: "butler_inbound", class: "col-md-1 col-xs-2 pull-right ios8-switch") %>
+      <%= content_tag :label,"Butler Inbound", for: "butler_inbound", class: if !@signs["butler_inbound"].enabled?, do: "text-muted col-md-11 col-xs-10", else: "col-md-11 col-xs-10" %>
+    <% end %>
+    <%= if @signs["milton_outbound"] do %>
+      <%= checkbox(f,"milton_outbound", value: @signs["milton_outbound"].enabled?, id: "milton_outbound", class: "col-md-1 col-xs-2 pull-right ios8-switch") %>
+      <%= content_tag :label,"Milton Outbound", for: "milton_outbound", class: if !@signs["milton_outbound"].enabled?, do: "text-muted col-md-11 col-xs-10", else: "col-md-11 col-xs-10" %>
+    <% end %>
+    <%= if @signs["milton_inbound"] do %>
+      <%= checkbox(f,"milton_inbound", value: @signs["milton_inbound"].enabled?, id: "milton_inbound", class: "col-md-1 col-xs-2 pull-right ios8-switch") %>
+      <%= content_tag :label,"Milton Inbound", for: "milton_inbound", class: if !@signs["milton_inbound"].enabled?, do: "text-muted col-md-11 col-xs-10", else: "col-md-11 col-xs-10" %>
+    <% end %>
+    <%= if @signs["central_avenue_outbound"] do %>
+      <%= checkbox(f,"central_avenue_outbound", value: @signs["central_avenue_outbound"].enabled?, id: "central_avenue_outbound", class: "col-md-1 col-xs-2 pull-right ios8-switch") %>
+      <%= content_tag :label,"Central Avenue Outbound", for: "central_avenue_outbound", class: if !@signs["central_avenue_outbound"].enabled?, do: "text-muted col-md-11 col-xs-10", else: "col-md-11 col-xs-10" %>
+    <% end %>
+    <%= if @signs["central_avenue_inbound"] do %>
+      <%= checkbox(f,"central_avenue_inbound", value: @signs["central_avenue_inbound"].enabled?, id: "central_avenue_inbound", class: "col-md-1 col-xs-2 pull-right ios8-switch") %>
+      <%= content_tag :label,"Central Avenue Inbound", for: "central_avenue_inbound", class: if !@signs["central_avenue_inbound"].enabled?, do: "text-muted col-md-11 col-xs-10", else: "col-md-11 col-xs-10" %>
+    <% end %>
+    <%= if @signs["valley_road_outbound"] do %>
+      <%= checkbox(f,"valley_road_outbound", value: @signs["valley_road_outbound"].enabled?, id: "valley_road_outbound", class: "col-md-1 col-xs-2 pull-right ios8-switch") %>
+      <%= content_tag :label,"Valley Road Outbound", for: "valley_road_outbound", class: if !@signs["valley_road_outbound"].enabled?, do: "text-muted col-md-11 col-xs-10", else: "col-md-11 col-xs-10" %>
+    <% end %>
+    <%= if @signs["valley_road_inbound"] do %>
+      <%= checkbox(f,"valley_road_inbound", value: @signs["valley_road_inbound"].enabled?, id: "valley_road_inbound", class: "col-md-1 col-xs-2 pull-right ios8-switch") %>
+      <%= content_tag :label,"Valley Road Inbound", for: "valley_road_inbound", class: if !@signs["valley_road_inbound"].enabled?, do: "text-muted col-md-11 col-xs-10", else: "col-md-11 col-xs-10" %>
+    <% end %>
+    <%= if @signs["capen_street_outbound"] do %>
+      <%= checkbox(f,"capen_street_outbound", value: @signs["capen_street_outbound"].enabled?, id: "capen_street_outbound", class: "col-md-1 col-xs-2 pull-right ios8-switch") %>
+      <%= content_tag :label,"Capen Street Outbound", for: "capen_street_outbound", class: if !@signs["capen_street_outbound"].enabled?, do: "text-muted col-md-11 col-xs-10", else: "col-md-11 col-xs-10" %>
+    <% end %>
+    <%= if @signs["capen_street_inbound"] do %>
+      <%= checkbox(f,"capen_street_inbound", value: @signs["capen_street_inbound"].enabled?, id: "capen_street_inbound", class: "col-md-1 col-xs-2 pull-right ios8-switch") %>
+      <%= content_tag :label,"Capen Street Inbound", for: "capen_street_inbound", class: if !@signs["capen_street_inbound"].enabled?, do: "text-muted col-md-11 col-xs-10", else: "col-md-11 col-xs-10" %>
+    <% end %>
+    <%= if @signs["chelsea_inbound"] do %>
+      <%= checkbox(f,"chelsea_inbound", value: @signs["chelsea_inbound"].enabled?, id: "chelsea_inbound", class: "col-md-1 col-xs-2 pull-right ios8-switch") %>
+      <%= content_tag :label,"Chelsea Inbound", for: "chelsea_inbound", class: if !@signs["chelsea_inbound"].enabled?, do: "text-muted col-md-11 col-xs-10", else: "col-md-11 col-xs-10" %>
+    <% end %>
+    <%= if @signs["bellingham_square_inbound"] do %>
+      <%= checkbox(f,"bellingham_square_inbound", value: @signs["bellingham_square_inbound"].enabled?, id: "bellingham_square_inbound", class: "col-md-1 col-xs-2 pull-right ios8-switch") %>
+      <%= content_tag :label,"Bellingham Square Inbound", for: "bellingham_square_inbound", class: if !@signs["bellingham_square_inbound"].enabled?, do: "text-muted col-md-11 col-xs-10", else: "col-md-11 col-xs-10" %>
+    <% end %>
+    <%= if @signs["bellingham_square_outbound"] do %>
+      <%= checkbox(f,"bellingham_square_outbound", value: @signs["bellingham_square_outbound"].enabled?, id: "bellingham_square_outbound", class: "col-md-1 col-xs-2 pull-right ios8-switch") %>
+      <%= content_tag :label,"Bellingham Square Outbound", for: "bellingham_square_outbound", class: if !@signs["bellingham_square_outbound"].enabled?, do: "text-muted col-md-11 col-xs-10", else: "col-md-11 col-xs-10" %>
+    <% end %>
+    <%= if @signs["box_district_inbound"] do %>
+      <%= checkbox(f,"box_district_inbound", value: @signs["box_district_inbound"].enabled?, id: "box_district_inbound", class: "col-md-1 col-xs-2 pull-right ios8-switch") %>
+      <%= content_tag :label,"Box District Inbound", for: "box_district_inbound", class: if !@signs["box_district_inbound"].enabled?, do: "text-muted col-md-11 col-xs-10", else: "col-md-11 col-xs-10" %>
+    <% end %>
+    <%= if @signs["box_district_outbound"] do %>
+      <%= checkbox(f,"box_district_outbound", value: @signs["box_district_outbound"].enabled?, id: "box_district_outbound", class: "col-md-1 col-xs-2 pull-right ios8-switch") %>
+      <%= content_tag :label,"Box District Outbound", for: "box_district_outbound", class: if !@signs["box_district_outbound"].enabled?, do: "text-muted col-md-11 col-xs-10", else: "col-md-11 col-xs-10" %>
+    <% end %>
+    <%= if @signs["eastern_ave_inbound"] do %>
+      <%= checkbox(f,"eastern_ave_inbound", value: @signs["eastern_ave_inbound"].enabled?, id: "eastern_ave_inbound", class: "col-md-1 col-xs-2 pull-right ios8-switch") %>
+      <%= content_tag :label,"Eastern Ave Inbound", for: "eastern_ave_inbound", class: if !@signs["eastern_ave_inbound"].enabled?, do: "text-muted col-md-11 col-xs-10", else: "col-md-11 col-xs-10" %>
+    <% end %>
+    <%= if @signs["eastern_ave_outbound"] do %>
+      <%= checkbox(f,"eastern_ave_outbound", value: @signs["eastern_ave_outbound"].enabled?, id: "eastern_ave_outbound", class: "col-md-1 col-xs-2 pull-right ios8-switch") %>
+      <%= content_tag :label,"Eastern Ave Outbound", for: "eastern_ave_outbound", class: if !@signs["eastern_ave_outbound"].enabled?, do: "text-muted col-md-11 col-xs-10", else: "col-md-11 col-xs-10" %>
+    <% end %>
+    <%= if @signs["south_station_silver_line_outbound"] do %>
+      <%= checkbox(f,"south_station_silver_line_outbound", value: @signs["south_station_silver_line_outbound"].enabled?, id: "south_station_silver_line_outbound", class: "col-md-1 col-xs-2 pull-right ios8-switch") %>
+      <%= content_tag :label,"South Station Silver Line Outbound", for: "south_station_silver_line_outbound", class: if !@signs["south_station_silver_line_outbound"].enabled?, do: "text-muted col-md-11 col-xs-10", else: "col-md-11 col-xs-10" %>
+    <% end %>
+    <%= if @signs["courthouse_station_outbound"] do %>
+      <%= checkbox(f,"courthouse_station_outbound", value: @signs["courthouse_station_outbound"].enabled?, id: "courthouse_station_outbound", class: "col-md-1 col-xs-2 pull-right ios8-switch") %>
+      <%= content_tag :label,"Courthouse Station Outbound", for: "courthouse_station_outbound", class: if !@signs["courthouse_station_outbound"].enabled?, do: "text-muted col-md-11 col-xs-10", else: "col-md-11 col-xs-10" %>
+    <% end %>
+    <%= if @signs["world_trade_center_outbound"] do %>
+      <%= checkbox(f,"world_trade_center_outbound", value: @signs["world_trade_center_outbound"].enabled?, id: "world_trade_center_outbound", class: "col-md-1 col-xs-2 pull-right ios8-switch") %>
+      <%= content_tag :label,"World Trade Center Outbound", for: "world_trade_center_outbound", class: if !@signs["world_trade_center_outbound"].enabled?, do: "text-muted col-md-11 col-xs-10", else: "col-md-11 col-xs-10" %>
+    <% end %>
+    <%= if @signs["world_trade_center_mezzanine"] do %>
+      <%= checkbox(f,"world_trade_center_mezzanine", value: @signs["world_trade_center_mezzanine"].enabled?, id: "world_trade_center_mezzanine", class: "col-md-1 col-xs-2 pull-right ios8-switch") %>
+      <%= content_tag :label,"World Trade Center Mezzanine", for: "world_trade_center_mezzanine", class: if !@signs["world_trade_center_mezzanine"].enabled?, do: "text-muted col-md-11 col-xs-10", else: "col-md-11 col-xs-10" %>
+    <% end %>
+    <%= if @signs["courthouse_station_mezzanine"] do %>
+      <%= checkbox(f,"courthouse_station_mezzanine", value: @signs["courthouse_station_mezzanine"].enabled?, id: "courthouse_station_mezzanine", class: "col-md-1 col-xs-2 pull-right ios8-switch") %>
+      <%= content_tag :label,"Courthouse Station Mezzanine", for: "courthouse_station_mezzanine", class: if !@signs["courthouse_station_mezzanine"].enabled?, do: "text-muted col-md-11 col-xs-10", else: "col-md-11 col-xs-10" %>
+    <% end %>
+    <%= if @signs["south_station_mezzanine"] do %>
+      <%= checkbox(f,"south_station_mezzanine", value: @signs["south_station_mezzanine"].enabled?, id: "south_station_mezzanine", class: "col-md-1 col-xs-2 pull-right ios8-switch") %>
+      <%= content_tag :label,"South Station Mezzanine", for: "south_station_mezzanine", class: if !@signs["south_station_mezzanine"].enabled?, do: "text-muted col-md-11 col-xs-10", else: "col-md-11 col-xs-10" %>
     <% end %>
     <%= submit "Submit", class: "btn btn-primary" %>
   <% end %>
