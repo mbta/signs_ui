@@ -3,7 +3,7 @@ defmodule SignsUiWeb.SignsController do
 
   def index(conn, _params) do
     signs = SignsUI.Signs.State.get_all()
-    render conn, "index.html", signs: signs
+    render conn, "index.html", signs: signs, sign_names: sign_names()
   end
 
   def update(conn, params) do
@@ -13,6 +13,37 @@ defmodule SignsUiWeb.SignsController do
       :ok -> redirect(conn, to: "/")
       :error -> render(conn, "index.html", signs: signs)
     end
+  end
+
+  def sign_names do
+    [
+      {"ashmont_mezzanine", "Ashmont Mezzanine"},
+      {"cedar_grove_outbound", "Cedar Grove Outbound"},
+      {"cedar_grove_inbound", "Cedar Grove Inbound"},
+      {"butler_outbound", "Butler Outbound"},
+      {"butler_inbound", "Butler Inbound"},
+      {"milton_outbound", "Milton Outbound"},
+      {"milton_inbound", "Milton Inbound"},
+      {"central_avenue_outbound", "Central Avenue Outbound"},
+      {"central_avenue_inbound", "Central Avenue Inbound"},
+      {"valley_road_outbound", "Valley Road Outbound"},
+      {"valley_road_inbound", "Valley Road Inbound"},
+      {"capen_street_outbound", "Capen Street Outbound"},
+      {"capen_street_inbound", "Capen Street Inbound"},
+      {"chelsea_inbound", "Chelsea Inbound"},
+      {"bellingham_square_inbound", "Bellingham Square Inbound"},
+      {"bellingham_square_outbound", "Bellingham Square Outbound"},
+      {"box_district_inbound", "Box District Inbound"},
+      {"box_district_outbound", "Box District Outbound"},
+      {"eastern_ave_inbound", "Eastern Ave Inbound"},
+      {"eastern_ave_outbound", "Eastern Ave Outbound"},
+      {"south_station_silver_line_outbound", "South Station Silver Line Outbound"},
+      {"courthouse_station_outbound", "Courthouse Station Outbound"},
+      {"world_trade_center_outbound", "World Trade Center Outbound"},
+      {"world_trade_center_mezzanine", "World Trade Center Mezzanine"},
+      {"courthouse_station_mezzanine", "Courthouse Station Mezzanine"},
+      {"south_station_mezzanine", "South Station Mezzanine"}
+    ]
   end
 
   defp perform_update(conn, signs) do
