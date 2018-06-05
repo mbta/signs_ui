@@ -2,19 +2,26 @@
 <div class="container signs-container">
   <%= form_for @conn, signs_path(@conn, :update), [as: :signs, class: "signs-form"], fn f -> %>
     <div class="row signs-headers-row">
-      <div class="col-md-1 col-xs-2 sign-header">
+      <div class="col-xs-1 sign-header">
         <b class="pull-right">Status</b>
       </div>
-      <div class="col-md-11 col-xs-10">
+      <div class="col-xs-11">
         <b>Sign</b>
       </div>
     </div>
-    <%= for {id, label} <- @sign_names do %>
-      <%= if @signs[id] do %>
-          <%= sign_checkbox(id, @signs[id].enabled?, f) %>
-          <%= sign_label(id, label, @signs[id].enabled?) %>
+    <div class="row">
+      <%= for {id, label} <- @sign_names do %>
+        <%= if @signs[id] do %>
+            <%= sign_checkbox(id, @signs[id].enabled?, f) %>
+            <%= sign_label(id, label, @signs[id].enabled?) %>
+        <% end %>
       <% end %>
-    <% end %>
-    <%= submit "Submit", class: "btn btn-primary" %>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">Don't see the sign you're looking for?</div>
+      <div class="col-xs-12">It's in the <%= link "the old tool", to: "http://occ.mbta.com/Supervisor/countdownannouncement.php", target: "_blank" %>
+      (we're still working to convert all countdown signs to the new  tool)</div>
+      <%= submit "Submit", class: "btn btn-primary col-xs-4 col-sm-3 col-md-2 col-xl-1" %>
+    </div>
   <% end %>
 </div>
