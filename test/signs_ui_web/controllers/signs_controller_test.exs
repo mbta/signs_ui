@@ -3,7 +3,18 @@ defmodule SignsUiWeb.SignsControllerTest do
 
   test "GET /", %{conn: conn} do
     conn = conn |> add_req_header |> get("/")
+    assert html_response(conn, 200) =~ "All signs"
+  end
+
+  test "GET /show", %{conn: conn} do
+    conn = conn |> add_req_header |> get("/show")
     assert html_response(conn, 200) =~ "Countdown Signs"
+  end
+
+  test "Gets signs for individual route", %{conn: conn} do
+    conn = conn |> add_req_header |> get("/show?route=blue")
+    assert html_response(conn, 200) =~ "Maverick Eastbound"
+    refute html_response(conn, 200) =~ "Eastern Ave"
   end
 
   test "POST /", %{conn: conn} do
