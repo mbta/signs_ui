@@ -8,3 +8,8 @@
       <%= link "All signs", to: signs_path(@conn, :show, route: :all) %>
   </li>
 </ul>
+<div class="old-sign-disclaimer">
+  Don't see the route you're looking for?
+  It's in <%= link "the old tool", to: "http://occ.mbta.com/Supervisor/countdownannouncement.php", target: "_blank" %>
+  (we're still working to convert all countdown signs to the new tool)
+</div>
