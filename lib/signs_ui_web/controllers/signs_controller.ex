@@ -2,15 +2,10 @@ defmodule SignsUiWeb.SignsController do
   use SignsUiWeb, :controller
   alias SignsUI.Signs
 
-  def index(conn, _params) do
-    render conn, "index.html", sign_routes: Signs.Names.sign_routes()
-  end
-
-  def show(conn, params) do
+  def index(conn, params) do
     signs = SignsUI.Signs.State.get_all()
-    render conn, "show.html", signs: signs, sign_names: sign_names(params)
+    render conn, "index.html", signs: signs, sign_names: sign_names(params)
   end
-
 
   def update(conn, params) do
     signs = params_to_signs(params)
@@ -23,12 +18,9 @@ defmodule SignsUiWeb.SignsController do
 
   def sign_names(%{"route" => "mattapan"}), do: Signs.Names.mattapan()
   def sign_names(%{"route" => "blue"}), do: Signs.Names.blue_line()
-  def sign_names(%{"route" => "silver_line"}), do: Signs.Names.silver_line()
-  def sign_names(%{"route" => "all"}) do
-    Signs.Names.mattapan() ++ Signs.Names.silver_line ++ Signs.Names.blue_line()
-  end
+  def sign_names(%{"route" => "silver"}), do: Signs.Names.silver_line()
   def sign_names(_) do
-    []
+    Signs.Names.blue_line() ++ Signs.Names.mattapan() ++ Signs.Names.silver_line
   end
 
   defp perform_update(conn, signs) do

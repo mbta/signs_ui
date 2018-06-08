@@ -3,7 +3,7 @@ defmodule SignsUI.Signs.Names do
   def sign_routes() do
     %{
       mattapan: "Mattapan",
-      silver_line: "Silver Line",
+      silver: "Silver Line",
       blue: "Blue Line"
     }
   end
@@ -81,7 +81,7 @@ defmodule SignsUI.Signs.Names do
       {"government_center_mezzanine_eastbound", "Government Center Mezzanine Eastbound"},
       {"government_center_westbound", "Government Center Westbound"},
       {"bowdoin_eastbound", "Bowdoin Eastbound"},
-      {"bowdoin_mezzanine", "Bowdoin Mezzanine"}
+      {"bowdoin_mezzanine", "Bowdoin Mezzanine"},
     ]
   end
 end
