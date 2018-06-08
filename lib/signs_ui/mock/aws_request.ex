@@ -8,7 +8,11 @@ defmodule SignsUI.Mock.AwsRequest do
       "cedar_grove_outbound" => %{"enabled" => "true"},
       "cedar_grove_inbound" => %{"enabled" => "true"},
       "butler_outbound" => %{"enabled" => "true"},
-      "butler_inbound" => %{"enabled" => "true"}
+      "butler_inbound" => %{"enabled" => "true"},
+      "maverick_eastbound" => %{"enabled" => "true"},
+      "maverick_westbound" => %{"enabled" => "true"},
+      "eastern_ave_inbound" => %{"enabled" => "true"},
+      "eastern_ave_outbound" => %{"enabled" => "true"},
     }
     {:ok, %{body: Poison.encode!(signs)}}
   end

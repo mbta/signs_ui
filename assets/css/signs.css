@@ -21,6 +21,16 @@
   padding-bottom: 8px;
 }
 
+.routes-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.routes-list li {
+  font-size: 16px;
+  padding-bottom: 6px;
+}
+
 input[type="checkbox"].ios8-switch {
   position: absolute;
   margin: 8px 0 0 16px;
