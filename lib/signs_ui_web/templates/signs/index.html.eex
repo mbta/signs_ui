@@ -1,4 +1,4 @@
-<h3>Countdown Signs</h3>
+<h3><%= @route_name %> Signs</h3>
 <div class="container signs-container">
   <%= form_for @conn, signs_path(@conn, :update), [as: :signs, class: "signs-form"], fn f -> %>
     <div class="row signs-headers-row">
