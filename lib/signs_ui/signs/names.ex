@@ -1,20 +1,11 @@
 defmodule SignsUI.Signs.Names do
 
-  @sign_routes %{
+  def sign_routes() do
+    %{
       mattapan: "Mattapan",
       silver: "Silver Line",
       blue: "Blue Line"
     }
-
-  def sign_routes() do
-    @sign_routes
-  end
-
-  def route_name(%{"route" => route}) do
-    @sign_routes[String.to_existing_atom(route)]
-  end
-  def route_name(_) do
-    "All"
   end
 
   def mattapan() do

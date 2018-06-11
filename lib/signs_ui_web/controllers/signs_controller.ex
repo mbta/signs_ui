@@ -4,7 +4,7 @@ defmodule SignsUiWeb.SignsController do
 
   def index(conn, params) do
     signs = SignsUI.Signs.State.get_all()
-    render conn, "index.html", signs: signs, sign_names: sign_names(params), route_name: Signs.Names.route_name(params)
+    render conn, "index.html", signs: signs, sign_names: sign_names(params), route_name: route_name(params)
   end
 
   def update(conn, params) do
@@ -54,5 +54,18 @@ defmodule SignsUiWeb.SignsController do
       enabled_value -> %{sign | enabled?: enabled_value}
     end
     {sign_id, updated_sign}
+  end
+
+  def route_name(%{"route" => "mattapan"}) do
+    "Mattapan Line"
+  end
+  def route_name(%{"route" => "silver"}) do
+    "Silver Line"
+  end
+  def route_name(%{"route" => "blue"}) do
+    "Blue Line"
+  end
+  def route_name(_) do
+    "All"
   end
 end
