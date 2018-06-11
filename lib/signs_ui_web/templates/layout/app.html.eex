@@ -13,10 +13,6 @@
 
   <body>
     <div class="container">
-      <header class="header">
-        <h1>MBTA Realtime Signs</h1>
-      </header>
-
       <p class="alert alert-success" role="alert"><%= get_flash(@conn, :success) %></p>
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
       <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
