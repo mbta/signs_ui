@@ -21,7 +21,7 @@ defmodule SignsUiWeb.SignsController do
   def sign_names(%{"route" => "silver"}), do: Signs.Names.silver_line()
   def sign_names(%{"route" => "orange"}), do: Signs.Names.orange_line()
   def sign_names(_) do
-    Signs.Names.blue_line() ++ Signs.Names.mattapan() ++ Signs.Names.silver_line() ++ Signs.Names.orange_line()
+    Signs.Names.orange_line() ++ Signs.Names.blue_line() ++ Signs.Names.mattapan() ++ Signs.Names.silver_line()
   end
 
   defp perform_update(conn, signs) do
