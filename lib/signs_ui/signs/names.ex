@@ -88,7 +88,6 @@ defmodule SignsUI.Signs.Names do
 
   def orange_line() do
     [
-      {"oak_grove_mezzanine_northbound", "Oak Grove Mezzanine Northbound"},
       {"oak_grove_mezzanine_southbound", "Oak Grove Mezzanine Southbound"},
       {"oak_grove_northbound", "Oak Grove Northbound"},
       {"oak_grove_southbound", "Oak Grove Southbound"},
@@ -166,11 +165,9 @@ defmodule SignsUI.Signs.Names do
       {"green_street_northbound", "Green Street Northbound"},
       {"green_street_southbound", "Green Street Southbound"},
       {"forest_hills_mezzanine_northbound", "Forest Hills Mezzanine Northbound"},
-      {"forest_hills_mezzanine_southbound", "Forest Hills Mezzanine Southbound"},
       {"forest_hills_northbound", "Forest Hills Northbound"},
       {"forest_hills_southbound", "Forest Hills Southbound"},
       {"forest_hills_bus_mezzanine_northbound", "Forest Hills Bus Mezzanine Northbound"},
-      {"forest_hills_bus_mezzanine_southbound", "Forest Hills Bus Mezzanine Southbound"},
       {"ruggles_bus_mezzanine_northbound", "Ruggles Bus Mezzanine Northbound"},
       {"ruggles_bus_mezzanine_southbound", "Ruggles Bus Mezzanine Southbound"}
     ]

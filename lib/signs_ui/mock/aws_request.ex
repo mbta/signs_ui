@@ -14,7 +14,6 @@ defmodule SignsUI.Mock.AwsRequest do
       "eastern_ave_inbound" => %{"enabled" => "true"},
       "eastern_ave_outbound" => %{"enabled" => "true"},
       "forest_hills_mezzanine_northbound" => %{"enabled" => "true"},
-      "forest_hills_mezzanine_southbound" => %{"enabled" => "true"},
       "forest_hills_northbound" => %{"enabled" => "true"},
       "forest_hills_southbound" => %{"enabled" => "true"},
     }
