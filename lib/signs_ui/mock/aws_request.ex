@@ -13,6 +13,10 @@ defmodule SignsUI.Mock.AwsRequest do
       "maverick_westbound" => %{"enabled" => "true"},
       "eastern_ave_inbound" => %{"enabled" => "true"},
       "eastern_ave_outbound" => %{"enabled" => "true"},
+      "forest_hills_mezzanine_northbound" => %{"enabled" => "true"},
+      "forest_hills_mezzanine_southbound" => %{"enabled" => "true"},
+      "forest_hills_northbound" => %{"enabled" => "true"},
+      "forest_hills_southbound" => %{"enabled" => "true"},
     }
     {:ok, %{body: Poison.encode!(signs)}}
   end
