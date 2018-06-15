@@ -2,6 +2,8 @@
 <h1><%= @route_name %> Signs</h1>
 <div class="container signs-container">
   <%= form_for @conn, signs_path(@conn, :update), [as: :signs, class: "signs-form"], fn f -> %>
+    <button id="toggle-on" class="btn" type="button">Toggle all on</button>
+    <button id="toggle-off" class="btn" type="button">Toggle all off</button>
     <div class="row signs-headers-row">
       <div class="col-xs-1 sign-header">
         <b class="pull-right">Status</b>

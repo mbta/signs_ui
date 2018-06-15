@@ -31,6 +31,10 @@
   padding-bottom: 6px;
 }
 
+.btn {
+  border: 2px solid #386BB2;
+}
+
 input[type="checkbox"].ios8-switch {
   position: absolute;
   margin: 8px 0 0 16px;
