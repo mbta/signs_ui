@@ -20,8 +20,9 @@ defmodule SignsUiWeb.SignsController do
   def sign_names(%{"route" => "blue"}), do: Signs.Names.blue_line()
   def sign_names(%{"route" => "silver"}), do: Signs.Names.silver_line()
   def sign_names(%{"route" => "orange"}), do: Signs.Names.orange_line()
+  def sign_names(%{"route" => "red"}), do: Signs.Names.red_line()
   def sign_names(_) do
-    Signs.Names.orange_line() ++ Signs.Names.blue_line() ++ Signs.Names.mattapan() ++ Signs.Names.silver_line()
+    Signs.Names.red_line() ++ Signs.Names.orange_line() ++ Signs.Names.blue_line() ++ Signs.Names.mattapan() ++ Signs.Names.silver_line()
   end
 
   defp perform_update(conn, signs) do
@@ -68,6 +69,9 @@ defmodule SignsUiWeb.SignsController do
   end
   def route_name(%{"route" => "orange"}) do
     "Orange Line"
+  end
+  def route_name(%{"route" => "red"}) do
+    "Red Line"
   end
   def route_name(_) do
     "All"
