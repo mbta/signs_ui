@@ -212,6 +212,7 @@ defmodule SignsUI.Signs.Names do
       {"jfk_umass_braintree_platform_southbound", "JFK/UMass (Braintree Platform) Southbound"},
       {"jfk_umass_ashmont_platform_northbound", "JFK/UMass (Ashmont Platform) Northbound"},
       {"jfk_umass_braintree_platform_northbound", "JFK/UMass (Braintree Platform) Northbound"},
+      {"jfk_umass_mezzanine", "JFK/UMass Mezzanine"},
       {"broadway_mezzanine_northbound", "Broadway Mezzanine Northbound"},
       {"broadway_mezzanine_southbound", "Broadway Mezzanine Southbound"},
       {"broadway_northbound", "Broadway Northbound"},
