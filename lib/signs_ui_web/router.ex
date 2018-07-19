@@ -33,9 +33,12 @@ defmodule SignsUiWeb.Router do
   end
 
   scope "/", SignsUiWeb do
+    get "/_health", HealthController, :index
+  end
+
+  scope "/", SignsUiWeb do
     pipe_through [:api]
     post "/messages/create", MessagesController, :create
-    get "/_health", HealthController, :index
   end
 
   # Other scopes may use custom stacks.
