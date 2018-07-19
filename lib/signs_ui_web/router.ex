@@ -7,6 +7,7 @@ defmodule SignsUiWeb.Router do
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug :put_user_token
   end
 
   pipeline :api do
@@ -46,6 +47,11 @@ defmodule SignsUiWeb.Router do
   # scope "/api", SignsUiWeb do
   #   pipe_through :api
   # end
+
+  defp put_user_token(conn, _) do
+    token = Phoenix.Token.sign(conn, "user socket", "admin")
+    assign(conn, :user_token, token)
+  end
 
   defp api_auth(conn, _) do
     secret_key = Application.get_env(:signs_ui, :realtime_signs_api_key)
