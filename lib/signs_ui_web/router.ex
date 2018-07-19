@@ -38,7 +38,7 @@ defmodule SignsUiWeb.Router do
 
   scope "/", SignsUiWeb do
     pipe_through [:api]
-    post "/messages/create", MessagesController, :create
+    post "/messages", MessagesController, :create
   end
 
   # Other scopes may use custom stacks.
