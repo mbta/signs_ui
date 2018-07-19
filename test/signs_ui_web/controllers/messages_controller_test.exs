@@ -17,11 +17,11 @@ defmodule SignsUiWeb.MessagesControllerTest do
     end
   end
 
-  describe "update messages" do
-    test "redirects when data is valid", %{conn: conn} do
+  describe "create messages" do
+    test "responds with the json message when its valid", %{conn: conn} do
       conn = conn
              |> add_req_header
-             |> post(messages_path(conn, :update, @update_attrs), messages: @update_attrs)
+             |> post(messages_path(conn, :create, @update_attrs), messages: @update_attrs)
       assert json_response(conn, 200) == "{\n    {\n      \"MsgType\" => SignContent\n      \"c\" => e120~m2-\"Bowdoin 4 min\"\n      \"sta\" => BGOV\n      \"uid\" => 22\n    },\n}\n"
     end
   end

@@ -34,7 +34,7 @@ defmodule SignsUiWeb.Router do
 
   scope "/", SignsUiWeb do
     pipe_through [:api]
-    post "/messages/update", MessagesController, :update
+    post "/messages/create", MessagesController, :create
     get "/_health", HealthController, :index
   end
 

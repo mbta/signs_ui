@@ -8,7 +8,7 @@ defmodule SignsUiWeb.MessagesController do
     render(conn, "index.html", messages: messages, token: get_csrf_token())
   end
 
-  def update(conn, params) do
+  def create(conn, params) do
     case Messages.add_message(params) do
       {:ok, messages} ->
         render(conn, :index, messages: messages, token: get_csrf_token())
