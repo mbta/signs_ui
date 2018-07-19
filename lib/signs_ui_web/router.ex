@@ -29,9 +29,12 @@ defmodule SignsUiWeb.Router do
     get "/", PageController, :index
     get "/signs", SignsController, :index
     post "/signs", SignsController, :update
+    get "/messages", MessagesController, :index
   end
 
   scope "/", SignsUiWeb do
+    pipe_through [:api]
+    post "/messages/update", MessagesController, :update
     get "/_health", HealthController, :index
   end
 

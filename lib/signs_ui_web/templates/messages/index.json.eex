@@ -1,0 +1,10 @@
+{
+  <%= for message <- @messages do %>
+    {
+      "MsgType" => <%= message["MsgType"] %>
+      "c" => <%= message["c"] %>
+      "sta" => <%= message["sta"] %>
+      "uid" => <%= message["uid"] %>
+    },
+  <% end %>
+}
