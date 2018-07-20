@@ -13,7 +13,7 @@ defmodule SignsUiWeb.MessagesController do
       {:ok, messages} ->
         send_resp(conn, 201, "")
       {:error, _} ->
-        render(conn, "index.html", messages: [])
+        send_resp(conn, 400, "")
     end
   end
 end

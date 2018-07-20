@@ -18,11 +18,17 @@ defmodule SignsUiWeb.MessagesControllerTest do
   end
 
   describe "create messages" do
-    test "responds with the json message when its valid", %{conn: conn} do
+    test "responds with the 201 when its valid", %{conn: conn} do
       conn = conn
              |> add_req_header(:api)
              |> post(messages_path(conn, :create, @update_attrs), messages: @update_attrs)
       assert response(conn, 201)
+    end
+
+    test "responds with the 401 when the key is invalid", %{conn: conn} do
+      conn = conn
+             |> post(messages_path(conn, :create, @update_attrs), messages: @update_attrs)
+      assert response(conn, 401)
     end
   end
 
