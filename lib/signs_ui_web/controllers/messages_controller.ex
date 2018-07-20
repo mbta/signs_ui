@@ -5,15 +5,15 @@ defmodule SignsUiWeb.MessagesController do
 
   def index(conn, _params) do
     messages = Messages.list_messages()
-    render(conn, "index.html", messages: messages, token: get_csrf_token())
+    render(conn, "index.html", messages: messages)
   end
 
   def create(conn, params) do
     case Messages.add_message(params) do
       {:ok, messages} ->
-        render(conn, :index, messages: messages, token: get_csrf_token())
+        send_resp(conn, 201, "")
       {:error, _} ->
-        render(conn, "index.html", messages: [], token: get_csrf_token())
+        render(conn, "index.html", messages: [])
     end
   end
 end
