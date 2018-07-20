@@ -11,6 +11,7 @@ defmodule SignsUiWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug :api_auth
   end
 
   pipeline :basic_auth do
@@ -29,14 +30,31 @@ defmodule SignsUiWeb.Router do
     get "/", PageController, :index
     get "/signs", SignsController, :index
     post "/signs", SignsController, :update
+    get "/messages", MessagesController, :index
   end
 
   scope "/", SignsUiWeb do
     get "/_health", HealthController, :index
   end
 
+  scope "/", SignsUiWeb do
+    pipe_through [:api]
+    post "/messages", MessagesController, :create
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", SignsUiWeb do
   #   pipe_through :api
   # end
+
+  defp api_auth(conn, _) do
+    secret_key = Application.get_env(:signs_ui, :api_key)
+    case get_req_header(conn, "x-api-key") do
+      [^secret_key] -> conn
+      _ ->
+        conn
+        |> send_resp(401, "unauthorized")
+        |> halt()
+    end
+  end
 end
