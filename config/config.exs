@@ -22,7 +22,7 @@ config :signs_ui,
 config :signs_ui, :redirect_http?, false
 
 config :signs_ui,
-  api_key: "dXNlcm6hbWU6cGFzc3dvcmQ="
+  api_key: "placeholder_key"
 
 # Configures Elixir's Logger
 config :logger, :console,

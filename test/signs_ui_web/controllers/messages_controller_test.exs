@@ -27,7 +27,7 @@ defmodule SignsUiWeb.MessagesControllerTest do
   end
 
   defp add_req_header(conn, :api) do
-    %{conn | req_headers: [{"x-api-key", "dXNlcm6hbWU6cGFzc3dvcmQ="}]}
+    %{conn | req_headers: [{"x-api-key", "placeholder_key"}]}
   end
   defp add_req_header(conn, :basic) do
     %{conn | req_headers: [{"authorization", "Basic dXNlcm5hbWU6cGFzc3dvcmQ="}]}
