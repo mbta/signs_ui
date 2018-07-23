@@ -13,6 +13,7 @@ module.exports = function(env) {
       publicPath: '/',
     },
     module: {
+      noParse: /\.elm$/,
       rules: [
         {
           test: /\.js$/,
@@ -22,6 +23,11 @@ module.exports = function(env) {
         {
           test: /\.css$/,
           use: [MiniCssExtractPlugin.loader, 'css-loader']
+        },
+        {
+          test: /\.elm$/,
+          exclude: [/elm-stuff/, /node_modules/],
+          loader: 'elm-webpack-loader?verbose=true&warn=true'
         }
       ],
     },
