@@ -48,7 +48,7 @@ defmodule SignsUiWeb.Router do
   # end
 
   defp api_auth(conn, _) do
-    secret_key = Application.get_env(:signs_ui, :api_key)
+    secret_key = Application.get_env(:signs_ui, :realtime_signs_api_key)
     case get_req_header(conn, "x-api-key") do
       [^secret_key] -> conn
       _ ->
