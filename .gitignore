@@ -13,6 +13,10 @@ npm-debug.log
 # Static artifacts
 /assets/node_modules
 
+# Elm packages and build artifacts
+/assets/elm/elm-stuff
+/assets/elm/tests/elm-stuff
+
 # Since we are building assets from assets/,
 # we ignore priv/static. You may want to comment
 # this depending on your deployment strategy.
