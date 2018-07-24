@@ -17,10 +17,10 @@ WORKDIR /root/assets/
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - && \
     apt-get install -y nodejs && \
     npm install -g npm@latest && \
-    npm install -g brunch
+    npm install -g yarn
 
-RUN npm install
-RUN brunch build --production
+RUN yarn install
+RUN yarn deploy
 
 WORKDIR /root
 RUN mix phx.digest
