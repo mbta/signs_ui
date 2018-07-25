@@ -20,11 +20,15 @@ defmodule SignsUi.Signs.Messages do
   end
 
   def handle_call(:list_messages, _from, messages) do
-    {:reply, messages, messages}
+    result = %{
+      "RASH-m" => ["Alewife     1 min", "Mattapan     5 min"],
+      "RALE-s" => ["Ashmont    3 min", "Braintree    8 min"]
+    }
+    {:reply, result, result}
   end
 
   def handle_call({:add_message, message}, _from, messages) do
-    SignsUiWeb.Endpoint.broadcast!("signs:all", "new_msg", %{body: "#{inspect(message)}"})
+    SignsUiWeb.Endpoint.broadcast!("signs:all", "sign_update", %{sign_id: "RASH-m", line_number: 1, text: "Alewife     arr"})
     messages = Enum.take([message | messages], 10)
     {:reply, {:ok, messages}, messages}
   end

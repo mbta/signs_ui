@@ -1,3 +1,5 @@
 <h2>Listing Messages</h2>
 
 <div id="viewer-root"></div>
+
+<script>window.initialSignsData = <%= raw(Poison.encode!(@messages)) %></script>
