@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
+import Sign from './Sign';
 
 class Viewer extends Component {
   render() {
     return(
       <ul>
-        {this.props.messages.map( msg => {
-          return(
-            <li key={msg}>{msg}</li>
-          );
+        {Object.keys(this.props.signs).map( (key, index) => {
+
         })}
       </ul>
+      <div>{JSON.stringify(this.props.signs)}</div>
     );
   }
 }

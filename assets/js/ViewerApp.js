@@ -5,8 +5,9 @@ import Viewer from "./Viewer";
 class ViewerApp extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
-      messages: []
+      signs: props.initialSigns
     }
   }
 
@@ -19,9 +20,17 @@ class ViewerApp extends Component {
       .join()
       .receive("ok", response => {console.log("Joined successfully", response)});
 
-    channel.on("new_msg", payload => {
+    channel.on("sign_update", ({sign_id, line_number, text}) => {
+      let newValues = (this.state.signs[sign_id] || ["", ""]).slice(0);
+      newValues[line_number - 1] = text;
+
+      let newSigns = {
+        ...this.state.signs,
+        [sign_id]: newValues
+      };
+
       this.setState({
-        messages: [payload.body, ...(this.state.messages.slice(0, 50))]
+        signs: newSigns
       })
     })
   }
@@ -29,7 +38,7 @@ class ViewerApp extends Component {
   render() {
     return (
       <div className="viewer">
-        <Viewer messages={this.state.messages} />
+        <Viewer signs={this.state.signs} />
       </div>
     );
   }
