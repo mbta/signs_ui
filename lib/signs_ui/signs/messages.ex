@@ -24,6 +24,7 @@ defmodule SignsUi.Signs.Messages do
   end
 
   def handle_call({:add_message, message}, _from, messages) do
+    SignsUiWeb.Endpoint.broadcast!("signs:all", "new_msg", %{body: "#{inspect(message)}"})
     messages = Enum.take([message | messages], 10)
     {:reply, {:ok, messages}, messages}
   end

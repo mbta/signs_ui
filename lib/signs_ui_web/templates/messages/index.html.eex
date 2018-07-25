@@ -1,25 +1,3 @@
 <h2>Listing Messages</h2>
 
-<table class="table">
-  <thead>
-    <tr>
-      <th>Message</th>
-
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-<%= for message <- @messages do %>
-    <tr>
-      <td>
-        MsgType: <%= message["MsgType"] %>
-        c: <%= message["c"] %>
-        sta: <%= message["sta"] %>
-        uid: <%= message["uid"] %>
-      <td class="text-right">
-      </td>
-    </tr>
-<% end %>
-  </tbody>
-</table>
-
+<div id="viewer-root"></div>
