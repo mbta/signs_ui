@@ -5,7 +5,8 @@ class Sign extends Component {
     return (
       <div className="sign">
         <div>id: {this.props.signId}</div>
-        <div>content: {JSON.stringify(this.props.content)}</div>
+        <div>lineOne: {this.props.lineOne}</div>
+        <div>lineTwo: {this.props.lineTwo}</div>
       </div>
     );
   }
