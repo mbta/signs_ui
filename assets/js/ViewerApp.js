@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {Socket} from "phoenix";
 import Viewer from "./Viewer";
+import { updateSigns } from "./helpers";
 
 class ViewerApp extends Component {
   constructor(props) {
@@ -21,16 +22,8 @@ class ViewerApp extends Component {
       .receive("ok", response => {console.log("Joined successfully", response)});
 
     channel.on("sign_update", ({sign_id, line_number, text}) => {
-      let newValues = (this.state.signs[sign_id] || ["", ""]).slice(0);
-      newValues[line_number - 1] = text;
-
-      let newSigns = {
-        ...this.state.signs,
-        [sign_id]: newValues
-      };
-
       this.setState({
-        signs: newSigns
+        signs: updateSigns(this.state.signs, {signId: sign_id, lineNumber: line_number, content: text})
       })
     })
   }

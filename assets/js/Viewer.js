@@ -4,13 +4,17 @@ import Sign from './Sign';
 class Viewer extends Component {
   render() {
     return(
-      <ul>
-        {Object.keys(this.props.signs).map( (key, index) => {
+      <div>
+        {this.sortedKeys(this.props.signs).map( (key, index) => {
           let lines = this.props.signs[key];
-          return <li key={key}><Sign signId={key} lineOne={lines[0]} lineTwo={lines[1]}></Sign></li>
+          return <Sign key={key} signId={key} lineOne={lines[0]} lineTwo={lines[1]}></Sign>
         })}
-      </ul>
+      </div>
     );
+  }
+
+  sortedKeys(signs) {
+    return Object.keys(signs).slice(0).sort();
   }
 }
 

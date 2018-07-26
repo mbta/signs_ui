@@ -3,10 +3,12 @@ import React, { Component } from 'react';
 class Sign extends Component {
   render() {
     return (
-      <div className="sign">
-        <div>id: {this.props.signId}</div>
-        <div>lineOne: {this.props.lineOne}</div>
-        <div>lineTwo: {this.props.lineTwo}</div>
+      <div className="viewer--sign">
+        <div className="viewer--sign-id">{this.props.signId}</div>
+        <div className="viewer--sign-lines">
+          <div className="viewer--sign-line">{this.props.lineOne}</div>
+          <div className="viewer--sign-line">{this.props.lineTwo}</div>
+        </div>
       </div>
     );
   }
