@@ -1,0 +1,23 @@
+.viewer--sign {
+  border: 1px solid gray;
+  float: left;
+  margin: 1em 1em 0 0;
+  width: 15em;
+}
+
+.viewer--sign-id {
+  font-weight: bold;
+  padding: 0.5em;
+}
+
+.viewer--sign-lines {
+  background-color: black;
+  padding-left: 0.5em;
+}
+
+.viewer--sign-line {
+  color: yellow;
+  font-family: monospace;
+  height: 1.5em;
+  white-space: pre;
+}

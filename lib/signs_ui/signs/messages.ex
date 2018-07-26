@@ -1,14 +1,14 @@
 defmodule SignsUi.Signs.Messages do
   use GenServer
 
-  @type message :: String.t
+  @type message :: String.t()
 
   def start_link(opts \\ []) do
     GenServer.start_link(__MODULE__, opts, opts)
   end
 
   def init(_opts) do
-    {:ok, []}
+    {:ok, %{}}
   end
 
   def list_messages(pid \\ __MODULE__) do
@@ -24,8 +24,22 @@ defmodule SignsUi.Signs.Messages do
   end
 
   def handle_call({:add_message, message}, _from, messages) do
-    SignsUiWeb.Endpoint.broadcast!("signs:all", "new_msg", %{body: "#{inspect(message)}"})
-    messages = Enum.take([message | messages], 10)
+    sta = message["sta"]
+    [duration, zone_line, text] = String.split(message["c"], ["~", "-"])
+    text = String.trim(text, "\"")
+    {zone, line_no} = String.split_at(zone_line, 1)
+    line_no = String.to_integer(line_no)
+    sign_id = "#{sta}-#{zone}"
+    sign_lines = Map.get(messages, sign_id, ["", ""])
+    sign_lines = List.replace_at(sign_lines, line_no - 1, text)
+
+    SignsUiWeb.Endpoint.broadcast!("signs:all", "sign_update", %{
+      sign_id: sign_id,
+      line_number: line_no,
+      text: text
+    })
+
+    messages = Map.put(messages, sign_id, sign_lines)
     {:reply, {:ok, messages}, messages}
   end
 end

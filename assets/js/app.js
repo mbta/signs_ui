@@ -1,13 +1,15 @@
-import css from "../css/app.css"
-import "phoenix_html"
-import toggle from "./toggle-all.js"
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import '../css/app.css';
+import './toggle-all';
+import 'phoenix_html';
+
 import ViewerApp from './ViewerApp';
 
-const realtimeRoot = document.getElementById("viewer-root");
+const realtimeRoot = document.getElementById('viewer-root');
 if (realtimeRoot) {
-  ReactDOM.render(<ViewerApp />, realtimeRoot);
+  const initialSigns = window.initialSignsData;
+  const viewerApp = React.createElement(ViewerApp, { initialSigns }, null);
+  ReactDOM.render(viewerApp, realtimeRoot);
 }

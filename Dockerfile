@@ -1,6 +1,7 @@
 FROM elixir:1.6 as builder
 
 ENV MIX_ENV=prod
+ENV NODE_ENV=production
 
 WORKDIR /root
 ADD . .
