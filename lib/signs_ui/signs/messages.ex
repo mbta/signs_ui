@@ -25,21 +25,48 @@ defmodule SignsUi.Signs.Messages do
 
   def handle_call({:add_message, message}, _from, messages) do
     sta = message["sta"]
-    [duration, zone_line, text] = String.split(message["c"], ["~", "-"])
-    text = String.trim(text, "\"")
-    {zone, line_no} = String.split_at(zone_line, 1)
-    line_no = String.to_integer(line_no)
+    {duration, zone, line_no, text} = parse_command(message["c"])
+
     sign_id = "#{sta}-#{zone}"
     sign_lines = Map.get(messages, sign_id, ["", ""])
     sign_lines = List.replace_at(sign_lines, line_no - 1, text)
 
-    SignsUiWeb.Endpoint.broadcast!("signs:all", "sign_update", %{
-      sign_id: sign_id,
-      line_number: line_no,
-      text: text
-    })
+    sign_lines =
+      if message["c2"] do
+        {duration2, zone2, line_no2, text2} = parse_command(message["c2"])
+        List.replace_at(sign_lines, line_no2 - 1, text2)
+      else
+        sign_lines
+      end
 
+    broadcast_update(sign_id, sign_lines)
     messages = Map.put(messages, sign_id, sign_lines)
     {:reply, {:ok, messages}, messages}
+  end
+
+  defp parse_command(command) do
+    [duration, zone_line, text] = String.split(command, ["~", "-"])
+
+    text =
+      text
+      |> URI.decode()
+      |> String.trim("\"")
+      |> String.replace("+", " ")
+
+    {zone, line_no} = String.split_at(zone_line, 1)
+    line_no = String.to_integer(line_no)
+    {duration, zone, line_no, text}
+  end
+
+  defp broadcast_update(sign_id, sign_lines) do
+    sign_lines
+    |> Enum.with_index(1)
+    |> Enum.each(fn {line, number} ->
+      SignsUiWeb.Endpoint.broadcast!("signs:all", "sign_update", %{
+        sign_id: sign_id,
+        line_number: number,
+        text: line
+      })
+    end)
   end
 end
