@@ -27,7 +27,7 @@ module.exports = function(env) {
     },
     resolve: {
       modules: ['node_modules', path.resolve(__dirname, 'js')],
-      extensions: ['.js'],
+      extensions: ['.js', '.jsx'],
     },
     plugins: [
       new CopyWebpackPlugin([{from: "./static", to: "../"}]),
