@@ -12,12 +12,12 @@
 
 .viewer--sign-lines {
   background-color: black;
-  height: 3em;
   padding-left: 0.5em;
 }
 
 .viewer--sign-line {
   color: yellow;
   font-family: monospace;
+  height: 1.5em;
   white-space: pre;
 }
