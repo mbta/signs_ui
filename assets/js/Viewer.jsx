@@ -10,7 +10,7 @@ class Viewer extends Component {
 
   sortedKeys() {
     const { signs } = this.props;
-    return Object.keys(signs).slice(0).sort();
+    return Object.keys(signs).sort();
   }
 
   render() {
