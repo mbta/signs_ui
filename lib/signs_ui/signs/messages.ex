@@ -20,26 +20,70 @@ defmodule SignsUi.Signs.Messages do
   end
 
   def handle_call(:list_messages, _from, messages) do
-    {:reply, messages, messages}
+    message_list =
+      messages
+      |> Enum.map(fn {sign_id, line_map} ->
+        line_one = line_map[1] || ""
+        line_two = line_map[2] || ""
+        lines = [line_one, line_two]
+        {sign_id, lines}
+      end)
+      |> Map.new()
+
+    {:reply, message_list, messages}
   end
 
   def handle_call({:add_message, message}, _from, messages) do
     sta = message["sta"]
-    [duration, zone_line, text] = String.split(message["c"], ["~", "-"])
-    text = String.trim(text, "\"")
-    {zone, line_no} = String.split_at(zone_line, 1)
-    line_no = String.to_integer(line_no)
-    sign_id = "#{sta}-#{zone}"
-    sign_lines = Map.get(messages, sign_id, ["", ""])
-    sign_lines = List.replace_at(sign_lines, line_no - 1, text)
+    commands = parse_commands(message["c"])
 
-    SignsUiWeb.Endpoint.broadcast!("signs:all", "sign_update", %{
-      sign_id: sign_id,
-      line_number: line_no,
-      text: text
-    })
+    sign_lines =
+      Enum.reduce(commands, %{}, fn {duration, zone, line_no, text}, acc ->
+        sign_id = "#{sta}-#{zone}"
 
-    messages = Map.put(messages, sign_id, sign_lines)
+        acc =
+          if acc[sign_id] do
+            lines = Map.merge(acc[sign_id], %{line_no => text})
+
+            Map.replace!(acc, sign_id, lines)
+          else
+            Map.put(acc, sign_id, %{line_no => text})
+          end
+      end)
+
+    broadcast_update(sign_lines)
+    messages = Map.merge(messages, sign_lines)
     {:reply, {:ok, messages}, messages}
+  end
+
+  defp parse_commands(commands) do
+    commands
+    |> Enum.map(fn command ->
+      [duration, zone_line, text] = String.split(command, ["~", "-"])
+
+      text =
+        text
+        |> URI.decode()
+        |> String.trim("\"")
+        |> String.replace("+", " ")
+
+      {zone, line_no} = String.split_at(zone_line, 1)
+      line_no = String.to_integer(line_no)
+      {duration, zone, line_no, text}
+    end)
+  end
+
+  defp broadcast_update(sign_lines) do
+    sign_lines
+    |> Enum.each(fn {sign_id, lines} ->
+      lines
+      |> Enum.each(fn {number, line} ->
+        SignsUiWeb.Endpoint.broadcast!("signs:all", "sign_update", %{
+          sign_id: sign_id,
+          line_number: number,
+          text: line
+        })
+      end)
+    end)
   end
 end
