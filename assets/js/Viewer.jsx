@@ -14,12 +14,34 @@ class Viewer extends Component {
   }
 
   render() {
+    const { arincMap, layoutConfig, signs } = this.props;
     return (
       <div>
-        {this.sortedKeys().map((key) => {
-          const { signs } = this.props;
-          const lines = signs[key];
-          return <Sign key={key} signId={key} lineOne={lines[0]} lineTwo={lines[1]} />;
+        {layoutConfig.map( (config) => {
+          const name = config[0];
+          const stations = config[1];
+          return(
+            <div key={name}>
+              <h3>{name}</h3>
+              {stations.map((station) => {
+                return(
+                  <div>
+                  <div style={{overflow: "auto"}}>
+                    {["s", "w", "c", "m", "e", "n"].map((direction) => {
+                      const arincId = `${station}-${direction}`;
+                      const id = arincMap[arincId];
+                      const lines = signs[arincId];
+                      if (id && lines) {
+                        return <Sign key={id} signId={id} lineOne={lines[0]} lineTwo={lines[1]} />
+                      }
+                    })}
+                  </div>
+                  <hr />
+                  </div>
+                );
+              })}
+            </div>
+          )
         })}
       </div>
     );

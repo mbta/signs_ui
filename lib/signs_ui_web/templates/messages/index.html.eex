@@ -2,4 +2,8 @@
 
 <div id="viewer-root"></div>
 
-<script>window.initialSignsData = <%= raw(Poison.encode!(@messages)) %></script>
+<script>
+  window.initialSignsData = <%= raw(Poison.encode!(@messages)) %>;
+  window.layoutConfig = <%= raw(Poison.encode!(SignsUI.Signs.Names.arinc_order())) %>;
+  window.arincMap = <%= raw(Poison.encode!(SignsUI.Signs.Names.arinc_ids())) %>;
+</script>

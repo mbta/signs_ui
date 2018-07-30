@@ -31,10 +31,11 @@ class ViewerApp extends Component {
 
   render() {
     const { signs } = this.state;
+    const { layoutConfig, arincMap } = this.props;
 
     return (
       <div className="viewer">
-        <Viewer signs={signs} />
+        <Viewer signs={signs} layoutConfig={layoutConfig} arincMap={arincMap} />
       </div>
     );
   }
