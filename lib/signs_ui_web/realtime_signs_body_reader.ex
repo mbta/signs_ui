@@ -9,11 +9,11 @@ defmodule RealtimeSignsBodyReader do
         [name, value] = String.split(arg, "=")
 
         case acc[name] do
-          nil -> Map.put(acc, name, value)
-          _ -> Map.put(acc, "#{name}2", value)
+          nil -> Map.put(acc, name, [value])
+          _ -> Map.put(acc, name, [value | acc[name]])
         end
       end)
-      |> URI.encode_query()
+      |> Plug.Conn.Query.encode()
 
     {:ok, body_params, conn}
   end

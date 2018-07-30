@@ -6,7 +6,7 @@ defmodule SignsUi.Signs.MessagesTest do
 
     SignsUi.Signs.Messages.add_message(pid, %{
       "MsgType" => "SignContent",
-      "c" => "e130~n2-\"Alewife 12 min\"",
+      "c" => ["e130~n2-\"Alewife 12 min\""],
       "sta" => "RDTC",
       "uid" => "616722"
     })
