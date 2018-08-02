@@ -45,9 +45,9 @@ class ViewerApp extends Component {
   }
 
   updateTime() {
-    this.setState(({
+    this.setState({
       currentTime: Date.now(),
-    }));
+    });
   }
 
   render() {
