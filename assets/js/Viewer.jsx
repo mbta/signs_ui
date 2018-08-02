@@ -17,8 +17,7 @@ class Viewer extends Component {
     return (
       <div>
         {this.sortedKeys().map((key) => {
-          const { signs } = this.props;
-          const { currentTime } = this.props;
+          const { signs, currentTime } = this.props;
           const lines = signs[key];
           return (
             <Sign
@@ -38,7 +37,7 @@ class Viewer extends Component {
 }
 
 Viewer.propTypes = {
-  signs: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.object)).isRequired,
+  signs: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.shape({text: PropTypes.string, duration: PropTypes.string}))).isRequired,
   currentTime: PropTypes.number.isRequired,
 };
 

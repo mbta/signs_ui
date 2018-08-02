@@ -34,7 +34,14 @@ class ViewerApp extends Component {
       }));
     });
 
-    window.setInterval(this.updateTime, 1000);
+    this.timerID = setInterval(
+      () => this.updateTime(),
+      1000
+    );
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timerID);
   }
 
   updateTime() {
@@ -44,8 +51,7 @@ class ViewerApp extends Component {
   }
 
   render() {
-    const { signs } = this.state;
-    const { currentTime } = this.state;
+    const { signs, currentTime } = this.state;
     return (
       <div className="viewer">
         <Viewer signs={signs} currentTime={currentTime} />
@@ -55,7 +61,7 @@ class ViewerApp extends Component {
 }
 
 ViewerApp.propTypes = {
-  initialSigns: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.object)).isRequired,
+  initialSigns: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.shape({text: PropTypes.string, duration: PropTypes.string}))).isRequired,
 };
 
 export default ViewerApp;
