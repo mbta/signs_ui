@@ -37,6 +37,7 @@
     "webpack-cli": "^3.1.0"
   },
   "jest": {
-    "setupTestFrameworkScriptFile": "./scripts/jestSetup.js"
+    "setupTestFrameworkScriptFile": "./scripts/jestSetup.js",
+    "testURL": "http://localhost/"
   }
 }

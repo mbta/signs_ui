@@ -1,5 +1,6 @@
 defmodule SignsUi.Signs.Messages do
   use GenServer
+  import Timex
 
   @type message :: String.t()
 
@@ -23,8 +24,9 @@ defmodule SignsUi.Signs.Messages do
     message_list =
       messages
       |> Enum.map(fn {sign_id, line_map} ->
-        line_one = line_map[1] || ""
-        line_two = line_map[2] || ""
+        current_time = Timex.now()
+        line_one = line_map[1] || %{text: "", duration: expiration_time(current_time, "0")}
+        line_two = line_map[2] || %{text: "", duration: expiration_time(current_time, "0")}
         lines = [line_one, line_two]
         {sign_id, lines}
       end)
@@ -40,14 +42,16 @@ defmodule SignsUi.Signs.Messages do
     sign_lines =
       Enum.reduce(commands, %{}, fn {duration, zone, line_no, text}, acc ->
         sign_id = "#{sta}-#{zone}"
+        current_time = Timex.now()
+        expiration = expiration_time(current_time, duration)
 
         acc =
           if acc[sign_id] do
-            lines = Map.merge(acc[sign_id], %{line_no => text})
+            lines = Map.merge(acc[sign_id], %{line_no => %{text: text, duration: expiration}})
 
             Map.replace!(acc, sign_id, lines)
           else
-            Map.put(acc, sign_id, %{line_no => text})
+            Map.put(acc, sign_id, %{line_no => %{text: text, duration: expiration}})
           end
       end)
 
@@ -60,6 +64,8 @@ defmodule SignsUi.Signs.Messages do
     commands
     |> Enum.map(fn command ->
       [duration, zone_line, text] = String.split(command, ["~", "-"])
+      duration_regex = ~r/([a-z])([\d]+)/
+      [_original, _expires?, duration] = Regex.run(duration_regex, duration)
 
       text =
         text
@@ -77,13 +83,19 @@ defmodule SignsUi.Signs.Messages do
     sign_lines
     |> Enum.each(fn {sign_id, lines} ->
       lines
-      |> Enum.each(fn {number, line} ->
+      |> Enum.each(fn {number, %{text: line, duration: duration}} ->
         SignsUiWeb.Endpoint.broadcast!("signs:all", "sign_update", %{
           sign_id: sign_id,
           line_number: number,
-          text: line
+          text: line,
+          duration: duration
         })
       end)
     end)
+  end
+
+  defp expiration_time(current_time, duration) do
+    {duration, _} = Integer.parse(duration)
+    Timex.shift(current_time, seconds: duration)
   end
 end

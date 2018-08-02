@@ -1,6 +1,8 @@
-function updateSigns(oldSigns, { signId, lineNumber, content }) {
-  const newValues = oldSigns[signId] ? oldSigns[signId].slice(0) : ['', ''];
-  newValues[lineNumber - 1] = content;
+function updateSigns(oldSigns, {
+  signId, lineNumber, content, duration,
+}) {
+  const newValues = oldSigns[signId] ? oldSigns[signId].slice(0) : [{ text: '', duration: '0' }, { text: '', duration: '0' }];
+  newValues[lineNumber - 1] = { text: content, duration };
 
   return {
     ...oldSigns,

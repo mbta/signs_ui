@@ -8,18 +8,23 @@ class Viewer extends Component {
     this.sortedKeys = this.sortedKeys.bind(this);
   }
 
-  sortedKeys() {
-    const { signs } = this.props;
-    return Object.keys(signs).sort();
-  }
-
   render() {
+    const { signs, currentTime } = this.props;
     return (
       <div>
-        {this.sortedKeys().map((key) => {
-          const { signs } = this.props;
+        { Object.keys(signs).sort().map((key) => {
           const lines = signs[key];
-          return <Sign key={key} signId={key} lineOne={lines[0]} lineTwo={lines[1]} />;
+          return (
+            <Sign
+              key={key}
+              signId={key}
+              lineOne={lines[0].text}
+              lineOneDuration={lines[0].duration}
+              lineTwo={lines[1].text}
+              lineTwoDuration={lines[1].duration}
+              currentTime={currentTime}
+            />
+          );
         })}
       </div>
     );
@@ -27,7 +32,10 @@ class Viewer extends Component {
 }
 
 Viewer.propTypes = {
-  signs: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.string)).isRequired,
+  signs: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.shape({
+    text: PropTypes.string, duration: PropTypes.string,
+  }))).isRequired,
+  currentTime: PropTypes.number.isRequired,
 };
 
 export default Viewer;

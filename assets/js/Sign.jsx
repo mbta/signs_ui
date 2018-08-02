@@ -1,7 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function Sign({ signId, lineOne, lineTwo }) {
+function displayLine(duration, currentTime) {
+  return (Date.parse(duration) - currentTime) > 0;
+}
+
+function Sign({
+  signId, lineOne, lineOneDuration, lineTwo, lineTwoDuration, currentTime,
+}) {
   return (
     <div className="viewer--sign">
       <div className="viewer--sign-id">
@@ -9,10 +15,10 @@ function Sign({ signId, lineOne, lineTwo }) {
       </div>
       <div className="viewer--sign-lines">
         <div className="viewer--sign-line">
-          {lineOne}
+          { displayLine(lineOneDuration, currentTime) ? lineOne : null }
         </div>
         <div className="viewer--sign-line">
-          {lineTwo}
+          { displayLine(lineTwoDuration, currentTime) ? lineTwo : null }
         </div>
       </div>
     </div>
@@ -21,8 +27,18 @@ function Sign({ signId, lineOne, lineTwo }) {
 
 Sign.propTypes = {
   signId: PropTypes.string.isRequired,
-  lineOne: PropTypes.string.isRequired,
-  lineTwo: PropTypes.string.isRequired,
+  lineOne: PropTypes.string,
+  lineOneDuration: PropTypes.string,
+  lineTwo: PropTypes.string,
+  lineTwoDuration: PropTypes.string,
+  currentTime: PropTypes.number.isRequired,
+};
+
+Sign.defaultProps = {
+  lineOne: null,
+  lineOneDuration: '0',
+  lineTwo: null,
+  lineTwoDuration: '0',
 };
 
 export default Sign;
