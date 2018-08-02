@@ -41,4 +41,11 @@ Sign.propTypes = {
   currentTime: PropTypes.number.isRequired,
 };
 
+Sign.defaultProps = {
+  lineOne: null,
+  lineOneDuration: '0',
+  lineTwo: null,
+  lineTwoDuration: '0',
+};
+
 export default Sign;
