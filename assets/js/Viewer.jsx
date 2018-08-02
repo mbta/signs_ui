@@ -8,16 +8,11 @@ class Viewer extends Component {
     this.sortedKeys = this.sortedKeys.bind(this);
   }
 
-  sortedKeys() {
-    const { signs } = this.props;
-    return Object.keys(signs).sort();
-  }
-
   render() {
+    const { signs, currentTime } = this.props;
     return (
       <div>
-        {this.sortedKeys().map((key) => {
-          const { signs, currentTime } = this.props;
+        { Object.keys(signs).sort().map((key) => {
           const lines = signs[key];
           return (
             <Sign
