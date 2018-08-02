@@ -36,7 +36,7 @@ class ViewerApp extends Component {
 
     this.timerID = setInterval(
       () => this.updateTime(),
-      1000
+      1000,
     );
   }
 
@@ -61,7 +61,9 @@ class ViewerApp extends Component {
 }
 
 ViewerApp.propTypes = {
-  initialSigns: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.shape({text: PropTypes.string, duration: PropTypes.string}))).isRequired,
+  initialSigns: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.shape({
+    text: PropTypes.string, duration: PropTypes.string,
+  }))).isRequired,
 };
 
 export default ViewerApp;

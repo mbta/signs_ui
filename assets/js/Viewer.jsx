@@ -37,7 +37,9 @@ class Viewer extends Component {
 }
 
 Viewer.propTypes = {
-  signs: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.shape({text: PropTypes.string, duration: PropTypes.string}))).isRequired,
+  signs: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.shape({
+    text: PropTypes.string, duration: PropTypes.string,
+  }))).isRequired,
   currentTime: PropTypes.number.isRequired,
 };
 
