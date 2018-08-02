@@ -11,6 +11,7 @@ defmodule SignsUi.Signs.MessagesTest do
       "uid" => "616722"
     })
 
-    assert SignsUi.Signs.Messages.list_messages(pid) == %{"RDTC-n" => ["", "Alewife 12 min"]}
+    assert %{"RDTC-n" => [%{duration: _, text: ""}, %{duration: _, text: "Alewife 12 min"}]} =
+             SignsUi.Signs.Messages.list_messages(pid)
   end
 end

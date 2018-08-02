@@ -83,13 +83,19 @@ defmodule SignsUi.Signs.Messages do
     sign_lines
     |> Enum.each(fn {sign_id, lines} ->
       lines
-      |> Enum.each(fn {number, line} ->
+      |> Enum.each(fn {number, %{text: line, duration: duration}} ->
         SignsUiWeb.Endpoint.broadcast!("signs:all", "sign_update", %{
           sign_id: sign_id,
           line_number: number,
-          text: line
+          text: line,
+          duration: duration
         })
       end)
     end)
+  end
+
+  defp expiration_time(current_time, duration) do
+    {duration, _} = Integer.parse(duration)
+    Timex.shift(current_time, seconds: duration)
   end
 end
