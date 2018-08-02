@@ -8,8 +8,10 @@ class ViewerApp extends Component {
   constructor(props) {
     super(props);
 
+    this.updateTime = this.updateTime.bind(this);
     this.state = {
       signs: props.initialSigns,
+      currentTime: Date.now()
     };
   }
 
@@ -22,26 +24,34 @@ class ViewerApp extends Component {
       .join()
       .receive('ok', () => {});
 
-    channel.on('sign_update', ({ sign_id: signId, line_number: lineNumber, text: content }) => {
+    channel.on('sign_update', ({ sign_id: signId, duration: duration, line_number: lineNumber, text: content }) => {
       this.setState(prevState => ({
-        signs: updateSigns(prevState.signs, { signId, lineNumber, content }),
+        signs: updateSigns(prevState.signs, { signId, duration, lineNumber, content }),
       }));
     });
+
+    window.setInterval(this.updateTime, 1000);
+  }
+
+  updateTime() {
+    this.setState(prevState => ({
+      currentTime: Date.now()
+    }));
   }
 
   render() {
     const { signs } = this.state;
-
+    const { currentTime } = this.state;
     return (
       <div className="viewer">
-        <Viewer signs={signs} />
+        <Viewer signs={signs} currentTime={currentTime} />
       </div>
     );
   }
 }
 
 ViewerApp.propTypes = {
-  initialSigns: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.string)).isRequired,
+  initialSigns: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.object)).isRequired,
 };
 
 export default ViewerApp;
