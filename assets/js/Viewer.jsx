@@ -20,7 +20,17 @@ class Viewer extends Component {
           const { signs } = this.props;
           const { currentTime } = this.props;
           const lines = signs[key];
-          return <Sign key={key} signId={key} lineOne={lines[0]["text"]} lineOneDuration={lines[0]["duration"]} lineTwo={lines[1]["text"]} lineTwoDuration={lines[1]["duration"]} currentTime={currentTime} />;
+          return (
+            <Sign
+              key={key}
+              signId={key}
+              lineOne={lines[0].text}
+              lineOneDuration={lines[0].duration}
+              lineTwo={lines[1].text}
+              lineTwoDuration={lines[1].duration}
+              currentTime={currentTime}
+            />
+          );
         })}
       </div>
     );
@@ -29,7 +39,7 @@ class Viewer extends Component {
 
 Viewer.propTypes = {
   signs: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.object)).isRequired,
-  currentTime: PropTypes.number
+  currentTime: PropTypes.number.isRequired,
 };
 
 export default Viewer;

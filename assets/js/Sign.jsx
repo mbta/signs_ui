@@ -1,16 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function Sign({ signId, lineOne, lineOneDuration, lineTwo, lineTwoDuration, currentTime }) {
-  let remainingTimeOne = Date.parse(lineOneDuration) - currentTime
-  let remainingTimeTwo = Date.parse(lineTwoDuration) - currentTime
-  let topLine = null
-  let bottomLine = null
-  if(remainingTimeOne > 0) {
-    topLine = lineOne
+function Sign({
+  signId, lineOne, lineOneDuration, lineTwo, lineTwoDuration, currentTime,
+}) {
+  const remainingTimeOne = Date.parse(lineOneDuration) - currentTime;
+  const remainingTimeTwo = Date.parse(lineTwoDuration) - currentTime;
+  let topLine = null;
+  let bottomLine = null;
+  if (remainingTimeOne > 0) {
+    topLine = lineOne;
   }
-  if(remainingTimeTwo > 0) {
-    bottomLine = lineTwo
+  if (remainingTimeTwo > 0) {
+    bottomLine = lineTwo;
   }
 
   return (
@@ -33,9 +35,10 @@ function Sign({ signId, lineOne, lineOneDuration, lineTwo, lineTwoDuration, curr
 Sign.propTypes = {
   signId: PropTypes.string.isRequired,
   lineOne: PropTypes.string,
-  lineOneExpiration: PropTypes.instanceOf(Date),
+  lineOneDuration: PropTypes.string,
   lineTwo: PropTypes.string,
-  lineTwoExpiration: PropTypes.instanceOf(Date),
+  lineTwoDuration: PropTypes.string,
+  currentTime: PropTypes.number.isRequired,
 };
 
 export default Sign;

@@ -11,7 +11,7 @@ class ViewerApp extends Component {
     this.updateTime = this.updateTime.bind(this);
     this.state = {
       signs: props.initialSigns,
-      currentTime: Date.now()
+      currentTime: Date.now(),
     };
   }
 
@@ -24,9 +24,13 @@ class ViewerApp extends Component {
       .join()
       .receive('ok', () => {});
 
-    channel.on('sign_update', ({ sign_id: signId, duration: duration, line_number: lineNumber, text: content }) => {
+    channel.on('sign_update', ({
+      sign_id: signId, duration, line_number: lineNumber, text: content,
+    }) => {
       this.setState(prevState => ({
-        signs: updateSigns(prevState.signs, { signId, duration, lineNumber, content }),
+        signs: updateSigns(prevState.signs, {
+          signId, duration, lineNumber, content,
+        }),
       }));
     });
 
@@ -34,8 +38,8 @@ class ViewerApp extends Component {
   }
 
   updateTime() {
-    this.setState(prevState => ({
-      currentTime: Date.now()
+    this.setState(({
+      currentTime: Date.now(),
     }));
   }
 
