@@ -63,19 +63,24 @@ defmodule SignsUi.Signs.Messages do
   defp parse_commands(commands) do
     commands
     |> Enum.map(fn command ->
-      [duration, zone_line, text] = String.split(command, ["~", "-"])
+      [duration, zone_line_text] = String.split(command, ["~"])
       duration_regex = ~r/([a-z])([\d]+)/
       [_original, _expires?, duration] = Regex.run(duration_regex, duration)
 
-      text =
-        text
-        |> URI.decode()
-        |> String.trim("\"")
-        |> String.replace("+", " ")
+      [zone_line | text_list] = String.split(zone_line_text, ["-"])
+
+      text_list =
+        text_list
+        |> Enum.map(fn text ->
+          text
+          |> URI.decode()
+          |> String.trim("\"")
+          |> String.replace("+", " ")
+        end)
 
       {zone, line_no} = String.split_at(zone_line, 1)
       line_no = String.to_integer(line_no)
-      {duration, zone, line_no, text}
+      {duration, zone, line_no, List.first(text_list)}
     end)
   end
 
