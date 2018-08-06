@@ -1,17 +1,12 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Sign from './Sign';
 
-class Viewer extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    const { signs, currentTime } = this.props;
-    return (
-      <div>
-        { Object.keys(signs).sort().map((key) => {
+function Viewer({ signs, currentTime }) {
+  return (
+    <div>
+      {
+        Object.keys(signs).sort().map((key) => {
           const lines = signs[key];
           return (
             <Sign
@@ -24,10 +19,10 @@ class Viewer extends Component {
               currentTime={currentTime}
             />
           );
-        })}
-      </div>
-    );
-  }
+        })
+      }
+    </div>
+  );
 }
 
 Viewer.propTypes = {
