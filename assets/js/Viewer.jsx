@@ -5,7 +5,6 @@ import Sign from './Sign';
 class Viewer extends Component {
   constructor(props) {
     super(props);
-    this.sortedKeys = this.sortedKeys.bind(this);
   }
 
   render() {
