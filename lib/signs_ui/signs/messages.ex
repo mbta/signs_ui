@@ -72,10 +72,17 @@ defmodule SignsUi.Signs.Messages do
       text_list =
         text_list
         |> Enum.map(fn text ->
+          text_time_regex = ~r/([\w\d\s]+).?([\d]?+)$/
+
+          text =
+            text
+            |> URI.decode()
+            |> String.replace("\"", "")
+            |> String.replace("+", " ")
+
+          [_original, text, _text_time] = Regex.run(text_time_regex, text)
+
           text
-          |> URI.decode()
-          |> String.trim("\"")
-          |> String.replace("+", " ")
         end)
 
       {zone, line_no} = String.split_at(zone_line, 1)
