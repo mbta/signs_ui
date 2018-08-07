@@ -72,7 +72,7 @@ defmodule SignsUi.Signs.Messages do
       text_list =
         text_list
         |> Enum.map(fn text ->
-          text_time_regex = ~r/([\w\d\s]+).?([\d]?+)$/
+          text_time_regex = ~r/([\w\d\s]+)\.?([\d]?+)$/
 
           text =
             text
