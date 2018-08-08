@@ -80,7 +80,11 @@ defmodule SignsUi.Signs.Messages do
             |> String.replace("\"", "")
             |> String.replace("+", " ")
 
-          [_original, text, _text_time] = Regex.run(text_time_regex, text)
+          text =
+            case Regex.run(text_time_regex, text) do
+              [_original, text, _text_time] -> text
+              nil -> ""
+            end
 
           text
         end)
