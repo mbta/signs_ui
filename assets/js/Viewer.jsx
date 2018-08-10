@@ -1,26 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Sign from './Sign';
+import Line from './Line';
 
-function Viewer({ signs, currentTime }) {
+function Viewer({ signs, currentTime, line }) {
   return (
     <div>
-      {
-        Object.keys(signs).sort().map((key) => {
-          const lines = signs[key];
-          return (
-            <Sign
-              key={key}
-              signId={key}
-              lineOne={lines[0].text}
-              lineOneDuration={lines[0].duration}
-              lineTwo={lines[1].text}
-              lineTwoDuration={lines[1].duration}
-              currentTime={currentTime}
-            />
-          );
-        })
-      }
+      <Line
+        signs={signs}
+        currentTime={currentTime}
+        line={line}
+      />
     </div>
   );
 }
