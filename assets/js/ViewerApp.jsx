@@ -10,9 +10,10 @@ class ViewerApp extends Component {
 
     this.updateTime = this.updateTime.bind(this);
     this.blueLine = this.blueLine.bind(this);
-    this.greenLine = this.greenLine.bind(this);
     this.redLine = this.redLine.bind(this);
     this.orangeLine = this.orangeLine.bind(this);
+    this.mattapanLine = this.mattapanLine.bind(this);
+    this.silverLine = this.silverLine.bind(this);
 
     this.state = {
       signs: props.initialSigns,
@@ -62,9 +63,9 @@ class ViewerApp extends Component {
     });
   }
 
-  greenLine() {
+  mattapanLine() {
     this.setState({
-      line: "Green"
+      line: "Mattapan"
     });
   }
 
@@ -80,14 +81,21 @@ class ViewerApp extends Component {
     });
   }
 
+  silverLine() {
+    this.setState({
+      line: "SL3"
+    });
+  }
+
   render() {
     const { signs, currentTime, line } = this.state;
     return (
       <div className="viewer">
         <button onClick={this.blueLine}>Blue</button>
-        <button onClick={this.greenLine}>Green</button>
         <button onClick={this.redLine}>Red</button>
         <button onClick={this.orangeLine}>Orange</button>
+        <button onClick={this.mattapanLine}>Mattapan</button>
+        <button onClick={this.silverLine}>Silver Line 3</button>
         <Viewer signs={signs} currentTime={currentTime} line={line} />
       </div>
     );
