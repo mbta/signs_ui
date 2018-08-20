@@ -19,6 +19,7 @@ Viewer.propTypes = {
     text: PropTypes.string, duration: PropTypes.string,
   }))).isRequired,
   currentTime: PropTypes.number.isRequired,
+  line: PropTypes.string.isRequired,
 };
 
 export default Viewer;

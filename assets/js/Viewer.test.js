@@ -3,15 +3,14 @@ import { mount } from 'enzyme';
 
 import Viewer from './Viewer';
 
-test('does not show messages that have expired', () => {
-  const now = Date.now();
-  const expired = new Date(now).toLocaleString();
-  const fresh = new Date(now + 5000).toLocaleString();
-  const signs = { signID: [{ text: 'Alewife 1 min', duration: fresh }, { text: 'Alewife 3 min', duration: expired }] };
+test('Shows all signs for a line', () => {
+  const currentTime = Date.now();
+  const line = 'Red';
+  const fresh = new Date(currentTime + 5000).toLocaleString();
+  const signs = { signID: [{ text: 'Alewife 1 min', duration: fresh }, { text: 'Alewife 3 min', duration: fresh }] };
 
-  const currentTime = now + 2000;
-  const wrapper = mount(React.createElement(Viewer, { signs, currentTime }, null));
+  const wrapper = mount(React.createElement(Viewer, { signs, currentTime, line }, null));
 
-  expect(wrapper.text()).toMatch('Alewife 1 min');
-  expect(wrapper.text()).not.toMatch('Alewife 3 min');
+  expect(wrapper.text()).toMatch('RALE-cRALE-mRDAV-mRDAV-nRDAV-sRPOR-mRPOR-nRPOR-sRHAR-mRHAR-nRHAR-sRCEN-nRCEN-sRKEN-nRKEN-sRMGH-nRMGH-sRPRK-nRPRK-sRPRK-cRDTC-nRDTC-sRSOU-mRSOU-nRSOU-sSSOU-mRBRO-mRBRO-nRBRO-sRAND-mRAND-nRAND-sRSAV-mRSAV-nRSAV-sRFIE-mRFIE-nRFIE-sRSHA-mRSHA-nRSHA-sRASH-mRASH-nRNQU-mRNQU-nRNQU-sRWOL-mRWOL-nRWOL-sRQUC-mRQUC-nRQUC-sRQUA-mRQUA-nRQUA-sRBRA-cRBRA-mRJFK-wRJFK-sRJFK-eRJFK-nRJFK-m');
+  expect(wrapper.text()).not.toMatch('OOAK');
 });

@@ -18,7 +18,7 @@ class ViewerApp extends Component {
     this.state = {
       signs: props.initialSigns,
       currentTime: Date.now(),
-      line: ""
+      line: '',
     };
   }
 
@@ -59,31 +59,31 @@ class ViewerApp extends Component {
 
   blueLine() {
     this.setState({
-      line: "Blue"
+      line: 'Blue',
     });
   }
 
   mattapanLine() {
     this.setState({
-      line: "Mattapan"
+      line: 'Mattapan',
     });
   }
 
   redLine() {
     this.setState({
-      line: "Red"
+      line: 'Red',
     });
   }
 
   orangeLine() {
     this.setState({
-      line: "Orange"
+      line: 'Orange',
     });
   }
 
   silverLine() {
     this.setState({
-      line: "SL3"
+      line: 'SL3',
     });
   }
 
@@ -91,11 +91,21 @@ class ViewerApp extends Component {
     const { signs, currentTime, line } = this.state;
     return (
       <div className="viewer">
-        <button onClick={this.blueLine}>Blue</button>
-        <button onClick={this.redLine}>Red</button>
-        <button onClick={this.orangeLine}>Orange</button>
-        <button onClick={this.mattapanLine}>Mattapan</button>
-        <button onClick={this.silverLine}>Silver Line 3</button>
+        <button type="button" onClick={this.blueLine}>
+          Blue
+        </button>
+        <button type="button" onClick={this.redLine}>
+          Red
+        </button>
+        <button type="button" onClick={this.orangeLine}>
+          Orange
+        </button>
+        <button type="button" onClick={this.mattapanLine}>
+          Mattapan
+        </button>
+        <button type="button" onClick={this.silverLine}>
+          Silver Line 3
+        </button>
         <Viewer signs={signs} currentTime={currentTime} line={line} />
       </div>
     );
