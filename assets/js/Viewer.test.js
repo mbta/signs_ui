@@ -1,5 +1,0 @@
-import React from 'react';
-import { mount } from 'enzyme';
-
-import Viewer from './Viewer';
-
