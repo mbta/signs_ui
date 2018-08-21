@@ -9,11 +9,7 @@ class ViewerApp extends Component {
     super(props);
 
     this.updateTime = this.updateTime.bind(this);
-    this.blueLine = this.blueLine.bind(this);
-    this.redLine = this.redLine.bind(this);
-    this.orangeLine = this.orangeLine.bind(this);
-    this.mattapanLine = this.mattapanLine.bind(this);
-    this.silverLine = this.silverLine.bind(this);
+    this.changeLine = this.changeLine.bind(this);
 
     this.state = {
       signs: props.initialSigns,
@@ -57,53 +53,27 @@ class ViewerApp extends Component {
     });
   }
 
-  blueLine() {
-    this.setState({
-      line: 'Blue',
-    });
-  }
-
-  mattapanLine() {
-    this.setState({
-      line: 'Mattapan',
-    });
-  }
-
-  redLine() {
-    this.setState({
-      line: 'Red',
-    });
-  }
-
-  orangeLine() {
-    this.setState({
-      line: 'Orange',
-    });
-  }
-
-  silverLine() {
-    this.setState({
-      line: 'SL3',
-    });
+  changeLine(line) {
+    this.setState({ line });
   }
 
   render() {
     const { signs, currentTime, line } = this.state;
     return (
       <div className="viewer">
-        <button type="button" onClick={this.blueLine}>
+        <button type="button" id="blue-button" onClick={() => this.changeLine('Blue')}>
           Blue
         </button>
-        <button type="button" onClick={this.redLine}>
+        <button type="button" id="red-button" onClick={() => this.changeLine('Red')}>
           Red
         </button>
-        <button type="button" onClick={this.orangeLine}>
+        <button type="button" id="orange-button" onClick={() => this.changeLine('Orange')}>
           Orange
         </button>
-        <button type="button" onClick={this.mattapanLine}>
+        <button type="button" id="mattapan-button" onClick={() => this.changeLine('Mattapan')}>
           Mattapan
         </button>
-        <button type="button" onClick={this.silverLine}>
+        <button type="button" id="sl3-button" onClick={() => this.changeLine('SL3')}>
           Silver Line 3
         </button>
         <Viewer signs={signs} currentTime={currentTime} line={line} />

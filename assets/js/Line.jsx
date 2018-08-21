@@ -3,9 +3,6 @@ import PropTypes from 'prop-types';
 import Sign from './Sign';
 
 function lineSigns(line) {
-  if (line === '') {
-    return [];
-  }
   if (line === 'Mattapan') {
     return ['MCED-s', 'MCED-n',
       'MBUT-c',
@@ -84,12 +81,7 @@ function lineSigns(line) {
       'RBRA-c', 'RBRA-m',
       'RJFK-w', 'RJFK-s', 'RJFK-e', 'RJFK-n', 'RJFK-m'];
   }
-  return ['MCED-s', 'MCED-n',
-    'MBUT-c',
-    'MMIL-s', 'MMIL-n',
-    'MCEN-s', 'MCEN-n',
-    'MVAL-s', 'MVAL-n',
-    'MCAP-s', 'MCAP-n'];
+  return [];
 }
 
 function Line({ signs, currentTime, line }) {
