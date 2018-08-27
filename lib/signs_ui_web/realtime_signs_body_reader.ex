@@ -9,8 +9,9 @@ defmodule RealtimeSignsBodyReader do
         [name, value] = String.split(arg, "=")
 
         case acc[name] do
-          nil -> Map.put(acc, name, [value])
-          _ -> Map.put(acc, name, [value | acc[name]])
+          nil -> Map.put(acc, name, value)
+          old_val when not is_list(old_val) -> Map.put(acc, name, [value, old_val])
+          vals -> Map.put(acc, name, [value | vals])
         end
       end)
       |> Plug.Conn.Query.encode()
