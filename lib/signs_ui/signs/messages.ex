@@ -62,6 +62,7 @@ defmodule SignsUi.Signs.Messages do
 
   defp parse_commands(commands) do
     commands
+    |> List.wrap
     |> Enum.map(fn command ->
       [duration, zone_line_text] = String.split(command, ["~"])
       duration_regex = ~r/([a-z])([\d]+)/
