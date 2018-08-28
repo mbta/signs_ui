@@ -14,8 +14,24 @@ defmodule RealtimeSignsBodyReader do
           vals -> Map.put(acc, name, [value | vals])
         end
       end)
-      |> Plug.Conn.Query.encode()
+      |> paramify()
 
     {:ok, body_params, conn}
+  end
+
+  defp paramify(map) do
+    map
+    |> Enum.flat_map(fn {key, value} ->
+        case value do
+          vs when is_list(vs) ->
+            Enum.map(vs, fn v ->
+              "#{key}[]=#{v}"
+            end)
+
+          v ->
+            ["#{key}=#{v}"]
+        end
+      end)
+    |> Enum.join("&")
   end
 end
