@@ -5,13 +5,10 @@ defmodule RealtimeSignsBodyReader do
     body_params =
       body
       |> String.split("&")
-      |> Enum.reduce([], fn arg, acc ->
-        case String.split(arg, "=") do
-          ["c", value] -> ["c[]=#{value}" | acc]
-          _ -> [arg | acc]
-        end
+      |> Enum.map(fn
+        "c=" <> rest -> "c[]=" <> rest
+        value -> value
       end)
-      |> Enum.reverse()
       |> Enum.join("&")
 
     {:ok, body_params, conn}
