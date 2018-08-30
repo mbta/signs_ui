@@ -39,24 +39,30 @@ defmodule SignsUi.Signs.Messages do
     sta = message["sta"]
     commands = parse_commands(message["c"])
 
-    sign_lines =
+    command_lines =
       Enum.reduce(commands, %{}, fn {duration, zone, line_no, text}, acc ->
         sign_id = "#{sta}-#{zone}"
         current_time = Timex.now()
         expiration = expiration_time(current_time, duration)
 
-        acc =
-          if acc[sign_id] do
-            lines = Map.merge(acc[sign_id], %{line_no => %{text: text, duration: expiration}})
-
-            Map.replace!(acc, sign_id, lines)
-          else
-            Map.put(acc, sign_id, %{line_no => %{text: text, duration: expiration}})
-          end
+        line_data = %{line_no => %{text: text, duration: expiration}}
+        Map.update(acc, sign_id, line_data, &Map.merge(&1, line_data))
       end)
 
-    broadcast_update(sign_lines)
-    messages = Map.merge(messages, sign_lines)
+    broadcast_update(command_lines)
+
+    messages =
+      Enum.reduce(command_lines, messages, fn {sign_id, lines}, acc ->
+        new_sign =
+          if acc[sign_id] != nil do
+            Map.merge(acc[sign_id], lines)
+          else
+            lines
+          end
+
+        Map.put(acc, sign_id, new_sign)
+      end)
+
     {:reply, {:ok, messages}, messages}
   end
 

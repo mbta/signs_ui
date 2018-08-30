@@ -12,6 +12,7 @@ defmodule SignsUiWeb.MessagesController do
     case Messages.add_message(params) do
       {:ok, _messages} ->
         send_resp(conn, 201, "")
+
       {:error, _} ->
         send_resp(conn, 400, "")
     end
