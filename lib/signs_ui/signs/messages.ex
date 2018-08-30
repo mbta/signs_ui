@@ -45,13 +45,8 @@ defmodule SignsUi.Signs.Messages do
         current_time = Timex.now()
         expiration = expiration_time(current_time, duration)
 
-        if acc[sign_id] do
-          lines = Map.merge(acc[sign_id], %{line_no => %{text: text, duration: expiration}})
-
-          Map.replace!(acc, sign_id, lines)
-        else
-          Map.put(acc, sign_id, %{line_no => %{text: text, duration: expiration}})
-        end
+        line_data = %{line_no => %{text: text, duration: expiration}}
+        Map.update(acc, sign_id, line_data, &Map.merge(&1, line_data))
       end)
 
     broadcast_update(command_lines)
