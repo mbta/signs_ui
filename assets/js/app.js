@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import '../css/app.css';
-import '../css/bootstrap-grid.min.css';
 import './toggle-all';
 import 'phoenix_html';
 
