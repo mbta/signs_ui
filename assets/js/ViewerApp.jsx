@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Socket } from 'phoenix';
 import Viewer from './Viewer';
 import { updateSigns } from './helpers';
+import lineToColor from './colors';
 
 class ViewerApp extends Component {
   constructor(props) {
@@ -14,7 +15,7 @@ class ViewerApp extends Component {
     this.state = {
       signs: props.initialSigns,
       currentTime: Date.now(),
-      line: '',
+      line: 'Blue',
     };
   }
 
@@ -54,28 +55,31 @@ class ViewerApp extends Component {
   }
 
   changeLine(line) {
+    document.body.style.backgroundColor = lineToColor(line);
     this.setState({ line });
   }
 
   render() {
     const { signs, currentTime, line } = this.state;
     return (
-      <div className="viewer">
-        <button type="button" id="blue-button" onClick={() => this.changeLine('Blue')}>
-          Blue
-        </button>
-        <button type="button" id="red-button" onClick={() => this.changeLine('Red')}>
-          Red
-        </button>
-        <button type="button" id="orange-button" onClick={() => this.changeLine('Orange')}>
-          Orange
-        </button>
-        <button type="button" id="mattapan-button" onClick={() => this.changeLine('Mattapan')}>
-          Mattapan
-        </button>
-        <button type="button" id="sl3-button" onClick={() => this.changeLine('SL3')}>
-          Silver Line 3
-        </button>
+      <div className="viewer--main container">
+        <div className="viewer--line-switcher">
+          <button type="button" id="blue-button" onClick={() => this.changeLine('Blue')}>
+            Blue
+          </button>
+          <button type="button" id="red-button" onClick={() => this.changeLine('Red')}>
+            Red
+          </button>
+          <button type="button" id="orange-button" onClick={() => this.changeLine('Orange')}>
+            Orange
+          </button>
+          <button type="button" id="mattapan-button" onClick={() => this.changeLine('Mattapan')}>
+            Mattapan
+          </button>
+          <button type="button" id="sl3-button" onClick={() => this.changeLine('SL3')}>
+            Silver Line 3
+          </button>
+        </div>
         <Viewer signs={signs} currentTime={currentTime} line={line} />
       </div>
     );
