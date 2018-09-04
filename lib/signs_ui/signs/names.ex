@@ -41,7 +41,6 @@ defmodule SignsUI.Signs.Names do
       {"world_trade_center_outbound", "World Trade Center Outbound"},
       {"world_trade_center_mezzanine", "World Trade Center Mezzanine"},
       {"courthouse_station_mezzanine", "Courthouse Station Mezzanine"},
-      {"south_station_mezzanine", "South Station Mezzanine"},
     ]
   end
 
