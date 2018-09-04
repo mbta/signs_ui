@@ -15,23 +15,21 @@
 
 .viewer--sign-id {
   border-top: 10px solid orange;
-  /*padding-top: 0.5em;*/
   float: left;
-  width: 5em;
   text-align: center;
-  /*font-weight: bold;*/
+  width: 5em;
 }
 
 .viewer--sign-lines {
   background-color: rgb(45, 45, 45);
-  padding-left: 0.5em;
   margin-left: 5em;
+  padding-left: 0.5em;
 }
 
 .viewer--sign-line {
-  font-size: 1.5em;
   color: rgb(251, 220, 75);
   font-family: monospace;
+  font-size: 1.5em;
   height: 1.5em;
   white-space: pre;
 }
