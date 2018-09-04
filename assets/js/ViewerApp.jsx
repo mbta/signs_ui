@@ -15,7 +15,6 @@ class ViewerApp extends Component {
     this.state = {
       signs: props.initialSigns,
       currentTime: Date.now(),
-      line: 'Blue',
     };
   }
 
@@ -80,7 +79,7 @@ class ViewerApp extends Component {
             Silver Line 3
           </button>
         </div>
-        <Viewer signs={signs} currentTime={currentTime} line={line} />
+        {line && <Viewer signs={signs} currentTime={currentTime} line={line} />}
       </div>
     );
   }

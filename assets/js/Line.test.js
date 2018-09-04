@@ -13,6 +13,6 @@ test('Shows all signs for a line', () => {
 
   const wrapper = mount(React.createElement(Line, { signs, currentTime, line }, null));
 
-  expect(wrapper.text()).toMatch('RALE-cRALE-mRDAV-mRDAV-nRDAV-sRPOR-mRPOR-nRPOR-sRHAR-mRHAR-nRHAR-sRCEN-nRCEN-sRKEN-nRKEN-sRMGH-nRMGH-sRPRK-nRPRK-sRPRK-cRDTC-nRDTC-sRSOU-mRSOU-nRSOU-sSSOU-mRBRO-mRBRO-nRBRO-sRAND-mRAND-nRAND-sRSAV-mRSAV-nRSAV-sRFIE-mRFIE-nRFIE-sRSHA-mRSHA-nRSHA-sRASH-mRASH-nRNQU-mRNQU-nRNQU-sRWOL-mRWOL-nRWOL-sRQUC-mRQUC-nRQUC-sRQUA-mRQUA-nRQUA-sRBRA-cRBRA-mRJFK-wRJFK-sRJFK-eRJFK-nRJFK-m');
-  expect(wrapper.text()).not.toMatch('OOAK');
+  expect(wrapper.text()).toMatch('Alewife (RALE)');
+  expect(wrapper.text()).not.toMatch('Oak Grove (OOAK)');
 });

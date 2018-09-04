@@ -15,7 +15,7 @@ defmodule SignsUiWeb.MessagesControllerTest do
         |> add_req_header(:basic)
         |> get(messages_path(conn, :index))
 
-      assert html_response(conn, 200) =~ "Listing Messages"
+      assert html_response(conn, 200) =~ "MBTA Realtime Signs"
     end
   end
 

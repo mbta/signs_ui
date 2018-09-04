@@ -13,10 +13,11 @@ test('does not show messages that have expired', () => {
   const signId = 'RDAV-s';
   const lineOne = 'Alewife 1 min';
   const lineTwo = 'Alewife 3 min';
+  const line = 'Red';
 
   const wrapper = mount(
     React.createElement(Sign, {
-      signId, lineOne, lineOneDuration, lineTwo, lineTwoDuration, currentTime,
+      signId, lineOne, lineOneDuration, lineTwo, lineTwoDuration, currentTime, line,
     }, null),
   );
 
