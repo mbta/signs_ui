@@ -100,7 +100,7 @@ defmodule SignsUi.Signs.Messages do
 
       display_text =
         case text_list do
-          [n_stops, _away, _stopped] -> n_stops
+          [_away, _stopped, n_stops] -> n_stops
           [n_minutes] -> n_minutes
           text_list -> List.first(text_list)
         end
