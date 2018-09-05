@@ -59,7 +59,7 @@ defmodule SignsUi.Signs.MessagesTest do
 
     SignsUi.Signs.Messages.add_message(pid, %{
       "MsgType" => "SignContent",
-      "c" => ["e130~n2-\"Alewife stopped\".4-\"Alewife 4 stops\".4-\"Alewife away\".4"],
+      "c" => ["e130~n2-\"Alewife away\".4-\"Alewife stopped\".4-\"Alewife 4 stops\".4"],
       "sta" => "RDTC",
       "uid" => "616722"
     })
