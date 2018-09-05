@@ -97,7 +97,15 @@ defmodule SignsUi.Signs.Messages do
 
       {zone, line_no} = String.split_at(zone_line, 1)
       line_no = String.to_integer(line_no)
-      {duration, zone, line_no, List.first(text_list)}
+
+      display_text =
+        case text_list do
+          [_away, _stopped, n_stops] -> n_stops
+          [n_minutes] -> n_minutes
+          text_list -> List.first(text_list)
+        end
+
+      {duration, zone, line_no, display_text}
     end)
   end
 
