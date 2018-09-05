@@ -8,6 +8,7 @@
     <meta name="author" content="">
 
     <title>MBTA Realtime Signs</title>
+    <link rel="stylesheet" href="<%= static_path(@conn, "/vendor/bootstrap.min.css") %>">
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
   </head>
 

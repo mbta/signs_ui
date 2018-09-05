@@ -12,7 +12,7 @@ defmodule SignsUiWeb.Endpoint do
     at: "/",
     from: :signs_ui,
     gzip: false,
-    only: ~w(css fonts images js favicon.ico robots.txt)
+    only: ~w(css fonts images js favicon.ico robots.txt vendor)
   )
 
   # Code reloading can be explicitly enabled under the

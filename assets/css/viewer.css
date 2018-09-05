@@ -1,23 +1,35 @@
+.viewer--main {
+  background-color: white;
+  padding-top: 1em;
+}
+
+.viewer--line-switcher {
+  margin-bottom: 2em;
+}
+
 .viewer--sign {
-  border: 1px solid gray;
-  float: left;
-  margin: 1em 1em 0 0;
-  width: 15em;
+  background-color: rgb(206, 206, 206);
+  margin-bottom: 1em;
+  width: 20em;
 }
 
 .viewer--sign-id {
-  font-weight: bold;
-  padding: 0.5em;
+  border-top: 10px solid white;
+  float: left;
+  text-align: center;
+  width: 5em;
 }
 
 .viewer--sign-lines {
-  background-color: black;
+  background-color: rgb(45, 45, 45);
+  margin-left: 5em;
   padding-left: 0.5em;
 }
 
 .viewer--sign-line {
-  color: yellow;
+  color: rgb(251, 220, 75);
   font-family: monospace;
+  font-size: 1.5em;
   height: 1.5em;
   white-space: pre;
 }
