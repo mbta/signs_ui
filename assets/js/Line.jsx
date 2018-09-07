@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Station from './Station';
-import stationConfig from './mbta';
+import { stationConfig } from './mbta';
 
 function name(line) {
   if (line === 'Red') { return 'Red Line'; }
@@ -13,7 +13,7 @@ function name(line) {
   return '';
 }
 
-function Line({ signs, currentTime, line }) {
+function Line({ signs, currentTime, line, enabledSigns, setEnabled }) {
   const stations = stationConfig[line] || [];
 
   return (
@@ -29,6 +29,8 @@ function Line({ signs, currentTime, line }) {
             signs={signs}
             currentTime={currentTime}
             line={line}
+            enabledSigns={enabledSigns}
+            setEnabled={setEnabled}
           />
         ))
       }
@@ -42,6 +44,8 @@ Line.propTypes = {
   }))).isRequired,
   currentTime: PropTypes.number.isRequired,
   line: PropTypes.string.isRequired,
+  enabledSigns: PropTypes.objectOf(PropTypes.bool.isRequired).isRequired,
+  setEnabled: PropTypes.func.isRequired,
 };
 
 export default Line;

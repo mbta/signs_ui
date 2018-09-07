@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Sign from './Sign';
+import { arincToRealtimeId } from './mbta';
 
 function zoneDescription(stationConfig, zone) {
   if (stationConfig.zones[zone] !== true) {
@@ -13,7 +14,7 @@ function zoneDescription(stationConfig, zone) {
   return zones[zone];
 }
 
-function makeSign(config, zone, signs, currentTime, line) {
+function makeSign(config, zone, signs, currentTime, line, enabledSigns, setEnabled) {
   if (config.zones[zone]) {
     const key = `${config.id}-${zone}`;
     const lines = signs[key];
@@ -33,6 +34,9 @@ function makeSign(config, zone, signs, currentTime, line) {
       lineTwoDuration = '0';
     }
 
+    const realtimeId = arincToRealtimeId(key, line);
+    const isEnabled = enabledSigns[realtimeId] || false;
+
     return (
       <Sign
         key={key}
@@ -43,6 +47,9 @@ function makeSign(config, zone, signs, currentTime, line) {
         lineTwo={lineTwo}
         lineTwoDuration={lineTwoDuration}
         currentTime={currentTime}
+        isEnabled={isEnabled}
+        setEnabled={setEnabled}
+        realtimeId={realtimeId}
       />
     );
   }
@@ -51,7 +58,7 @@ function makeSign(config, zone, signs, currentTime, line) {
 }
 
 function Station({
-  config, signs, currentTime, line,
+  config, signs, currentTime, line, enabledSigns, setEnabled
 }) {
   return (
     <div key={config.id}>
@@ -66,16 +73,16 @@ function Station({
       </h3>
       <div className="row">
         <div className="col">
-          {makeSign(config, 's', signs, currentTime, line)}
-          {makeSign(config, 'w', signs, currentTime, line)}
+          {makeSign(config, 's', signs, currentTime, line, enabledSigns, setEnabled)}
+          {makeSign(config, 'w', signs, currentTime, line, enabledSigns, setEnabled)}
         </div>
         <div className="col">
-          {makeSign(config, 'c', signs, currentTime, line)}
-          {makeSign(config, 'm', signs, currentTime, line)}
+          {makeSign(config, 'c', signs, currentTime, line, enabledSigns, setEnabled)}
+          {makeSign(config, 'm', signs, currentTime, line, enabledSigns, setEnabled)}
         </div>
         <div className="col">
-          {makeSign(config, 'n', signs, currentTime, line)}
-          {makeSign(config, 'e', signs, currentTime, line)}
+          {makeSign(config, 'n', signs, currentTime, line, enabledSigns, setEnabled)}
+          {makeSign(config, 'e', signs, currentTime, line, enabledSigns, setEnabled)}
         </div>
       </div>
       <hr />
@@ -101,6 +108,8 @@ Station.propTypes = {
   }))).isRequired,
   currentTime: PropTypes.number.isRequired,
   line: PropTypes.string.isRequired,
+  enabledSigns: PropTypes.objectOf(PropTypes.bool.isRequired).isRequired,
+  setEnabled: PropTypes.func.isRequired,
 };
 
 export default Station;

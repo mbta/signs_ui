@@ -10,6 +10,7 @@ import ViewerApp from './ViewerApp';
 const realtimeRoot = document.getElementById('viewer-root');
 if (realtimeRoot) {
   const initialSigns = window.initialSignsData;
-  const viewerApp = React.createElement(ViewerApp, { initialSigns }, null);
+  const initialEnabledSigns = window.initialEnabledSigns;
+  const viewerApp = React.createElement(ViewerApp, { initialSigns, initialEnabledSigns }, null);
   ReactDOM.render(viewerApp, realtimeRoot);
 }
