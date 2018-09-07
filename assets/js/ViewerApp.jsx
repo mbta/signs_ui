@@ -41,8 +41,8 @@ class ViewerApp extends Component {
     });
 
     channel.on('new_enabled_signs_state', (state) => {
-      this.setState({enabledSigns: state});
-    })
+      this.setState({ enabledSigns: state });
+    });
 
     this.setState({ channel });
 
@@ -62,7 +62,7 @@ class ViewerApp extends Component {
     if (channel) {
       channel.push('changeSigns', signStatuses);
 
-      this.setState((oldState) => ({
+      this.setState(oldState => ({
         ...oldState,
         enabledSigns: { ...oldState.enabledSigns, ...signStatuses },
       }));
