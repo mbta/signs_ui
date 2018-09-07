@@ -40,6 +40,10 @@ class ViewerApp extends Component {
       }));
     });
 
+    channel.on('new_enabled_signs_state', (state) => {
+      this.setState({enabledSigns: state});
+    })
+
     this.setState({ channel });
 
     this.timerID = setInterval(
@@ -55,16 +59,14 @@ class ViewerApp extends Component {
   setEnabled(signStatuses) {
     const { channel } = this.state;
 
-    this.setState((oldState) => {
-      if (channel) {
-        channel.push('changeSigns', signStatuses);
-      }
+    if (channel) {
+      channel.push('changeSigns', signStatuses);
 
-      return {
+      this.setState((oldState) => ({
         ...oldState,
         enabledSigns: { ...oldState.enabledSigns, ...signStatuses },
-      };
-    });
+      }));
+    }
   }
 
   changeLine(line) {

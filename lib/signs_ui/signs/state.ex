@@ -59,7 +59,7 @@ defmodule SignsUI.Signs.State do
 
     new_state = Map.merge(old_state, new_state_changes)
     {:ok, _} = external_post_mod.update(new_state)
-    {:reply, :ok, new_state}
+    {:reply, {:ok, new_state}, new_state}
   end
 
   defp handle_response({:error, _reason}, old_signs, _updated_signs) do
