@@ -493,7 +493,7 @@ const stationConfig = {
     },
     {
       id: 'SEAV',
-      name: 'Seaport Ave',
+      name: 'Eastern Ave',
       zones: {
         n: false, s: false, e: true, w: true, c: false, m: false,
       },
