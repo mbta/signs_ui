@@ -9,7 +9,7 @@ function zoneDescription(stationConfig, zone) {
   }
 
   const zones = {
-    n: 'NB', s: 'SB', e: 'EB', w: 'WB', m: 'MZ', c: 'CN',
+    n: 'NB', s: 'SB', e: 'EB', w: 'WB', m: 'MZ', c: 'CP',
   };
   return zones[zone];
 }
