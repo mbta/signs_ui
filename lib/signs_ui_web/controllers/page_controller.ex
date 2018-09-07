@@ -3,6 +3,6 @@ defmodule SignsUiWeb.PageController do
   alias SignsUI.Signs
 
   def index(conn, _params) do
-    render conn, "index.html", sign_routes: Signs.Names.sign_routes()
+    redirect(conn, to: "/viewer")
   end
 end
