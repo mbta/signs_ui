@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Station from './Station';
-import { stationConfig } from './mbta';
+import { stationConfig, arincToRealtimeId } from './mbta';
 
 function name(line) {
   if (line === 'Red') { return 'Red Line'; }
@@ -13,6 +13,21 @@ function name(line) {
   return '';
 }
 
+function setEnabledStations(enablerFn, stations, line, val) {
+  const statuses = {}
+
+  stations.forEach(station => {
+    ['n', 's', 'e', 'w', 'm', 'c'].forEach(zone => {
+      let realtimeId = arincToRealtimeId(`${station.id}-${zone}`, line);
+      if (realtimeId) {
+        statuses[realtimeId] = val;
+      }
+    })
+  });
+
+  enablerFn(statuses);
+}
+
 function Line({ signs, currentTime, line, enabledSigns, setEnabled }) {
   const stations = stationConfig[line] || [];
 
@@ -21,6 +36,11 @@ function Line({ signs, currentTime, line, enabledSigns, setEnabled }) {
       <h1>
         {name(line)}
       </h1>
+
+      <div className="viewer--toggle-all">
+        <button className="btn btn-outline-secondary" onClick={() => {setEnabledStations(setEnabled, stations, line, true)}}>Enable all</button>&nbsp;
+        <button className="btn btn-outline-secondary" onClick={() => {setEnabledStations(setEnabled, stations, line, false)}}>Disable all</button>
+      </div>
       {
         stations.map(station => (
           <Station

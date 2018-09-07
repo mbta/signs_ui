@@ -63,23 +63,19 @@ class ViewerApp extends Component {
     this.setState({ line });
   }
 
-  setEnabled(realtimeId, value) {
+  setEnabled(signStatuses) {
     const { channel } = this.state;
 
     this.setState(oldState => {
       if (channel) {
-        channel.push("changeSigns", {[realtimeId]: value});
-      } else {
-        console.log("no channel!");
+        channel.push("changeSigns", signStatuses);
       }
 
-      const newState = {
+      return {
         ...oldState,
-        enabledSigns: {...oldState.enabledSigns, [realtimeId]: value}
-      };
-
-      return newState;
-    });
+        enabledSigns: {...oldState.enabledSigns, ...signStatuses}
+      }
+    })
   }
 
   render() {

@@ -23,7 +23,7 @@ function Sign({
           {signId}
         </span>
         <div>
-          <input id={realtimeId} type="checkbox" checked={isEnabled} className="ios8-switch" onChange={() => {setEnabled(realtimeId, !isEnabled)}}></input>
+          <input id={realtimeId} type="checkbox" checked={isEnabled} className="ios8-switch" onChange={() => {setEnabled({[realtimeId]: !isEnabled})}}></input>
           <label htmlFor={realtimeId}></label>
         </div>
       </div>

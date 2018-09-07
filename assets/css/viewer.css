@@ -3,6 +3,10 @@
   padding-top: 1em;
 }
 
+.viewer--toggle-all {
+  margin-bottom: 2em;
+}
+
 .viewer--line-switcher {
   margin-bottom: 2em;
 }
