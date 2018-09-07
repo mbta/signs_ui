@@ -4,6 +4,6 @@ defmodule SignsUiWeb.PageControllerTest do
   test "GET /", %{conn: conn} do
     conn = %{conn | req_headers: [{"authorization", "Basic dXNlcm5hbWU6cGFzc3dvcmQ="}]}
     conn = get(conn, "/")
-    assert html_response(conn, 200) =~ "All signs"
+    assert html_response(conn, 302) =~ "/viewer"
   end
 end
