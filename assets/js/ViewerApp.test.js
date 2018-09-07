@@ -13,9 +13,12 @@ test('Shows all signs for a line', () => {
 
   const currentTime = now + 2000;
   const line = 'Red';
+  const initialEnabledSigns = {};
 
   const wrapper = mount(
-    React.createElement(ViewerApp, { initialSigns: signs, currentTime, line }, null),
+    React.createElement(ViewerApp, {
+      initialSigns: signs, currentTime, line, initialEnabledSigns,
+    }, null),
   );
 
   wrapper.find('#red-button').simulate('click');

@@ -58,7 +58,7 @@ function makeSign(config, zone, signs, currentTime, line, enabledSigns, setEnabl
 }
 
 function Station({
-  config, signs, currentTime, line, enabledSigns, setEnabled
+  config, signs, currentTime, line, enabledSigns, setEnabled,
 }) {
   return (
     <div key={config.id}>

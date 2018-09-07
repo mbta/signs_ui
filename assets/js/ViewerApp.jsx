@@ -9,9 +9,9 @@ class ViewerApp extends Component {
   constructor(props) {
     super(props);
 
-    this.updateTime = this.updateTime.bind(this);
-    this.changeLine = this.changeLine.bind(this);
     this.setEnabled = this.setEnabled.bind(this);
+    this.changeLine = this.changeLine.bind(this);
+    this.updateTime = this.updateTime.bind(this);
 
     this.state = {
       signs: props.initialSigns,
@@ -40,7 +40,7 @@ class ViewerApp extends Component {
       }));
     });
 
-    this.setState({channel: channel});
+    this.setState({ channel });
 
     this.timerID = setInterval(
       () => this.updateTime(),
@@ -52,9 +52,18 @@ class ViewerApp extends Component {
     clearInterval(this.timerID);
   }
 
-  updateTime() {
-    this.setState({
-      currentTime: Date.now(),
+  setEnabled(signStatuses) {
+    const { channel } = this.state;
+
+    this.setState((oldState) => {
+      if (channel) {
+        channel.push('changeSigns', signStatuses);
+      }
+
+      return {
+        ...oldState,
+        enabledSigns: { ...oldState.enabledSigns, ...signStatuses },
+      };
     });
   }
 
@@ -63,23 +72,16 @@ class ViewerApp extends Component {
     this.setState({ line });
   }
 
-  setEnabled(signStatuses) {
-    const { channel } = this.state;
-
-    this.setState(oldState => {
-      if (channel) {
-        channel.push("changeSigns", signStatuses);
-      }
-
-      return {
-        ...oldState,
-        enabledSigns: {...oldState.enabledSigns, ...signStatuses}
-      }
-    })
+  updateTime() {
+    this.setState({
+      currentTime: Date.now(),
+    });
   }
 
   render() {
-    const { signs, currentTime, line, enabledSigns } = this.state;
+    const {
+      signs, currentTime, line, enabledSigns,
+    } = this.state;
     return (
       <div className="viewer--main container">
         <div className="viewer--line-switcher">
@@ -99,7 +101,16 @@ class ViewerApp extends Component {
             Silver Line 3
           </button>
         </div>
-        {line && <Viewer signs={signs} enabledSigns={enabledSigns} setEnabled={this.setEnabled} currentTime={currentTime} line={line} />}
+        {line
+          && (
+          <Viewer
+            signs={signs}
+            enabledSigns={enabledSigns}
+            setEnabled={this.setEnabled}
+            currentTime={currentTime}
+            line={line}
+          />
+          )}
       </div>
     );
   }

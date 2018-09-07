@@ -10,8 +10,12 @@ test('Shows all signs for a line', () => {
 
   const currentTime = now + 2000;
   const line = 'Red';
+  const enabledSigns = {};
+  const setEnabled = () => {};
 
-  const wrapper = mount(React.createElement(Line, { signs, currentTime, line }, null));
+  const wrapper = mount(React.createElement(Line, {
+    signs, currentTime, line, enabledSigns, setEnabled,
+  }, null));
 
   expect(wrapper.text()).toMatch('Alewife (RALE)');
   expect(wrapper.text()).not.toMatch('Oak Grove (OOAK)');

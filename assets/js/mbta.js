@@ -709,15 +709,15 @@ const arincToRealtimeIdMap = {
   'RJFK-m': 'jfk_umass_mezzanine',
 };
 
-function arincToRealtimeId(station_zone, line) {
-  if (station_zone === 'RSOU-m' && line === 'Red') {
+function arincToRealtimeId(stationZone, line) {
+  if (stationZone === 'RSOU-m' && line === 'Red') {
     return 'red_south_station_mezzanine';
   }
-  if (station_zone === 'RSOU-m' && line === 'SL3') {
+  if (stationZone === 'RSOU-m' && line === 'SL3') {
     return 'south_station_mezzanine';
   }
 
-  return arincToRealtimeIdMap[station_zone];
+  return arincToRealtimeIdMap[stationZone];
 }
 
 export { stationConfig, arincToRealtimeId };

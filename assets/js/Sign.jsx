@@ -14,7 +14,16 @@ function fontSize(signId) {
 }
 
 function Sign({
-  signId, lineOne, lineOneDuration, lineTwo, lineTwoDuration, currentTime, line, isEnabled, setEnabled, realtimeId
+  signId,
+  lineOne,
+  lineOneDuration,
+  lineTwo,
+  lineTwoDuration,
+  currentTime,
+  line,
+  isEnabled,
+  setEnabled,
+  realtimeId,
 }) {
   return (
     <div className="viewer--sign">
@@ -23,8 +32,9 @@ function Sign({
           {signId}
         </span>
         <div>
-          <input id={realtimeId} type="checkbox" checked={isEnabled} className="ios8-switch" onChange={() => {setEnabled({[realtimeId]: !isEnabled})}}></input>
-          <label htmlFor={realtimeId}></label>
+          <input id={realtimeId} type="checkbox" checked={isEnabled} className="ios8-switch" onChange={() => { setEnabled({ [realtimeId]: !isEnabled }); }} />
+          {/* eslint-disable-next-line jsx-a11y/label-has-for */}
+          <label htmlFor={realtimeId} />
         </div>
       </div>
       <div className="viewer--sign-lines">
@@ -49,6 +59,7 @@ Sign.propTypes = {
   line: PropTypes.string.isRequired,
   setEnabled: PropTypes.func.isRequired,
   isEnabled: PropTypes.bool.isRequired,
+  realtimeId: PropTypes.string.isRequired,
 };
 
 Sign.defaultProps = {

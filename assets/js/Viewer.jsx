@@ -2,7 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Line from './Line';
 
-function Viewer({ signs, currentTime, line, enabledSigns, setEnabled }) {
+function Viewer({
+  signs, currentTime, line, enabledSigns, setEnabled,
+}) {
   return (
     <div>
       <Line
