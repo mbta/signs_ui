@@ -26,4 +26,30 @@ defmodule SignsUI.Signs.StateTest do
       assert status == :ok
     end
   end
+
+  describe "update_some" do
+    test "updates some values and leaves others alone" do
+      {:ok, pid} = GenServer.start_link(SignsUI.Signs.State, [], [])
+
+      assert %{
+        "maverick_westbound" => %Signs.Sign{enabled?: true},
+        "maverick_eastbound" => %Signs.Sign{enabled?: true},
+        "forest_hills_southbound" => %Signs.Sign{enabled?: true}
+      } = get_all(pid)
+
+      {:ok, new_state} = update_some(pid, %{"maverick_eastbound" => false, "maverick_westbound" => false})
+
+      assert %{
+        "maverick_westbound" => %Signs.Sign{enabled?: false},
+        "maverick_eastbound" => %Signs.Sign{enabled?: false},
+        "forest_hills_southbound" => %Signs.Sign{enabled?: true}
+      } = new_state
+
+      assert %{
+        "maverick_westbound" => %Signs.Sign{enabled?: false},
+        "maverick_eastbound" => %Signs.Sign{enabled?: false},
+        "forest_hills_southbound" => %Signs.Sign{enabled?: true}
+      } = get_all(pid)
+    end
+  end
 end

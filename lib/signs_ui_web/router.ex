@@ -31,7 +31,7 @@ defmodule SignsUiWeb.Router do
     get("/", PageController, :index)
     get("/signs", SignsController, :index)
     post("/signs", SignsController, :update)
-    get("/messages", MessagesController, :index)
+    get("/viewer", MessagesController, :index)
   end
 
   scope "/", SignsUiWeb do

@@ -14,10 +14,22 @@ test('does not show messages that have expired', () => {
   const lineOne = 'Alewife 1 min';
   const lineTwo = 'Alewife 3 min';
   const line = 'Red';
+  const isEnabled = true;
+  const setEnabled = () => {};
+  const realtimeId = 'id';
 
   const wrapper = mount(
     React.createElement(Sign, {
-      signId, lineOne, lineOneDuration, lineTwo, lineTwoDuration, currentTime, line,
+      signId,
+      lineOne,
+      lineOneDuration,
+      lineTwo,
+      lineTwoDuration,
+      currentTime,
+      line,
+      isEnabled,
+      setEnabled,
+      realtimeId,
     }, null),
   );
 

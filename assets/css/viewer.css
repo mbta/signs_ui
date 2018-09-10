@@ -3,6 +3,10 @@
   padding-top: 1em;
 }
 
+.viewer--toggle-all {
+  margin-bottom: 2em;
+}
+
 .viewer--line-switcher {
   margin-bottom: 2em;
 }
@@ -11,6 +15,7 @@
   background-color: rgb(206, 206, 206);
   margin-bottom: 1em;
   width: 20em;
+  height: 100px;
 }
 
 .viewer--sign-id {
@@ -30,6 +35,7 @@
   color: rgb(251, 220, 75);
   font-family: monospace;
   font-size: 1.5em;
-  height: 1.5em;
+  height: 50px;
+  padding-top: 10px;
   white-space: pre;
 }

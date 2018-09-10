@@ -7,14 +7,23 @@ function displayLine(duration, currentTime) {
 }
 
 function fontSize(signId) {
-  if (signId === 'NB' || signId === 'SB' || signId === 'EB' || signId === 'WB' || signId === 'MZ' || signId === 'CN') {
+  if (signId === 'NB' || signId === 'SB' || signId === 'EB' || signId === 'WB' || signId === 'MZ' || signId === 'CP') {
     return { fontSize: '1.5em' };
   }
   return {};
 }
 
 function Sign({
-  signId, lineOne, lineOneDuration, lineTwo, lineTwoDuration, currentTime, line,
+  signId,
+  lineOne,
+  lineOneDuration,
+  lineTwo,
+  lineTwoDuration,
+  currentTime,
+  line,
+  isEnabled,
+  setEnabled,
+  realtimeId,
 }) {
   return (
     <div className="viewer--sign">
@@ -22,6 +31,11 @@ function Sign({
         <span style={fontSize(signId)}>
           {signId}
         </span>
+        <div>
+          <input id={realtimeId} type="checkbox" checked={isEnabled} className="ios8-switch" onChange={() => { setEnabled({ [realtimeId]: !isEnabled }); }} />
+          {/* eslint-disable-next-line jsx-a11y/label-has-for */}
+          <label htmlFor={realtimeId} />
+        </div>
       </div>
       <div className="viewer--sign-lines">
         <div className="viewer--sign-line">
@@ -43,6 +57,9 @@ Sign.propTypes = {
   lineTwoDuration: PropTypes.string,
   currentTime: PropTypes.number.isRequired,
   line: PropTypes.string.isRequired,
+  setEnabled: PropTypes.func.isRequired,
+  isEnabled: PropTypes.bool.isRequired,
+  realtimeId: PropTypes.string.isRequired,
 };
 
 Sign.defaultProps = {
