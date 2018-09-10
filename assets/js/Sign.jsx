@@ -7,7 +7,7 @@ function displayLine(duration, currentTime) {
 }
 
 function fontSize(signId) {
-  if (signId === 'NB' || signId === 'SB' || signId === 'EB' || signId === 'WB' || signId === 'MZ' || signId === 'CN') {
+  if (signId === 'NB' || signId === 'SB' || signId === 'EB' || signId === 'WB' || signId === 'MZ' || signId === 'CP') {
     return { fontSize: '1.5em' };
   }
   return {};
