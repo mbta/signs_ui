@@ -7,6 +7,7 @@ function name(line) {
   if (line === 'Red') { return 'Red Line'; }
   if (line === 'Blue') { return 'Blue Line'; }
   if (line === 'Orange') { return 'Orange Line'; }
+  if (line === 'Green') { return 'Green Line'; }
   if (line === 'Mattapan') { return 'Mattapan'; }
   if (line === 'SL3') { return 'SL3'; }
 
