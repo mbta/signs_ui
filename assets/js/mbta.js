@@ -640,7 +640,7 @@ const stationConfig = {
         n: false, s: false, e: true, w: true, c: false, m: false,
       },
     },
-  ]
+  ],
 };
 
 const arincToRealtimeIdMap = {
