@@ -3,6 +3,7 @@ const lineToColor = {
   Red: 'rgb(218, 41, 28)',
   Blue: 'rgb(0, 61, 165)',
   Orange: 'rgb(237, 139, 0)',
+  Green: 'rgb(0, 132, 61)',
   SL3: 'rgb(124, 135, 142)',
 };
 

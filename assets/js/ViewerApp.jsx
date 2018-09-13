@@ -96,6 +96,9 @@ class ViewerApp extends Component {
           <button type="button" id="orange-button" onClick={() => this.changeLine('Orange')}>
             Orange
           </button>
+          <button type="button" id="green-button" onClick={() => this.changeLine('Green')}>
+            Green
+          </button>
           <button type="button" id="mattapan-button" onClick={() => this.changeLine('Mattapan')}>
             Mattapan
           </button>

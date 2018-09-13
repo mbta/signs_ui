@@ -527,6 +527,120 @@ const stationConfig = {
       },
     },
   ],
+  Green: [
+    {
+      id: 'GARL',
+      name: 'Arlington',
+      zones: {
+        n: false, s: false, e: true, w: true, c: false, m: true,
+      },
+    },
+    {
+      id: 'GCOP',
+      name: 'Copley',
+      zones: {
+        n: false, s: false, e: true, w: true, c: false, m: true,
+      },
+    },
+    {
+      id: 'GAUD',
+      name: 'Hynes',
+      zones: {
+        n: false, s: false, e: true, w: true, c: false, m: true,
+      },
+    },
+    {
+      id: 'GKEN',
+      name: 'Kenmore',
+      zones: {
+        n: 'C/D East', s: 'C/D West', e: 'B East', w: 'B West', c: false, m: false,
+      },
+    },
+    {
+      id: 'GFEN',
+      name: 'Fenway',
+      zones: {
+        n: false, s: false, e: true, w: true, c: false, m: false,
+      },
+    },
+    {
+      id: 'GLON',
+      name: 'Longwood',
+      zones: {
+        n: false, s: false, e: true, w: true, c: false, m: false,
+      },
+    },
+    {
+      id: 'GBRV',
+      name: 'Brookline Village',
+      zones: {
+        n: false, s: false, e: true, w: true, c: false, m: false,
+      },
+    },
+    {
+      id: 'GBRH',
+      name: 'Brookline Hills',
+      zones: {
+        n: false, s: false, e: true, w: true, c: false, m: false,
+      },
+    },
+    {
+      id: 'GBEA',
+      name: 'Beaconsfield',
+      zones: {
+        n: false, s: false, e: true, w: true, c: false, m: false,
+      },
+    },
+    {
+      id: 'GRES',
+      name: 'Reservoir',
+      zones: {
+        n: false, s: false, e: true, w: true, c: false, m: false,
+      },
+    },
+    {
+      id: 'GCHE',
+      name: 'Chestnut Hill',
+      zones: {
+        n: false, s: false, e: true, w: true, c: false, m: false,
+      },
+    },
+    {
+      id: 'GNEC',
+      name: 'Newton Centre',
+      zones: {
+        n: false, s: false, e: true, w: true, c: false, m: false,
+      },
+    },
+    {
+      id: 'GNEH',
+      name: 'Newton Highlands',
+      zones: {
+        n: false, s: false, e: true, w: true, c: false, m: false,
+      },
+    },
+    {
+      id: 'GELI',
+      name: 'Eliot',
+      zones: {
+        n: false, s: false, e: true, w: true, c: false, m: false,
+      },
+    },
+    {
+      id: 'GWAB',
+      name: 'Waban',
+      zones: {
+        n: false, s: false, e: true, w: true, c: false, m: false,
+      },
+    },
+    {
+      id: 'GWOO',
+      name: 'Woodland',
+      zones: {
+        n: false, s: false, e: true, w: true, c: false, m: false,
+      },
+    },
+  ],
 };
 
 const arincToRealtimeIdMap = {
@@ -707,6 +821,44 @@ const arincToRealtimeIdMap = {
   'RJFK-e': 'jfk_umass_ashmont_platform_northbound',
   'RJFK-n': 'jfk_umass_braintree_platform_northbound',
   'RJFK-m': 'jfk_umass_mezzanine',
+  'GWOO-e': 'woodland_eastbound',
+  'GWOO-w': 'woodland_westbound',
+  'GWAB-e': 'waban_eastbound',
+  'GWAB-w': 'waban_westbound',
+  'GELI-e': 'eliot_eastbound',
+  'GELI-w': 'eliot_westbound',
+  'GNEH-e': 'newton_highlands_eastbound',
+  'GNEH-w': 'newton_highlands_westbound',
+  'GNEC-e': 'newton_centre_eastbound',
+  'GNEC-w': 'newton_centre_westbound',
+  'GCHE-e': 'chestnut_hill_eastbound',
+  'GCHE-w': 'chestnut_hill_westbound',
+  'GRES-e': 'reservoir_eastbound',
+  'GRES-w': 'reservoir_westbound',
+  'GBEA-e': 'beaconsfield_eastbound',
+  'GBEA-w': 'beaconsfield_westbound',
+  'GBRH-e': 'brookline_hills_eastbound',
+  'GBRH-w': 'brookline_hills_westbound',
+  'GBRV-e': 'brookline_village_eastbound',
+  'GBRV-w': 'brookline_village_westbound',
+  'GLON-e': 'longwood_eastbound',
+  'GLON-w': 'longwood_westbound',
+  'GFEN-e': 'fenway_eastbound',
+  'GFEN-w': 'fenway_westbound',
+  'GKEN-e': 'kenmore_b_eastbound',
+  'GKEN-w': 'kenmore_b_westbound',
+  'GKEN-n': 'kenmore_c_d_eastbound',
+  'GKEN-s': 'kenmore_c_d_westbound',
+  'GKEN-m': 'kenmore_mezzanine',
+  'GAUD-e': 'hynes_eastbound',
+  'GAUD-w': 'hynes_westbound',
+  'GAUD-m': 'hynes_mezzanine',
+  'GCOP-e': 'copley_eastbound',
+  'GCOP-w': 'copley_westbound',
+  'GCOP-m': 'copley_mezzanine',
+  'GARL-e': 'arlington_eastbound',
+  'GARL-w': 'arlington_westbound',
+  'GARL-m': 'arlington_mezzanine',
 };
 
 function arincToRealtimeId(stationZone, line) {
