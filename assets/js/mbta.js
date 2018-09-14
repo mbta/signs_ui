@@ -553,7 +553,7 @@ const stationConfig = {
       id: 'GKEN',
       name: 'Kenmore',
       zones: {
-        n: 'C/D East', s: 'C/D West', e: 'B East', w: 'B West', c: false, m: false,
+        n: 'C/D East', s: 'C/D West', e: 'B East', w: 'B West', c: false, m: true,
       },
     },
     {
