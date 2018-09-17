@@ -529,6 +529,13 @@ const stationConfig = {
   ],
   Green: [
     {
+      id: 'GBOY',
+      name: 'Boylston',
+      zones: {
+        n: false, s: false, e: true, w: true, c: false, m: false,
+      },
+    },
+    {
       id: 'GARL',
       name: 'Arlington',
       zones: {
@@ -540,6 +547,20 @@ const stationConfig = {
       name: 'Copley',
       zones: {
         n: false, s: false, e: true, w: true, c: false, m: true,
+      },
+    },
+    {
+      id: 'GPRU',
+      name: 'Prudential',
+      zones: {
+        n: false, s: false, e: true, w: true, c: false, m: true,
+      },
+    },
+    {
+      id: 'GSYM',
+      name: 'Symphony',
+      zones: {
+        n: false, s: false, e: true, w: true, c: false, m: false,
       },
     },
     {
@@ -853,12 +874,19 @@ const arincToRealtimeIdMap = {
   'GAUD-e': 'hynes_eastbound',
   'GAUD-w': 'hynes_westbound',
   'GAUD-m': 'hynes_mezzanine',
+  'GSYM-e': 'symphony_eastbound',
+  'GSYM-w': 'symphony_westbound',
+  'GPRU-e': 'prudential_eastbound',
+  'GPRU-w': 'prudential_westbound',
+  'GPRU-m': 'prudential_mezzanine',
   'GCOP-e': 'copley_eastbound',
   'GCOP-w': 'copley_westbound',
   'GCOP-m': 'copley_mezzanine',
   'GARL-e': 'arlington_eastbound',
   'GARL-w': 'arlington_westbound',
   'GARL-m': 'arlington_mezzanine',
+  'GBOY-e': 'boylston_eastbound',
+  'GBOY-w': 'boylston_westbound',
 };
 
 function arincToRealtimeId(stationZone, line) {
