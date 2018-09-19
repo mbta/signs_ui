@@ -546,7 +546,7 @@ const stationConfig = {
       id: 'GCOP',
       name: 'Copley',
       zones: {
-        n: false, s: false, e: true, w: true, c: false, m: true,
+        n: false, s: false, e: true, w: true, c: false, m: false,
       },
     },
     {
