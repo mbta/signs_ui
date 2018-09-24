@@ -529,6 +529,48 @@ const stationConfig = {
   ],
   Green: [
     {
+      id: 'GSCI',
+      name: 'Science Park',
+      zones: {
+        n: false, s: false, e: true, w: true, c: false, m: true,
+      },
+    },
+    {
+      id: 'GNST',
+      name: 'North Station',
+      zones: {
+        n: false, s: false, e: true, w: true, c: false, m: true,
+      },
+    },
+    {
+      id: 'GHAY',
+      name: 'Hay Market',
+      zones: {
+        n: false, s: false, e: true, w: true, c: false, m: false,
+      },
+    },
+    {
+      id: 'GGOV',
+      name: 'Government Center',
+      zones: {
+        n: false, s: false, e: true, w: true, c: false, m: true,
+      },
+    },
+    {
+      id: 'GPRKE',
+      name: 'Park St. East Platform',
+      zones: {
+        n: false, s: false, e: true, w: false, c: false, m: true,
+      },
+    },
+    {
+      id: 'GPRKW',
+      name: 'Park St. West Platform',
+      zones: {
+        n: false, s: false, e: false, w: true, c: false, m: true,
+      },
+    },
+    {
       id: 'GBOY',
       name: 'Boylston',
       zones: {
@@ -887,6 +929,21 @@ const arincToRealtimeIdMap = {
   'GARL-m': 'arlington_mezzanine',
   'GBOY-e': 'boylston_eastbound',
   'GBOY-w': 'boylston_westbound',
+  'GPRKE-e': 'park_st_east_platform_eastbound',
+  'GPRKE-m': 'park_st_east_platform_mezzanine',
+  'GPRKW-w': 'park_st_west_platform_westbound',
+  'GPRKW-m': 'park_st_west_platform_mezzanine',
+  'GGOV-e': 'green_government_center_eastbound',
+  'GGOV-w': 'green_government_center_westbound',
+  'GGOV-m': 'green_government_center_mezzanine',
+  'GHAY-e': 'green_haymarket_eastbound',
+  'GHAY-w': 'green_haymarket_westbound',
+  'GNST-e': 'green_north_station_eastbound',
+  'GNST-w': 'green_north_station_westbound',
+  'GNST-m': 'green_north_station_mezzanine',
+  'GSCI-e': 'science_park_eastbound',
+  'GSCI-w': 'science_park_westbound',
+  'GSCI-m': 'science_park_mezzanine',
 };
 
 function arincToRealtimeId(stationZone, line) {
