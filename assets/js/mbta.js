@@ -544,7 +544,7 @@ const stationConfig = {
     },
     {
       id: 'GHAY',
-      name: 'Hay Market',
+      name: 'Haymarket',
       zones: {
         n: false, s: false, e: true, w: true, c: false, m: false,
       },
@@ -558,14 +558,14 @@ const stationConfig = {
     },
     {
       id: 'GPRKE',
-      name: 'Park St. East Platform',
+      name: 'Park St. Eastbound Platform',
       zones: {
         n: false, s: false, e: true, w: false, c: false, m: true,
       },
     },
     {
       id: 'GPRKW',
-      name: 'Park St. West Platform',
+      name: 'Park St. Westbound Platform',
       zones: {
         n: false, s: false, e: false, w: true, c: false, m: true,
       },
