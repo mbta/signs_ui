@@ -560,7 +560,7 @@ const stationConfig = {
       id: 'GPRKE',
       name: 'Park St. Eastbound',
       zones: {
-        n: false, s: false, e: true, w: false, c: false, m: 'Winter St',
+        n: false, s: false, e: true, w: false, c: false, m: 'Winter St Concourse',
       },
     },
     {
