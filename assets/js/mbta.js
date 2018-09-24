@@ -539,7 +539,7 @@ const stationConfig = {
       id: 'GNST',
       name: 'North Station',
       zones: {
-        n: false, s: false, e: true, w: true, c: false, m: true,
+        n: false, s: false, e: true, w: true, c: false, m: 'CR Exit',
       },
     },
     {
@@ -558,16 +558,16 @@ const stationConfig = {
     },
     {
       id: 'GPRKE',
-      name: 'Park St. Eastbound Platform',
+      name: 'Park St. Eastbound',
       zones: {
-        n: false, s: false, e: true, w: false, c: false, m: true,
+        n: false, s: false, e: true, w: false, c: false, m: 'Winter St',
       },
     },
     {
       id: 'GPRKW',
-      name: 'Park St. Westbound Platform',
+      name: 'Park St. Westbound',
       zones: {
-        n: false, s: false, e: false, w: true, c: false, m: true,
+        n: 'Fence Track', s: false, e: false, w: 'Wall Track', c: false, m: false,
       },
     },
     {
@@ -929,10 +929,10 @@ const arincToRealtimeIdMap = {
   'GARL-m': 'arlington_mezzanine',
   'GBOY-e': 'boylston_eastbound',
   'GBOY-w': 'boylston_westbound',
-  'GPRKE-e': 'park_st_east_platform_eastbound',
-  'GPRKE-m': 'park_st_east_platform_mezzanine',
-  'GPRKW-w': 'park_st_west_platform_westbound',
-  'GPRKW-m': 'park_st_west_platform_mezzanine',
+  'GPRKE-e': 'park_st_eastbound',
+  'GPRKE-m': 'park_st_winter_st_concourse',
+  'GPRKW-w': 'park_st_westbound_wall_track',
+  'GPRKW-n': 'park_st_westbound_fence_track',
   'GGOV-e': 'green_government_center_eastbound',
   'GGOV-w': 'green_government_center_westbound',
   'GGOV-m': 'green_government_center_mezzanine',
@@ -940,7 +940,7 @@ const arincToRealtimeIdMap = {
   'GHAY-w': 'green_haymarket_westbound',
   'GNST-e': 'green_north_station_eastbound',
   'GNST-w': 'green_north_station_westbound',
-  'GNST-m': 'green_north_station_mezzanine',
+  'GNST-m': 'green_north_station_commuter_rail_exit',
   'GSCI-e': 'science_park_eastbound',
   'GSCI-w': 'science_park_westbound',
   'GSCI-m': 'science_park_mezzanine',
