@@ -5,6 +5,8 @@ set -e -x -u
 # other required configuration:
 # * APP
 # * DOCKER_REPO
+# * ERL_COOKIE
+# * SECRET_KEY_BASE
 
 awsenv=$1
 
