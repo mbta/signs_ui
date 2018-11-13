@@ -5,12 +5,14 @@ set -e -x -u
 # other required configuration:
 # * APP
 # * DOCKER_REPO
+# * ERL_COOKIE
+# * SECRET_KEY_BASE
 
 awsenv=$1
 
 # build docker image and tag it with git hash and aws environment
 githash=$(git rev-parse --short HEAD)
-docker build -t $APP:latest .
+docker build --build-arg ERL_COOKIE={$ERL_COOKIE} --build-arg SECRET_KEY_BASE={$SECRET_KEY_BASE} -t $APP:latest .
 docker tag $APP:latest $DOCKER_REPO/$APP:$awsenv
 docker tag $APP:latest $DOCKER_REPO/$APP:git-$githash
 

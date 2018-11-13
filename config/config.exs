@@ -8,10 +8,9 @@ use Mix.Config
 # Configures the endpoint
 config :signs_ui, SignsUiWeb.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: "e53SM3tp0FyeUz+x0VM2u3ZFBNER5Eiiipi9wIPienn66DV8wfCIMMNNB8OxOJE8",
+  secret_key_base: Map.fetch!(System.get_env(), "SECRET_KEY_BASE"),
   render_errors: [view: SignsUiWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: SignsUi.PubSub,
-           adapter: Phoenix.PubSub.PG2]
+  pubsub: [name: SignsUi.PubSub, adapter: Phoenix.PubSub.PG2]
 
 # Internal configuration
 config :signs_ui,
@@ -28,4 +27,4 @@ config :logger, :console,
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
-import_config "#{Mix.env}.exs"
+import_config "#{Mix.env()}.exs"
