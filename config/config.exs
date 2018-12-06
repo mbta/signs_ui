@@ -8,7 +8,7 @@ use Mix.Config
 # Configures the endpoint
 config :signs_ui, SignsUiWeb.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: Map.fetch!(System.get_env(), "SECRET_KEY_BASE"),
+  secret_key_base: "local_secret_key_base_at_least_64_bytes_________________________________",
   render_errors: [view: SignsUiWeb.ErrorView, accepts: ~w(html json)],
   pubsub: [name: SignsUi.PubSub, adapter: Phoenix.PubSub.PG2]
 
