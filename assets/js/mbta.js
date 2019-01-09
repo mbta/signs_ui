@@ -707,7 +707,7 @@ const stationConfig = {
       id: 'GRIV',
       name: 'Riverside',
       zones: {
-        n: false, s: false, e: true, w: true, c: false, m: false,
+        n: false, s: false, e: "Track 1", w: "Track 2", c: false, m: false,
       },
     },
   ],
