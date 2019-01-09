@@ -707,7 +707,7 @@ const stationConfig = {
       id: 'GRIV',
       name: 'Riverside',
       zones: {
-        n: false, s: false, e: true, w: false, c: false, m: false,
+        n: false, s: false, e: true, w: true, c: false, m: false,
       },
     },
   ],
@@ -892,6 +892,7 @@ const arincToRealtimeIdMap = {
   'RJFK-n': 'jfk_umass_braintree_platform_northbound',
   'RJFK-m': 'jfk_umass_mezzanine',
   'GRIV-e': 'riverside_eastbound',
+  'GRIV-e': 'riverside_westbound',
   'GWOO-e': 'woodland_eastbound',
   'GWOO-w': 'woodland_westbound',
   'GWAB-e': 'waban_eastbound',
