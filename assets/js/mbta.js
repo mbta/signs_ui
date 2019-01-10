@@ -529,6 +529,13 @@ const stationConfig = {
   ],
   Green: [
     {
+      id: 'GLEC',
+      name: 'Lechmere',
+      zones: {
+        n: false, s: false, e: false, w: 'Green Line', c: false, m: false,
+      },
+    },
+    {
       id: 'GSCI',
       name: 'Science Park',
       zones: {
@@ -701,6 +708,13 @@ const stationConfig = {
       name: 'Woodland',
       zones: {
         n: false, s: false, e: true, w: true, c: false, m: false,
+      },
+    },
+    {
+      id: 'GRIV',
+      name: 'Riverside',
+      zones: {
+        n: false, s: false, e: 'Track 1', w: 'Track 2', c: false, m: false,
       },
     },
   ],
@@ -884,6 +898,8 @@ const arincToRealtimeIdMap = {
   'RJFK-e': 'jfk_umass_ashmont_platform_northbound',
   'RJFK-n': 'jfk_umass_braintree_platform_northbound',
   'RJFK-m': 'jfk_umass_mezzanine',
+  'GRIV-e': 'riverside_track_1',
+  'GRIV-w': 'riverside_track_2',
   'GWOO-e': 'woodland_eastbound',
   'GWOO-w': 'woodland_westbound',
   'GWAB-e': 'waban_eastbound',
@@ -944,6 +960,7 @@ const arincToRealtimeIdMap = {
   'GSCI-e': 'science_park_eastbound',
   'GSCI-w': 'science_park_westbound',
   'GSCI-m': 'science_park_mezzanine',
+  'GLEC-w': 'lechmere_green_line',
 };
 
 function arincToRealtimeId(stationZone, line) {
