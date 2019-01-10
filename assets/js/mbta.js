@@ -529,6 +529,13 @@ const stationConfig = {
   ],
   Green: [
     {
+      id: 'GLEC',
+      name: 'Lechmere',
+      zones: {
+        n: false, s: false, e: false, w: 'Green Line', c: false, m: false,
+      },
+    },
+    {
       id: 'GSCI',
       name: 'Science Park',
       zones: {
@@ -953,6 +960,7 @@ const arincToRealtimeIdMap = {
   'GSCI-e': 'science_park_eastbound',
   'GSCI-w': 'science_park_westbound',
   'GSCI-m': 'science_park_mezzanine',
+  'GLEC-w': 'lechmere_green_line',
 };
 
 function arincToRealtimeId(stationZone, line) {
