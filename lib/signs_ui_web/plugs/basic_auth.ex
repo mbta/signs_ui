@@ -11,7 +11,7 @@ defmodule BasicAuth do
     end
   end
 
-  def verify(conn, attempted_auth, [username: username, password: password]) do
+  def verify(conn, attempted_auth, username: username, password: password) do
     case encode(username, password) do
       ^attempted_auth -> conn
       _ -> unauthorized(conn)

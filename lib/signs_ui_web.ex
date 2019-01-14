@@ -28,8 +28,9 @@ defmodule SignsUiWeb do
 
   def view do
     quote do
-      use Phoenix.View, root: "lib/signs_ui_web/templates",
-                        namespace: SignsUiWeb
+      use Phoenix.View,
+        root: "lib/signs_ui_web/templates",
+        namespace: SignsUiWeb
 
       # Import convenience functions from controllers
       import Phoenix.Controller, only: [get_flash: 2, view_module: 1]

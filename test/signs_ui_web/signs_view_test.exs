@@ -3,17 +3,21 @@ defmodule SignsUiWeb.SignsViewTest do
 
   describe "sign_checkbox/3" do
     test "makes a checkbox with the given id and checked value for the given form" do
-      form = Phoenix.HTML.Form.form_for(%Plug.Conn{}, "/", fn f ->
-        SignsUiWeb.SignsView.sign_checkbox("abc", true, f)
-      end)
+      form =
+        Phoenix.HTML.Form.form_for(%Plug.Conn{}, "/", fn f ->
+          SignsUiWeb.SignsView.sign_checkbox("abc", true, f)
+        end)
+
       assert Phoenix.HTML.safe_to_string(form) =~ "id=\"abc\""
       assert Phoenix.HTML.safe_to_string(form) =~ "checked"
     end
 
     test "makes a checkbox with the given id and unchecked value for the given form" do
-      form = Phoenix.HTML.Form.form_for(%Plug.Conn{}, "/", fn f ->
-        SignsUiWeb.SignsView.sign_checkbox("abc", false, f)
-      end)
+      form =
+        Phoenix.HTML.Form.form_for(%Plug.Conn{}, "/", fn f ->
+          SignsUiWeb.SignsView.sign_checkbox("abc", false, f)
+        end)
+
       assert Phoenix.HTML.safe_to_string(form) =~ "id=\"abc\""
       refute Phoenix.HTML.safe_to_string(form) =~ "checked"
     end

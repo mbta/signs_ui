@@ -7,8 +7,8 @@ defmodule SignsUI.Signs.State do
   alias SignsUI.Signs
 
   @type t :: %{
-    Signs.Sign.id() => Signs.Sign.t()
-  }
+          Signs.Sign.id() => Signs.Sign.t()
+        }
 
   def start_link(opts \\ []) do
     name = opts[:name] || __MODULE__
@@ -42,9 +42,11 @@ defmodule SignsUI.Signs.State do
 
   def handle_call({:update, updated_signs}, _from, old_signs) do
     external_post_mod = Application.get_env(:signs_ui, :signs_external_post_mod)
-    {status, new_sign_state} = updated_signs
-                               |> external_post_mod.update()
-                               |> handle_response(old_signs, updated_signs)
+
+    {status, new_sign_state} =
+      updated_signs
+      |> external_post_mod.update()
+      |> handle_response(old_signs, updated_signs)
 
     {:reply, status, new_sign_state}
   end
@@ -65,6 +67,7 @@ defmodule SignsUI.Signs.State do
   defp handle_response({:error, _reason}, old_signs, _updated_signs) do
     {:error, old_signs}
   end
+
   defp handle_response({:ok, _}, _old_signs, updated_signs) do
     {:ok, updated_signs}
   end

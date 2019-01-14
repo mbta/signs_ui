@@ -30,7 +30,7 @@ defmodule SignsUiWeb.SignsControllerTest do
   end
 
   test "Receives unauthorized if no auth given", %{conn: conn} do
-    conn = get conn, "/"
+    conn = get(conn, "/")
     assert response(conn, 401) =~ "unauthorized"
   end
 
