@@ -2,6 +2,7 @@ defmodule SignsUI.Mock.AwsRequest do
   def request(%{http_method: :put} = put_object) do
     {:ok, put_object}
   end
+
   def request(%{http_method: :get}) do
     signs = %{
       "ashmont_mezzanine" => %{"enabled" => true},
@@ -15,8 +16,9 @@ defmodule SignsUI.Mock.AwsRequest do
       "eastern_ave_outbound" => %{"enabled" => true},
       "forest_hills_mezzanine_northbound" => %{"enabled" => true},
       "forest_hills_northbound" => %{"enabled" => true},
-      "forest_hills_southbound" => %{"enabled" => true},
+      "forest_hills_southbound" => %{"enabled" => true}
     }
+
     {:ok, %{body: Poison.encode!(signs)}}
   end
 end

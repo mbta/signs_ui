@@ -1,12 +1,11 @@
 defmodule SignsUI.Signs.Names do
-
   def sign_routes() do
     %{
       mattapan: "Mattapan",
       silver: "Silver Line",
       blue: "Blue Line",
       orange: "Orange Line",
-      red: "Red Line",
+      red: "Red Line"
     }
   end
 
@@ -23,7 +22,7 @@ defmodule SignsUI.Signs.Names do
       {"valley_road_outbound", "Valley Road Outbound"},
       {"valley_road_inbound", "Valley Road Inbound"},
       {"capen_street_outbound", "Capen Street Outbound"},
-      {"capen_street_inbound", "Capen Street Inbound"},
+      {"capen_street_inbound", "Capen Street Inbound"}
     ]
   end
 
@@ -40,7 +39,7 @@ defmodule SignsUI.Signs.Names do
       {"courthouse_station_outbound", "Courthouse Station Outbound"},
       {"world_trade_center_outbound", "World Trade Center Outbound"},
       {"world_trade_center_mezzanine", "World Trade Center Mezzanine"},
-      {"courthouse_station_mezzanine", "Courthouse Station Mezzanine"},
+      {"courthouse_station_mezzanine", "Courthouse Station Mezzanine"}
     ]
   end
 
@@ -75,7 +74,7 @@ defmodule SignsUI.Signs.Names do
       {"government_center_mezzanine", "Government Center Mezzanine"},
       {"government_center_westbound", "Government Center Westbound"},
       {"bowdoin_eastbound", "Bowdoin Eastbound"},
-      {"bowdoin_mezzanine", "Bowdoin Mezzanine"},
+      {"bowdoin_mezzanine", "Bowdoin Mezzanine"}
     ]
   end
 
@@ -174,7 +173,8 @@ defmodule SignsUI.Signs.Names do
       {"red_south_station_mezzanine", "Red South Station Mezzanine"},
       {"red_south_station_northbound", "Red South Station Northbound"},
       {"red_south_station_southbound", "Red South Station Southbound"},
-      {"south_station_silver_line_arrival_platform", "South Station Silver Line Arrival Platform"},
+      {"south_station_silver_line_arrival_platform",
+       "South Station Silver Line Arrival Platform"},
       {"jfk_umass_ashmont_platform_southbound", "JFK/UMass (Ashmont Platform) Southbound"},
       {"jfk_umass_braintree_platform_southbound", "JFK/UMass (Braintree Platform) Southbound"},
       {"jfk_umass_ashmont_platform_northbound", "JFK/UMass (Ashmont Platform) Northbound"},
@@ -210,7 +210,7 @@ defmodule SignsUI.Signs.Names do
       {"quincy_adams_northbound", "Quincy Adams Northbound"},
       {"quincy_adams_southbound", "Quincy Adams Southbound"},
       {"braintree_center_northbound", "Braintree Center Northbound"},
-      {"braintree_mezzanine_northbound", "Braintree Mezzanine Northbound"},
+      {"braintree_mezzanine_northbound", "Braintree Mezzanine Northbound"}
     ]
   end
 end

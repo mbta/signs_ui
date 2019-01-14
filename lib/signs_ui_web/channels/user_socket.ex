@@ -2,10 +2,10 @@ defmodule SignsUiWeb.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  channel "signs:*", SignsUiWeb.SignsChannel
+  channel("signs:*", SignsUiWeb.SignsChannel)
 
   ## Transports
-  transport :websocket, Phoenix.Transports.WebSocket, check_origin: false
+  transport(:websocket, Phoenix.Transports.WebSocket, check_origin: false)
   # transport :longpoll, Phoenix.Transports.LongPoll
 
   # Socket params are passed from the client and can
@@ -20,7 +20,7 @@ defmodule SignsUiWeb.UserSocket do
   # See `Phoenix.Token` documentation for examples in
   # performing token verification on connect.
   def connect(%{"token" => token}, socket) do
-    case Phoenix.Token.verify(socket, "user socket", token, max_age: 1209600) do
+    case Phoenix.Token.verify(socket, "user socket", token, max_age: 1_209_600) do
       {:ok, "admin"} -> {:ok, socket}
       {:error, _reason} -> :error
     end

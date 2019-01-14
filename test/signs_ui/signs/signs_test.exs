@@ -14,8 +14,9 @@ defmodule SignsUI.Signs.SignsTest do
       expected = %{
         "sign1" => %{"enabled" => true},
         "sign2" => %{"enabled" => false},
-        "sign3" => %{"enabled" => true},
+        "sign3" => %{"enabled" => true}
       }
+
       assert format_signs_for_json(@signs) == expected
     end
   end
