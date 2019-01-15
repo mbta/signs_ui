@@ -16,12 +16,8 @@ defmodule SignsUiWeb.SignsController do
 
   def update(conn, params) do
     signs = params_to_signs(params)
-    {status, conn} = perform_update(conn, signs)
-
-    case status do
-      :ok -> redirect(conn, to: "/")
-      :error -> render(conn, "index.html", signs: signs)
-    end
+    {:ok, conn} = perform_update(conn, signs)
+    redirect(conn, to: "/")
   end
 
   def sign_names(%{"route" => "mattapan"}), do: Signs.Names.mattapan()
@@ -44,10 +40,6 @@ defmodule SignsUiWeb.SignsController do
 
   defp handle_update_response(:ok, conn) do
     {:ok, put_flash(conn, :success, "Signs updated successfully")}
-  end
-
-  defp handle_update_response(:error, conn) do
-    {:error, put_flash(conn, :error, "Signs could not be updated, please try again.")}
   end
 
   defp get_enabled_map(%{"signs" => signs}) do

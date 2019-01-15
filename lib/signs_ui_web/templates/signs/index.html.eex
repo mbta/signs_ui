@@ -15,8 +15,8 @@
     <div class="row">
       <%= for {id, label} <- @sign_names do %>
         <%= if @signs[id] do %>
-            <%= sign_checkbox(id, @signs[id].enabled?, f) %>
-            <%= sign_label(id, label, @signs[id].enabled?) %>
+            <%= sign_checkbox(id, @signs[id].config.mode == :auto, f) %>
+            <%= sign_label(id, label, @signs[id].config.mode == :auto) %>
         <% end %>
       <% end %>
     </div>
