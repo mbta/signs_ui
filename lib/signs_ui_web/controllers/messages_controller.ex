@@ -9,7 +9,7 @@ defmodule SignsUiWeb.MessagesController do
     enabled_signs =
       SignsUI.Signs.State.get_all()
       |> Enum.map(fn {_id, sign} ->
-        {sign.id, sign.enabled?}
+        {sign.id, SignsUI.Signs.Sign.enabled?(sign)}
       end)
       |> Enum.into(%{})
 

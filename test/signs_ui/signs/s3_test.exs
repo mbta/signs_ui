@@ -5,7 +5,11 @@ defmodule SignsUI.Signs.S3Test do
 
   describe "update/1" do
     test "sends_update" do
-      signs = %{"sign1" => %Sign{id: "sign1"}, "sign2" => %Sign{id: "sign2"}}
+      signs = %{
+        "sign1" => %Sign{id: "sign1", config: %{mode: :auto}},
+        "sign2" => %Sign{id: "sign2", config: %{mode: :auto}}
+      }
+
       {:ok, object} = update(signs)
       assert object.body =~ "sign1"
       assert object.body =~ "sign2"

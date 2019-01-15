@@ -17,7 +17,7 @@ defmodule SignsUI.Signs.Request do
     case Poison.decode(json) do
       {:ok, response} ->
         {:ok,
-         Map.new(response, fn {sign_id, values} -> {sign_id, Sign.from_json(sign_id, values)} end)}
+         Map.new(response, fn {sign_id, config} -> {sign_id, Sign.from_json(sign_id, config)} end)}
 
       {:error, reason} ->
         Logger.warn("Could not decode response: #{inspect(reason)}")
