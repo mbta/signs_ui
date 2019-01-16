@@ -39,3 +39,7 @@
   padding-top: 10px;
   white-space: pre;
 }
+
+.viewer--static-text-form {
+  margin-bottom: 1em;
+}

@@ -24,7 +24,7 @@ defmodule SignsUI.Signs.State do
     :ok
   end
 
-  @spec update_some(GenServer.server(), %{Signs.Sign.id() => boolean()}) :: :ok
+  @spec update_some(GenServer.server(), %{Signs.Sign.id() => Signs.Sign.t()}) :: {:ok, t()}
   def update_some(pid \\ __MODULE__, changes) do
     GenServer.call(pid, {:update_some, changes})
   end
@@ -54,12 +54,7 @@ defmodule SignsUI.Signs.State do
   defp save_changes(changes, old_state) do
     external_post_mod = Application.get_env(:signs_ui, :signs_external_post_mod)
 
-    new_signs =
-      changes
-      |> Enum.map(fn {id, enabled?} -> {id, Signs.Sign.new(id, enabled?)} end)
-      |> Enum.into(%{})
-
-    signs = Map.merge(old_state, new_signs)
+    signs = Map.merge(old_state, changes)
     {:ok, _} = external_post_mod.update(signs)
     signs
   end

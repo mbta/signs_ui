@@ -6,14 +6,14 @@ defmodule SignsUiWeb.MessagesController do
   def index(conn, _params) do
     messages = Messages.list_messages()
 
-    enabled_signs =
+    sign_configs =
       SignsUI.Signs.State.get_all()
       |> Enum.map(fn {_id, sign} ->
-        {sign.id, SignsUI.Signs.Sign.enabled?(sign)}
+        {sign.id, sign.config}
       end)
       |> Enum.into(%{})
 
-    render(conn, "index.html", messages: messages, enabled_signs: enabled_signs)
+    render(conn, "index.html", messages: messages, sign_configs: sign_configs)
   end
 
   def create(conn, params) do

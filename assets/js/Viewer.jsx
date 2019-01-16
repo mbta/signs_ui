@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Line from './Line';
 
 function Viewer({
-  signs, currentTime, line, enabledSigns, setEnabled,
+  signs, currentTime, line, signConfigs, setConfigs,
 }) {
   return (
     <div>
@@ -11,8 +11,8 @@ function Viewer({
         signs={signs}
         currentTime={currentTime}
         line={line}
-        enabledSigns={enabledSigns}
-        setEnabled={setEnabled}
+        signConfigs={signConfigs}
+        setConfigs={setConfigs}
       />
     </div>
   );
@@ -24,8 +24,8 @@ Viewer.propTypes = {
   }))).isRequired,
   currentTime: PropTypes.number.isRequired,
   line: PropTypes.string.isRequired,
-  enabledSigns: PropTypes.objectOf(PropTypes.bool.isRequired).isRequired,
-  setEnabled: PropTypes.func.isRequired,
+  signConfigs: PropTypes.object.isRequired,
+  setConfigs: PropTypes.func.isRequired,
 };
 
 export default Viewer;

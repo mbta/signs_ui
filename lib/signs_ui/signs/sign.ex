@@ -105,6 +105,48 @@ defmodule SignsUI.Signs.Sign do
     }
   end
 
+  @spec from_config(any(), map()) :: t()
+  def from_config(sign_id, %{"mode" => "auto"}) do
+    %__MODULE__{id: sign_id, config: %{mode: :auto}}
+  end
+
+  def from_config(sign_id, %{"mode" => "off", "expires" => expires}) do
+    %__MODULE__{
+      id: sign_id,
+      config: %{
+        mode: :off,
+        expires: expires
+      }
+    }
+  end
+
+  def from_config(sign_id, %{"mode" => "headway", "expires" => expires}) do
+    %__MODULE__{
+      id: sign_id,
+      config: %{
+        mode: :headway,
+        expires: expires
+      }
+    }
+  end
+
+  def from_config(sign_id, %{
+        "mode" => "static_text",
+        "expires" => expires,
+        "line1" => line1,
+        "line2" => line2
+      }) do
+    %__MODULE__{
+      id: sign_id,
+      config: %{
+        mode: :static_text,
+        expires: expires,
+        line1: line1,
+        line2: line2
+      }
+    }
+  end
+
   def to_json(%{config: %{mode: :auto}} = sign) do
     %{
       "id" => sign.id,

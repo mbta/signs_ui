@@ -30,7 +30,7 @@ function setEnabledStations(enablerFn, stations, line, val) {
 }
 
 function Line({
-  signs, currentTime, line, enabledSigns, setEnabled,
+  signs, currentTime, line, signConfigs, setConfigs,
 }) {
   const stations = stationConfig[line] || [];
 
@@ -44,7 +44,7 @@ function Line({
         <button
           type="button"
           className="btn btn-outline-secondary"
-          onClick={() => { setEnabledStations(setEnabled, stations, line, true); }}
+          onClick={() => { setEnabledStations(setConfigs, stations, line, true); }}
         >
           Enable all
         </button>
@@ -54,7 +54,7 @@ function Line({
         <button
           type="button"
           className="btn btn-outline-secondary"
-          onClick={() => { setEnabledStations(setEnabled, stations, line, false); }}
+          onClick={() => { setEnabledStations(setConfigs, stations, line, false); }}
         >
           Disable all
         </button>
@@ -67,8 +67,8 @@ function Line({
             signs={signs}
             currentTime={currentTime}
             line={line}
-            enabledSigns={enabledSigns}
-            setEnabled={setEnabled}
+            signConfigs={signConfigs}
+            setConfigs={setConfigs}
           />
         ))
       }
@@ -82,8 +82,8 @@ Line.propTypes = {
   }))).isRequired,
   currentTime: PropTypes.number.isRequired,
   line: PropTypes.string.isRequired,
-  enabledSigns: PropTypes.objectOf(PropTypes.bool.isRequired).isRequired,
-  setEnabled: PropTypes.func.isRequired,
+  signConfigs: PropTypes.object.isRequired,
+  setConfigs: PropTypes.func.isRequired,
 };
 
 export default Line;
