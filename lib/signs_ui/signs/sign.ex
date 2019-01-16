@@ -177,7 +177,7 @@ defmodule SignsUI.Signs.Sign do
     %{
       "id" => sign.id,
       "mode" => "static_text",
-      "enabled" => false,
+      "enabled" => true,
       "line1" => sign.config.line1,
       "line2" => sign.config.line2,
       "expires" => sign.config.expires
