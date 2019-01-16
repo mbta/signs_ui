@@ -18,7 +18,7 @@ defmodule SignsUi.Application do
       },
       %{
         id: SignsUi.Signs.Messages,
-        start: {SignsUi.Signs.Messages, :start_link, []}
+        start: {SignsUi.Signs.Messages, :start_link, [[name: SignsUi.Signs.Messages]]}
       }
     ]
 

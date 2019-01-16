@@ -7,6 +7,10 @@ defmodule SignsUi.Signs.Messages do
     GenServer.start_link(__MODULE__, %{}, opts)
   end
 
+  def init(_opts) do
+    {:ok, %{}}
+  end
+
   def list_messages(pid \\ __MODULE__) do
     GenServer.call(pid, :list_messages)
   end
