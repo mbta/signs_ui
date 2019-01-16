@@ -12,7 +12,7 @@ defmodule SignsUi.Application do
       %{
         id: Superviser,
         start: {SignsUiWeb.Endpoint, :start_link, []},
-        type: :superisor
+        type: :supervisor
       },
       %{
         id: State,
