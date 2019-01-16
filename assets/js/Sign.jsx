@@ -27,20 +27,43 @@ function makeConfig(mode) {
   }
 }
 
+function isValidText(text) {
+  return !(/[^a-zA-Z0-9,.!@' ]/.test(text))
+}
+
 class Sign extends Component {
   constructor(props) {
     super(props);
 
     this.saveStaticText = this.saveStaticText.bind(this);
+    this.handleInputLine1 = this.handleInputLine1.bind(this);
+    this.handleInputLine2 = this.handleInputLine2.bind(this);
 
-    if (props.signConfig.mode === 'static_text') {
-      this.state = {
-        staticLine1: props.signConfig.line1,
-        staticLine2: props.signConfig.line2,
-        customChanges: false
-      }
+    this.state = {
+      staticLine1: props.signConfig.line1 || '',
+      staticLine2: props.signConfig.line2 || '',
+      customChanges: false,
+      tipText: false
+    }
+  }
+
+  handleInputLine1(evt) {
+    const text = evt.target.value;
+
+    if (isValidText(text)) {
+      this.setState({ staticLine1: text, customChanges: true });
     } else {
-      this.state = { staticLine1: '', staticLine2: '', customChanges: false }
+      this.setState({ tipText: true })
+    }
+  }
+
+  handleInputLine2(evt) {
+    const text = evt.target.value;
+
+    if (isValidText(text)) {
+      this.setState({ staticLine2: text, customChanges: true });
+    } else {
+      this.setState({ tipText: true })
     }
   }
 
@@ -107,26 +130,37 @@ class Sign extends Component {
 
         {signConfig['mode'] == 'static_text' &&
           <div className="viewer--static-text-form">
-            <div>Set custom text:</div>
+            <div><strong>Set custom text</strong></div>
+            {this.state.tipText && <small>Only allowed letters, numbers, and: ,.!@'</small>}
             <div>
               <input
+                className='viewer--line-input'
                 type="text"
                 maxLength={18}
                 size={18}
                 value={this.state.staticLine1}
-                onChange={(evt) => this.setState({ staticLine1: evt.target.value, customChanges: true })}
+                onChange={this.handleInputLine1}
               />
             </div>
             <div>
               <input
+                className='viewer--line-input'
                 type="text"
                 maxLength={24}
                 size={24}
                 value={this.state.staticLine2}
-                onChange={(evt) => this.setState({ staticLine2: evt.target.value, customChanges: true })}
+                onChange={this.handleInputLine2}
               />
             </div>
-            <div><input type="submit" value="Apply" onClick={this.saveStaticText} />{this.state.customChanges ? '*' : ''}</div>
+            <div>
+              <input
+                className='viewer--apply-button'
+                disabled={!this.state.customChanges}
+                type="submit"
+                value="Apply"
+                onClick={this.saveStaticText}
+              />
+              {this.state.customChanges ? '*' : ''}</div>
           </div>
         }
       </div>
