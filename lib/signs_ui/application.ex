@@ -4,18 +4,24 @@ defmodule SignsUi.Application do
   alias SignsUi.Utilities.Config
 
   def start(_type, _args) do
-    import Supervisor.Spec
-
     set_runtime_config()
 
     # Define workers and child supervisors to be supervised
     children = [
       # Start the endpoint when the application starts
-      supervisor(SignsUiWeb.Endpoint, []),
-      worker(SignsUI.Signs.State, [[]]),
-      worker(SignsUi.Signs.Messages, [[name: SignsUi.Signs.Messages]])
-      # Start your own worker by calling: SignsUi.Worker.start_link(arg1, arg2, arg3)
-      # worker(SignsUi.Worker, [arg1, arg2, arg3]),
+      %{
+        id: Superviser,
+        start: {SignsUiWeb.Endpoint, :start_link, []},
+        type: :superisor
+      },
+      %{
+        id: State,
+        start: {SignsUI.Signs.State, :start_link, [[]]}
+      },
+      %{
+        id: Messages,
+        start: {SignsUi.Signs.Messages, :start_link, [[name: SignsUI.Signs.Messages]]}
+      }
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
