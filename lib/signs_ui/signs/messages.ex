@@ -4,11 +4,7 @@ defmodule SignsUi.Signs.Messages do
   @type message :: String.t()
 
   def start_link(opts \\ []) do
-    GenServer.start_link(__MODULE__, opts, opts)
-  end
-
-  def init(_opts) do
-    {:ok, %{}}
+    GenServer.start_link(__MODULE__, %{}, opts)
   end
 
   def list_messages(pid \\ __MODULE__) do

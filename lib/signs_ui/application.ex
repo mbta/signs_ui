@@ -6,28 +6,24 @@ defmodule SignsUi.Application do
   def start(_type, _args) do
     set_runtime_config()
 
-    # Define workers and child supervisors to be supervised
     children = [
-      # Start the endpoint when the application starts
       %{
-        id: Superviser,
+        id: SignsUiWeb.Endpoint,
         start: {SignsUiWeb.Endpoint, :start_link, []},
         type: :supervisor
       },
       %{
-        id: State,
-        start: {SignsUI.Signs.State, :start_link, [[]]}
+        id: SignsUI.Signs.State,
+        start: {SignsUI.Signs.State, :start_link, []}
       },
       %{
-        id: Messages,
-        start: {SignsUi.Signs.Messages, :start_link, [[name: SignsUI.Signs.Messages]]}
+        id: SignsUi.Signs.Messages,
+        start: {SignsUi.Signs.Messages, :start_link, []}
       }
     ]
 
-    # See https://hexdocs.pm/elixir/Supervisor.html
-    # for other strategies and supported options
     opts = [strategy: :one_for_one, name: SignsUi.Supervisor]
-    Supervisor.start_link(children, opts)
+    {:ok, _pid} = Supervisor.start_link(children, opts)
   end
 
   # Tell Phoenix to update the endpoint configuration
