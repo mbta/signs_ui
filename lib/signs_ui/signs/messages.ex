@@ -1,6 +1,5 @@
 defmodule SignsUi.Signs.Messages do
   use GenServer
-  import Timex
 
   @type message :: String.t()
 
