@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Line from './Line';
+import { signConfigType } from './types';
 
 function Viewer({
   signs, currentTime, line, signConfigs, setConfigs,
@@ -24,7 +25,7 @@ Viewer.propTypes = {
   }))).isRequired,
   currentTime: PropTypes.number.isRequired,
   line: PropTypes.string.isRequired,
-  signConfigs: PropTypes.object.isRequired,
+  signConfigs: PropTypes.objectOf(signConfigType).isRequired,
   setConfigs: PropTypes.func.isRequired,
 };
 

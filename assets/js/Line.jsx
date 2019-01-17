@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Station from './Station';
 import { stationConfig, arincToRealtimeId } from './mbta';
+import { signConfigType } from './types';
 
 function name(line) {
   if (line === 'Red') { return 'Red Line'; }
@@ -82,7 +83,7 @@ Line.propTypes = {
   }))).isRequired,
   currentTime: PropTypes.number.isRequired,
   line: PropTypes.string.isRequired,
-  signConfigs: PropTypes.object.isRequired,
+  signConfigs: PropTypes.objectOf(signConfigType).isRequired,
   setConfigs: PropTypes.func.isRequired,
 };
 

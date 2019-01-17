@@ -4,6 +4,7 @@ import { Socket } from 'phoenix';
 import Viewer from './Viewer';
 import { updateSigns } from './helpers';
 import lineToColor from './colors';
+import { signConfigType } from './types';
 
 class ViewerApp extends Component {
   constructor(props) {
@@ -125,7 +126,7 @@ ViewerApp.propTypes = {
   initialSigns: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.shape({
     text: PropTypes.string, duration: PropTypes.string,
   }))).isRequired,
-  initialSignConfigs: PropTypes.object.isRequired,
+  initialSignConfigs: PropTypes.objectOf(signConfigType).isRequired,
 };
 
 export default ViewerApp;

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Sign from './Sign';
 import { arincToRealtimeId } from './mbta';
+import { signConfigType } from './types';
 
 function zoneDescription(stationConfig, zone) {
   if (stationConfig.zones[zone] !== true) {
@@ -109,7 +110,7 @@ Station.propTypes = {
   }))).isRequired,
   currentTime: PropTypes.number.isRequired,
   line: PropTypes.string.isRequired,
-  signConfigs: PropTypes.object.isRequired,
+  signConfigs: PropTypes.objectOf(signConfigType).isRequired,
   setConfigs: PropTypes.func.isRequired,
 };
 

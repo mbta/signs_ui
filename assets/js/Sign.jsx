@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import lineToColor from './colors';
+import { signConfigType } from './types';
 
 function displayLine(duration, currentTime) {
   return (Date.parse(duration) - currentTime) > 0;
@@ -14,19 +15,23 @@ function fontSize(signId) {
 }
 
 function makeConfig(mode) {
-  if (mode == 'auto') {
+  if (mode === 'auto') {
     return { mode: 'auto' };
   }
 
-  if (mode == 'off') {
-    return { mode: 'off', expires: null };
-  }
-
-  if (mode == 'static_text') {
+  if (mode === 'static_text') {
     return {
       mode: 'static_text', expires: null, line1: '', line2: '',
     };
   }
+
+  if (mode === 'headway') {
+    return {
+      mode: 'headway', expires: null,
+    };
+  }
+
+  return { mode: 'off', expires: null };
 }
 
 function isValidText(text) {
@@ -99,6 +104,13 @@ class Sign extends Component {
       realtimeId,
     } = this.props;
 
+    const {
+      tipText,
+      staticLine1,
+      staticLine2,
+      customChanges,
+    } = this.state;
+
     return (
       <div>
         <div className="viewer--sign">
@@ -111,19 +123,19 @@ class Sign extends Component {
                 id={realtimeId}
                 value={signConfig.mode}
                 onChange={
-                (event) => {
-                  setConfigs({ [realtimeId]: makeConfig(event.target.value) });
+                  (event) => {
+                    setConfigs({ [realtimeId]: makeConfig(event.target.value) });
+                  }
                 }
-              }
               >
                 <option value="auto">
-On
+                  On
                 </option>
                 <option value="off">
-Off
+                  Off
                 </option>
                 <option value="static_text">
-Text
+                  Text
                 </option>
               </select>
               {/* eslint-disable-next-line jsx-a11y/label-has-for */}
@@ -140,50 +152,50 @@ Text
           </div>
         </div>
 
-        {signConfig.mode == 'static_text'
+        {signConfig.mode === 'static_text'
           && (
-          <div className="viewer--static-text-form">
-            <div>
-              <strong>
-Set custom message
-              </strong>
+            <div className="viewer--static-text-form">
+              <div>
+                <strong>
+                  Set custom message
+                </strong>
+              </div>
+              {tipText && (
+                <small>
+                  Only allowed letters, numbers, and: ,.!@&quot;
+                </small>
+              )}
+              <div>
+                <input
+                  className="viewer--line-input"
+                  type="text"
+                  maxLength={18}
+                  size={18}
+                  value={staticLine1}
+                  onChange={this.handleInputLine1}
+                />
+              </div>
+              <div>
+                <input
+                  className="viewer--line-input"
+                  type="text"
+                  maxLength={24}
+                  size={24}
+                  value={staticLine2}
+                  onChange={this.handleInputLine2}
+                />
+              </div>
+              <div>
+                <input
+                  className="viewer--apply-button"
+                  disabled={!customChanges}
+                  type="submit"
+                  value="Apply"
+                  onClick={this.saveStaticText}
+                />
+                {customChanges ? '*' : ''}
+              </div>
             </div>
-            {this.state.tipText && (
-            <small>
-Only allowed letters, numbers, and: ,.!@'
-            </small>
-            )}
-            <div>
-              <input
-                className="viewer--line-input"
-                type="text"
-                maxLength={18}
-                size={18}
-                value={this.state.staticLine1}
-                onChange={this.handleInputLine1}
-              />
-            </div>
-            <div>
-              <input
-                className="viewer--line-input"
-                type="text"
-                maxLength={24}
-                size={24}
-                value={this.state.staticLine2}
-                onChange={this.handleInputLine2}
-              />
-            </div>
-            <div>
-              <input
-                className="viewer--apply-button"
-                disabled={!this.state.customChanges}
-                type="submit"
-                value="Apply"
-                onClick={this.saveStaticText}
-              />
-              {this.state.customChanges ? '*' : ''}
-            </div>
-          </div>
           )
         }
       </div>
@@ -200,13 +212,7 @@ Sign.propTypes = {
   currentTime: PropTypes.number.isRequired,
   line: PropTypes.string.isRequired,
   setConfigs: PropTypes.func.isRequired,
-  signConfig: PropTypes.oneOfType([
-    PropTypes.exact({ mode: PropTypes.oneOf(['off']), expires: PropTypes.string }),
-    PropTypes.exact({ mode: PropTypes.oneOf(['auto']) }),
-    PropTypes.exact({
-      mode: PropTypes.oneOf(['static_text']), line1: PropTypes.string.isRequired, line2: PropTypes.string.isRequired, expires: PropTypes.string,
-    }),
-  ]).isRequired,
+  signConfig: signConfigType.isRequired,
   realtimeId: PropTypes.string.isRequired,
 };
 
