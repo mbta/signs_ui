@@ -15,19 +15,23 @@ function name(line) {
   return '';
 }
 
-function setEnabledStations(enablerFn, stations, line, val) {
+function setEnabledStations(setConfigFn, stations, line, enabled) {
   const statuses = {};
 
   stations.forEach((station) => {
     ['n', 's', 'e', 'w', 'm', 'c'].forEach((zone) => {
       const realtimeId = arincToRealtimeId(`${station.id}-${zone}`, line);
       if (realtimeId) {
-        statuses[realtimeId] = val;
+        if (enabled) {
+          statuses[realtimeId] = { "mode": "auto" };
+        } else {
+          statuses[realtimeId] = { "mode": "off", "expires": null };
+        }
       }
     });
   });
 
-  enablerFn(statuses);
+  setConfigFn(statuses);
 }
 
 function Line({
