@@ -7,23 +7,10 @@ defmodule SignsUi.Application do
     set_runtime_config()
 
     children = [
-      %{
-        id: SignsUiWeb.Endpoint,
-        start: {SignsUiWeb.Endpoint, :start_link, []},
-        type: :supervisor
-      },
-      %{
-        id: SignsUI.Signs.State,
-        start: {SignsUI.Signs.State, :start_link, []}
-      },
-      %{
-        id: SignsUi.Signs.Messages,
-        start: {SignsUi.Signs.Messages, :start_link, [[name: SignsUi.Signs.Messages]]}
-      },
-      %{
-        id: SignsUI.Signs.Expiration,
-        start: {SignsUI.Signs.Expiration, :start_link, []}
-      }
+      SignsUiWeb.Endpoint,
+      SignsUI.Signs.State,
+      {SignsUi.Signs.Messages, [name: SignsUi.Signs.Messages]},
+      SignsUI.Signs.Expiration
     ]
 
     opts = [strategy: :one_for_one, name: SignsUi.Supervisor]

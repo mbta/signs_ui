@@ -2,6 +2,7 @@ defmodule SignsUI.Signs.Expiration do
   @moduledoc """
   Handle cleaning up settings in the configuration that have since expired
   """
+  use GenServer
 
   @type state :: %{
           time_fetcher: (() -> DateTime.t()),
@@ -18,9 +19,9 @@ defmodule SignsUI.Signs.Expiration do
 
   @spec init(Keyword.t()) :: {:ok, state()}
   def init(opts) do
-    time_fetcher = opts[:time_fetcher] || fn -> DateTime.utc_now() end
-    loop_ms = opts[:loop_ms] || 5_000
-    sign_state = opts[:sign_state] || SignsUI.Signs.State
+    time_fetcher = Keyword.get(opts, :time_fetcher) || fn -> DateTime.utc_now() end
+    loop_ms = Keyword.get(opts, :loop_ms) || 5_000
+    sign_state = Keyword.get(opts, :sign_state) || SignsUI.Signs.State
     schedule_loop(self(), loop_ms)
     {:ok, %{time_fetcher: time_fetcher, loop_ms: loop_ms, sign_state: sign_state}}
   end
