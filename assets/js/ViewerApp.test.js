@@ -40,7 +40,7 @@ test('Can enable/disable a sign', () => {
 
   const currentTime = now + 2000;
   const line = 'Red';
-  const initialEnabledSigns = { davis_southbound: true };
+  const initialEnabledSigns = { davis_southbound: { mode: 'auto' } };
 
   const wrapper = mount(
     React.createElement(ViewerApp, {

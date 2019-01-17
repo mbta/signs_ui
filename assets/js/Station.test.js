@@ -19,12 +19,12 @@ test('shows the custom configuration information for a station', () => {
     ],
   };
   const line = 'Orange';
-  const enabledSigns = {};
-  const setEnabled = () => {};
+  const signConfigs = {};
+  const setConfigs = () => { };
 
   const wrapper = mount(
     React.createElement(Station, {
-      config, signs, currentTime, line, enabledSigns, setEnabled,
+      config, signs, currentTime, line, signConfigs, setConfigs,
     }),
   );
 

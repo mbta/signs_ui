@@ -23,9 +23,9 @@ function setEnabledStations(setConfigFn, stations, line, enabled) {
       const realtimeId = arincToRealtimeId(`${station.id}-${zone}`, line);
       if (realtimeId) {
         if (enabled) {
-          statuses[realtimeId] = { "mode": "auto" };
+          statuses[realtimeId] = { mode: 'auto' };
         } else {
-          statuses[realtimeId] = { "mode": "off", "expires": null };
+          statuses[realtimeId] = { mode: 'off', expires: null };
         }
       }
     });
