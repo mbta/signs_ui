@@ -5,7 +5,6 @@ defmodule SignsUI.Signs.ExpirationTest do
   describe "expire_signs/2" do
     test "expires expired sign" do
       {:ok, state_pid} = SignsUI.Signs.State.start_link(name: :sign_state_test)
-      :timer.sleep(1_000)
 
       expire_signs(
         fn ->
