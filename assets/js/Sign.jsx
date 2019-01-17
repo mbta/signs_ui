@@ -130,7 +130,7 @@ class Sign extends Component {
 
         {signConfig['mode'] == 'static_text' &&
           <div className="viewer--static-text-form">
-            <div><strong>Set custom text</strong></div>
+            <div><strong>Set custom message</strong></div>
             {this.state.tipText && <small>Only allowed letters, numbers, and: ,.!@'</small>}
             <div>
               <input

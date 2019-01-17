@@ -24,7 +24,10 @@ defmodule SignsUI.Signs.StateTest do
              } = get_all(pid)
 
       {:ok, new_state} =
-        update_some(pid, %{"maverick_eastbound" => false, "maverick_westbound" => false})
+        update_some(pid, %{
+          "maverick_eastbound" => Sign.new("maverick_eastbound", false),
+          "maverick_westbound" => Sign.new("maverick_westbound", false)
+        })
 
       assert %{
                "maverick_westbound" => %Signs.Sign{config: %{mode: :off}},
