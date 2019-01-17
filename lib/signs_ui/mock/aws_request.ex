@@ -22,6 +22,12 @@ defmodule SignsUI.Mock.AwsRequest do
         "line1" => "test",
         "line2" => "message",
         "expires" => "2019-01-15T12:00:00Z"
+      },
+      "harvard_southbound" => %{
+        "mode" => "static_text",
+        "line1" => "test",
+        "line2" => "message",
+        "expires" => "2019-01-15T14:00:00Z"
       }
     }
 
