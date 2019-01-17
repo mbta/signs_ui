@@ -15,20 +15,22 @@ function fontSize(signId) {
 
 function makeConfig(mode) {
   if (mode == 'auto') {
-    return { 'mode': 'auto' };
+    return { mode: 'auto' };
   }
 
   if (mode == 'off') {
-    return { 'mode': 'off', 'expires': null };
+    return { mode: 'off', expires: null };
   }
 
   if (mode == 'static_text') {
-    return { 'mode': 'static_text', 'expires': null, 'line1': '', 'line2': '' };
+    return {
+      mode: 'static_text', expires: null, line1: '', line2: '',
+    };
   }
 }
 
 function isValidText(text) {
-  return !(/[^a-zA-Z0-9,.!@' ]/.test(text))
+  return !(/[^a-zA-Z0-9,.!@' ]/.test(text));
 }
 
 class Sign extends Component {
@@ -43,8 +45,8 @@ class Sign extends Component {
       staticLine1: props.signConfig.line1 || '',
       staticLine2: props.signConfig.line2 || '',
       customChanges: false,
-      tipText: false
-    }
+      tipText: false,
+    };
   }
 
   handleInputLine1(evt) {
@@ -53,7 +55,7 @@ class Sign extends Component {
     if (isValidText(text)) {
       this.setState({ staticLine1: text, customChanges: true });
     } else {
-      this.setState({ tipText: true })
+      this.setState({ tipText: true });
     }
   }
 
@@ -63,7 +65,7 @@ class Sign extends Component {
     if (isValidText(text)) {
       this.setState({ staticLine2: text, customChanges: true });
     } else {
-      this.setState({ tipText: true })
+      this.setState({ tipText: true });
     }
   }
 
@@ -71,16 +73,16 @@ class Sign extends Component {
     const { setConfigs, realtimeId } = this.props;
     const { staticLine1, staticLine2 } = this.state;
 
-    this.setState({ customChanges: false })
+    this.setState({ customChanges: false });
 
     setConfigs({
       [realtimeId]: {
-        'mode': 'static_text',
-        'line1': staticLine1,
-        'line2': staticLine2,
-        'expires': null
-      }
-    })
+        mode: 'static_text',
+        line1: staticLine1,
+        line2: staticLine2,
+        expires: null,
+      },
+    });
   }
 
   render() {
@@ -105,14 +107,24 @@ class Sign extends Component {
               {signId}
             </span>
             <div>
-              <select id={realtimeId} value={signConfig['mode']} onChange={
+              <select
+                id={realtimeId}
+                value={signConfig.mode}
+                onChange={
                 (event) => {
-                  setConfigs({ [realtimeId]: makeConfig(event.target.value) })
+                  setConfigs({ [realtimeId]: makeConfig(event.target.value) });
                 }
-              }>
-                <option value="auto">On</option>
-                <option value="off">Off</option>
-                <option value="static_text">Text</option>
+              }
+              >
+                <option value="auto">
+On
+                </option>
+                <option value="off">
+Off
+                </option>
+                <option value="static_text">
+Text
+                </option>
               </select>
               {/* eslint-disable-next-line jsx-a11y/label-has-for */}
               <label htmlFor={realtimeId} />
@@ -128,13 +140,22 @@ class Sign extends Component {
           </div>
         </div>
 
-        {signConfig['mode'] == 'static_text' &&
+        {signConfig.mode == 'static_text'
+          && (
           <div className="viewer--static-text-form">
-            <div><strong>Set custom message</strong></div>
-            {this.state.tipText && <small>Only allowed letters, numbers, and: ,.!@'</small>}
+            <div>
+              <strong>
+Set custom message
+              </strong>
+            </div>
+            {this.state.tipText && (
+            <small>
+Only allowed letters, numbers, and: ,.!@'
+            </small>
+            )}
             <div>
               <input
-                className='viewer--line-input'
+                className="viewer--line-input"
                 type="text"
                 maxLength={18}
                 size={18}
@@ -144,7 +165,7 @@ class Sign extends Component {
             </div>
             <div>
               <input
-                className='viewer--line-input'
+                className="viewer--line-input"
                 type="text"
                 maxLength={24}
                 size={24}
@@ -154,14 +175,16 @@ class Sign extends Component {
             </div>
             <div>
               <input
-                className='viewer--apply-button'
+                className="viewer--apply-button"
                 disabled={!this.state.customChanges}
                 type="submit"
                 value="Apply"
                 onClick={this.saveStaticText}
               />
-              {this.state.customChanges ? '*' : ''}</div>
+              {this.state.customChanges ? '*' : ''}
+            </div>
           </div>
+          )
         }
       </div>
     );
@@ -178,9 +201,11 @@ Sign.propTypes = {
   line: PropTypes.string.isRequired,
   setConfigs: PropTypes.func.isRequired,
   signConfig: PropTypes.oneOfType([
-    PropTypes.exact({ mode: PropTypes.oneOf(["off"]), expires: PropTypes.string }),
-    PropTypes.exact({ mode: PropTypes.oneOf(["auto"]) }),
-    PropTypes.exact({ mode: PropTypes.oneOf(["static_text"]), line1: PropTypes.string.isRequired, line2: PropTypes.string.isRequired, expires: PropTypes.string })
+    PropTypes.exact({ mode: PropTypes.oneOf(['off']), expires: PropTypes.string }),
+    PropTypes.exact({ mode: PropTypes.oneOf(['auto']) }),
+    PropTypes.exact({
+      mode: PropTypes.oneOf(['static_text']), line1: PropTypes.string.isRequired, line2: PropTypes.string.isRequired, expires: PropTypes.string,
+    }),
   ]).isRequired,
   realtimeId: PropTypes.string.isRequired,
 };

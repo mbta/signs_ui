@@ -36,7 +36,7 @@ function makeSign(config, zone, signs, currentTime, line, signConfigs, setConfig
 
     const realtimeId = arincToRealtimeId(key, line);
 
-    const signConfig = signConfigs[realtimeId] || { 'mode': 'off' };
+    const signConfig = signConfigs[realtimeId] || { mode: 'off' };
 
     return (
       <Sign
