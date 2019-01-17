@@ -14,8 +14,8 @@ test('does not show messages that have expired', () => {
   const lineOne = 'Alewife 1 min';
   const lineTwo = 'Alewife 3 min';
   const line = 'Red';
-  const isEnabled = true;
-  const setEnabled = () => {};
+  const signConfig = { mode: 'auto' };
+  const setConfigs = () => { };
   const realtimeId = 'id';
 
   const wrapper = mount(
@@ -27,8 +27,8 @@ test('does not show messages that have expired', () => {
       lineTwoDuration,
       currentTime,
       line,
-      isEnabled,
-      setEnabled,
+      signConfig,
+      setConfigs,
       realtimeId,
     }, null),
   );
