@@ -5,7 +5,8 @@ defmodule SignsUI.Signs.Expiration do
 
   @type state :: %{
           time_fetcher: (() -> DateTime.t()),
-          loop_ms: integer()
+          loop_ms: integer(),
+          sign_state: pid()
         }
 
   @spec start_link(Keyword.t()) :: GenServer.on_start()
@@ -19,28 +20,41 @@ defmodule SignsUI.Signs.Expiration do
   def init(opts) do
     time_fetcher = opts[:time_fetcher] || fn -> DateTime.utc_now() end
     loop_ms = opts[:loop_ms] || 5_000
+    sign_state = opts[:sign_state] || SignsUI.Signs.State
     schedule_loop(self(), loop_ms)
-    {:ok, %{time_fetcher: time_fetcher, loop_ms: loop_ms}}
+    {:ok, %{time_fetcher: time_fetcher, loop_ms: loop_ms, sign_state: sign_state}}
   end
 
   @spec handle_info(:process_expired, state()) :: state()
   def handle_info(:process_expired, state) do
-    signs =
-      SignsUI.Signs.State.get_all()
-      |> Enum.map(&expire_sign(&1, state))
-      |> Enum.into(%{})
-
-    SignsUI.Signs.State.update_some(signs)
+    expire_signs(state.time_fetcher, state.sign_state)
 
     schedule_loop(self(), state.loop_ms)
 
     {:noreply, state}
   end
 
-  @spec expire_sign({SignsUI.Signs.Sign.id(), SignsUI.Signs.Sign.t()}, state()) ::
-          {SignsUI.Signs.Sign.id(), SignsUI.Signs.Sign.t()}
-  defp expire_sign({id, %{expires: expiration} = sign}, state) do
-    if expiration and DateTime.compare(expiration, state.time_fetcher.()) == :lt do
+  @spec expire_signs((() -> DateTime.t()), pid()) :: :ok
+  def expire_signs(time_fetcher, sign_state) do
+    signs =
+      SignsUI.Signs.State.get_all(sign_state)
+      |> Enum.map(&expire_single_sign(&1, time_fetcher))
+      |> Enum.into(%{})
+
+    SignsUI.Signs.State.update_some(sign_state, signs)
+  end
+
+  @spec expire_single_sign(
+          {SignsUI.Signs.Sign.id(), SignsUI.Signs.Sign.t()},
+          (() -> DateTime.t())
+        ) :: {SignsUI.Signs.Sign.id(), SignsUI.Signs.Sign.t()}
+  defp expire_single_sign(
+         {id, %SignsUI.Signs.Sign{config: %{expires: expiration}} = sign},
+         time_fetcher
+       ) do
+    {:ok, expiration_dt, 0} = DateTime.from_iso8601(expiration)
+
+    if expiration != nil and DateTime.compare(expiration_dt, time_fetcher.()) == :lt do
       {id,
        %SignsUI.Signs.Sign{
          sign
@@ -51,7 +65,7 @@ defmodule SignsUI.Signs.Expiration do
     end
   end
 
-  defp expire_sign({id, sign}, _) do
+  defp expire_single_sign({id, sign}, _) do
     {id, sign}
   end
 
