@@ -7,12 +7,12 @@ defmodule SignsUI.Signs.Expiration do
   @type state :: %{
           time_fetcher: (() -> DateTime.t()),
           loop_ms: integer(),
-          sign_state: pid()
+          sign_state_server: GenServer.server()
         }
 
   @spec start_link(Keyword.t()) :: GenServer.on_start()
   def start_link(opts \\ []) do
-    name = opts[:name] || __MODULE__
+    name = Keyword.get(opts, :name) || __MODULE__
 
     GenServer.start_link(__MODULE__, opts, name: name)
   end
@@ -21,28 +21,28 @@ defmodule SignsUI.Signs.Expiration do
   def init(opts) do
     time_fetcher = Keyword.get(opts, :time_fetcher) || fn -> DateTime.utc_now() end
     loop_ms = Keyword.get(opts, :loop_ms) || 5_000
-    sign_state = Keyword.get(opts, :sign_state) || SignsUI.Signs.State
+    sign_state_server = Keyword.get(opts, :sign_state_server) || SignsUI.Signs.State
     schedule_loop(self(), loop_ms)
-    {:ok, %{time_fetcher: time_fetcher, loop_ms: loop_ms, sign_state: sign_state}}
+    {:ok, %{time_fetcher: time_fetcher, loop_ms: loop_ms, sign_state_server: sign_state_server}}
   end
 
   @spec handle_info(:process_expired, state()) :: state()
   def handle_info(:process_expired, state) do
-    expire_signs(state.time_fetcher, state.sign_state)
+    expire_signs(state.time_fetcher, state.sign_state_server)
 
     schedule_loop(self(), state.loop_ms)
 
     {:noreply, state}
   end
 
-  @spec expire_signs((() -> DateTime.t()), pid()) :: :ok
-  def expire_signs(time_fetcher, sign_state) do
+  @spec expire_signs((() -> DateTime.t()), GenServer.server()) :: :ok
+  def expire_signs(time_fetcher, sign_state_server) do
     signs =
-      SignsUI.Signs.State.get_all(sign_state)
+      SignsUI.Signs.State.get_all(sign_state_server)
       |> Enum.map(&expire_single_sign(&1, time_fetcher))
       |> Enum.into(%{})
 
-    SignsUI.Signs.State.update_some(sign_state, signs)
+    SignsUI.Signs.State.update_some(sign_state_server, signs)
   end
 
   @spec expire_single_sign(
