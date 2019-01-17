@@ -37,37 +37,46 @@ defmodule SignsUI.Signs.Expiration do
 
   @spec expire_signs((() -> DateTime.t()), GenServer.server()) :: :ok
   def expire_signs(time_fetcher, sign_state_server) do
-    signs =
-      SignsUI.Signs.State.get_all(sign_state_server)
-      |> Enum.map(&expire_single_sign(&1, time_fetcher))
+    current_dt = time_fetcher.()
+
+    expired_signs =
+      sign_state_server
+      |> SignsUI.Signs.State.get_all()
+      |> Enum.flat_map(&expire_single_sign(&1, current_dt))
       |> Enum.into(%{})
 
-    SignsUI.Signs.State.update_some(sign_state_server, signs)
+    if expired_signs != %{} do
+      SignsUI.Signs.State.update_some(sign_state_server, expired_signs)
+    else
+      :ok
+    end
   end
 
   @spec expire_single_sign(
           {SignsUI.Signs.Sign.id(), SignsUI.Signs.Sign.t()},
-          (() -> DateTime.t())
-        ) :: {SignsUI.Signs.Sign.id(), SignsUI.Signs.Sign.t()}
+          DateTime.t()
+        ) :: [{SignsUI.Signs.Sign.id(), SignsUI.Signs.Sign.t()}]
   defp expire_single_sign(
          {id, %SignsUI.Signs.Sign{config: %{expires: expiration}} = sign},
-         time_fetcher
+         current_dt
        ) do
     {:ok, expiration_dt, 0} = DateTime.from_iso8601(expiration)
 
-    if expiration != nil and DateTime.compare(expiration_dt, time_fetcher.()) == :lt do
-      {id,
-       %SignsUI.Signs.Sign{
-         sign
-         | config: %{mode: :auto}
-       }}
+    if DateTime.compare(expiration_dt, current_dt) == :lt do
+      [
+        {id,
+         %SignsUI.Signs.Sign{
+           sign
+           | config: %{mode: :auto}
+         }}
+      ]
     else
-      {id, sign}
+      []
     end
   end
 
   defp expire_single_sign({id, sign}, _) do
-    {id, sign}
+    []
   end
 
   @spec schedule_loop(pid(), integer()) :: reference()
