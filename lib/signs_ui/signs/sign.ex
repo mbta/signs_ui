@@ -52,7 +52,7 @@ defmodule SignsUI.Signs.Sign do
 
   @spec expiration_from_string(String.t() | nil) :: expires_on()
   defp expiration_from_string(expiration_string)
-       when not is_nil(expiration_string) and expiration_string != "" do
+       when is_binary(expiration_string) do
     case DateTime.from_iso8601(expiration_string) do
       {:ok, expiration_dt, 0} ->
         expiration_dt

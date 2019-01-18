@@ -33,7 +33,7 @@ defmodule SignsUI.Mock.AwsRequest do
         "mode" => "static_text",
         "line1" => "test",
         "line2" => "message",
-        "expires" => ""
+        "expires" => nil
       }
     }
 
