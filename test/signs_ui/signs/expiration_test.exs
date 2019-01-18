@@ -17,6 +17,7 @@ defmodule SignsUI.Signs.ExpirationTest do
 
       assert new_state["harvard_northbound"].config.mode == :auto
       assert new_state["harvard_southbound"].config.mode == :static_text
+      assert new_state["central_southbound"].config.mode == :static_text
     end
   end
 end
