@@ -2,7 +2,7 @@ defmodule SignsUI.Signs.ExpirationTest do
   use ExUnit.Case
   import SignsUI.Signs.Expiration
 
-  describe "expire_signs/2" do
+  describe "process_expired callback" do
     test "expires expired sign, but not signs that haven't expired" do
       {:ok, state_pid} = SignsUI.Signs.State.start_link(name: :sign_state_test)
 
