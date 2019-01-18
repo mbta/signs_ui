@@ -28,6 +28,10 @@ defmodule SignsUI.Signs.ExpirationTest do
             mode: :off,
             expires: time2
           }
+        },
+        "already_auto" => %Sign{
+          id: "already_auto",
+          config: %{mode: :auto}
         }
       }
 
