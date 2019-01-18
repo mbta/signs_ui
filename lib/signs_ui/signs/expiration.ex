@@ -57,15 +57,10 @@ defmodule SignsUI.Signs.Expiration do
   defp expire_single_sign(
          {id, %Sign{config: %{expires: expiration}} = sign},
          current_dt
-       ) do
+       )
+       when not is_nil(expiration) do
     if DateTime.compare(expiration, current_dt) == :lt do
-      [
-        {id,
-         %Sign{
-           sign
-           | config: %{mode: :auto}
-         }}
-      ]
+      [{id, %Sign{sign | config: %{mode: :auto}}}]
     else
       []
     end

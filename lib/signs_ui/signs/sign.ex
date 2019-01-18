@@ -52,13 +52,17 @@ defmodule SignsUI.Signs.Sign do
 
   @spec expiration_from_string(String.t()) :: expires_on()
   defp expiration_from_string(expiration_string) do
-    case DateTime.from_iso8601(expiration_string) do
-      {:ok, expiration_dt, 0} ->
-        expiration_dt
+    if is_nil(expiration_string) || expiration_string == "" do
+      nil
+    else
+      case DateTime.from_iso8601(expiration_string) do
+        {:ok, expiration_dt, 0} ->
+          expiration_dt
 
-      _ ->
-        Logger.warn("Invalid expiration time #{inspect(expiration_string)} received.")
-        nil
+        _ ->
+          Logger.warn("Invalid expiration time #{inspect(expiration_string)} received.")
+          nil
+      end
     end
   end
 
