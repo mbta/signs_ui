@@ -105,7 +105,7 @@ defmodule SignsUI.Signs.Sign do
     }
   end
 
-  @spec from_config(any(), map()) :: t()
+  @spec from_config(String.t(), map()) :: t()
   def from_config(sign_id, %{"mode" => "auto"}) do
     %__MODULE__{id: sign_id, config: %{mode: :auto}}
   end
@@ -147,7 +147,8 @@ defmodule SignsUI.Signs.Sign do
     }
   end
 
-  def to_json(%{config: %{mode: :auto}} = sign) do
+  @spec to_json(t()) :: map()
+  def to_json(%__MODULE__{config: %{mode: :auto}} = sign) do
     %{
       "id" => sign.id,
       "mode" => "auto",
@@ -155,7 +156,7 @@ defmodule SignsUI.Signs.Sign do
     }
   end
 
-  def to_json(%{config: %{mode: :off}} = sign) do
+  def to_json(%__MODULE__{config: %{mode: :off}} = sign) do
     %{
       "id" => sign.id,
       "mode" => "off",
@@ -164,7 +165,7 @@ defmodule SignsUI.Signs.Sign do
     }
   end
 
-  def to_json(%{config: %{mode: :headway}} = sign) do
+  def to_json(%__MODULE__{config: %{mode: :headway}} = sign) do
     %{
       "id" => sign.id,
       "mode" => "headway",
@@ -173,7 +174,7 @@ defmodule SignsUI.Signs.Sign do
     }
   end
 
-  def to_json(%{config: %{mode: :static_text}} = sign) do
+  def to_json(%__MODULE__{config: %{mode: :static_text}} = sign) do
     %{
       "id" => sign.id,
       "mode" => "static_text",

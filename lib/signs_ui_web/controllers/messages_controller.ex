@@ -3,6 +3,7 @@ defmodule SignsUiWeb.MessagesController do
 
   alias SignsUi.Signs.Messages
 
+  @spec index(Plug.Conn.t(), map()) :: Plug.Conn.t()
   def index(conn, _params) do
     messages = Messages.list_messages()
 
@@ -16,6 +17,7 @@ defmodule SignsUiWeb.MessagesController do
     render(conn, "index.html", messages: messages, sign_configs: sign_configs)
   end
 
+  @spec create(Plug.Conn.t(), map()) :: Plug.Conn.t()
   def create(conn, params) do
     case Messages.add_message(params) do
       {:ok, _messages} ->

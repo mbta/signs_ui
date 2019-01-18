@@ -161,8 +161,8 @@ class Sign extends Component {
                 </strong>
               </div>
               {tipText && (
-                <small>
-                  Only allowed letters, numbers, and: ,.!@&quot;
+                <small className="viewer--error-text">
+                  You may use letters, numbers, and: ,.!@&quot;
                 </small>
               )}
               <div>

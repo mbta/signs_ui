@@ -52,3 +52,7 @@
   margin-bottom: 0.25em;
   padding-left: 0.25em;
 }
+
+.viewer--error-text {
+  color: #ff0000;
+}

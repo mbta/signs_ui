@@ -51,6 +51,7 @@ defmodule SignsUI.Signs.State do
     {:reply, {:ok, new_state}, new_state}
   end
 
+  @spec save_changes(t(), t()) :: t()
   defp save_changes(changes, old_state) do
     external_post_mod = Application.get_env(:signs_ui, :signs_external_post_mod)
 
