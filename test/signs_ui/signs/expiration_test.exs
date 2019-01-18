@@ -6,14 +6,17 @@ defmodule SignsUI.Signs.ExpirationTest do
     test "expires expired sign, but not signs that haven't expired" do
       {:ok, state_pid} = SignsUI.Signs.State.start_link(name: :sign_state_test)
 
-      expire_signs(
-        fn ->
+      state = %{
+        time_fetcher: fn ->
           Timex.to_datetime(~N[2019-01-15 08:00:00], "America/New_York")
         end,
-        state_pid
-      )
+        loop_ms: 5_000,
+        sign_state_server: :sign_state_test
+      }
 
-      new_state = SignsUI.Signs.State.get_all(state_pid)
+      {:noreply, _state} = SignsUI.Signs.Expiration.handle_info(:process_expired, state)
+
+      new_state = SignsUI.Signs.State.get_all(:sign_state_test)
 
       assert new_state["harvard_northbound"].config.mode == :auto
       assert new_state["harvard_southbound"].config.mode == :static_text

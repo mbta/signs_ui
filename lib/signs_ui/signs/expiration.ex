@@ -29,28 +29,29 @@ defmodule SignsUI.Signs.Expiration do
 
   @spec handle_info(:process_expired, state()) :: state()
   def handle_info(:process_expired, state) do
-    expire_signs(state.time_fetcher, state.sign_state_server)
+    updates =
+      state.sign_state_server
+      |> SignsUI.Signs.State.get_all()
+      |> expire_signs(state.time_fetcher)
+
+    if updates != %{} do
+      SignsUI.Signs.State.update_some(state.sign_state_server, updates)
+    end
 
     schedule_loop(self(), state.loop_ms)
 
     {:noreply, state}
   end
 
-  @spec expire_signs((() -> DateTime.t()), GenServer.server()) :: :ok
-  def expire_signs(time_fetcher, sign_state_server) do
+  @spec expire_signs(SignsUI.Signs.State.t(), (() -> DateTime.t())) :: %{
+          Signs.Sign.id() => Signs.Sign.t()
+        }
+  def expire_signs(state, time_fetcher) do
     current_dt = time_fetcher.()
 
-    expired_signs =
-      sign_state_server
-      |> SignsUI.Signs.State.get_all()
-      |> Enum.flat_map(&expire_single_sign(&1, current_dt))
-      |> Enum.into(%{})
-
-    if expired_signs != %{} do
-      SignsUI.Signs.State.update_some(sign_state_server, expired_signs)
-    else
-      :ok
-    end
+    state
+    |> Enum.flat_map(&expire_single_sign(&1, current_dt))
+    |> Enum.into(%{})
   end
 
   @spec expire_single_sign({Sign.id(), Sign.t()}, DateTime.t()) :: [{Sign.id(), Sign.t()}]
