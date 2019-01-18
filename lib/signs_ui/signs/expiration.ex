@@ -60,9 +60,7 @@ defmodule SignsUI.Signs.Expiration do
          {id, %SignsUI.Signs.Sign{config: %{expires: expiration}} = sign},
          current_dt
        ) do
-    {:ok, expiration_dt, 0} = DateTime.from_iso8601(expiration)
-
-    if DateTime.compare(expiration_dt, current_dt) == :lt do
+    if DateTime.compare(expiration, current_dt) == :lt do
       [
         {id,
          %SignsUI.Signs.Sign{
