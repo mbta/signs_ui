@@ -3,6 +3,7 @@ defmodule SignsUI.Signs.Expiration do
   Handle cleaning up settings in the configuration that have since expired
   """
   use GenServer
+  alias SignsUI.Signs.Sign
 
   @type state :: %{
           time_fetcher: (() -> DateTime.t()),
@@ -52,18 +53,15 @@ defmodule SignsUI.Signs.Expiration do
     end
   end
 
-  @spec expire_single_sign(
-          {SignsUI.Signs.Sign.id(), SignsUI.Signs.Sign.t()},
-          DateTime.t()
-        ) :: [{SignsUI.Signs.Sign.id(), SignsUI.Signs.Sign.t()}]
+  @spec expire_single_sign({Sign.id(), Sign.t()}, DateTime.t()) :: [{Sign.id(), Sign.t()}]
   defp expire_single_sign(
-         {id, %SignsUI.Signs.Sign{config: %{expires: expiration}} = sign},
+         {id, %Sign{config: %{expires: expiration}} = sign},
          current_dt
        ) do
     if DateTime.compare(expiration, current_dt) == :lt do
       [
         {id,
-         %SignsUI.Signs.Sign{
+         %Sign{
            sign
            | config: %{mode: :auto}
          }}
