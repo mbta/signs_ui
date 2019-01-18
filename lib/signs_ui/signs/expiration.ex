@@ -12,16 +12,16 @@ defmodule SignsUI.Signs.Expiration do
 
   @spec start_link(Keyword.t()) :: GenServer.on_start()
   def start_link(opts \\ []) do
-    name = Keyword.get(opts, :name) || __MODULE__
+    name = Keyword.get(opts, :name, __MODULE__)
 
     GenServer.start_link(__MODULE__, opts, name: name)
   end
 
   @spec init(Keyword.t()) :: {:ok, state()}
   def init(opts) do
-    time_fetcher = Keyword.get(opts, :time_fetcher) || fn -> DateTime.utc_now() end
-    loop_ms = Keyword.get(opts, :loop_ms) || 5_000
-    sign_state_server = Keyword.get(opts, :sign_state_server) || SignsUI.Signs.State
+    time_fetcher = Keyword.get(opts, :time_fetcher, fn -> DateTime.utc_now() end)
+    loop_ms = Keyword.get(opts, :loop_ms, 5_000)
+    sign_state_server = Keyword.get(opts, :sign_state_server, SignsUI.Signs.State)
     schedule_loop(self(), loop_ms)
     {:ok, %{time_fetcher: time_fetcher, loop_ms: loop_ms, sign_state_server: sign_state_server}}
   end
@@ -75,7 +75,7 @@ defmodule SignsUI.Signs.Expiration do
     end
   end
 
-  defp expire_single_sign({id, sign}, _) do
+  defp expire_single_sign(_, _) do
     []
   end
 
