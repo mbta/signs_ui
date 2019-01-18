@@ -50,21 +50,20 @@ defmodule SignsUI.Signs.Sign do
     %__MODULE__{id: id, config: %{mode: :off, expires: nil}}
   end
 
-  @spec expiration_from_string(String.t()) :: expires_on()
-  defp expiration_from_string(expiration_string) do
-    if is_nil(expiration_string) || expiration_string == "" do
-      nil
-    else
-      case DateTime.from_iso8601(expiration_string) do
-        {:ok, expiration_dt, 0} ->
-          expiration_dt
+  @spec expiration_from_string(String.t() | nil) :: expires_on()
+  defp expiration_from_string(expiration_string)
+       when not is_nil(expiration_string) and expiration_string != "" do
+    case DateTime.from_iso8601(expiration_string) do
+      {:ok, expiration_dt, 0} ->
+        expiration_dt
 
-        _ ->
-          Logger.warn("Invalid expiration time #{inspect(expiration_string)} received.")
-          nil
-      end
+      _ ->
+        Logger.warn("Invalid expiration time #{inspect(expiration_string)} received.")
+        nil
     end
   end
+
+  defp expiration_from_string(_), do: nil
 
   @spec from_json(String.t(), map()) :: t()
   def from_json(sign_id, %{"mode" => "auto"}) do
@@ -165,12 +164,8 @@ defmodule SignsUI.Signs.Sign do
   end
 
   @spec expiration_to_iso8601(expires_on()) :: String.t() | nil
-  defp expiration_to_iso8601(expires) do
-    case expires do
-      nil -> nil
-      dt -> DateTime.to_iso8601(dt)
-    end
-  end
+  defp expiration_to_iso8601(%DateTime{} = dt), do: DateTime.to_iso8601(dt)
+  defp expiration_to_iso8601(nil), do: nil
 
   @spec to_json(t()) :: map()
   def to_json(%__MODULE__{config: %{mode: :auto}} = sign) do
