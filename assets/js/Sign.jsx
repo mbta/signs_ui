@@ -78,7 +78,7 @@ class Sign extends Component {
     const { setConfigs, realtimeId } = this.props;
     const { staticLine1, staticLine2 } = this.state;
 
-    this.setState({ customChanges: false });
+    this.setState({ customChanges: false, tipText: false });
 
     setConfigs({
       [realtimeId]: {
