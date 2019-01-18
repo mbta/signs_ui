@@ -1,5 +1,7 @@
 defmodule SignsUI.Signs.ExpirationTest do
   use ExUnit.Case
+  import ExUnit.CaptureLog
+  require Logger
   alias SignsUI.Signs.Sign
 
   describe "expire_signs/2" do
@@ -52,6 +54,10 @@ defmodule SignsUI.Signs.ExpirationTest do
 
   describe "process_expired callback" do
     test "expires expired sign, but not signs that haven't expired" do
+      old_level = Logger.level()
+      Logger.configure(level: :info)
+      on_exit(fn -> Logger.configure(level: old_level) end)
+
       {:ok, _state_pid} = SignsUI.Signs.State.start_link(name: :sign_state_test)
 
       state = %{
@@ -62,7 +68,12 @@ defmodule SignsUI.Signs.ExpirationTest do
         sign_state_server: :sign_state_test
       }
 
-      {:noreply, _state} = SignsUI.Signs.Expiration.handle_info(:process_expired, state)
+      log =
+        capture_log([level: :info], fn ->
+          {:noreply, _state} = SignsUI.Signs.Expiration.handle_info(:process_expired, state)
+        end)
+
+      assert log =~ "Cleaning expired settings for sign IDs: [\"harvard_northbound\"]"
 
       new_state = SignsUI.Signs.State.get_all(:sign_state_test)
 

@@ -3,6 +3,7 @@ defmodule SignsUI.Signs.Expiration do
   Handle cleaning up settings in the configuration that have since expired
   """
   use GenServer
+  require Logger
   alias SignsUI.Signs.Sign
 
   @type state :: %{
@@ -35,6 +36,7 @@ defmodule SignsUI.Signs.Expiration do
       |> expire_signs(state.time_fetcher)
 
     if updates != %{} do
+      Logger.info("Cleaning expired settings for sign IDs: #{inspect(Map.keys(updates))}")
       SignsUI.Signs.State.update_some(state.sign_state_server, updates)
     end
 
