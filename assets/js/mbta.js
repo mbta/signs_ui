@@ -11,7 +11,7 @@ const stationConfig = {
       id: 'OMAL',
       name: 'Malden Center',
       zones: {
-        n: false, s: false, e: false, w: false, c: false, m: 'Entire Station',
+        n: 'Platform', s: false, e: false, w: false, c: false, m: 'Lobby',
       },
     },
     {
@@ -778,7 +778,8 @@ const arincToRealtimeIdMap = {
   'OOAK-e': 'oak_grove_east_busway',
   'OOAK-n': 'oak_grove_northbound',
   'OOAK-s': 'oak_grove_southbound',
-  'OMAL-m': 'malden_center_entire_station',
+  'OMAL-m': 'malden_lobby',
+  'OMAL-n': 'malden_center_platform',
   'OWEL-m': 'wellington_mezzanine',
   'OWEL-n': 'wellington_northbound',
   'OWEL-s': 'wellington_southbound',
