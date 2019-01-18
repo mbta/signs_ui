@@ -39,3 +39,20 @@
   padding-top: 10px;
   white-space: pre;
 }
+
+.viewer--static-text-form {
+  background-color: rgb(206, 206, 206);
+  margin-bottom: 1em;
+  margin-top: -1em;
+  padding: 0.25em 0.5em 0.5em 0.5em;
+  width: 20em;
+}
+
+.viewer--line-input {
+  margin-bottom: 0.25em;
+  padding-left: 0.25em;
+}
+
+.viewer--error-text {
+  color: #ff0000;
+}

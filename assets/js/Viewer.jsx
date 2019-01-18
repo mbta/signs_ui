@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Line from './Line';
+import { signConfigType } from './types';
 
 function Viewer({
-  signs, currentTime, line, enabledSigns, setEnabled,
+  signs, currentTime, line, signConfigs, setConfigs,
 }) {
   return (
     <div>
@@ -11,8 +12,8 @@ function Viewer({
         signs={signs}
         currentTime={currentTime}
         line={line}
-        enabledSigns={enabledSigns}
-        setEnabled={setEnabled}
+        signConfigs={signConfigs}
+        setConfigs={setConfigs}
       />
     </div>
   );
@@ -24,8 +25,8 @@ Viewer.propTypes = {
   }))).isRequired,
   currentTime: PropTypes.number.isRequired,
   line: PropTypes.string.isRequired,
-  enabledSigns: PropTypes.objectOf(PropTypes.bool.isRequired).isRequired,
-  setEnabled: PropTypes.func.isRequired,
+  signConfigs: PropTypes.objectOf(signConfigType).isRequired,
+  setConfigs: PropTypes.func.isRequired,
 };
 
 export default Viewer;

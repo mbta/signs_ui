@@ -4,18 +4,19 @@ import { Socket } from 'phoenix';
 import Viewer from './Viewer';
 import { updateSigns } from './helpers';
 import lineToColor from './colors';
+import { signConfigType } from './types';
 
 class ViewerApp extends Component {
   constructor(props) {
     super(props);
 
-    this.setEnabled = this.setEnabled.bind(this);
+    this.setConfigs = this.setConfigs.bind(this);
     this.changeLine = this.changeLine.bind(this);
     this.updateTime = this.updateTime.bind(this);
 
     this.state = {
       signs: props.initialSigns,
-      enabledSigns: props.initialEnabledSigns,
+      signConfigs: props.initialSignConfigs,
       currentTime: Date.now(),
       channel: null,
     };
@@ -28,7 +29,7 @@ class ViewerApp extends Component {
     const channel = socket.channel('signs:all', {});
     channel
       .join()
-      .receive('ok', () => {});
+      .receive('ok', () => { });
 
     channel.on('sign_update', ({
       sign_id: signId, duration, line_number: lineNumber, text: content,
@@ -40,8 +41,8 @@ class ViewerApp extends Component {
       }));
     });
 
-    channel.on('new_enabled_signs_state', (state) => {
-      this.setState({ enabledSigns: state });
+    channel.on('new_sign_configs_state', (state) => {
+      this.setState({ signConfigs: state });
     });
 
     this.setState({ channel });
@@ -56,15 +57,15 @@ class ViewerApp extends Component {
     clearInterval(this.timerID);
   }
 
-  setEnabled(signStatuses) {
+  setConfigs(signConfigs) {
     const { channel } = this.state;
 
     if (channel) {
-      channel.push('changeSigns', signStatuses);
+      channel.push('changeSigns', signConfigs);
 
       this.setState(oldState => ({
         ...oldState,
-        enabledSigns: { ...oldState.enabledSigns, ...signStatuses },
+        signConfigs: { ...oldState.signConfigs, ...signConfigs },
       }));
     }
   }
@@ -82,7 +83,7 @@ class ViewerApp extends Component {
 
   render() {
     const {
-      signs, currentTime, line, enabledSigns,
+      signs, currentTime, line, signConfigs,
     } = this.state;
     return (
       <div className="viewer--main container">
@@ -108,13 +109,13 @@ class ViewerApp extends Component {
         </div>
         {line
           && (
-          <Viewer
-            signs={signs}
-            enabledSigns={enabledSigns}
-            setEnabled={this.setEnabled}
-            currentTime={currentTime}
-            line={line}
-          />
+            <Viewer
+              signs={signs}
+              signConfigs={signConfigs}
+              setConfigs={this.setConfigs}
+              currentTime={currentTime}
+              line={line}
+            />
           )}
       </div>
     );
@@ -125,7 +126,7 @@ ViewerApp.propTypes = {
   initialSigns: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.shape({
     text: PropTypes.string, duration: PropTypes.string,
   }))).isRequired,
-  initialEnabledSigns: PropTypes.objectOf(PropTypes.bool.isRequired).isRequired,
+  initialSignConfigs: PropTypes.objectOf(signConfigType).isRequired,
 };
 
 export default ViewerApp;

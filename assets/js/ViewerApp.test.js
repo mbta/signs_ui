@@ -13,11 +13,11 @@ test('Shows all signs for a line', () => {
 
   const currentTime = now + 2000;
   const line = 'Red';
-  const initialEnabledSigns = {};
+  const initialSignConfigs = {};
 
   const wrapper = mount(
     React.createElement(ViewerApp, {
-      initialSigns: signs, currentTime, line, initialEnabledSigns,
+      initialSigns: signs, currentTime, line, initialSignConfigs,
     }, null),
   );
 
@@ -40,16 +40,16 @@ test('Can enable/disable a sign', () => {
 
   const currentTime = now + 2000;
   const line = 'Red';
-  const initialEnabledSigns = { davis_southbound: true };
+  const initialSignConfigs = { davis_southbound: { mode: 'auto' } };
 
   const wrapper = mount(
     React.createElement(ViewerApp, {
-      initialSigns: signs, currentTime, line, initialEnabledSigns,
+      initialSigns: signs, currentTime, line, initialSignConfigs,
     }, null),
   );
 
   wrapper.find('#red-button').simulate('click');
-  expect(wrapper.find('#davis_southbound').props().checked).toBe(true);
-  wrapper.find('#davis_southbound').simulate('change');
-  expect(wrapper.find('#davis_southbound').props().checked).toBe(false);
+  expect(wrapper.find('#davis_southbound').props().value).toBe('auto');
+  wrapper.find('#davis_southbound').simulate('change', { target: { value: 'off' } });
+  expect(wrapper.find('#davis_southbound').props().value).toBe('off');
 });

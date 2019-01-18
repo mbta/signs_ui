@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Station from './Station';
 import { stationConfig, arincToRealtimeId } from './mbta';
+import { signConfigType } from './types';
 
 function name(line) {
   if (line === 'Red') { return 'Red Line'; }
@@ -14,23 +15,27 @@ function name(line) {
   return '';
 }
 
-function setEnabledStations(enablerFn, stations, line, val) {
+function setEnabledStations(setConfigFn, stations, line, enabled) {
   const statuses = {};
 
   stations.forEach((station) => {
     ['n', 's', 'e', 'w', 'm', 'c'].forEach((zone) => {
       const realtimeId = arincToRealtimeId(`${station.id}-${zone}`, line);
       if (realtimeId) {
-        statuses[realtimeId] = val;
+        if (enabled) {
+          statuses[realtimeId] = { mode: 'auto' };
+        } else {
+          statuses[realtimeId] = { mode: 'off', expires: null };
+        }
       }
     });
   });
 
-  enablerFn(statuses);
+  setConfigFn(statuses);
 }
 
 function Line({
-  signs, currentTime, line, enabledSigns, setEnabled,
+  signs, currentTime, line, signConfigs, setConfigs,
 }) {
   const stations = stationConfig[line] || [];
 
@@ -44,7 +49,7 @@ function Line({
         <button
           type="button"
           className="btn btn-outline-secondary"
-          onClick={() => { setEnabledStations(setEnabled, stations, line, true); }}
+          onClick={() => { setEnabledStations(setConfigs, stations, line, true); }}
         >
           Enable all
         </button>
@@ -54,7 +59,7 @@ function Line({
         <button
           type="button"
           className="btn btn-outline-secondary"
-          onClick={() => { setEnabledStations(setEnabled, stations, line, false); }}
+          onClick={() => { setEnabledStations(setConfigs, stations, line, false); }}
         >
           Disable all
         </button>
@@ -67,8 +72,8 @@ function Line({
             signs={signs}
             currentTime={currentTime}
             line={line}
-            enabledSigns={enabledSigns}
-            setEnabled={setEnabled}
+            signConfigs={signConfigs}
+            setConfigs={setConfigs}
           />
         ))
       }
@@ -82,8 +87,8 @@ Line.propTypes = {
   }))).isRequired,
   currentTime: PropTypes.number.isRequired,
   line: PropTypes.string.isRequired,
-  enabledSigns: PropTypes.objectOf(PropTypes.bool.isRequired).isRequired,
-  setEnabled: PropTypes.func.isRequired,
+  signConfigs: PropTypes.objectOf(signConfigType).isRequired,
+  setConfigs: PropTypes.func.isRequired,
 };
 
 export default Line;
