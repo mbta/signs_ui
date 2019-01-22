@@ -1,11 +1,10 @@
 defmodule SignsUi.Signs.Messages do
   use GenServer
-  import Timex
 
   @type message :: String.t()
 
   def start_link(opts \\ []) do
-    GenServer.start_link(__MODULE__, opts, opts)
+    GenServer.start_link(__MODULE__, %{}, opts)
   end
 
   def init(_opts) do

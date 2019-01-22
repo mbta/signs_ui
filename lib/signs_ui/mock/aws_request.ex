@@ -16,7 +16,25 @@ defmodule SignsUI.Mock.AwsRequest do
       "eastern_ave_outbound" => %{"enabled" => true},
       "forest_hills_mezzanine_northbound" => %{"enabled" => true},
       "forest_hills_northbound" => %{"enabled" => true},
-      "forest_hills_southbound" => %{"enabled" => true}
+      "forest_hills_southbound" => %{"enabled" => true},
+      "harvard_northbound" => %{
+        "mode" => "static_text",
+        "line1" => "test",
+        "line2" => "message",
+        "expires" => "2019-01-15T12:00:00Z"
+      },
+      "harvard_southbound" => %{
+        "mode" => "static_text",
+        "line1" => "test",
+        "line2" => "message",
+        "expires" => "2019-01-15T14:00:00Z"
+      },
+      "central_southbound" => %{
+        "mode" => "static_text",
+        "line1" => "test",
+        "line2" => "message",
+        "expires" => nil
+      }
     }
 
     {:ok, %{body: Poison.encode!(signs)}}
