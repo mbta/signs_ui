@@ -56,3 +56,15 @@
 .viewer--error-text {
   color: #ff0000;
 }
+
+.react-datepicker__time-list-item {
+  font-size: smaller;
+}
+
+.viewer--schedule-expires {
+  background-color: rgb(206, 206, 206);
+  margin-bottom: 1em;
+  margin-top: -1em;
+  padding: 0.25em 0.5em 0.5em 0.5em;
+  width: 20em;
+}

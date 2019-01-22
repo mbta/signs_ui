@@ -131,7 +131,7 @@ defmodule SignsUI.Signs.Sign do
       id: sign_id,
       config: %{
         mode: :off,
-        expires: expires
+        expires: expiration_from_string(expires)
       }
     }
   end
@@ -141,7 +141,7 @@ defmodule SignsUI.Signs.Sign do
       id: sign_id,
       config: %{
         mode: :headway,
-        expires: expires
+        expires: expiration_from_string(expires)
       }
     }
   end
@@ -156,7 +156,7 @@ defmodule SignsUI.Signs.Sign do
       id: sign_id,
       config: %{
         mode: :static_text,
-        expires: expires,
+        expires: expiration_from_string(expires),
         line1: line1,
         line2: line2
       }

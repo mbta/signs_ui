@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import lineToColor from './colors';
 import { signConfigType } from './types';
+import SetExpiration from './SetExpiration';
 
 function displayLine(duration, currentTime) {
   return (Date.parse(duration) - currentTime) > 0;
@@ -198,6 +199,15 @@ class Sign extends Component {
             </div>
           )
         }
+        {signConfig.mode !== 'auto' && (
+          <div class="viewer--schedule-expires">
+            <SetExpiration
+              realtimeId={realtimeId}
+              signConfig={signConfig}
+              setConfigs={setConfigs}
+            />
+          </div>
+        )}
       </div>
     );
   }
