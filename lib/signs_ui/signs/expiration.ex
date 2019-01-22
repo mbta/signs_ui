@@ -30,8 +30,6 @@ defmodule SignsUI.Signs.Expiration do
 
   @spec handle_info(:process_expired, state()) :: state()
   def handle_info(:process_expired, state) do
-    Logger.info("Running :process_expired loop")
-
     updates =
       state.sign_state_server
       |> SignsUI.Signs.State.get_all()
