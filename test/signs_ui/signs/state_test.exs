@@ -6,7 +6,6 @@ defmodule SignsUI.Signs.StateTest do
   alias SignsUI.Signs.Sign
 
   @endpoint SignsUiWeb.Endpoint
-  @endpoint.subscribe("signs:all")
 
   describe "get_all/1" do
     test "Returns all signs" do
@@ -21,6 +20,7 @@ defmodule SignsUI.Signs.StateTest do
     test "updates some values and leaves others alone" do
       {:ok, pid} = GenServer.start_link(SignsUI.Signs.State, [], [])
 
+      @endpoint.subscribe("signs:all")
       token = Phoenix.Token.sign(SignsUiWeb.Endpoint, "user socket", "admin")
       {:ok, socket} = connect(SignsUiWeb.UserSocket, %{"token" => token})
       {:ok, _, _socket} = subscribe_and_join(socket, "signs:all", %{})
