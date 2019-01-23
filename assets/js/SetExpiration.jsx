@@ -14,6 +14,14 @@ function updateConfig(setConfigsFn, realtimeId, signConfig, expires) {
   });
 }
 
+function parseDate(str) {
+  if (str) {
+    return new Date(str);
+  }
+
+  return null;
+}
+
 function SetExpiration({
   realtimeId, signConfig, setConfigs,
 }) {
@@ -24,7 +32,7 @@ function SetExpiration({
       </strong>
 
       <DatePicker
-        selected={signConfig.expires}
+        selected={parseDate(signConfig.expires)}
         onChange={dt => updateConfig(setConfigs, realtimeId, signConfig, dt)}
         showTimeSelect
         timeFormat="HH:mm"
@@ -33,6 +41,7 @@ function SetExpiration({
       />
       {signConfig.expires && (
         <button
+          className="viewer--cancel-expiration-button"
           type="button"
           onClick={() => updateConfig(setConfigs, realtimeId, signConfig, null)}
         >

@@ -141,8 +141,6 @@ class Sign extends Component {
                   Text
                 </option>
               </select>
-              {/* eslint-disable-next-line jsx-a11y/label-has-for */}
-              <label htmlFor={realtimeId} />
             </div>
           </div>
           <div className="viewer--sign-lines">
