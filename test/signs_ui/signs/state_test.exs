@@ -1,8 +1,12 @@
 defmodule SignsUI.Signs.StateTest do
   use ExUnit.Case
+  use Phoenix.ChannelTest
   import SignsUI.Signs.State
   alias SignsUI.Signs
   alias SignsUI.Signs.Sign
+
+  @endpoint SignsUiWeb.Endpoint
+  @endpoint.subscribe("signs:all")
 
   describe "get_all/1" do
     test "Returns all signs" do
@@ -16,6 +20,10 @@ defmodule SignsUI.Signs.StateTest do
   describe "update_some" do
     test "updates some values and leaves others alone" do
       {:ok, pid} = GenServer.start_link(SignsUI.Signs.State, [], [])
+
+      token = Phoenix.Token.sign(SignsUiWeb.Endpoint, "user socket", "admin")
+      {:ok, socket} = connect(SignsUiWeb.UserSocket, %{"token" => token})
+      {:ok, _, _socket} = subscribe_and_join(socket, "signs:all", %{})
 
       assert %{
                "maverick_westbound" => %Signs.Sign{config: %{mode: :auto}},
@@ -34,6 +42,11 @@ defmodule SignsUI.Signs.StateTest do
                "maverick_eastbound" => %Signs.Sign{config: %{mode: :off}},
                "forest_hills_southbound" => %Signs.Sign{config: %{mode: :auto}}
              } = new_state
+
+      assert_broadcast("new_sign_config_state", %{
+        "maverick_eastbound" => %{expires: nil, mode: :off},
+        "maverick_westbound" => %{expires: nil, mode: :off}
+      })
 
       assert %{
                "maverick_westbound" => %Signs.Sign{config: %{mode: :off}},
