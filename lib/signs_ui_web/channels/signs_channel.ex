@@ -14,16 +14,9 @@ defmodule SignsUiWeb.SignsChannel do
       |> Enum.map(fn {id, config} -> {id, Sign.from_config(id, config)} end)
       |> Enum.into(%{})
 
-    {:ok, new_state} = SignsUI.Signs.State.update_some(new_signs)
+    {:ok, _new_state} = SignsUI.Signs.State.update_some(new_signs)
 
     Logger.info("Sign toggled: #{inspect(changes)}")
-
-    broadcast_data =
-      new_state
-      |> Enum.map(fn {_id, sign} -> {sign.id, sign.config} end)
-      |> Enum.into(%{})
-
-    broadcast!(socket, "new_sign_configs_state", broadcast_data)
 
     {:noreply, socket}
   end
