@@ -4,7 +4,11 @@ import DatePicker from "react-datepicker";
 import { signConfigType } from './types';
 
 function updateConfig(setConfigsFn, realtimeId, signConfig, expires) {
-  const newConfig = Object.assign(signConfig, { expires: expires });
+  const newConfig = {
+    ...signConfig,
+    expires: expires
+  };
+
   setConfigsFn({
     [realtimeId]: newConfig
   });

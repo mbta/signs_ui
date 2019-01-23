@@ -76,18 +76,20 @@ class Sign extends Component {
   }
 
   saveStaticText() {
-    const { setConfigs, realtimeId } = this.props;
+    const { signConfig, setConfigs, realtimeId } = this.props;
     const { staticLine1, staticLine2 } = this.state;
 
     this.setState({ customChanges: false, tipText: false });
 
+    const newConfig = {
+      ...signConfig,
+      mode: 'static_text',
+      line1: staticLine1,
+      line2: staticLine2
+    };
+
     setConfigs({
-      [realtimeId]: {
-        mode: 'static_text',
-        line1: staticLine1,
-        line2: staticLine2,
-        expires: null,
-      },
+      [realtimeId]: newConfig,
     });
   }
 
