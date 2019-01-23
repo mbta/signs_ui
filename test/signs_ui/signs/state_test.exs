@@ -49,10 +49,7 @@ defmodule SignsUI.Signs.StateTest do
         |> Enum.map(fn {_id, sign} -> {sign.id, sign.config} end)
         |> Enum.into(%{})
 
-      assert_broadcast(
-        "new_sign_config_state",
-        expected_broadcast
-      )
+      assert_broadcast("new_sign_config_state", ^expected_broadcast)
 
       assert %{
                "maverick_westbound" => %Signs.Sign{config: %{mode: :off}},
