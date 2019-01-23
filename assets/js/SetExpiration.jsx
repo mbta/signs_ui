@@ -3,10 +3,20 @@ import PropTypes from 'prop-types';
 import DatePicker from 'react-datepicker';
 import { signConfigType } from './types';
 
+function stringify(expires) {
+  if (expires) {
+    return expires.toISOString();
+  }
+
+  return null;
+}
+
 function updateConfig(setConfigsFn, realtimeId, signConfig, expires) {
+  const expirationConfig = stringify(expires);
+
   const newConfig = {
     ...signConfig,
-    expires,
+    expires: expirationConfig,
   };
 
   setConfigsFn({

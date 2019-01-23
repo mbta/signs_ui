@@ -27,7 +27,7 @@ test('Can set the expiration time', () => {
   wrapper.find('.react-datepicker__day--024').simulate('click');
   expect(requests.length).toBe(1);
   const newConf = requests[0].rtID;
-  expect(newConf.expires).toBeInstanceOf(Date);
+  expect(new Date(newConf.expires)).toBeInstanceOf(Date);
 });
 
 test('Can clear the expiration time', () => {
@@ -44,7 +44,7 @@ test('Can clear the expiration time', () => {
         mode: 'static_text',
         line1: 'line1',
         line2: 'line2',
-        expires: new Date(),
+        expires: (new Date()).toISOString(),
       },
       setConfigs,
     }),
