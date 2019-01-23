@@ -85,7 +85,7 @@ class Sign extends Component {
       ...signConfig,
       mode: 'static_text',
       line1: staticLine1,
-      line2: staticLine2
+      line2: staticLine2,
     };
 
     setConfigs({
@@ -202,7 +202,7 @@ class Sign extends Component {
           )
         }
         {signConfig.mode !== 'auto' && (
-          <div class="viewer--schedule-expires">
+          <div className="viewer--schedule-expires">
             <SetExpiration
               realtimeId={realtimeId}
               signConfig={signConfig}
