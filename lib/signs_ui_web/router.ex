@@ -29,8 +29,6 @@ defmodule SignsUiWeb.Router do
     pipe_through([:redirect_prod_http, :browser, :basic_auth])
 
     get("/", PageController, :index)
-    get("/signs", SignsController, :index)
-    post("/signs", SignsController, :update)
     get("/viewer", MessagesController, :index)
   end
 
