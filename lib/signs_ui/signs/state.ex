@@ -63,7 +63,7 @@ defmodule SignsUI.Signs.State do
       |> Enum.map(fn {_id, sign} -> {sign.id, sign.config} end)
       |> Enum.into(%{})
 
-    SignsUiWeb.Endpoint.broadcast!("signs:all", "new_sign_config_state", broadcast_data)
+    SignsUiWeb.Endpoint.broadcast!("signs:all", "new_sign_configs_state", broadcast_data)
 
     signs
   end
