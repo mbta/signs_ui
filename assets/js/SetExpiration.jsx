@@ -26,7 +26,11 @@ function updateConfig(setConfigsFn, realtimeId, signConfig, expires) {
 
 function parseDate(str) {
   if (str) {
-    return new Date(str);
+    const date = new Date(str);
+
+    if (date.toString() !== 'Invalid Date') {
+      return date;
+    }
   }
 
   return null;
