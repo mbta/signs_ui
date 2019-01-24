@@ -19,11 +19,6 @@ defmodule SignsUI.Signs.State do
     GenServer.call(pid, :get_all)
   end
 
-  @spec update(atom() | pid() | {atom(), any()} | {:via, atom(), any()}, any()) :: any()
-  def update(_pid \\ __MODULE__, _enabled_values) do
-    :ok
-  end
-
   @spec update_some(GenServer.server(), %{Signs.Sign.id() => Signs.Sign.t()}) :: {:ok, t()}
   def update_some(pid \\ __MODULE__, changes) do
     GenServer.call(pid, {:update_some, changes})
