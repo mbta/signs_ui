@@ -102,25 +102,6 @@ defmodule SignsUI.Signs.Sign do
     }
   end
 
-  def from_json(sign_id, %{"enabled" => true}) do
-    %__MODULE__{
-      id: sign_id,
-      config: %{
-        mode: :auto
-      }
-    }
-  end
-
-  def from_json(sign_id, %{"enabled" => false}) do
-    %__MODULE__{
-      id: sign_id,
-      config: %{
-        mode: :off,
-        expires: nil
-      }
-    }
-  end
-
   @spec from_config(String.t(), map()) :: t()
   def from_config(sign_id, %{"mode" => "auto"}) do
     %__MODULE__{id: sign_id, config: %{mode: :auto}}
@@ -171,8 +152,7 @@ defmodule SignsUI.Signs.Sign do
   def to_json(%__MODULE__{config: %{mode: :auto}} = sign) do
     %{
       "id" => sign.id,
-      "mode" => "auto",
-      "enabled" => true
+      "mode" => "auto"
     }
   end
 
@@ -180,7 +160,6 @@ defmodule SignsUI.Signs.Sign do
     %{
       "id" => sign.id,
       "mode" => "off",
-      "enabled" => false,
       "expires" => expiration_to_iso8601(sign.config.expires)
     }
   end
@@ -189,7 +168,6 @@ defmodule SignsUI.Signs.Sign do
     %{
       "id" => sign.id,
       "mode" => "headway",
-      "enabled" => false,
       "expires" => expiration_to_iso8601(sign.config.expires)
     }
   end
@@ -198,7 +176,6 @@ defmodule SignsUI.Signs.Sign do
     %{
       "id" => sign.id,
       "mode" => "static_text",
-      "enabled" => false,
       "line1" => sign.config.line1,
       "line2" => sign.config.line2,
       "expires" => expiration_to_iso8601(sign.config.expires)

@@ -7,18 +7,6 @@ defmodule SignsUI.Signs.SignTest do
   @expires "2018-08-10T12:00:00Z"
 
   describe "from_json" do
-    test "builds a Sign struct in 'auto' mode from legacy json" do
-      values = %{"enabled" => true}
-      expected = %Sign{id: "Sign", config: %{mode: :auto}}
-      assert from_json("Sign", values) == expected
-    end
-
-    test "builds a Sign struct in 'off' mode from legacy json" do
-      values = %{"enabled" => false}
-      expected = %Sign{id: "Sign", config: %{mode: :off, expires: nil}}
-      assert from_json("Sign", values) == expected
-    end
-
     test "builds a Sign struct in 'auto' mode from json" do
       values = %{"mode" => "auto"}
       expected = %Sign{id: "Sign", config: %{mode: :auto}}
@@ -87,7 +75,7 @@ defmodule SignsUI.Signs.SignTest do
   describe "to_json" do
     test "serializes an Auto sign" do
       sign = %Sign{id: "sign", config: %{mode: :auto}}
-      assert to_json(sign) == %{"id" => "sign", "mode" => "auto", "enabled" => true}
+      assert to_json(sign) == %{"id" => "sign", "mode" => "auto"}
     end
 
     test "serializes a Headway sign" do
@@ -101,8 +89,7 @@ defmodule SignsUI.Signs.SignTest do
       assert to_json(sign) == %{
                "id" => "sign",
                "mode" => "headway",
-               "expires" => @expires,
-               "enabled" => false
+               "expires" => @expires
              }
     end
 
@@ -113,8 +100,7 @@ defmodule SignsUI.Signs.SignTest do
       assert to_json(sign) == %{
                "id" => "sign",
                "mode" => "off",
-               "expires" => @expires,
-               "enabled" => false
+               "expires" => @expires
              }
     end
 
@@ -131,8 +117,7 @@ defmodule SignsUI.Signs.SignTest do
                "mode" => "static_text",
                "expires" => @expires,
                "line1" => "l1",
-               "line2" => "l2",
-               "enabled" => false
+               "line2" => "l2"
              }
     end
   end
