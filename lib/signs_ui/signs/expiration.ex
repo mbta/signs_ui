@@ -37,7 +37,7 @@ defmodule SignsUI.Signs.Expiration do
 
     if updates != %{} do
       Logger.info("Cleaning expired settings for sign IDs: #{inspect(Map.keys(updates))}")
-      SignsUI.Signs.State.update_some(state.sign_state_server, updates)
+      {:ok, _new_state} = SignsUI.Signs.State.update_some(state.sign_state_server, updates)
     end
 
     schedule_loop(self(), state.loop_ms)

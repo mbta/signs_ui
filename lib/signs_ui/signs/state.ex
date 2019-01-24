@@ -57,6 +57,14 @@ defmodule SignsUI.Signs.State do
 
     signs = Map.merge(old_state, changes)
     {:ok, _} = external_post_mod.update(signs)
+
+    broadcast_data =
+      signs
+      |> Enum.map(fn {_id, sign} -> {sign.id, sign.config} end)
+      |> Enum.into(%{})
+
+    SignsUiWeb.Endpoint.broadcast!("signs:all", "new_sign_config_state", broadcast_data)
+
     signs
   end
 end
