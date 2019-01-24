@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import lineToColor from './colors';
 import { signConfigType } from './types';
+import SetExpiration from './SetExpiration';
 
 function displayLine(duration, currentTime) {
   return (Date.parse(duration) - currentTime) > 0;
@@ -75,18 +76,20 @@ class Sign extends Component {
   }
 
   saveStaticText() {
-    const { setConfigs, realtimeId } = this.props;
+    const { signConfig, setConfigs, realtimeId } = this.props;
     const { staticLine1, staticLine2 } = this.state;
 
     this.setState({ customChanges: false, tipText: false });
 
+    const newConfig = {
+      ...signConfig,
+      mode: 'static_text',
+      line1: staticLine1,
+      line2: staticLine2,
+    };
+
     setConfigs({
-      [realtimeId]: {
-        mode: 'static_text',
-        line1: staticLine1,
-        line2: staticLine2,
-        expires: null,
-      },
+      [realtimeId]: newConfig,
     });
   }
 
@@ -138,8 +141,6 @@ class Sign extends Component {
                   Text
                 </option>
               </select>
-              {/* eslint-disable-next-line jsx-a11y/label-has-for */}
-              <label htmlFor={realtimeId} />
             </div>
           </div>
           <div className="viewer--sign-lines">
@@ -198,6 +199,15 @@ class Sign extends Component {
             </div>
           )
         }
+        {signConfig.mode !== 'auto' && (
+          <div className="viewer--schedule-expires">
+            <SetExpiration
+              realtimeId={realtimeId}
+              signConfig={signConfig}
+              setConfigs={setConfigs}
+            />
+          </div>
+        )}
       </div>
     );
   }

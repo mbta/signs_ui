@@ -65,7 +65,7 @@ class ViewerApp extends Component {
 
       this.setState(oldState => ({
         ...oldState,
-        signConfigs: { ...oldState.signConfigs, ...signConfigs },
+        signConfigs: { ...(oldState.signConfigs), ...signConfigs },
       }));
     }
   }
