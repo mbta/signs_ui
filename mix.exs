@@ -40,7 +40,7 @@ defmodule SignsUi.Mixfile do
   defp deps do
     [
       {:excoveralls, "~> 0.9.0", only: :test},
-      {:dialyxir, "~> 1.0.0-rc.4", only: [:dev], runtime: false},
+      {:dialyxir, "~> 1.0.0-rc.4", only: [:dev, :test], runtime: false},
       {:distillery, "~> 1.5", runtime: false},
       {:phoenix, "~> 1.3.2"},
       {:phoenix_pubsub, "~> 1.0"},
