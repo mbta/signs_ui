@@ -28,7 +28,7 @@ defmodule SignsUI.Signs.Expiration do
     {:ok, %{time_fetcher: time_fetcher, loop_ms: loop_ms, sign_state_server: sign_state_server}}
   end
 
-  @spec handle_info(:process_expired, state()) :: state()
+  @spec handle_info(:process_expired, state()) :: {:noreply, state()}
   def handle_info(:process_expired, state) do
     updates =
       state.sign_state_server
@@ -46,7 +46,7 @@ defmodule SignsUI.Signs.Expiration do
   end
 
   @spec expire_signs(SignsUI.Signs.State.t(), (() -> DateTime.t())) :: %{
-          Signs.Sign.id() => Signs.Sign.t()
+          Sign.id() => Sign.t()
         }
   def expire_signs(state, time_fetcher) do
     current_dt = time_fetcher.()

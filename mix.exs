@@ -9,6 +9,8 @@ defmodule SignsUi.Mixfile do
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
+      test_coverage: [tool: ExCoveralls],
+      dialyzer: [plt_add_apps: [:ex_unit]],
       deps: deps()
     ]
   end
@@ -38,6 +40,8 @@ defmodule SignsUi.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:excoveralls, "~> 0.9.0", only: :test},
+      {:dialyxir, "~> 1.0.0-rc.4", only: [:dev, :test], runtime: false},
       {:distillery, "~> 1.5", runtime: false},
       {:phoenix, "~> 1.3.2"},
       {:phoenix_pubsub, "~> 1.0"},
