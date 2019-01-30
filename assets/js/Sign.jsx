@@ -132,7 +132,7 @@ class Sign extends Component {
                 }
               >
                 <option value="auto">
-                  On
+                  Auto
                 </option>
                 <option value="off">
                   Off

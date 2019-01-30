@@ -42,7 +42,7 @@ function SetExpiration({
   return (
     <div>
       <strong>
-        Schedule return to &quot;On&quot;
+        Schedule return to &quot;Auto&quot;
       </strong>
 
       <DatePicker
