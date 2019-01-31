@@ -124,6 +124,7 @@ class Sign extends Component {
             <div>
               <select
                 id={realtimeId}
+                className="viewer--mode-select"
                 value={signConfig.mode}
                 onChange={
                   (event) => {
@@ -138,7 +139,7 @@ class Sign extends Component {
                   Off
                 </option>
                 <option value="static_text">
-                  Text
+                  Custom
                 </option>
               </select>
             </div>
