@@ -135,11 +135,11 @@ class Sign extends Component {
                 <option value="auto">
                   Auto
                 </option>
-                <option value="off">
-                  Off
-                </option>
                 <option value="static_text">
                   Custom
+                </option>
+                <option value="off">
+                  Off
                 </option>
               </select>
             </div>
