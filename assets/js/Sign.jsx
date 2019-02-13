@@ -42,7 +42,9 @@ function isValidText(text) {
 function timeString(currentTime) {
   const date = new Date(currentTime);
   let hour = date.getHours();
-  if (hour > 12) {
+  if (hour === 0) {
+    hour = 12;
+  } else if (hour > 12) {
     hour -= 12;
   }
   const minute = date.getMinutes();
