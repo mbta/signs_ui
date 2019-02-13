@@ -15,11 +15,11 @@
   background-color: rgb(206, 206, 206);
   margin-bottom: 1em;
   width: 20em;
-  height: 100px;
+  height: 80px;
 }
 
 .viewer--sign-id {
-  border-top: 10px solid white;
+  border-top: 6px solid white;
   float: left;
   text-align: center;
   width: 5em;
@@ -35,8 +35,8 @@
   color: rgb(251, 220, 75);
   font-family: monospace;
   font-size: 1.2em;
-  height: 50px;
-  padding-top: 13px;
+  height: 40px;
+  padding-top: 8px;
   white-space: pre;
 }
 
