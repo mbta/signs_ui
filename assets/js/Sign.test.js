@@ -35,8 +35,8 @@ test('does not show messages that have expired', () => {
 
   expect(wrapper.text()).toMatch('Alewife 1 min');
 
-  const currentDate = new Date(currentTime)
-  expect(wrapper.text()).toMatch(currentDate.getHours() + ":" + currentDate.getMinutes());
+  const currentDate = new Date(currentTime);
+  expect(wrapper.text()).toMatch(`${currentDate.getHours()}:${currentDate.getMinutes()}`);
 
   expect(wrapper.text()).not.toMatch('Alewife 3 min');
 });

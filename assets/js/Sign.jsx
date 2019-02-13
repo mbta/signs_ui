@@ -42,7 +42,7 @@ function isValidText(text) {
 function timeString(currentTime) {
   const date = new Date(currentTime);
 
-  return date.getHours() + ":" + date.getMinutes();
+  return `${date.getHours()}:${date.getMinutes()}`;
 }
 
 class Sign extends Component {
@@ -152,10 +152,10 @@ class Sign extends Component {
           </div>
           <div className="viewer--sign-lines">
             <div className="viewer--sign-line">
-              {(displayLine(lineOneDuration, currentTime) ? lineOne : "").padEnd(18) + timeString(currentTime)}
+              {(displayLine(lineOneDuration, currentTime) ? lineOne : '').padEnd(18) + timeString(currentTime)}
             </div>
             <div className="viewer--sign-line">
-              {displayLine(lineTwoDuration, currentTime) ? lineTwo : ""}
+              {displayLine(lineTwoDuration, currentTime) ? lineTwo : ''}
             </div>
           </div>
         </div>
