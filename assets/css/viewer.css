@@ -34,9 +34,9 @@
 .viewer--sign-line {
   color: rgb(251, 220, 75);
   font-family: monospace;
-  font-size: 1.5em;
+  font-size: 1.2em;
   height: 50px;
-  padding-top: 10px;
+  padding-top: 13px;
   white-space: pre;
 }
 
