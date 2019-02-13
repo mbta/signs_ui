@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import dateFormat from 'dateformat';
 import lineToColor from './colors';
 import { signConfigType } from './types';
 import SetExpiration from './SetExpiration';
@@ -41,15 +42,7 @@ function isValidText(text) {
 
 function timeString(currentTime) {
   const date = new Date(currentTime);
-  let hour = date.getHours();
-  if (hour === 0) {
-    hour = 12;
-  } else if (hour > 12) {
-    hour -= 12;
-  }
-  const minute = date.getMinutes();
-
-  return `${hour}:${minute}`.padStart(5);
+  return dateFormat(date, 'h:MM').padStart(5);
 }
 
 class Sign extends Component {
