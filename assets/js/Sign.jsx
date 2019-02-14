@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import dateFormat from 'dateformat';
 import lineToColor from './colors';
 import { signConfigType } from './types';
 import SetExpiration from './SetExpiration';
@@ -37,6 +38,21 @@ function makeConfig(mode) {
 
 function isValidText(text) {
   return !(/[^a-zA-Z0-9,.!@' ]/.test(text));
+}
+
+function timeString(currentTime) {
+  const date = new Date(currentTime);
+  return dateFormat(date, 'h:MM').padStart(5);
+}
+
+function line1DisplayText(lineOne, lineOneDuration, currentTime) {
+  let text = displayLine(lineOneDuration, currentTime) ? lineOne : '';
+  text = text.padEnd(19);
+  return `${text}${timeString(currentTime)}`;
+}
+
+function line2DisplayText(lineTwo, lineTwoDuration, currentTime) {
+  return displayLine(lineTwoDuration, currentTime) ? lineTwo : '';
 }
 
 class Sign extends Component {
@@ -146,10 +162,10 @@ class Sign extends Component {
           </div>
           <div className="viewer--sign-lines">
             <div className="viewer--sign-line">
-              {displayLine(lineOneDuration, currentTime) ? lineOne : null}
+              {line1DisplayText(lineOne, lineOneDuration, currentTime)}
             </div>
             <div className="viewer--sign-line">
-              {displayLine(lineTwoDuration, currentTime) ? lineTwo : null}
+              {line2DisplayText(lineTwo, lineTwoDuration, currentTime)}
             </div>
           </div>
         </div>

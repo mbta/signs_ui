@@ -4,7 +4,7 @@ import { mount } from 'enzyme';
 import Sign from './Sign';
 
 test('does not show messages that have expired', () => {
-  const now = Date.now();
+  const now = new Date('2019-01-15T20:15:00Z').valueOf();
   const fresh = new Date(now + 5000).toLocaleString();
   const lineOneDuration = fresh;
   const expired = new Date(now).toLocaleString();
@@ -34,5 +34,7 @@ test('does not show messages that have expired', () => {
   );
 
   expect(wrapper.text()).toMatch('Alewife 1 min');
+  expect(wrapper.text()).toMatch('3:15');
+
   expect(wrapper.text()).not.toMatch('Alewife 3 min');
 });
