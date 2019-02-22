@@ -14,7 +14,7 @@ defmodule SignsUI.Signs.Names do
       {"ashmont_mezzanine", "Ashmont Mezzanine"},
       {"cedar_grove_outbound", "Cedar Grove Outbound"},
       {"cedar_grove_inbound", "Cedar Grove Inbound"},
-      {"butler_center", "Butler Center"},
+      {"butler_center", "Butler"},
       {"milton_outbound", "Milton Outbound"},
       {"milton_inbound", "Milton Inbound"},
       {"central_avenue_outbound", "Central Avenue Outbound"},
@@ -80,7 +80,7 @@ defmodule SignsUI.Signs.Names do
 
   def orange_line() do
     [
-      {"oak_grove_mezzanine_southbound", "Oak Grove Mezzanine Southbound"},
+      {"oak_grove_mezzanine_southbound", "Oak Grove Mezzanine"},
       {"oak_grove_northbound", "Oak Grove Northbound"},
       {"oak_grove_southbound", "Oak Grove Southbound"},
       {"oak_grove_east_busway", "Oak Grove East Busway"},
@@ -149,8 +149,8 @@ defmodule SignsUI.Signs.Names do
 
   def red_line() do
     [
-      {"alewife_center_southbound", "Alewife Center Southbound"},
-      {"alewife_mezzanine_southbound", "Alewife Mezzanine Southbound"},
+      {"alewife_center_southbound", "Alewife Platform"},
+      {"alewife_mezzanine_southbound", "Alewife Mezzanine"},
       {"davis_mezzanine", "Davis Mezzanine"},
       {"davis_northbound", "Davis Northbound"},
       {"davis_southbound", "Davis Southbound"},
@@ -168,7 +168,7 @@ defmodule SignsUI.Signs.Names do
       {"charles_mgh_southbound", "Charles MGH Southbound"},
       {"red_park_st_northbound", "Red Park St. Northbound"},
       {"red_park_st_southbound", "Red Park St. Southbound"},
-      {"red_park_st_center", "Red Park St. Center"},
+      {"red_park_st_center", "Red Park St. Center Platform"},
       {"red_downtown_crossing_northbound", "Red Downtown Crossing Northbound"},
       {"red_downtown_crossing_southbound", "Red Downtown Crossing Southbound"},
       {"red_south_station_mezzanine", "Red South Station Mezzanine"},
@@ -210,8 +210,8 @@ defmodule SignsUI.Signs.Names do
       {"quincy_adams_mezzanine", "Quincy Adams Mezzanine"},
       {"quincy_adams_northbound", "Quincy Adams Northbound"},
       {"quincy_adams_southbound", "Quincy Adams Southbound"},
-      {"braintree_center_northbound", "Braintree Center Northbound"},
-      {"braintree_mezzanine_northbound", "Braintree Mezzanine Northbound"}
+      {"braintree_center_northbound", "Braintree Platform"},
+      {"braintree_mezzanine_northbound", "Braintree Mezzanine"}
     ]
   end
 end
