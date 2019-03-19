@@ -833,7 +833,7 @@ const arincToRealtimeIdMap = {
   'OGRE-n': 'green_street_northbound',
   'OGRE-s': 'green_street_southbound',
   'OFOR-m': 'forest_hills_main_lobby',
-  'OFOR-s': 'forest_hills_platform',
+  'OFOR-n': 'forest_hills_platform',
   'SFOR-m': 'forest_hills_entrances_from_busways',
   'SRUG-m': 'ruggles_upper_busway',
   'RALE-c': 'alewife_center_southbound',
