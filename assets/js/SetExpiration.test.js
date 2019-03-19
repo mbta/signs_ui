@@ -24,7 +24,7 @@ test('Can set the expiration time', () => {
   );
 
   wrapper.find('.react-datepicker-wrapper input').simulate('focus');
-  wrapper.find('.react-datepicker__day--024').simulate('click');
+  wrapper.find('.react-datepicker__day--015').simulate('click');
   expect(requests.length).toBe(1);
   const newConf = requests[0].rtID;
   expect(new Date(newConf.expires)).toBeInstanceOf(Date);
