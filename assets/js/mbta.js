@@ -4,7 +4,7 @@ const stationConfig = {
       id: 'OOAK',
       name: 'Oak Grove',
       zones: {
-        n: true, s: true, e: 'Busway', w: false, c: false, m: true,
+        n: false, s: 'Platform', e: 'Busway', w: false, c: false, m: true,
       },
     },
     {
@@ -165,7 +165,7 @@ const stationConfig = {
       id: 'OFOR',
       name: 'Forest Hills',
       zones: {
-        n: true, s: true, e: false, w: false, c: false, m: 'Main Lobby',
+        n: 'Platform', s: false, e: false, w: false, c: false, m: 'Main Lobby',
       },
     },
     {
@@ -714,7 +714,7 @@ const stationConfig = {
       id: 'GRIV',
       name: 'Riverside',
       zones: {
-        n: false, s: false, e: 'Track 1', w: 'Track 2', c: false, m: false,
+        n: false, s: false, e: false, w: 'Entire Station', c: false, m: false,
       },
     },
   ],
