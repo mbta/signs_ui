@@ -521,7 +521,7 @@ const stationConfig = {
     },
     {
       id: 'SWTC',
-      name: 'World Train Center',
+      name: 'World Trade Center',
       zones: {
         n: false, s: false, e: true, w: false, c: false, m: true,
       },
