@@ -465,7 +465,7 @@ const stationConfig = {
       id: 'MCAP',
       name: 'Capen St',
       zones: {
-        n: true, s: true, e: false, w: false, c: false, m: false,
+        n: true, s: false, e: false, w: false, c: false, m: false,
       },
     },
   ],
