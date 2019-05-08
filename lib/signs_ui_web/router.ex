@@ -22,7 +22,7 @@ defmodule SignsUiWeb.Router do
   end
 
   scope "/", SignsUiWeb do
-    pipe_through([:redirect_prod_http, :browser])
+    pipe_through([:redirect_prod_http, :browser, :cognito_auth])
 
     get("/", PageController, :index)
     get("/viewer", MessagesController, :index)
@@ -62,6 +62,22 @@ defmodule SignsUiWeb.Router do
         conn
         |> send_resp(401, "unauthorized")
         |> halt()
+    end
+  end
+
+  @spec cognito_auth(Plug.Conn.t(), Plug.opts()) :: Plug.Conn.t()
+  defp cognito_auth(conn, _) do
+    conn = fetch_session(conn)
+    login_expiration = get_session(conn, :login_expiration)
+
+    current_time = DateTime.utc_now() |> DateTime.to_unix()
+
+    if is_nil(login_expiration) or current_time >= login_expiration do
+      conn
+      |> redirect(to: SignsUiWeb.Router.Helpers.cognito_path(conn, :new))
+      |> halt()
+    else
+      conn
     end
   end
 end
