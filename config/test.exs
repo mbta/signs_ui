@@ -10,9 +10,7 @@ config :signs_ui,
   signs_external_post_mod: SignsUI.Mock.Write,
   local_write_path: "test/mock_write.json",
   aws_requestor: SignsUI.Mock.AwsRequest,
-  realtime_signs_api_key: "placeholder_key",
-  username: "username",
-  password: "password"
+  realtime_signs_api_key: "placeholder_key"
 
 # Print only warnings and errors during test
 config :logger, level: :warn

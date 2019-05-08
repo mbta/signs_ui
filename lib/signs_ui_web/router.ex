@@ -15,10 +15,6 @@ defmodule SignsUiWeb.Router do
     plug(:api_auth)
   end
 
-  pipeline :basic_auth do
-    plug(BasicAuth)
-  end
-
   pipeline :redirect_prod_http do
     if Application.get_env(:signs_ui, :redirect_http?) do
       plug(Plug.SSL, rewrite_on: [:x_forwarded_proto])
@@ -26,7 +22,7 @@ defmodule SignsUiWeb.Router do
   end
 
   scope "/", SignsUiWeb do
-    pipe_through([:redirect_prod_http, :browser, :basic_auth])
+    pipe_through([:redirect_prod_http, :browser])
 
     get("/", PageController, :index)
     get("/viewer", MessagesController, :index)
