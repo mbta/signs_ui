@@ -27,8 +27,6 @@ defmodule SignsUi.Application do
   defp set_runtime_config do
     Config.update_env(:aws_signs_bucket, System.get_env("AWS_SIGNS_BUCKET"))
     Config.update_env(:aws_signs_path, System.get_env("AWS_SIGNS_PATH"))
-    Config.update_env(:username, System.get_env("USERNAME"))
-    Config.update_env(:password, System.get_env("PASSWORD"))
     Config.update_env(:realtime_signs_api_key, System.get_env("REALTIME_SIGNS_API_KEY"))
     Config.update_env(:cognito_client_id, System.get_env("COGNITO_CLIENT_ID"))
   end
