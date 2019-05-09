@@ -15,10 +15,9 @@ config :signs_ui, SignsUiWeb.Endpoint,
 # Internal configuration
 config :signs_ui,
   signs_external_post_mod: SignsUI.Signs.S3,
-  aws_requestor: ExAws
-
-# HTTP config
-config :signs_ui, :redirect_http?, false
+  aws_requestor: ExAws,
+  redirect_http?: false,
+  http_fetcher: HTTPoison
 
 # Configures Elixir's Logger
 config :logger, :console,
