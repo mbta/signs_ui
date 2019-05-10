@@ -1,6 +1,5 @@
 defmodule SignsUiWeb.MessagesControllerTest do
   use SignsUiWeb.ConnCase
-  import Plug.Test
 
   @update_attrs %{
     "MsgType" => "SignContent",
@@ -11,11 +10,8 @@ defmodule SignsUiWeb.MessagesControllerTest do
 
   describe "index" do
     test "lists all messages", %{conn: conn} do
-      current_time = DateTime.utc_now() |> DateTime.to_unix()
-
       conn =
         conn
-        |> init_test_session(login_expiration: current_time + 1_000)
         |> add_req_header(:basic)
         |> get(messages_path(conn, :index))
 
