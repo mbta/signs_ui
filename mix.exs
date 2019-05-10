@@ -53,7 +53,8 @@ defmodule SignsUi.Mixfile do
       {:httpoison, "~> 1.0"},
       {:ex_aws, "~> 2.0"},
       {:ex_aws_s3, "~> 2.0"},
-      {:timex, "~> 3.1"}
+      {:timex, "~> 3.1"},
+      {:guardian, "~> 1.0"}
     ]
   end
 end
