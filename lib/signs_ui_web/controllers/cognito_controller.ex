@@ -8,6 +8,11 @@ defmodule SignsUiWeb.CognitoController do
       |> fetch_session()
       |> get_session("cognito_state")
 
+    challenge_code = "123456"
+    # conn
+    # |> fetch_session()
+    # |> get_session("challenge_code")
+
     if state == expected_state do
       http_fetcher = Application.get_env(:signs_ui, :http_fetcher)
       client_id = Application.get_env(:signs_ui, :cognito_client_id)
@@ -17,7 +22,8 @@ defmodule SignsUiWeb.CognitoController do
         grant_type: "authorization_code",
         code: code,
         client_id: client_id,
-        redirect_uri: "http://localhost:4000/cognito"
+        redirect_uri: "http://localhost:4000/cognito",
+        code_verifier: Base.url_encode64(challenge_code, padding: false)
       }
 
       {:ok, %{body: body}} =
@@ -30,7 +36,9 @@ defmodule SignsUiWeb.CognitoController do
           ]
         )
 
-      %{"id_token" => id_token} = Poison.decode!(body)
+      body = Poison.decode!(body) |> IO.inspect()
+
+      %{"id_token" => id_token} = body
 
       [header_raw, payload_raw, signature_raw] = String.split(id_token, ".")
 
@@ -46,6 +54,7 @@ defmodule SignsUiWeb.CognitoController do
 
       send_resp(conn, 200, "cognito OK")
     else
+      Logger.warn("state=#{state} expected_state=#{expected_state}")
       send_resp(conn, 400, "unexpected state")
     end
   end
@@ -56,24 +65,27 @@ defmodule SignsUiWeb.CognitoController do
   end
 
   def new(conn, _) do
-    state = "1234567"
+    state = "#{:rand.uniform(10_000_000)}"
+    challenge_code = "123456"
 
     params = %{
       response_type: "code",
       client_id: Application.get_env(:signs_ui, :cognito_client_id),
       redirect_uri: "http://localhost:4000/cognito",
       state: state,
-      scope: "openid profile email"
-      # code_challenge: "abc",
-      # code_challenge_method: "S256"
+      scope: "openid profile email",
+      code_challenge: :crypto.hash(:sha256, challenge_code) |> Base.url_encode64(padding: false),
+      code_challenge_method: "S256"
     }
 
     url =
-      "https://mbta-signs-dev.auth.us-east-1.amazoncognito.com/login?" <> URI.encode_query(params)
+      "https://mbta-signs-dev.auth.us-east-1.amazoncognito.com/oauth2/authorize?" <>
+        URI.encode_query(params)
 
     conn
     |> fetch_session()
     |> put_session("cognito_state", state)
+    |> put_session("challenge_code", challenge_code)
     |> redirect(external: url)
   end
 end
