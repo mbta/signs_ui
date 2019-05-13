@@ -9,6 +9,9 @@ To start your Phoenix server:
 
 Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
+To get updates on the signs locally, run `realtime_signs` with a `SIGN_UI_URL` of the local url of `signs_ui`.
+See that `README` for more details.
+
 Ready to run in production? Please [check our deployment guides](http://www.phoenixframework.org/docs/deployment).
 
 ## Learn more

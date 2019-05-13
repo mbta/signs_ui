@@ -65,7 +65,8 @@ defmodule SignsUi.Signs.Messages do
     {:reply, {:ok, messages}, messages}
   end
 
-  defp parse_commands(commands) do
+  @spec parse_commands([String.t()]) :: [{String.t(), String.t(), integer(), String.t()}]
+  defp(parse_commands(commands)) do
     commands
     |> Enum.map(fn command ->
       [duration, zone_line_text] = String.split(command, ["~"])
@@ -77,7 +78,7 @@ defmodule SignsUi.Signs.Messages do
       text_list =
         text_list
         |> Enum.map(fn text ->
-          text_time_regex = ~r/([\w\d\s]+)\.?([\d]?+)$/
+          text_time_regex = ~r/([\w\d\s']+)\.?([\d]?+)$/
 
           text =
             text
