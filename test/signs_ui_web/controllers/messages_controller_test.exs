@@ -9,6 +9,7 @@ defmodule SignsUiWeb.MessagesControllerTest do
   }
 
   describe "index" do
+    @tag :authenticated
     test "lists all messages", %{conn: conn} do
       conn =
         conn

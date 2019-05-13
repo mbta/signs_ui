@@ -21,8 +21,26 @@ defmodule SignsUiWeb.Router do
     end
   end
 
+  pipeline :auth do
+    plug(SignsUiWeb.AuthManager.Pipeline)
+  end
+
+  pipeline :ensure_auth do
+    plug(Guardian.Plug.EnsureAuthenticated)
+  end
+
   scope "/", SignsUiWeb do
-    pipe_through([:redirect_prod_http, :browser])
+    pipe_through([:redirect_prod_http, :browser, :auth])
+
+    get("/", PageController, :index)
+
+    get("/login", SessionController, :new)
+    post("/login", SessionController, :login)
+    post("/logout", SessionController, :logout)
+  end
+
+  scope "/", SignsUiWeb do
+    pipe_through([:redirect_prod_http, :browser, :auth, :ensure_auth])
 
     get("/", PageController, :index)
     get("/viewer", MessagesController, :index)
