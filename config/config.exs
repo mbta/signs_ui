@@ -20,6 +20,10 @@ config :signs_ui,
 # HTTP config
 config :signs_ui, :redirect_http?, false
 
+config :signs_ui, SignsUiWeb.AuthManager,
+  issuer: "signs_ui",
+  secret_key: ""
+
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
