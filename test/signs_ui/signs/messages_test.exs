@@ -15,6 +15,20 @@ defmodule SignsUi.Signs.MessagesTest do
              SignsUi.Signs.Messages.list_messages(pid)
   end
 
+  test "receives a message with a ' and does not truncate everything before it" do
+    {:ok, pid} = SignsUi.Signs.Messages.start_link()
+
+    SignsUi.Signs.Messages.add_message(pid, %{
+      "MsgType" => "SignContent",
+      "c" => ["e130~n2-\"Alewife 12' min\""],
+      "sta" => "RDTC",
+      "uid" => "616722"
+    })
+
+    assert %{"RDTC-n" => [%{duration: _, text: ""}, %{duration: _, text: "Alewife 12' min"}]} =
+             SignsUi.Signs.Messages.list_messages(pid)
+  end
+
   test "when it recieves a second line for a sign, both lines are persisted" do
     {:ok, pid} = SignsUi.Signs.Messages.start_link()
 
