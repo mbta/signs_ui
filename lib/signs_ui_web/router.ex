@@ -33,10 +33,6 @@ defmodule SignsUiWeb.Router do
     pipe_through([:redirect_prod_http, :browser, :auth])
 
     get("/", PageController, :index)
-
-    get("/login", SessionController, :new)
-    post("/login", SessionController, :login)
-    post("/logout", SessionController, :logout)
   end
 
   scope "/", SignsUiWeb do
