@@ -60,7 +60,7 @@ defmodule SignsUiWeb.Router do
   # end
 
   defp put_user_token(conn, _) do
-    token = Phoenix.Token.sign(conn, "user socket", "admin")
+    token = Guardian.Plug.current_token(conn)
     assign(conn, :user_token, token)
   end
 

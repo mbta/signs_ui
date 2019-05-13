@@ -18,6 +18,20 @@ defmodule SignsUiWeb.MessagesControllerTest do
 
       assert html_response(conn, 200) =~ "MBTA Realtime Signs"
     end
+
+    @tag :authenticated
+    test "includes user token", %{conn: conn} do
+      conn =
+        conn
+        |> add_req_header(:basic)
+        |> get(messages_path(conn, :index))
+
+      response = html_response(conn, 200)
+
+      token = Regex.run(~r/window.userToken = "(.+)";/, response) |> Enum.at(1)
+
+      assert {:ok, _claims} = Guardian.decode_and_verify(SignsUiWeb.AuthManager, token)
+    end
   end
 
   describe "create messages" do
