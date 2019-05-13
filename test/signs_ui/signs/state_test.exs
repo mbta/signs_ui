@@ -21,7 +21,15 @@ defmodule SignsUI.Signs.StateTest do
       {:ok, pid} = GenServer.start_link(SignsUI.Signs.State, [], [])
 
       @endpoint.subscribe("signs:all")
-      token = Phoenix.Token.sign(SignsUiWeb.Endpoint, "user socket", "admin")
+
+      {:ok, claims} =
+        Guardian.Token.Jwt.build_claims(
+          SignsUiWeb.AuthManager,
+          %{username: "test_user", expiration: 100},
+          "test_user"
+        )
+
+      {:ok, token} = Guardian.Token.Jwt.create_token(SignsUiWeb.AuthManager, claims)
       {:ok, socket} = connect(SignsUiWeb.UserSocket, %{"token" => token})
       {:ok, _, _socket} = subscribe_and_join(socket, "signs:all", %{})
 
