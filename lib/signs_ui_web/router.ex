@@ -38,7 +38,6 @@ defmodule SignsUiWeb.Router do
   scope "/", SignsUiWeb do
     pipe_through([:redirect_prod_http, :browser, :auth, :ensure_auth])
 
-    get("/", PageController, :index)
     get("/viewer", MessagesController, :index)
   end
 
