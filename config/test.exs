@@ -12,5 +12,7 @@ config :signs_ui,
   aws_requestor: SignsUI.Mock.AwsRequest,
   realtime_signs_api_key: "placeholder_key"
 
+config :signs_ui, SignsUiWeb.AuthManager, secret_key: "test secret"
+
 # Print only warnings and errors during test
 config :logger, level: :warn
