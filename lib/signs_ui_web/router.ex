@@ -29,6 +29,13 @@ defmodule SignsUiWeb.Router do
     plug(Guardian.Plug.EnsureAuthenticated)
   end
 
+  scope "/auth", SignsUiWeb do
+    pipe_through([:redirect_prod_http, :browser])
+
+    get("/:provider", AuthController, :request)
+    get("/:provider/callback", AuthController, :callback)
+  end
+
   scope "/", SignsUiWeb do
     pipe_through([:redirect_prod_http, :browser, :auth])
 
@@ -39,10 +46,6 @@ defmodule SignsUiWeb.Router do
     pipe_through([:redirect_prod_http, :browser, :auth, :ensure_auth])
 
     get("/viewer", MessagesController, :index)
-  end
-
-  scope "/", SignsUiWeb do
-    resources("/cognito", CognitoController, only: [:index, :new])
   end
 
   scope "/", SignsUiWeb do

@@ -29,6 +29,17 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:user_id]
 
+config :ueberauth, Ueberauth,
+  providers: [
+    cognito: {Ueberauth.Strategy.Cognito, []}
+  ]
+
+config :ueberauth, Ueberauth.Strategy.Cognito,
+  auth_domain: {System, :get_env, ["COGNITO_DOMAIN"]},
+  redirect_uri: {System, :get_env, ["COGNITO_REDIRECT_URI"]},
+  client_id: {System, :get_env, ["COGNITO_CLIENT_ID"]},
+  client_secret: {System, :get_env, ["COGNITO_CLIENT_SECRET"]}
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"
