@@ -42,10 +42,6 @@ defmodule SignsUiWeb.Router do
   end
 
   scope "/", SignsUiWeb do
-    resources("/cognito", CognitoController, only: [:index, :new])
-  end
-
-  scope "/", SignsUiWeb do
     get("/_health", HealthController, :index)
   end
 
