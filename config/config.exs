@@ -22,7 +22,7 @@ config :signs_ui, :redirect_http?, false
 
 config :signs_ui, SignsUiWeb.AuthManager,
   issuer: "signs_ui",
-  secret_key: {System, :get_env, ["SIGNS_UI_AUTH_SECRET"]}
+  secret_key: "test key"
 
 # Configures Elixir's Logger
 config :logger, :console,
