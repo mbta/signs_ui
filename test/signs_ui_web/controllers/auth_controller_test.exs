@@ -3,12 +3,12 @@ defmodule SignsUiWeb.AuthControllerTest do
 
   describe "callback" do
     test "redirects on success", %{conn: conn} do
+      current_time = DateTime.utc_now() |> DateTime.to_unix()
+
       auth = %Ueberauth.Auth{
         uid: "foo@mbta.com",
-        extra: %Ueberauth.Auth.Extra{
-          raw_info: %{
-            "exp" => 1_557_870_946
-          }
+        credentials: %Ueberauth.Auth.Credentials{
+          expires_at: current_time + 1_000
         }
       }
 

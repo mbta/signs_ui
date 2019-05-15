@@ -4,16 +4,19 @@ defmodule SignsUiWeb.AuthController do
 
   @spec callback(Plug.Conn.t(), map()) :: Plug.Conn.t()
   def callback(%{assigns: %{ueberauth_auth: auth}} = conn, _params) do
-    IO.inspect("======")
-    IO.inspect(auth)
+    username = auth.uid
+    expiration = auth.credentials.expires_at
 
-    user = %{
-      username: auth.uid,
-      expiration: auth.extra.raw_info["exp"]
-    }
+    current_time = DateTime.utc_now() |> DateTime.to_unix()
 
     conn
-    |> Guardian.Plug.sign_in(SignsUiWeb.AuthManager, user)
+    |> Guardian.Plug.sign_in(
+      SignsUiWeb.AuthManager,
+      username,
+      %{},
+      # ttl: {expiration - current_time, :seconds}
+      ttl: {1, :minute}
+    )
     |> redirect(to: SignsUiWeb.Router.Helpers.messages_path(conn, :index))
   end
 
