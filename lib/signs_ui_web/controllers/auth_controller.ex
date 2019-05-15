@@ -14,8 +14,7 @@ defmodule SignsUiWeb.AuthController do
       SignsUiWeb.AuthManager,
       username,
       %{},
-      # ttl: {expiration - current_time, :seconds}
-      ttl: {1, :minute}
+      ttl: {expiration - current_time, :seconds}
     )
     |> redirect(to: SignsUiWeb.Router.Helpers.messages_path(conn, :index))
   end

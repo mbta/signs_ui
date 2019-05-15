@@ -30,12 +30,7 @@ defmodule SignsUiWeb.ConnCase do
   setup tags do
     {conn, user} =
       if tags[:authenticated] do
-        current_time = DateTime.utc_now() |> DateTime.to_unix()
-
-        user = %{
-          username: "test_user",
-          expiration: current_time + 1_000
-        }
+        user = "test_user"
 
         conn =
           Phoenix.ConnTest.build_conn()
