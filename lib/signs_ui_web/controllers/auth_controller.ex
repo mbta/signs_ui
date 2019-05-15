@@ -8,7 +8,7 @@ defmodule SignsUiWeb.AuthController do
     IO.inspect(auth)
 
     user = %{
-      username: auth.extra.raw_info["cognito:username"],
+      username: auth.uid,
       expiration: auth.extra.raw_info["exp"]
     }
 
