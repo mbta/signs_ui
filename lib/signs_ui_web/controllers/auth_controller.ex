@@ -2,7 +2,8 @@ defmodule SignsUiWeb.AuthController do
   use SignsUiWeb, :controller
   plug(Ueberauth)
 
-  def callback(%{assigns: %{ueberauth_auth: auth}} = conn, params) do
+  @spec callback(Plug.Conn.t(), map()) :: Plug.Conn.t()
+  def callback(%{assigns: %{ueberauth_auth: auth}} = conn, _params) do
     IO.inspect("======")
     IO.inspect(auth)
 
