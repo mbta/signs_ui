@@ -28,8 +28,27 @@ defmodule SignsUiWeb.SignsChannelTest do
 
       socket = Guardian.Phoenix.Socket.assign_rtc(socket, "foo@mbta.com", token, claims)
 
-      assert {:stop, :not_authenticated, _socket} =
-               SignsUiWeb.SignsChannel.handle_in("changeSigns", %{}, socket)
+      {:noreply, _socket} = SignsUiWeb.SignsChannel.handle_in("changeSigns", %{}, socket)
+
+      assert_push("auth_expired", %{})
+    end
+
+    test "doesn't double-sending auth_expired message", %{socket: socket} do
+      current_time = DateTime.utc_now() |> DateTime.to_unix()
+      expired_time = current_time - 100
+
+      {:ok, token, claims} =
+        SignsUiWeb.AuthManager.encode_and_sign("foo@mbta.com", %{"exp" => expired_time})
+
+      socket = Guardian.Phoenix.Socket.assign_rtc(socket, "foo@mbta.com", token, claims)
+
+      {:noreply, socket} = SignsUiWeb.SignsChannel.handle_in("changeSigns", %{}, socket)
+
+      assert_push("auth_expired", %{})
+
+      {:noreply, _socket} = SignsUiWeb.SignsChannel.handle_in("changeSigns", %{}, socket)
+
+      refute_push("auth_expired", %{})
     end
   end
 
@@ -55,8 +74,9 @@ defmodule SignsUiWeb.SignsChannelTest do
 
       socket = Guardian.Phoenix.Socket.assign_rtc(socket, "foo@mbta.com", token, claims)
 
-      assert {:stop, :not_authenticated, _socket} =
-               SignsUiWeb.SignsChannel.handle_out("sign_update", %{}, socket)
+      {:noreply, _socket} = SignsUiWeb.SignsChannel.handle_out("sign_update", %{}, socket)
+
+      assert_push("auth_expired", %{})
     end
   end
 end
