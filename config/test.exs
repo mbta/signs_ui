@@ -12,5 +12,5 @@ config :signs_ui,
   aws_requestor: SignsUI.Mock.AwsRequest,
   realtime_signs_api_key: "placeholder_key"
 
-# Print only warnings and errors during test
-config :logger, level: :warn
+# Print only warnings, errors, and info during test
+config :logger, level: :info

@@ -1,5 +1,6 @@
 defmodule SignsUiWeb.SignsChannelTest do
   use SignsUiWeb.ChannelCase
+  import ExUnit.CaptureLog
 
   setup do
     socket = subscribe_and_join!(socket(), SignsUiWeb.SignsChannel, "signs:all", %{})
@@ -16,7 +17,13 @@ defmodule SignsUiWeb.SignsChannelTest do
 
       socket = Guardian.Phoenix.Socket.assign_rtc(socket, "foo@mbta.com", token, claims)
 
-      assert {:noreply, _socket} = SignsUiWeb.SignsChannel.handle_in("changeSigns", %{}, socket)
+      log =
+        capture_log([level: :info], fn ->
+          assert {:noreply, _socket} =
+                   SignsUiWeb.SignsChannel.handle_in("changeSigns", %{}, socket)
+        end)
+
+      assert log =~ "foo@mbta.com"
     end
 
     test "rejects changing signs when socket is not authenticated", %{socket: socket} do

@@ -17,7 +17,9 @@ defmodule SignsUiWeb.SignsChannel do
 
       {:ok, _new_state} = SignsUI.Signs.State.update_some(new_signs)
 
-      Logger.info("Sign toggled: #{inspect(changes)}")
+      username = Guardian.Phoenix.Socket.current_resource(socket)
+
+      Logger.info("sign_changed: user=#{username} changes=#{inspect(changes)}")
 
       {:noreply, socket}
     else
