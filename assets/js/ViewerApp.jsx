@@ -45,6 +45,11 @@ class ViewerApp extends Component {
       this.setState({ signConfigs: state });
     });
 
+    channel.on('auth_expired', () => {
+      console.log('auth_expired');
+      window.location.reload(true);
+    });
+
     this.setState({ channel });
 
     this.timerID = setInterval(
