@@ -4,11 +4,7 @@ defmodule SignsUiWeb.SignsChannel do
   alias SignsUI.Signs.Sign
 
   def join("signs:all", _message, socket) do
-    if socket_authenticated?(socket) do
-      {:ok, socket}
-    else
-      {:error, :not_authenticated}
-    end
+    {:ok, socket}
   end
 
   @spec handle_in(String.t(), %{Sign.id() => map()}, any()) :: {:noreply, Phoenix.Socket.t()}
