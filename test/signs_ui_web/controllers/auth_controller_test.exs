@@ -3,7 +3,7 @@ defmodule SignsUiWeb.AuthControllerTest do
 
   describe "callback" do
     test "redirects on success", %{conn: conn} do
-      current_time = DateTime.utc_now() |> DateTime.to_unix()
+      current_time = System.system_time(:second)
 
       auth = %Ueberauth.Auth{
         uid: "foo@mbta.com",

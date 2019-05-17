@@ -7,7 +7,7 @@ defmodule SignsUiWeb.AuthController do
     username = auth.uid
     expiration = auth.credentials.expires_at
 
-    current_time = DateTime.utc_now() |> DateTime.to_unix()
+    current_time = System.system_time(:second)
 
     conn
     |> Guardian.Plug.sign_in(

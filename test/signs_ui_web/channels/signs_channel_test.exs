@@ -9,8 +9,8 @@ defmodule SignsUiWeb.SignsChannelTest do
 
   describe "handle_in" do
     test "allows changing signs when socket is authenticated", %{socket: socket} do
-      current_time = DateTime.utc_now() |> DateTime.to_unix()
-      expiration_time = current_time + 100
+      current_time = System.system_time(:second)
+      expiration_time = current_time + 500
 
       {:ok, token, claims} =
         SignsUiWeb.AuthManager.encode_and_sign("foo@mbta.com", %{"exp" => expiration_time})
@@ -27,7 +27,7 @@ defmodule SignsUiWeb.SignsChannelTest do
     end
 
     test "rejects changing signs when socket is not authenticated", %{socket: socket} do
-      current_time = DateTime.utc_now() |> DateTime.to_unix()
+      current_time = System.system_time(:second)
       expired_time = current_time - 100
 
       {:ok, token, claims} =
@@ -41,7 +41,7 @@ defmodule SignsUiWeb.SignsChannelTest do
     end
 
     test "doesn't double-sending auth_expired message", %{socket: socket} do
-      current_time = DateTime.utc_now() |> DateTime.to_unix()
+      current_time = System.system_time(:second)
       expired_time = current_time - 100
 
       {:ok, token, claims} =
@@ -61,8 +61,8 @@ defmodule SignsUiWeb.SignsChannelTest do
 
   describe "handle_out" do
     test "allows sending sign updates when socket is authenticated", %{socket: socket} do
-      current_time = DateTime.utc_now() |> DateTime.to_unix()
-      expiration_time = current_time + 100
+      current_time = System.system_time(:second)
+      expiration_time = current_time + 500
 
       {:ok, token, claims} =
         SignsUiWeb.AuthManager.encode_and_sign("foo@mbta.com", %{"exp" => expiration_time})
@@ -73,7 +73,7 @@ defmodule SignsUiWeb.SignsChannelTest do
     end
 
     test "rejects sending sign updates when socket is not authenticated", %{socket: socket} do
-      current_time = DateTime.utc_now() |> DateTime.to_unix()
+      current_time = System.system_time(:second)
       expired_time = current_time - 100
 
       {:ok, token, claims} =

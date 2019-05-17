@@ -51,11 +51,11 @@ defmodule SignsUiWeb.SignsChannel do
 
   @spec maybe_send_auth_expired_message(Phoenix.Socket.t()) :: Phoenix.Socket.t()
   defp maybe_send_auth_expired_message(socket) do
-    if socket.assigns[:auth_expired_message_sent] do
+    if socket.assigns[:auth_expired_message_sent?] do
       socket
     else
       :ok = push(socket, "auth_expired", %{})
-      assign(socket, :auth_expired_message_sent, true)
+      assign(socket, :auth_expired_message_sent?, true)
     end
   end
 end
