@@ -36,9 +36,10 @@ config :ueberauth, Ueberauth,
 
 config :ueberauth, Ueberauth.Strategy.Cognito,
   auth_domain: {System, :get_env, ["COGNITO_DOMAIN"]},
-  redirect_uri: {System, :get_env, ["COGNITO_REDIRECT_URI"]},
   client_id: {System, :get_env, ["COGNITO_CLIENT_ID"]},
-  client_secret: {System, :get_env, ["COGNITO_CLIENT_SECRET"]}
+  client_secret: {System, :get_env, ["COGNITO_CLIENT_SECRET"]},
+  user_pool_id: {System, :get_env, ["COGNITO_USER_POOL_ID"]},
+  aws_region: {System, :get_env, ["COGNITO_AWS_REGION"]}
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

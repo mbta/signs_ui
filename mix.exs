@@ -57,7 +57,7 @@ defmodule SignsUi.Mixfile do
       {:timex, "~> 3.1"},
       {:guardian, "~> 1.0"},
       {:ueberauth, "~> 0.1"},
-      {:ueberauth_cognito, github: "mbta/ueberauth_cognito"}
+      {:ueberauth_cognito, git: "https://github.com/mbta/ueberauth_cognito.git", ref: "ab8294b3"}
     ]
   end
 end
