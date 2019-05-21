@@ -26,6 +26,18 @@ config :signs_ui, :redirect_http?, true
 # Do not print debug messages in production
 config :logger, level: :info
 
+config :ueberauth, Ueberauth,
+  providers: [
+    cognito: {Ueberauth.Strategy.Cognito, []}
+  ]
+
+config :ueberauth, Ueberauth.Strategy.Cognito,
+  auth_domain: {System, :get_env, ["COGNITO_DOMAIN"]},
+  client_id: {System, :get_env, ["COGNITO_CLIENT_ID"]},
+  client_secret: {System, :get_env, ["COGNITO_CLIENT_SECRET"]},
+  user_pool_id: {System, :get_env, ["COGNITO_USER_POOL_ID"]},
+  aws_region: {System, :get_env, ["COGNITO_AWS_REGION"]}
+
 # ## SSL Support
 #
 # To get SSL working, you will need to add the `https` key
