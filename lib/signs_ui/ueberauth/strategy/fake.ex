@@ -3,12 +3,16 @@ defmodule SignsUi.Ueberauth.Strategy.Fake do
 
   def handle_request!(conn) do
     conn
-    |> redirect!(callback_path(conn))
+    |> redirect!("/auth/cognito/callback")
     |> halt()
   end
 
   def handle_callback!(conn) do
     conn
+  end
+
+  def uid(_conn) do
+    "fake_uid"
   end
 
   def credentials(_conn) do
@@ -18,10 +22,6 @@ defmodule SignsUi.Ueberauth.Strategy.Fake do
       expires: true,
       expires_at: System.system_time(:seconds) + 60 * 60
     }
-  end
-
-  def uid(_conn) do
-    "fake_uid"
   end
 
   def info(_conn) do
