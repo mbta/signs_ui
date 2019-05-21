@@ -35,12 +35,12 @@ defmodule SignsUiWeb.AuthControllerTest do
   end
 
   describe "request" do
-    test "redirects to Cognito", %{conn: conn} do
+    test "redirects to auth callback", %{conn: conn} do
       conn = get(conn, SignsUiWeb.Router.Helpers.auth_path(conn, :request, "cognito"))
 
       response = response(conn, 302)
 
-      assert response =~ "/oauth2/authorize"
+      assert response =~ SignsUiWeb.Router.Helpers.auth_path(conn, :callback, "cognito")
     end
   end
 end
