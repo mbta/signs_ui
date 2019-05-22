@@ -7,16 +7,11 @@ defmodule SignsUiWeb.Router do
     plug(:fetch_flash)
     plug(:protect_from_forgery)
     plug(:put_secure_browser_headers)
-    plug(:put_user_token)
   end
 
   pipeline :api do
     plug(:accepts, ["json"])
     plug(:api_auth)
-  end
-
-  pipeline :basic_auth do
-    plug(BasicAuth)
   end
 
   pipeline :redirect_prod_http do
@@ -25,10 +20,30 @@ defmodule SignsUiWeb.Router do
     end
   end
 
+  pipeline :auth do
+    plug(SignsUiWeb.AuthManager.Pipeline)
+  end
+
+  pipeline :ensure_auth do
+    plug(Guardian.Plug.EnsureAuthenticated)
+  end
+
+  scope "/auth", SignsUiWeb do
+    pipe_through([:redirect_prod_http, :browser])
+
+    get("/:provider", AuthController, :request)
+    get("/:provider/callback", AuthController, :callback)
+  end
+
   scope "/", SignsUiWeb do
-    pipe_through([:redirect_prod_http, :browser, :basic_auth])
+    pipe_through([:redirect_prod_http, :browser, :auth])
 
     get("/", PageController, :index)
+  end
+
+  scope "/", SignsUiWeb do
+    pipe_through([:redirect_prod_http, :browser, :auth, :ensure_auth, :put_user_token])
+
     get("/viewer", MessagesController, :index)
   end
 
@@ -47,7 +62,7 @@ defmodule SignsUiWeb.Router do
   # end
 
   defp put_user_token(conn, _) do
-    token = Phoenix.Token.sign(conn, "user socket", "admin")
+    token = Guardian.Plug.current_token(conn)
     assign(conn, :user_token, token)
   end
 

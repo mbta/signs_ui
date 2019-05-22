@@ -20,11 +20,13 @@ defmodule SignsUiWeb.UserSocket do
   # See `Phoenix.Token` documentation for examples in
   # performing token verification on connect.
   def connect(%{"token" => token}, socket) do
-    case Phoenix.Token.verify(socket, "user socket", token, max_age: 1_209_600) do
-      {:ok, "admin"} -> {:ok, socket}
+    case Guardian.Phoenix.Socket.authenticate(socket, SignsUiWeb.AuthManager, token) do
+      {:ok, authed_socket} -> {:ok, authed_socket}
       {:error, _reason} -> :error
     end
   end
+
+  def connect(_params, _socket), do: :error
 
   # Socket id's are topics that allow you to identify all sockets for a given user:
   #

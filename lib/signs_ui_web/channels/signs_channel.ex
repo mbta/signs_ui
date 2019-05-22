@@ -9,15 +9,46 @@ defmodule SignsUiWeb.SignsChannel do
 
   @spec handle_in(String.t(), %{Sign.id() => map()}, any()) :: {:noreply, Phoenix.Socket.t()}
   def handle_in("changeSigns", changes, socket) do
-    new_signs =
-      changes
-      |> Enum.map(fn {id, config} -> {id, Sign.from_config(id, config)} end)
-      |> Enum.into(%{})
+    if socket_authenticated?(socket) do
+      new_signs = Map.new(changes, fn {id, config} -> {id, Sign.from_config(id, config)} end)
 
-    {:ok, _new_state} = SignsUI.Signs.State.update_some(new_signs)
+      {:ok, _new_state} = SignsUI.Signs.State.update_some(new_signs)
 
-    Logger.info("Sign toggled: #{inspect(changes)}")
+      username = Guardian.Phoenix.Socket.current_resource(socket)
 
-    {:noreply, socket}
+      Logger.info("sign_changed: user=#{username} changes=#{inspect(changes)}")
+
+      {:noreply, socket}
+    else
+      {:stop, :normal, send_auth_expired_message(socket)}
+    end
+  end
+
+  intercept(["sign_update"])
+
+  def handle_out("sign_update", msg, socket) do
+    if socket_authenticated?(socket) do
+      push(socket, "sign_update", msg)
+      {:noreply, socket}
+    else
+      {:stop, :normal, send_auth_expired_message(socket)}
+    end
+  end
+
+  @spec socket_authenticated?(Phoenix.Socket.t()) :: boolean()
+  defp socket_authenticated?(socket) do
+    claims = Guardian.Phoenix.Socket.current_claims(socket)
+    token = Guardian.Phoenix.Socket.current_token(socket)
+
+    case SignsUiWeb.AuthManager.decode_and_verify(token, claims) do
+      {:ok, _claims} -> true
+      {:error, _error} -> false
+    end
+  end
+
+  @spec send_auth_expired_message(Phoenix.Socket.t()) :: Phoenix.Socket.t()
+  defp send_auth_expired_message(socket) do
+    :ok = push(socket, "auth_expired", %{})
+    socket
   end
 end

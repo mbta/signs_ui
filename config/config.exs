@@ -20,10 +20,19 @@ config :signs_ui,
 # HTTP config
 config :signs_ui, :redirect_http?, false
 
+config :signs_ui, SignsUiWeb.AuthManager,
+  issuer: "signs_ui",
+  secret_key: "test key"
+
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:user_id]
+
+config :ueberauth, Ueberauth,
+  providers: [
+    cognito: {SignsUi.Ueberauth.Strategy.Fake, []}
+  ]
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

@@ -14,6 +14,7 @@ defmodule SignsUiWeb.ConnCase do
   """
 
   use ExUnit.CaseTemplate
+  import Plug.Test
 
   using do
     quote do
@@ -26,7 +27,21 @@ defmodule SignsUiWeb.ConnCase do
     end
   end
 
-  setup _tags do
-    {:ok, conn: Phoenix.ConnTest.build_conn()}
+  setup tags do
+    {conn, user} =
+      if tags[:authenticated] do
+        user = "test_user"
+
+        conn =
+          Phoenix.ConnTest.build_conn()
+          |> init_test_session(%{})
+          |> Guardian.Plug.sign_in(SignsUiWeb.AuthManager, user)
+
+        {conn, user}
+      else
+        {Phoenix.ConnTest.build_conn(), nil}
+      end
+
+    {:ok, %{conn: conn, user: user}}
   end
 end

@@ -1,11 +1,23 @@
 defmodule SignsUI.Signs.StateTest do
-  use ExUnit.Case
-  use Phoenix.ChannelTest
+  use SignsUiWeb.ChannelCase
   import SignsUI.Signs.State
   alias SignsUI.Signs
   alias SignsUI.Signs.Sign
 
-  @endpoint SignsUiWeb.Endpoint
+  setup do
+    {:ok, claims} =
+      Guardian.Token.Jwt.build_claims(
+        SignsUiWeb.AuthManager,
+        "test_user",
+        "test_user"
+      )
+
+    {:ok, token} = Guardian.Token.Jwt.create_token(SignsUiWeb.AuthManager, claims)
+    {:ok, socket} = connect(SignsUiWeb.UserSocket, %{"token" => token})
+    {:ok, _, socket} = subscribe_and_join(socket, "signs:all", %{})
+
+    {:ok, socket: socket}
+  end
 
   describe "get_all/1" do
     test "Returns all signs" do
@@ -21,9 +33,6 @@ defmodule SignsUI.Signs.StateTest do
       {:ok, pid} = GenServer.start_link(SignsUI.Signs.State, [], [])
 
       @endpoint.subscribe("signs:all")
-      token = Phoenix.Token.sign(SignsUiWeb.Endpoint, "user socket", "admin")
-      {:ok, socket} = connect(SignsUiWeb.UserSocket, %{"token" => token})
-      {:ok, _, _socket} = subscribe_and_join(socket, "signs:all", %{})
 
       assert %{
                "maverick_westbound" => %Signs.Sign{config: %{mode: :auto}},

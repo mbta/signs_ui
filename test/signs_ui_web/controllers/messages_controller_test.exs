@@ -9,13 +9,22 @@ defmodule SignsUiWeb.MessagesControllerTest do
   }
 
   describe "index" do
+    @tag :authenticated
     test "lists all messages", %{conn: conn} do
-      conn =
-        conn
-        |> add_req_header(:basic)
-        |> get(messages_path(conn, :index))
+      conn = get(conn, messages_path(conn, :index))
 
       assert html_response(conn, 200) =~ "MBTA Realtime Signs"
+    end
+
+    @tag :authenticated
+    test "includes user token", %{conn: conn} do
+      conn = get(conn, messages_path(conn, :index))
+
+      response = html_response(conn, 200)
+
+      token = Regex.run(~r/window.userToken = "(.+)";/, response) |> Enum.at(1)
+
+      assert {:ok, _claims} = Guardian.decode_and_verify(SignsUiWeb.AuthManager, token)
     end
   end
 
@@ -23,7 +32,7 @@ defmodule SignsUiWeb.MessagesControllerTest do
     test "responds with the 201 when its valid", %{conn: conn} do
       conn =
         conn
-        |> add_req_header(:api)
+        |> add_api_req_header()
         |> post(messages_path(conn, :create, @update_attrs), messages: @update_attrs)
 
       assert response(conn, 201)
@@ -38,11 +47,7 @@ defmodule SignsUiWeb.MessagesControllerTest do
     end
   end
 
-  defp add_req_header(conn, :api) do
+  defp add_api_req_header(conn) do
     %{conn | req_headers: [{"x-api-key", "placeholder_key"}]}
-  end
-
-  defp add_req_header(conn, :basic) do
-    %{conn | req_headers: [{"authorization", "Basic dXNlcm5hbWU6cGFzc3dvcmQ="}]}
   end
 end
