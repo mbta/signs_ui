@@ -20,7 +20,7 @@ defmodule SignsUiWeb.SignsChannel do
 
       {:noreply, socket}
     else
-      {:noreply, maybe_send_auth_expired_message(socket)}
+      {:stop, :normal, send_auth_expired_message(socket)}
     end
   end
 
@@ -31,7 +31,7 @@ defmodule SignsUiWeb.SignsChannel do
       push(socket, "sign_update", msg)
       {:noreply, socket}
     else
-      {:noreply, maybe_send_auth_expired_message(socket)}
+      {:stop, :normal, send_auth_expired_message(socket)}
     end
   end
 
@@ -46,13 +46,9 @@ defmodule SignsUiWeb.SignsChannel do
     end
   end
 
-  @spec maybe_send_auth_expired_message(Phoenix.Socket.t()) :: Phoenix.Socket.t()
-  defp maybe_send_auth_expired_message(socket) do
-    if socket.assigns[:auth_expired_message_sent?] do
-      socket
-    else
-      :ok = push(socket, "auth_expired", %{})
-      assign(socket, :auth_expired_message_sent?, true)
-    end
+  @spec send_auth_expired_message(Phoenix.Socket.t()) :: Phoenix.Socket.t()
+  defp send_auth_expired_message(socket) do
+    :ok = push(socket, "auth_expired", %{})
+    socket
   end
 end
