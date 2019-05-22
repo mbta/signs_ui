@@ -4,7 +4,7 @@ defmodule SignsUI.Signs.StateTest do
   alias SignsUI.Signs
   alias SignsUI.Signs.Sign
 
-  setup _tags do
+  setup do
     {:ok, claims} =
       Guardian.Token.Jwt.build_claims(
         SignsUiWeb.AuthManager,

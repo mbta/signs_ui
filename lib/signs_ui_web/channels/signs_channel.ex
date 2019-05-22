@@ -10,10 +10,7 @@ defmodule SignsUiWeb.SignsChannel do
   @spec handle_in(String.t(), %{Sign.id() => map()}, any()) :: {:noreply, Phoenix.Socket.t()}
   def handle_in("changeSigns", changes, socket) do
     if socket_authenticated?(socket) do
-      new_signs =
-        changes
-        |> Enum.map(fn {id, config} -> {id, Sign.from_config(id, config)} end)
-        |> Enum.into(%{})
+      new_signs = Map.new(changes, fn {id, config} -> {id, Sign.from_config(id, config)} end)
 
       {:ok, _new_state} = SignsUI.Signs.State.update_some(new_signs)
 
