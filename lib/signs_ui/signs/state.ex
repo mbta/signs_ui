@@ -1,4 +1,4 @@
-defmodule SignsUi.Signs.Messages do
+defmodule SignsUi.Signs.State do
   use GenServer
 
   @type message :: String.t()

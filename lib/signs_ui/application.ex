@@ -9,7 +9,7 @@ defmodule SignsUi.Application do
     children = [
       SignsUiWeb.Endpoint,
       SignsUi.Config.State,
-      {SignsUi.Signs.Messages, [name: SignsUi.Signs.Messages]},
+      {SignsUi.Signs.State, [name: SignsUi.Signs.State]},
       SignsUi.Config.Expiration
     ]
 

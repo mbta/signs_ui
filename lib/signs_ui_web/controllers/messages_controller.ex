@@ -1,11 +1,11 @@
 defmodule SignsUiWeb.MessagesController do
   use SignsUiWeb, :controller
 
-  alias SignsUi.Signs.Messages
+  alias SignsUi.Signs.State
 
   @spec index(Plug.Conn.t(), map()) :: Plug.Conn.t()
   def index(conn, _params) do
-    messages = Messages.list_messages()
+    messages = State.list_messages()
 
     sign_configs =
       SignsUi.Config.State.get_all()
@@ -19,7 +19,7 @@ defmodule SignsUiWeb.MessagesController do
 
   @spec create(Plug.Conn.t(), map()) :: Plug.Conn.t()
   def create(conn, params) do
-    case Messages.add_message(params) do
+    case State.add_message(params) do
       {:ok, _messages} ->
         send_resp(conn, 201, "")
 
