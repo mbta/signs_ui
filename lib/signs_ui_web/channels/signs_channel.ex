@@ -1,7 +1,7 @@
 defmodule SignsUiWeb.SignsChannel do
   use Phoenix.Channel
   require Logger
-  alias SignsUI.Signs.Sign
+  alias SignsUi.Config.Sign
 
   def join("signs:all", _message, socket) do
     {:ok, socket}
@@ -12,7 +12,7 @@ defmodule SignsUiWeb.SignsChannel do
     if socket_authenticated?(socket) do
       new_signs = Map.new(changes, fn {id, config} -> {id, Sign.from_config(id, config)} end)
 
-      {:ok, _new_state} = SignsUI.Signs.State.update_some(new_signs)
+      {:ok, _new_state} = SignsUi.Config.State.update_some(new_signs)
 
       username = Guardian.Phoenix.Socket.current_resource(socket)
 

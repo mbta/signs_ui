@@ -1,8 +1,9 @@
-defmodule SignsUI.Signs.ExpirationTest do
+defmodule SignsUi.Config.ExpirationTest do
   use ExUnit.Case
   import ExUnit.CaptureLog
   require Logger
-  alias SignsUI.Signs.Sign
+  alias SignsUi.Signs.Sign
+  alias SignsUi.Config.Sign
 
   describe "expire_signs/2" do
     test "produces correct updates" do
@@ -46,7 +47,7 @@ defmodule SignsUI.Signs.ExpirationTest do
         }
       }
 
-      assert SignsUI.Signs.Expiration.expire_signs(signs, fn ->
+      assert SignsUi.Config.Expiration.expire_signs(signs, fn ->
                Timex.to_datetime(~N[2019-01-15 08:00:00], "America/New_York")
              end) == expected_updates
     end
@@ -58,7 +59,7 @@ defmodule SignsUI.Signs.ExpirationTest do
       Logger.configure(level: :info)
       on_exit(fn -> Logger.configure(level: old_level) end)
 
-      {:ok, _state_pid} = SignsUI.Signs.State.start_link(name: :sign_state_test)
+      {:ok, _state_pid} = SignsUi.Config.State.start_link(name: :sign_state_test)
 
       state = %{
         time_fetcher: fn ->
@@ -70,12 +71,12 @@ defmodule SignsUI.Signs.ExpirationTest do
 
       log =
         capture_log([level: :info], fn ->
-          {:noreply, _state} = SignsUI.Signs.Expiration.handle_info(:process_expired, state)
+          {:noreply, _state} = SignsUi.Config.Expiration.handle_info(:process_expired, state)
         end)
 
       assert log =~ "Cleaning expired settings for sign IDs: [\"harvard_northbound\"]"
 
-      new_state = SignsUI.Signs.State.get_all(:sign_state_test)
+      new_state = SignsUi.Config.State.get_all(:sign_state_test)
 
       assert new_state["harvard_northbound"].config.mode == :auto
       assert new_state["harvard_southbound"].config.mode == :static_text

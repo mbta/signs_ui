@@ -1,70 +1,98 @@
-defmodule SignsUI.Signs.StateTest do
-  use SignsUiWeb.ChannelCase
-  import SignsUI.Signs.State
-  alias SignsUI.Signs
-  alias SignsUI.Signs.Sign
+defmodule SignsUi.Signs.StateTest do
+  use ExUnit.Case
 
-  setup do
-    {:ok, claims} =
-      Guardian.Token.Jwt.build_claims(
-        SignsUiWeb.AuthManager,
-        "test_user",
-        "test_user"
-      )
+  test "receives a message and stores the sign in the state" do
+    {:ok, pid} = SignsUi.Signs.State.start_link()
 
-    {:ok, token} = Guardian.Token.Jwt.create_token(SignsUiWeb.AuthManager, claims)
-    {:ok, socket} = connect(SignsUiWeb.UserSocket, %{"token" => token})
-    {:ok, _, socket} = subscribe_and_join(socket, "signs:all", %{})
+    SignsUi.Signs.State.add_message(pid, %{
+      "MsgType" => "SignContent",
+      "c" => ["e130~n2-\"Alewife 12 min\""],
+      "sta" => "RDTC",
+      "uid" => "616722"
+    })
 
-    {:ok, socket: socket}
+    assert %{"RDTC-n" => [%{duration: _, text: ""}, %{duration: _, text: "Alewife 12 min"}]} =
+             SignsUi.Signs.State.list_messages(pid)
   end
 
-  describe "get_all/1" do
-    test "Returns all signs" do
-      {:ok, signs_server} = start_supervised({Signs.State, [name: :sign_test]})
-      signs = %{"sign1" => Sign.new("sign1", true), "sign2" => Sign.new("sign2", true)}
-      :sys.replace_state(signs_server, fn _state -> signs end)
-      assert get_all(signs_server) == signs
-    end
+  test "receives a message with a ' and does not truncate everything before it" do
+    {:ok, pid} = SignsUi.Signs.State.start_link()
+
+    SignsUi.Signs.State.add_message(pid, %{
+      "MsgType" => "SignContent",
+      "c" => ["e130~n2-\"Alewife 12' min\""],
+      "sta" => "RDTC",
+      "uid" => "616722"
+    })
+
+    assert %{"RDTC-n" => [%{duration: _, text: ""}, %{duration: _, text: "Alewife 12' min"}]} =
+             SignsUi.Signs.State.list_messages(pid)
   end
 
-  describe "update_some" do
-    test "updates some values and leaves others alone" do
-      {:ok, pid} = GenServer.start_link(SignsUI.Signs.State, [], [])
+  test "when it recieves a second line for a sign, both lines are persisted" do
+    {:ok, pid} = SignsUi.Signs.State.start_link()
 
-      @endpoint.subscribe("signs:all")
+    SignsUi.Signs.State.add_message(pid, %{
+      "MsgType" => "SignContent",
+      "c" => ["e130~n2-\"Alewife 12 min\""],
+      "sta" => "RDTC",
+      "uid" => "616722"
+    })
 
-      assert %{
-               "maverick_westbound" => %Signs.Sign{config: %{mode: :auto}},
-               "maverick_eastbound" => %Signs.Sign{config: %{mode: :auto}},
-               "forest_hills_southbound" => %Signs.Sign{config: %{mode: :auto}}
-             } = get_all(pid)
+    SignsUi.Signs.State.add_message(pid, %{
+      "MsgType" => "SignContent",
+      "c" => ["e130~n1-\"Alewife 4 min\""],
+      "sta" => "RDTC",
+      "uid" => "616722"
+    })
 
-      {:ok, new_state} =
-        update_some(pid, %{
-          "maverick_eastbound" => Sign.new("maverick_eastbound", false),
-          "maverick_westbound" => Sign.new("maverick_westbound", false)
-        })
+    assert %{
+             "RDTC-n" => [
+               %{duration: _, text: "Alewife 4 min"},
+               %{duration: _, text: "Alewife 12 min"}
+             ]
+           } = SignsUi.Signs.State.list_messages(pid)
+  end
 
-      assert %{
-               "maverick_westbound" => %Signs.Sign{config: %{mode: :off}},
-               "maverick_eastbound" => %Signs.Sign{config: %{mode: :off}},
-               "forest_hills_southbound" => %Signs.Sign{config: %{mode: :auto}}
-             } = new_state
+  test "when the message has multiple dashes it doesnt crash" do
+    {:ok, pid} = SignsUi.Signs.State.start_link()
 
-      expected_broadcast =
-        pid
-        |> get_all()
-        |> Enum.map(fn {_id, sign} -> {sign.id, sign.config} end)
-        |> Enum.into(%{})
+    SignsUi.Signs.State.add_message(pid, %{
+      "MsgType" => "SignContent",
+      "c" => ["e130~n2-\"Alewife 12 min\".4-\"Braintre 4 min\""],
+      "sta" => "RDTC",
+      "uid" => "616722"
+    })
 
-      assert_broadcast("new_sign_configs_state", ^expected_broadcast)
+    assert %{"RDTC-n" => [%{duration: _, text: ""}, %{duration: _, text: "Alewife 12 min"}]} =
+             SignsUi.Signs.State.list_messages(pid)
+  end
 
-      assert %{
-               "maverick_westbound" => %Signs.Sign{config: %{mode: :off}},
-               "maverick_eastbound" => %Signs.Sign{config: %{mode: :off}},
-               "forest_hills_southbound" => %Signs.Sign{config: %{mode: :auto}}
-             } = get_all(pid)
-    end
+  test "when we send a stopped stops away message, only sends the n-stops part" do
+    {:ok, pid} = SignsUi.Signs.State.start_link()
+
+    SignsUi.Signs.State.add_message(pid, %{
+      "MsgType" => "SignContent",
+      "c" => ["e130~n2-\"Alewife away\".4-\"Alewife stopped\".4-\"Alewife 4 stops\".4"],
+      "sta" => "RDTC",
+      "uid" => "616722"
+    })
+
+    assert %{"RDTC-n" => [%{duration: _, text: ""}, %{duration: _, text: "Alewife 4 stops"}]} =
+             SignsUi.Signs.State.list_messages(pid)
+  end
+
+  test "when the message has a blank string for the sign, it does not crash" do
+    {:ok, pid} = SignsUi.Signs.State.start_link()
+
+    SignsUi.Signs.State.add_message(pid, %{
+      "MsgType" => "SignContent",
+      "c" => ["e130~n2-"],
+      "sta" => "RDTC",
+      "uid" => "616722"
+    })
+
+    assert %{"RDTC-n" => [%{duration: _, text: ""}, %{duration: _, text: ""}]} =
+             SignsUi.Signs.State.list_messages(pid)
   end
 end

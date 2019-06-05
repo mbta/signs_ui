@@ -14,7 +14,7 @@ config :signs_ui, SignsUiWeb.Endpoint,
 
 # Internal configuration
 config :signs_ui,
-  signs_external_post_mod: SignsUI.Signs.S3,
+  signs_external_post_mod: SignsUi.Config.S3,
   aws_requestor: ExAws
 
 # HTTP config

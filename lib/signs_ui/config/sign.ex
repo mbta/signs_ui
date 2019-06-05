@@ -1,4 +1,4 @@
-defmodule SignsUI.Signs.Sign do
+defmodule SignsUi.Config.Sign do
   require Logger
 
   @enforce_keys [:id, :config]

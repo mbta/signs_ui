@@ -1,4 +1,4 @@
-defmodule SignsUI.Mock.AwsRequest do
+defmodule SignsUi.Mock.AwsRequest do
   def request(%{http_method: :put} = put_object) do
     {:ok, put_object}
   end

@@ -8,9 +8,9 @@ defmodule SignsUi.Application do
 
     children = [
       SignsUiWeb.Endpoint,
-      SignsUI.Signs.State,
-      {SignsUi.Signs.Messages, [name: SignsUi.Signs.Messages]},
-      SignsUI.Signs.Expiration
+      SignsUi.Config.State,
+      {SignsUi.Signs.State, [name: SignsUi.Signs.State]},
+      SignsUi.Config.Expiration
     ]
 
     opts = [strategy: :one_for_one, name: SignsUi.Supervisor]

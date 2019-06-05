@@ -1,6 +1,7 @@
-defmodule SignsUI.Signs.Request do
+defmodule SignsUi.Config.Request do
   require Logger
-  alias SignsUI.Signs.{Sign, S3}
+  alias SignsUi.Config.S3
+  alias SignsUi.Config.Sign
 
   def get_signs() do
     case S3.get_object() do
