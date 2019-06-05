@@ -1,8 +1,9 @@
-defmodule SignsUi.Signs.SignTest do
+defmodule SignsUi.Config.SignTest do
   use ExUnit.Case, async: true
   import ExUnit.CaptureLog
-  import SignsUi.Signs.Sign
+  import SignsUi.Config.Sign
   alias SignsUi.Signs.Sign
+  alias SignsUi.Config.Sign
 
   @expires "2018-08-10T12:00:00Z"
 

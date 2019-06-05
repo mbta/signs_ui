@@ -3,6 +3,7 @@ defmodule SignsUi.Signs.ExpirationTest do
   import ExUnit.CaptureLog
   require Logger
   alias SignsUi.Signs.Sign
+  alias SignsUi.Config.Sign
 
   describe "expire_signs/2" do
     test "produces correct updates" do

@@ -2,7 +2,8 @@ defmodule SignsUi.Signs.StateTest do
   use SignsUiWeb.ChannelCase
   import SignsUi.Signs.State
   alias SignsUi.Signs
-  alias SignsUi.Signs.Sign
+  alias SignsUi.Config
+  alias SignsUi.Config.Sign
 
   setup do
     {:ok, claims} =
@@ -35,9 +36,9 @@ defmodule SignsUi.Signs.StateTest do
       @endpoint.subscribe("signs:all")
 
       assert %{
-               "maverick_westbound" => %Signs.Sign{config: %{mode: :auto}},
-               "maverick_eastbound" => %Signs.Sign{config: %{mode: :auto}},
-               "forest_hills_southbound" => %Signs.Sign{config: %{mode: :auto}}
+               "maverick_westbound" => %Config.Sign{config: %{mode: :auto}},
+               "maverick_eastbound" => %Config.Sign{config: %{mode: :auto}},
+               "forest_hills_southbound" => %Config.Sign{config: %{mode: :auto}}
              } = get_all(pid)
 
       {:ok, new_state} =
@@ -47,9 +48,9 @@ defmodule SignsUi.Signs.StateTest do
         })
 
       assert %{
-               "maverick_westbound" => %Signs.Sign{config: %{mode: :off}},
-               "maverick_eastbound" => %Signs.Sign{config: %{mode: :off}},
-               "forest_hills_southbound" => %Signs.Sign{config: %{mode: :auto}}
+               "maverick_westbound" => %Config.Sign{config: %{mode: :off}},
+               "maverick_eastbound" => %Config.Sign{config: %{mode: :off}},
+               "forest_hills_southbound" => %Config.Sign{config: %{mode: :auto}}
              } = new_state
 
       expected_broadcast =
@@ -61,9 +62,9 @@ defmodule SignsUi.Signs.StateTest do
       assert_broadcast("new_sign_configs_state", ^expected_broadcast)
 
       assert %{
-               "maverick_westbound" => %Signs.Sign{config: %{mode: :off}},
-               "maverick_eastbound" => %Signs.Sign{config: %{mode: :off}},
-               "forest_hills_southbound" => %Signs.Sign{config: %{mode: :auto}}
+               "maverick_westbound" => %Config.Sign{config: %{mode: :off}},
+               "maverick_eastbound" => %Config.Sign{config: %{mode: :off}},
+               "forest_hills_southbound" => %Config.Sign{config: %{mode: :auto}}
              } = get_all(pid)
     end
   end

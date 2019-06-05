@@ -4,7 +4,7 @@ defmodule SignsUi.Signs.Expiration do
   """
   use GenServer
   require Logger
-  alias SignsUi.Signs.Sign
+  alias SignsUi.Config.Sign
 
   @type state :: %{
           time_fetcher: (() -> DateTime.t()),

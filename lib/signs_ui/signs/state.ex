@@ -7,7 +7,7 @@ defmodule SignsUi.Signs.State do
   alias SignsUi.Signs
 
   @type t :: %{
-          Signs.Sign.id() => Signs.Sign.t()
+          Config.Sign.id() => Config.Sign.t()
         }
 
   def start_link(opts \\ []) do
@@ -19,7 +19,7 @@ defmodule SignsUi.Signs.State do
     GenServer.call(pid, :get_all)
   end
 
-  @spec update_some(GenServer.server(), %{Signs.Sign.id() => Signs.Sign.t()}) :: {:ok, t()}
+  @spec update_some(GenServer.server(), %{Config.Sign.id() => Config.Sign.t()}) :: {:ok, t()}
   def update_some(pid \\ __MODULE__, changes) do
     GenServer.call(pid, {:update_some, changes})
   end

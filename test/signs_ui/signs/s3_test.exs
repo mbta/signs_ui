@@ -1,7 +1,7 @@
 defmodule SignsUi.Signs.S3Test do
   use ExUnit.Case, async: true
   import SignsUi.Signs.S3
-  alias SignsUi.Signs.Sign
+  alias SignsUi.Config.Sign
 
   describe "update/1" do
     test "sends_update" do
