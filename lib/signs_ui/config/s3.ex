@@ -1,4 +1,4 @@
-defmodule SignsUi.Signs.S3 do
+defmodule SignsUi.Config.S3 do
   alias SignsUi.Config
 
   def update(signs) do

@@ -1,6 +1,6 @@
 defmodule SignsUi.Config.Request do
   require Logger
-  alias SignsUi.Signs.S3
+  alias SignsUi.Config.S3
   alias SignsUi.Config.Sign
 
   def get_signs() do
