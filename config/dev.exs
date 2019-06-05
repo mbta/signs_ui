@@ -41,8 +41,8 @@ config :signs_ui, SignsUiWeb.Endpoint,
   ]
 
 config :signs_ui,
-  signs_external_post_mod: SignsUI.Mock.Write,
-  aws_requestor: SignsUI.Mock.AwsRequest,
+  signs_external_post_mod: SignsUi.Mock.Write,
+  aws_requestor: SignsUi.Mock.AwsRequest,
   local_write_path: "test/mock_write.json"
 
 # Do not include metadata nor timestamps in development logs

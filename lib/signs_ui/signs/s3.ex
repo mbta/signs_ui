@@ -1,5 +1,5 @@
-defmodule SignsUI.Signs.S3 do
-  alias SignsUI.Config
+defmodule SignsUi.Signs.S3 do
+  alias SignsUi.Config
 
   def update(signs) do
     json = signs |> Config.Signs.format_signs_for_json() |> Poison.encode(pretty: true)

@@ -1,7 +1,7 @@
-defmodule SignsUI.Config.SignsTest do
+defmodule SignsUi.Config.SignsTest do
   use ExUnit.Case, async: true
-  import SignsUI.Config.Signs
-  alias SignsUI.Signs.Sign
+  import SignsUi.Config.Signs
+  alias SignsUi.Signs.Sign
 
   @signs %{
     "sign1" => Sign.new("sign1", true),

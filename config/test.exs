@@ -7,9 +7,9 @@ config :signs_ui, SignsUiWeb.Endpoint,
   server: false
 
 config :signs_ui,
-  signs_external_post_mod: SignsUI.Mock.Write,
+  signs_external_post_mod: SignsUi.Mock.Write,
   local_write_path: "test/mock_write.json",
-  aws_requestor: SignsUI.Mock.AwsRequest,
+  aws_requestor: SignsUi.Mock.AwsRequest,
   realtime_signs_api_key: "placeholder_key"
 
 # Print only warnings, errors, and info during test

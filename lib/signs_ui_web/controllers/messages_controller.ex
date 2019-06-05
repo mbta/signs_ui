@@ -8,7 +8,7 @@ defmodule SignsUiWeb.MessagesController do
     messages = Messages.list_messages()
 
     sign_configs =
-      SignsUI.Signs.State.get_all()
+      SignsUi.Signs.State.get_all()
       |> Enum.map(fn {_id, sign} ->
         {sign.id, sign.config}
       end)

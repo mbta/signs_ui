@@ -1,8 +1,8 @@
-defmodule SignsUI.Signs.StateTest do
+defmodule SignsUi.Signs.StateTest do
   use SignsUiWeb.ChannelCase
-  import SignsUI.Signs.State
-  alias SignsUI.Signs
-  alias SignsUI.Signs.Sign
+  import SignsUi.Signs.State
+  alias SignsUi.Signs
+  alias SignsUi.Signs.Sign
 
   setup do
     {:ok, claims} =
@@ -30,7 +30,7 @@ defmodule SignsUI.Signs.StateTest do
 
   describe "update_some" do
     test "updates some values and leaves others alone" do
-      {:ok, pid} = GenServer.start_link(SignsUI.Signs.State, [], [])
+      {:ok, pid} = GenServer.start_link(SignsUi.Signs.State, [], [])
 
       @endpoint.subscribe("signs:all")
 

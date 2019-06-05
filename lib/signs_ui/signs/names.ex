@@ -1,4 +1,4 @@
-defmodule SignsUI.Signs.Names do
+defmodule SignsUi.Signs.Names do
   def sign_routes() do
     %{
       mattapan: "Mattapan",

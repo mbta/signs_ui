@@ -1,10 +1,10 @@
-defmodule SignsUI.Signs.State do
+defmodule SignsUi.Signs.State do
   @moduledoc """
     Keeps an internal state of all the signs
   """
   use GenServer
   require Logger
-  alias SignsUI.Signs
+  alias SignsUi.Signs
 
   @type t :: %{
           Signs.Sign.id() => Signs.Sign.t()
