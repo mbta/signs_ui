@@ -4,7 +4,7 @@ defmodule SignsUI.Mock.Write do
 
     json =
       signs
-      |> SignsUI.Signs.Signs.format_signs_for_json()
+      |> SignsUI.Config.Signs.format_signs_for_json()
       |> Poison.encode!()
 
     case File.write(file_path, json) do

@@ -1,4 +1,4 @@
-defmodule SignsUI.Signs.Signs do
+defmodule SignsUI.Config.Signs do
   alias SignsUI.Signs.Sign
 
   @spec format_signs_for_json(%{Sign.id() => Sign.t()}) :: map()
