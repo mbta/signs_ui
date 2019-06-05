@@ -1,4 +1,4 @@
-defmodule SignsUi.Signs.ExpirationTest do
+defmodule SignsUi.Config.ExpirationTest do
   use ExUnit.Case
   import ExUnit.CaptureLog
   require Logger
@@ -47,7 +47,7 @@ defmodule SignsUi.Signs.ExpirationTest do
         }
       }
 
-      assert SignsUi.Signs.Expiration.expire_signs(signs, fn ->
+      assert SignsUi.Config.Expiration.expire_signs(signs, fn ->
                Timex.to_datetime(~N[2019-01-15 08:00:00], "America/New_York")
              end) == expected_updates
     end
@@ -71,7 +71,7 @@ defmodule SignsUi.Signs.ExpirationTest do
 
       log =
         capture_log([level: :info], fn ->
-          {:noreply, _state} = SignsUi.Signs.Expiration.handle_info(:process_expired, state)
+          {:noreply, _state} = SignsUi.Config.Expiration.handle_info(:process_expired, state)
         end)
 
       assert log =~ "Cleaning expired settings for sign IDs: [\"harvard_northbound\"]"

@@ -1,4 +1,4 @@
-defmodule SignsUi.Signs.Expiration do
+defmodule SignsUi.Config.Expiration do
   @moduledoc """
   Handle cleaning up settings in the configuration that have since expired
   """

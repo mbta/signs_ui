@@ -10,7 +10,7 @@ defmodule SignsUi.Application do
       SignsUiWeb.Endpoint,
       SignsUi.Config.State,
       {SignsUi.Signs.Messages, [name: SignsUi.Signs.Messages]},
-      SignsUi.Signs.Expiration
+      SignsUi.Config.Expiration
     ]
 
     opts = [strategy: :one_for_one, name: SignsUi.Supervisor]
