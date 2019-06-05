@@ -1,4 +1,4 @@
-defmodule SignsUi.Signs.Request do
+defmodule SignsUi.Config.Request do
   require Logger
   alias SignsUi.Signs.S3
   alias SignsUi.Config.Sign

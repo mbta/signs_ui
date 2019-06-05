@@ -4,7 +4,8 @@ defmodule SignsUi.Config.State do
   """
   use GenServer
   require Logger
-  alias SignsUi.Signs
+
+  alias SignsUi.Config
 
   @type t :: %{
           Config.Sign.id() => Config.Sign.t()
@@ -26,7 +27,7 @@ defmodule SignsUi.Config.State do
 
   @spec init(any()) :: {:ok, t()} | {:stop, any()}
   def init(_) do
-    case Signs.Request.get_signs() do
+    case Config.Request.get_signs() do
       {:ok, state} ->
         # re-save state, since format was updated
         save_changes(%{}, state)
