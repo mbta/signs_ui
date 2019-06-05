@@ -1,7 +1,6 @@
 defmodule SignsUiWeb.SignsChannel do
   use Phoenix.Channel
   require Logger
-  alias SignsUi.Signs.Sign
   alias SignsUi.Config.Sign
 
   def join("signs:all", _message, socket) do
