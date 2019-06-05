@@ -59,7 +59,7 @@ defmodule SignsUi.Signs.ExpirationTest do
       Logger.configure(level: :info)
       on_exit(fn -> Logger.configure(level: old_level) end)
 
-      {:ok, _state_pid} = SignsUi.Signs.State.start_link(name: :sign_state_test)
+      {:ok, _state_pid} = SignsUi.Config.State.start_link(name: :sign_state_test)
 
       state = %{
         time_fetcher: fn ->
@@ -76,7 +76,7 @@ defmodule SignsUi.Signs.ExpirationTest do
 
       assert log =~ "Cleaning expired settings for sign IDs: [\"harvard_northbound\"]"
 
-      new_state = SignsUi.Signs.State.get_all(:sign_state_test)
+      new_state = SignsUi.Config.State.get_all(:sign_state_test)
 
       assert new_state["harvard_northbound"].config.mode == :auto
       assert new_state["harvard_southbound"].config.mode == :static_text

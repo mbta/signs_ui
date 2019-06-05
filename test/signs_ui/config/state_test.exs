@@ -1,7 +1,6 @@
-defmodule SignsUi.Signs.StateTest do
+defmodule SignsUi.Config.StateTest do
   use SignsUiWeb.ChannelCase
-  import SignsUi.Signs.State
-  alias SignsUi.Signs
+  import SignsUi.Config.State
   alias SignsUi.Config
   alias SignsUi.Config.Sign
 
@@ -22,7 +21,7 @@ defmodule SignsUi.Signs.StateTest do
 
   describe "get_all/1" do
     test "Returns all signs" do
-      {:ok, signs_server} = start_supervised({Signs.State, [name: :sign_test]})
+      {:ok, signs_server} = start_supervised({Config.State, [name: :sign_test]})
       signs = %{"sign1" => Sign.new("sign1", true), "sign2" => Sign.new("sign2", true)}
       :sys.replace_state(signs_server, fn _state -> signs end)
       assert get_all(signs_server) == signs
@@ -31,7 +30,7 @@ defmodule SignsUi.Signs.StateTest do
 
   describe "update_some" do
     test "updates some values and leaves others alone" do
-      {:ok, pid} = GenServer.start_link(SignsUi.Signs.State, [], [])
+      {:ok, pid} = GenServer.start_link(SignsUi.Config.State, [], [])
 
       @endpoint.subscribe("signs:all")
 
