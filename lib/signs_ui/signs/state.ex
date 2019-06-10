@@ -1,7 +1,19 @@
 defmodule SignsUi.Signs.State do
+  @moduledoc """
+  Stores the state of all the countdown viewer's signs, as built up by
+  the received messages from realtime_signs.
+  """
+
   use GenServer
 
-  @type message :: String.t()
+  alias SignsUi.Messages.SignContent
+  alias SignsUi.Signs.Sign
+
+  @type sign_id :: String.t()
+
+  @type state :: %{
+          sign_id => Sign.t()
+        }
 
   def start_link(opts \\ []) do
     GenServer.start_link(__MODULE__, %{}, opts)
@@ -11,121 +23,53 @@ defmodule SignsUi.Signs.State do
     {:ok, %{}}
   end
 
-  def list_messages(pid \\ __MODULE__) do
-    GenServer.call(pid, :list_messages)
+  @spec list_signs(GenServer.server()) :: %{sign_id() => [map()]}
+  def list_signs(pid \\ __MODULE__) do
+    GenServer.call(pid, :list_signs)
   end
 
-  def add_message(pid \\ __MODULE__, message) do
-    GenServer.call(pid, {:add_message, message})
+  @spec process_message(GenServer.server(), SignContent.t()) :: :ok
+  def process_message(pid \\ __MODULE__, %SignContent{} = message) do
+    GenServer.call(pid, {:process_message, message})
   end
 
-  def handle_call(:list_messages, _from, messages) do
-    message_list =
-      messages
-      |> Enum.map(fn {sign_id, line_map} ->
-        current_time = Timex.now()
-        line_one = line_map[1] || %{text: "", duration: expiration_time(current_time, "0")}
-        line_two = line_map[2] || %{text: "", duration: expiration_time(current_time, "0")}
-        lines = [line_one, line_two]
-        {sign_id, lines}
-      end)
-      |> Map.new()
-
-    {:reply, message_list, messages}
-  end
-
-  def handle_call({:add_message, message}, _from, messages) do
-    sta = message["sta"]
-    commands = parse_commands(message["c"])
-
-    command_lines =
-      Enum.reduce(commands, %{}, fn {duration, zone, line_no, text}, acc ->
-        sign_id = "#{sta}-#{zone}"
-        current_time = Timex.now()
-        expiration = expiration_time(current_time, duration)
-
-        line_data = %{line_no => %{text: text, duration: expiration}}
-        Map.update(acc, sign_id, line_data, &Map.merge(&1, line_data))
+  def handle_call(:list_signs, _from, state) do
+    signs =
+      Map.new(state, fn {sign_id, sign} ->
+        {sign_id, Sign.to_json(sign)}
       end)
 
-    broadcast_update(command_lines)
-
-    messages =
-      Enum.reduce(command_lines, messages, fn {sign_id, lines}, acc ->
-        new_sign =
-          if acc[sign_id] != nil do
-            Map.merge(acc[sign_id], lines)
-          else
-            lines
-          end
-
-        Map.put(acc, sign_id, new_sign)
-      end)
-
-    {:reply, {:ok, messages}, messages}
+    {:reply, signs, state}
   end
 
-  @spec parse_commands([String.t()]) :: [{String.t(), String.t(), integer(), String.t()}]
-  defp(parse_commands(commands)) do
-    commands
-    |> Enum.map(fn command ->
-      [duration, zone_line_text] = String.split(command, ["~"])
-      duration_regex = ~r/([a-z])([\d]+)/
-      [_original, _expires?, duration] = Regex.run(duration_regex, duration)
+  def handle_call({:process_message, message}, _from, state) do
+    sign_id = "#{message.station}-#{message.zone}"
 
-      [zone_line | text_list] = String.split(zone_line_text, ["-"])
+    sign =
+      state
+      |> Map.get(sign_id, Sign.new_from_message(message))
+      |> Sign.update_from_message(message)
 
-      text_list =
-        text_list
-        |> Enum.map(fn text ->
-          text_time_regex = ~r/([\w\d\s']+)\.?([\d]?+)$/
-
-          text =
-            text
-            |> URI.decode()
-            |> String.replace("\"", "")
-            |> String.replace("+", " ")
-
-          text =
-            case Regex.run(text_time_regex, text) do
-              [_original, text, _text_time] -> text
-              nil -> ""
-            end
-
-          text
-        end)
-
-      {zone, line_no} = String.split_at(zone_line, 1)
-      line_no = String.to_integer(line_no)
-
-      display_text =
-        case text_list do
-          [_away, _stopped, n_stops] -> n_stops
-          [n_minutes] -> n_minutes
-          text_list -> List.first(text_list)
-        end
-
-      {duration, zone, line_no, display_text}
-    end)
+    broadcast_update(message)
+    {:reply, :ok, Map.put(state, sign_id, sign)}
   end
 
-  defp broadcast_update(sign_lines) do
-    sign_lines
-    |> Enum.each(fn {sign_id, lines} ->
-      lines
-      |> Enum.each(fn {number, %{text: line, duration: duration}} ->
-        SignsUiWeb.Endpoint.broadcast!("signs:all", "sign_update", %{
-          sign_id: sign_id,
-          line_number: number,
-          text: line,
-          duration: duration
-        })
-      end)
-    end)
+  @spec broadcast_update(SignContent.t()) :: :ok
+  defp broadcast_update(message) do
+    SignsUiWeb.Endpoint.broadcast!("signs:all", "sign_update", %{
+      sign_id: "#{message.station}-#{message.zone}",
+      line_number: message.line_number,
+      text: message.pages |> get_page() |> SignContent.page_to_text(),
+      duration: message.expiration
+    })
   end
 
-  defp expiration_time(current_time, duration) do
-    {duration, _} = Integer.parse(duration)
-    Timex.shift(current_time, seconds: duration)
+  @spec get_page([SignContent.page()]) :: SignContent.page()
+  defp get_page([_away, _stopped, n_stops]) do
+    n_stops
+  end
+
+  defp get_page(pages) do
+    List.first(pages)
   end
 end

@@ -1,4 +1,4 @@
 <div id="viewer-root"></div>
 
-<script>window.initialSignsData = <%= raw(Poison.encode!(@messages)) %></script>
+<script>window.initialSignsData = <%= raw(Poison.encode!(@signs)) %></script>
 <script>window.initialSignConfigs = <%= raw(Poison.encode!(@sign_configs)) %></script>
