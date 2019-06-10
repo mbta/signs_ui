@@ -1,5 +1,6 @@
 defmodule SignsUiWeb.MessagesControllerTest do
   use SignsUiWeb.ConnCase
+  import ExUnit.CaptureLog
 
   @update_attrs %{
     "MsgType" => "SignContent",
@@ -33,15 +34,42 @@ defmodule SignsUiWeb.MessagesControllerTest do
       conn =
         conn
         |> add_api_req_header()
-        |> post(messages_path(conn, :create, @update_attrs), messages: @update_attrs)
+        |> post(messages_path(conn, :create), @update_attrs)
 
       assert response(conn, 201)
+    end
+
+    test "responds with 201 when receiving an unknown message type", %{conn: conn} do
+      conn =
+        conn
+        |> add_api_req_header()
+        |> post(messages_path(conn, :create), %{"MsgType" => "Unknown"})
+
+      assert response(conn, 201) =~ "Ignoring unknown message."
+    end
+
+    test "responds with 201 but logs a warnings when message can't be parsed", %{conn: conn} do
+      log =
+        capture_log([level: :warn], fn ->
+          conn =
+            conn
+            |> add_api_req_header()
+            |> post(messages_path(conn, :create), %{
+              "MsgType" => "SignContent",
+              "sta" => "BGOV",
+              "c" => ["e100~~~"]
+            })
+
+          assert response(conn, 201)
+        end)
+
+      assert log =~ "could_not_process"
     end
 
     test "responds with the 401 when the key is invalid", %{conn: conn} do
       conn =
         conn
-        |> post(messages_path(conn, :create, @update_attrs), messages: @update_attrs)
+        |> post(messages_path(conn, :create), @update_attrs)
 
       assert response(conn, 401)
     end

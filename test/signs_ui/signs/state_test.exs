@@ -1,98 +1,100 @@
 defmodule SignsUi.Signs.StateTest do
-  use ExUnit.Case
+  use ExUnit.Case, async: true
+
+  alias SignsUi.Signs.State
+  alias SignsUi.Signs.Sign
+  alias SignsUi.Signs.SignLine
+  alias SignsUi.Messages.SignContent
 
   test "receives a message and stores the sign in the state" do
-    {:ok, pid} = SignsUi.Signs.State.start_link()
+    {:ok, pid} = State.start_link()
+    now = Timex.now()
+    later = now |> Timex.shift(seconds: 150)
 
-    SignsUi.Signs.State.add_message(pid, %{
-      "MsgType" => "SignContent",
-      "c" => ["e130~n2-\"Alewife 12 min\""],
-      "sta" => "RDTC",
-      "uid" => "616722"
-    })
+    msg = %SignContent{
+      station: "XYZ",
+      zone: "w",
+      line_number: 1,
+      expiration: later,
+      pages: ["Alewife 12 min"]
+    }
 
-    assert %{"RDTC-n" => [%{duration: _, text: ""}, %{duration: _, text: "Alewife 12 min"}]} =
-             SignsUi.Signs.State.list_messages(pid)
-  end
-
-  test "receives a message with a ' and does not truncate everything before it" do
-    {:ok, pid} = SignsUi.Signs.State.start_link()
-
-    SignsUi.Signs.State.add_message(pid, %{
-      "MsgType" => "SignContent",
-      "c" => ["e130~n2-\"Alewife 12' min\""],
-      "sta" => "RDTC",
-      "uid" => "616722"
-    })
-
-    assert %{"RDTC-n" => [%{duration: _, text: ""}, %{duration: _, text: "Alewife 12' min"}]} =
-             SignsUi.Signs.State.list_messages(pid)
-  end
-
-  test "when it recieves a second line for a sign, both lines are persisted" do
-    {:ok, pid} = SignsUi.Signs.State.start_link()
-
-    SignsUi.Signs.State.add_message(pid, %{
-      "MsgType" => "SignContent",
-      "c" => ["e130~n2-\"Alewife 12 min\""],
-      "sta" => "RDTC",
-      "uid" => "616722"
-    })
-
-    SignsUi.Signs.State.add_message(pid, %{
-      "MsgType" => "SignContent",
-      "c" => ["e130~n1-\"Alewife 4 min\""],
-      "sta" => "RDTC",
-      "uid" => "616722"
-    })
+    State.process_message(pid, msg)
 
     assert %{
-             "RDTC-n" => [
-               %{duration: _, text: "Alewife 4 min"},
-               %{duration: _, text: "Alewife 12 min"}
+             "XYZ-w" => [
+               %{text: "Alewife 12 min", duration: ^later},
+               %{text: ""}
              ]
-           } = SignsUi.Signs.State.list_messages(pid)
+           } = State.list_signs(pid)
   end
 
-  test "when the message has multiple dashes it doesnt crash" do
-    {:ok, pid} = SignsUi.Signs.State.start_link()
+  test "receives messages and updates existing state with a new line" do
+    state = %{
+      "ABCD-w" => %Sign{
+        station: "ABCD",
+        zone: "w",
+        lines: %{
+          1 => %SignLine{
+            text: "Alewife 1 min",
+            expiration: Timex.now()
+          }
+        }
+      }
+    }
 
-    SignsUi.Signs.State.add_message(pid, %{
-      "MsgType" => "SignContent",
-      "c" => ["e130~n2-\"Alewife 12 min\".4-\"Braintre 4 min\""],
-      "sta" => "RDTC",
-      "uid" => "616722"
-    })
+    msg = %SignContent{
+      station: "ABCD",
+      zone: "w",
+      line_number: 2,
+      expiration: Timex.now(),
+      pages: ["Alewife 8 min"]
+    }
 
-    assert %{"RDTC-n" => [%{duration: _, text: ""}, %{duration: _, text: "Alewife 12 min"}]} =
-             SignsUi.Signs.State.list_messages(pid)
+    assert {:reply, :ok,
+            %{
+              "ABCD-w" => %Sign{
+                station: "ABCD",
+                zone: "w",
+                lines: %{
+                  1 => %SignLine{text: "Alewife 1 min"},
+                  2 => %SignLine{text: "Alewife 8 min"}
+                }
+              }
+            }} = State.handle_call({:process_message, msg}, self(), state)
   end
 
-  test "when we send a stopped stops away message, only sends the n-stops part" do
-    {:ok, pid} = SignsUi.Signs.State.start_link()
+  test "receives messages and updates existing state overwriting a line" do
+    state = %{
+      "ABCD-w" => %Sign{
+        station: "ABCD",
+        zone: "w",
+        lines: %{
+          1 => %SignLine{
+            text: "Alewife 1 min",
+            expiration: Timex.now()
+          }
+        }
+      }
+    }
 
-    SignsUi.Signs.State.add_message(pid, %{
-      "MsgType" => "SignContent",
-      "c" => ["e130~n2-\"Alewife away\".4-\"Alewife stopped\".4-\"Alewife 4 stops\".4"],
-      "sta" => "RDTC",
-      "uid" => "616722"
-    })
+    msg = %SignContent{
+      station: "ABCD",
+      zone: "w",
+      line_number: 1,
+      expiration: Timex.now(),
+      pages: [{"2 stops", 2}, {"away", 2}, {"Stopped", 5}]
+    }
 
-    assert %{"RDTC-n" => [%{duration: _, text: ""}, %{duration: _, text: "Alewife 4 stops"}]} =
-             SignsUi.Signs.State.list_messages(pid)
-  end
-
-  test "when the message has a blank string for the sign, it does not crash" do
-    {:ok, pid} = SignsUi.Signs.State.start_link()
-
-    SignsUi.Signs.State.add_message(pid, %{
-      "MsgType" => "SignContent",
-      "c" => ["e130~n2-"],
-      "sta" => "RDTC",
-      "uid" => "616722"
-    })
-
-    assert %{"RDTC-n" => [%{duration: _, text: ""}, %{duration: _, text: ""}]} =
-             SignsUi.Signs.State.list_messages(pid)
+    assert {:reply, :ok,
+            %{
+              "ABCD-w" => %Sign{
+                station: "ABCD",
+                zone: "w",
+                lines: %{
+                  1 => %SignLine{text: [{"2 stops", 2}, {"away", 2}, {"Stopped", 5}]}
+                }
+              }
+            }} = State.handle_call({:process_message, msg}, self(), state)
   end
 end
