@@ -39,6 +39,16 @@ defmodule SignsUi.Messages.SignContent do
     |> integer(1)
     |> times(page_text, min: 1)
 
+  # Generate a parser, for ARINC-formatted commands. See the docs in
+  # realtime_signs for what the components mean. Examples are:
+  #
+  # e145~w1-"Riverside      BRD"
+  # with expiration of 145 seconds from now, west zone, line 1
+  #
+  # or
+  #
+  # e145~s2-"Frst Hills    away".2-"Frst Hills Stopped".5-"Frst Hills 8 stops".2
+  # which is a paginated message, with page durations of 2, 5, and 2 seconds.
   defparsec(:parse_command, command)
 
   @spec new(String.t(), String.t(), DateTime.t()) :: {:ok, t()} | {:error, any()}
