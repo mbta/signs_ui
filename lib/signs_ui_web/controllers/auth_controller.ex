@@ -6,6 +6,7 @@ defmodule SignsUiWeb.AuthController do
   def callback(%{assigns: %{ueberauth_auth: auth}} = conn, _params) do
     username = auth.uid
     expiration = auth.credentials.expires_at
+    credentials = conn.assigns.ueberauth_auth.credentials
 
     current_time = System.system_time(:second)
 
@@ -13,7 +14,7 @@ defmodule SignsUiWeb.AuthController do
     |> Guardian.Plug.sign_in(
       SignsUiWeb.AuthManager,
       username,
-      %{},
+      %{groups: credentials.other[:groups]},
       ttl: {expiration - current_time, :seconds}
     )
     |> redirect(to: SignsUiWeb.Router.Helpers.messages_path(conn, :index))
