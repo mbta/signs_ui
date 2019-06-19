@@ -12,12 +12,7 @@ test('shows the custom configuration information for a station', () => {
     },
   };
   const currentTime = Date.now() + 2000;
-  const signs = {
-    'OMAL-m': [
-      { text: 'Alewife 1 min', duration: (currentTime + 1000).toLocaleString() },
-      { text: 'Alewife 3 min', duration: (currentTime + 1000).toLocaleString() },
-    ],
-  };
+  const signs = {};
   const line = 'Orange';
   const signConfigs = {};
   const setConfigs = () => { };

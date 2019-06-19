@@ -1,17 +1,28 @@
-import { updateSigns } from './helpers';
+import { choosePage } from './helpers';
 
-test('updateSigns returns a new map with changed values for the ID', () => {
-  const oldSigns = { id1: ['one', 'two'] };
-  const newSigns = updateSigns(oldSigns, {
-    signId: 'id1', lineNumber: 2, duration: 2, content: 'TWO',
-  });
-  expect(oldSigns).toEqual({ id1: ['one', 'two'] });
-  expect(newSigns).toEqual({ id1: ['one', { duration: 2, text: 'TWO' }] });
+test('choosePage returns the first page when there is only one', () => {
+  const pages = [{ content: 'the page', duration: 5 }];
+
+  expect(choosePage(pages, 2)).toEqual('the page');
+  expect(choosePage(pages, 7)).toEqual('the page');
 });
 
-test('updateSigns returns a new map adding a new sign if not present before', () => {
-  const signs = updateSigns({}, {
-    signId: 'newSign', lineNumber: 1, duration: 2, content: 'ONE',
-  });
-  expect(signs).toEqual({ newSign: [{ duration: 2, text: 'ONE' }, { duration: '0', text: '' }] });
+test('choosePage cycles through pages as time elapses', () => {
+  const pages = [
+    { content: 'page one', duration: 2 },
+    { content: 'page two', duration: 5 },
+    { content: 'page three', duration: 2 },
+  ];
+
+  expect(choosePage(pages, 1.5)).toEqual('page one');
+  expect(choosePage(pages, 2.5)).toEqual('page two');
+  expect(choosePage(pages, 3.5)).toEqual('page two');
+  expect(choosePage(pages, 4.5)).toEqual('page two');
+  expect(choosePage(pages, 5.5)).toEqual('page two');
+  expect(choosePage(pages, 6.5)).toEqual('page two');
+  expect(choosePage(pages, 7.5)).toEqual('page three');
+  expect(choosePage(pages, 8.5)).toEqual('page three');
+  expect(choosePage(pages, 9.5)).toEqual('page one');
+  expect(choosePage(pages, 10.5)).toEqual('page one');
+  expect(choosePage(pages, 100.5)).toEqual('page one');
 });

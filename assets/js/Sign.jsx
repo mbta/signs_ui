@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import dateFormat from 'dateformat';
 import lineToColor from './colors';
-import { signConfigType } from './types';
+import { signConfigType, signContentType } from './types';
+import { choosePage } from './helpers';
 import SetExpiration from './SetExpiration';
 
-function displayLine(duration, currentTime) {
-  return (Date.parse(duration) - currentTime) > 0;
+function isNotExpired(expiration, currentTime) {
+  return (Date.parse(expiration) - currentTime) > 0;
 }
 
 function fontSize(signId) {
@@ -45,14 +46,19 @@ function timeString(currentTime) {
   return dateFormat(date, 'h:MM').padStart(5);
 }
 
-function line1DisplayText(lineOne, lineOneDuration, currentTime) {
-  let text = displayLine(lineOneDuration, currentTime) ? lineOne : '';
-  text = text.padEnd(19);
-  return `${text}${timeString(currentTime)}`;
+function line1DisplayText(lineContent, currentTime, initialTime) {
+  if (lineContent !== undefined && isNotExpired(lineContent.expiration, currentTime)) {
+    const text = choosePage(lineContent.text, (currentTime - initialTime) / 1000);
+    return `${text}${timeString(currentTime)}`;
+  }
+  return '';
 }
 
-function line2DisplayText(lineTwo, lineTwoDuration, currentTime) {
-  return displayLine(lineTwoDuration, currentTime) ? lineTwo : '';
+function line2DisplayText(lineContent, currentTime, initialTime) {
+  if (lineContent !== undefined && isNotExpired(lineContent.expiration, currentTime)) {
+    return choosePage(lineContent.text, (currentTime - initialTime) / 1000);
+  }
+  return '';
 }
 
 class Sign extends Component {
@@ -68,6 +74,7 @@ class Sign extends Component {
       staticLine2: props.signConfig.line2 || '',
       customChanges: false,
       tipText: false,
+      initialTime: props.currentTime,
     };
   }
 
@@ -112,10 +119,7 @@ class Sign extends Component {
   render() {
     const {
       signId,
-      lineOne,
-      lineOneDuration,
-      lineTwo,
-      lineTwoDuration,
+      signContent,
       currentTime,
       line,
       signConfig,
@@ -128,6 +132,7 @@ class Sign extends Component {
       staticLine1,
       staticLine2,
       customChanges,
+      initialTime,
     } = this.state;
 
     return (
@@ -162,10 +167,10 @@ class Sign extends Component {
           </div>
           <div className="viewer--sign-lines">
             <div className="viewer--sign-line">
-              {line1DisplayText(lineOne, lineOneDuration, currentTime)}
+              {line1DisplayText(signContent.lines['1'], currentTime, initialTime)}
             </div>
             <div className="viewer--sign-line">
-              {line2DisplayText(lineTwo, lineTwoDuration, currentTime)}
+              {line2DisplayText(signContent.lines['2'], currentTime, initialTime)}
             </div>
           </div>
         </div>
@@ -232,22 +237,12 @@ class Sign extends Component {
 
 Sign.propTypes = {
   signId: PropTypes.string.isRequired,
-  lineOne: PropTypes.string,
-  lineOneDuration: PropTypes.string,
-  lineTwo: PropTypes.string,
-  lineTwoDuration: PropTypes.string,
+  signContent: signContentType.isRequired,
   currentTime: PropTypes.number.isRequired,
   line: PropTypes.string.isRequired,
   setConfigs: PropTypes.func.isRequired,
   signConfig: signConfigType.isRequired,
   realtimeId: PropTypes.string.isRequired,
-};
-
-Sign.defaultProps = {
-  lineOne: null,
-  lineOneDuration: '0',
-  lineTwo: null,
-  lineTwoDuration: '0',
 };
 
 export default Sign;

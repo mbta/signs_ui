@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Sign from './Sign';
 import { arincToRealtimeId } from './mbta';
-import { signConfigType } from './types';
+import { signConfigType, signContentType } from './types';
 
 function zoneDescription(stationConfig, zone) {
   if (stationConfig.zones[zone] !== true) {
@@ -18,25 +18,8 @@ function zoneDescription(stationConfig, zone) {
 function makeSign(config, zone, signs, currentTime, line, signConfigs, setConfigs) {
   if (config.zones[zone]) {
     const key = `${config.id}-${zone}`;
-    const lines = signs[key];
-    let lineOne;
-    let lineTwo;
-    let lineOneDuration;
-    let lineTwoDuration;
-    if (lines !== undefined) {
-      lineOne = lines[0].text;
-      lineTwo = lines[1].text;
-      lineOneDuration = lines[0].duration;
-      lineTwoDuration = lines[1].duration;
-    } else {
-      lineOne = '';
-      lineTwo = '';
-      lineOneDuration = '0';
-      lineTwoDuration = '0';
-    }
-
+    const signContent = signs[key] || { sign_id: key, lines: {} };
     const realtimeId = arincToRealtimeId(key, line);
-
     const signConfig = signConfigs[realtimeId] || { mode: 'off' };
 
     return (
@@ -44,10 +27,7 @@ function makeSign(config, zone, signs, currentTime, line, signConfigs, setConfig
         key={key}
         signId={zoneDescription(config, zone)}
         line={line}
-        lineOne={lineOne}
-        lineOneDuration={lineOneDuration}
-        lineTwo={lineTwo}
-        lineTwoDuration={lineTwoDuration}
+        signContent={signContent}
         currentTime={currentTime}
         signConfig={signConfig}
         setConfigs={setConfigs}
@@ -105,9 +85,7 @@ Station.propTypes = {
       m: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
     }).isRequired,
   }).isRequired,
-  signs: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.shape({
-    text: PropTypes.string, duration: PropTypes.string,
-  }))).isRequired,
+  signs: PropTypes.objectOf(signContentType).isRequired,
   currentTime: PropTypes.number.isRequired,
   line: PropTypes.string.isRequired,
   signConfigs: PropTypes.objectOf(signConfigType).isRequired,

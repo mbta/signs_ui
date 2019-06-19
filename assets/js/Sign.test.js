@@ -6,25 +6,37 @@ import Sign from './Sign';
 test('does not show messages that have expired', () => {
   const now = new Date('2019-01-15T20:15:00Z').valueOf();
   const fresh = new Date(now + 5000).toLocaleString();
-  const lineOneDuration = fresh;
   const expired = new Date(now).toLocaleString();
-  const lineTwoDuration = expired;
   const currentTime = now + 2000;
-  const signId = 'RDAV-s';
-  const lineOne = 'Alewife 1 min';
-  const lineTwo = 'Alewife 3 min';
+  const signId = 'RDAV-n';
   const line = 'Red';
   const signConfig = { mode: 'auto' };
+  const signContent = {
+    sign_id: 'RDAV-n',
+    lines: {
+      1: {
+        text: [{
+          content: 'Alewife 1 min',
+          duration: 5,
+        }],
+        expiration: fresh,
+      },
+      2: {
+        text: [{
+          content: 'Alewife 3 min',
+          duration: 5,
+        }],
+        expiration: expired,
+      },
+    },
+  };
   const setConfigs = () => { };
   const realtimeId = 'id';
 
   const wrapper = mount(
     React.createElement(Sign, {
       signId,
-      lineOne,
-      lineOneDuration,
-      lineTwo,
-      lineTwoDuration,
+      signContent,
       currentTime,
       line,
       signConfig,

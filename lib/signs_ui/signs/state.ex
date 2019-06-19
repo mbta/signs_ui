@@ -50,26 +50,12 @@ defmodule SignsUi.Signs.State do
       |> Map.get(sign_id, Sign.new_from_message(message))
       |> Sign.update_from_message(message)
 
-    broadcast_update(message)
+    broadcast_update(sign)
     {:reply, :ok, Map.put(state, sign_id, sign)}
   end
 
-  @spec broadcast_update(SignContent.t()) :: :ok
-  defp broadcast_update(message) do
-    SignsUiWeb.Endpoint.broadcast!("signs:all", "sign_update", %{
-      sign_id: "#{message.station}-#{message.zone}",
-      line_number: message.line_number,
-      text: message.pages |> get_page() |> SignContent.page_to_text(),
-      duration: message.expiration
-    })
-  end
-
-  @spec get_page([SignContent.page()]) :: SignContent.page()
-  defp get_page([_away, _stopped, n_stops]) do
-    n_stops
-  end
-
-  defp get_page(pages) do
-    List.first(pages)
+  @spec broadcast_update(Sign.t()) :: :ok
+  defp broadcast_update(sign) do
+    SignsUiWeb.Endpoint.broadcast!("signs:all", "sign_update", Sign.to_json(sign))
   end
 end
