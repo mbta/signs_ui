@@ -13,7 +13,10 @@ defmodule SignsUiWeb.SignsChannelTest do
       expiration_time = current_time + 500
 
       {:ok, token, claims} =
-        SignsUiWeb.AuthManager.encode_and_sign("foo@mbta.com", %{"exp" => expiration_time})
+        SignsUiWeb.AuthManager.encode_and_sign("foo@mbta.com", %{
+          "exp" => expiration_time,
+          "groups" => ["signs-ui-admin"]
+        })
 
       socket = Guardian.Phoenix.Socket.assign_rtc(socket, "foo@mbta.com", token, claims)
 
@@ -47,7 +50,10 @@ defmodule SignsUiWeb.SignsChannelTest do
       expiration_time = current_time + 500
 
       {:ok, token, claims} =
-        SignsUiWeb.AuthManager.encode_and_sign("foo@mbta.com", %{"exp" => expiration_time})
+        SignsUiWeb.AuthManager.encode_and_sign("foo@mbta.com", %{
+          "exp" => expiration_time,
+          "groups" => ["signs-ui-admin"]
+        })
 
       socket = Guardian.Phoenix.Socket.assign_rtc(socket, "foo@mbta.com", token, claims)
 

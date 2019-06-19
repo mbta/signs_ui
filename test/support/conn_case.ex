@@ -35,7 +35,7 @@ defmodule SignsUiWeb.ConnCase do
         conn =
           Phoenix.ConnTest.build_conn()
           |> init_test_session(%{})
-          |> Guardian.Plug.sign_in(SignsUiWeb.AuthManager, user)
+          |> Guardian.Plug.sign_in(SignsUiWeb.AuthManager, user, %{groups: ["signs-ui-admin"]})
 
         {conn, user}
       else

@@ -8,7 +8,8 @@ defmodule SignsUiWeb.AuthControllerTest do
       auth = %Ueberauth.Auth{
         uid: "foo@mbta.com",
         credentials: %Ueberauth.Auth.Credentials{
-          expires_at: current_time + 1_000
+          expires_at: current_time + 1_000,
+          other: %{groups: ["test1"]}
         }
       }
 
@@ -20,6 +21,7 @@ defmodule SignsUiWeb.AuthControllerTest do
       response = html_response(conn, 302)
 
       assert response =~ SignsUiWeb.Router.Helpers.messages_path(conn, :index)
+      assert Guardian.Plug.current_claims(conn)["groups"] == ["test1"]
     end
 
     test "handles failure", %{conn: conn} do

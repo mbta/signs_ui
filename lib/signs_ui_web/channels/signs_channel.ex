@@ -40,9 +40,11 @@ defmodule SignsUiWeb.SignsChannel do
     claims = Guardian.Phoenix.Socket.current_claims(socket)
     token = Guardian.Phoenix.Socket.current_token(socket)
 
-    case SignsUiWeb.AuthManager.decode_and_verify(token, claims) do
-      {:ok, _claims} -> true
-      {:error, _error} -> false
+    with {:ok, claims} <- SignsUiWeb.AuthManager.decode_and_verify(token, claims),
+         true <- SignsUiWeb.AuthManager.claims_grant_signs_access?(claims) do
+      true
+    else
+      _ -> false
     end
   end
 

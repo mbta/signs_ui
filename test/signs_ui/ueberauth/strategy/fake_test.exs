@@ -28,7 +28,7 @@ defmodule SignsUi.Ueberauth.Strategy.FakeTest do
     test "credentials/1" do
       conn = conn(:get, "/auth/cognito/callback")
 
-      assert %Ueberauth.Auth.Credentials{} = credentials(conn)
+      assert %Ueberauth.Auth.Credentials{other: %{groups: ["signs-ui-admin"]}} = credentials(conn)
     end
 
     test "info/1" do
