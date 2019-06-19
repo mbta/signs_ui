@@ -22,10 +22,15 @@ defmodule SignsUi.Signs.StateTest do
     State.process_message(pid, msg)
 
     assert %{
-             "XYZ-w" => [
-               %{text: "Alewife 12 min", duration: ^later},
-               %{text: ""}
-             ]
+             "XYZ-w" => %{
+               sign_id: "XYZ-w",
+               lines: %{
+                 1 => %{
+                   text: [%{content: "Alewife 12 min", duration: 5}],
+                   expiration: ^later
+                 }
+               }
+             }
            } = State.list_signs(pid)
   end
 
@@ -36,7 +41,7 @@ defmodule SignsUi.Signs.StateTest do
         zone: "w",
         lines: %{
           1 => %SignLine{
-            text: "Alewife 1 min",
+            text: [{"Alewife 1 min", 5}],
             expiration: Timex.now()
           }
         }
@@ -57,8 +62,8 @@ defmodule SignsUi.Signs.StateTest do
                 station: "ABCD",
                 zone: "w",
                 lines: %{
-                  1 => %SignLine{text: "Alewife 1 min"},
-                  2 => %SignLine{text: "Alewife 8 min"}
+                  1 => %SignLine{text: [{"Alewife 1 min", 5}]},
+                  2 => %SignLine{text: [{"Alewife 8 min", 5}]}
                 }
               }
             }} = State.handle_call({:process_message, msg}, self(), state)

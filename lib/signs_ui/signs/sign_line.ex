@@ -11,34 +11,25 @@ defmodule SignsUi.Signs.SignLine do
 
   @type t :: %__MODULE__{
           expiration: DateTime.t(),
-          text: String.t() | [page]
+          text: [page]
         }
 
   def new_from_message(%SignsUi.Messages.SignContent{} = msg) do
     %__MODULE__{
       expiration: msg.expiration,
-      text: message_text(msg.pages)
+      text: Enum.map(msg.pages, &normalize_page/1)
     }
-  end
-
-  def to_json(%__MODULE__{text: text} = line) when is_binary(text) do
-    %{text: text, duration: line.expiration}
   end
 
   def to_json(%__MODULE__{text: pages} = line) do
     %{
-      text: pages |> choose_page() |> page_text(),
-      duration: line.expiration
+      text: Enum.map(pages, &page_to_json/1),
+      expiration: line.expiration
     }
   end
 
-  defp message_text([{text, _}]), do: text
-  defp message_text([text]), do: text
-  defp message_text(pages), do: pages
+  defp normalize_page({text, duration}), do: {text, duration}
+  defp normalize_page(text) when is_binary(text), do: {text, 5}
 
-  defp choose_page([_away, _stopped, n]), do: n
-  defp choose_page(pages), do: List.first(pages)
-
-  def page_text({text, _exp}), do: text
-  def page_text(text) when is_binary(text), do: text
+  defp page_to_json({text, duration}), do: %{content: text, duration: duration}
 end

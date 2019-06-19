@@ -13,7 +13,7 @@ defmodule SignsUi.Signs.SignTest do
     lines: %{
       1 => %SignLine{
         expiration: @now,
-        text: "a page"
+        text: [{"a page", 5}]
       }
     }
   }
@@ -34,7 +34,7 @@ defmodule SignsUi.Signs.SignTest do
                lines: %{
                  1 => %SignLine{
                    expiration: @now,
-                   text: "a page"
+                   text: [{"a page", 5}]
                  }
                }
              } = Sign.new_from_message(@message)
@@ -51,11 +51,11 @@ defmodule SignsUi.Signs.SignTest do
                lines: %{
                  1 => %SignLine{
                    expiration: @now,
-                   text: "a page"
+                   text: [{"a page", 5}]
                  },
                  2 => %SignLine{
                    expiration: @now,
-                   text: "2nd page"
+                   text: [{"2nd page", 5}]
                  }
                }
              } = Sign.update_from_message(@sign, message2)
@@ -64,10 +64,15 @@ defmodule SignsUi.Signs.SignTest do
 
   describe "to_json" do
     test "serializes to the map that the frontend expects" do
-      assert [
-               %{duration: %DateTime{}, text: "a page"},
-               %{duration: %DateTime{}, text: ""}
-             ] = Sign.to_json(@sign)
+      assert %{
+               sign_id: "XYZ-w",
+               lines: %{
+                 1 => %{
+                   expiration: @now,
+                   text: [%{content: "a page", duration: 5}]
+                 }
+               }
+             } = Sign.to_json(@sign)
     end
   end
 end

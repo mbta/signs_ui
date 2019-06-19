@@ -11,5 +11,15 @@ const signConfigType = PropTypes.oneOfType([
   }),
 ]);
 
-// eslint-disable-next-line import/prefer-default-export
-export { signConfigType };
+const signContentType = PropTypes.shape({
+  sign_id: PropTypes.string.isRequired,
+  lines: PropTypes.objectOf(PropTypes.shape({
+    text: PropTypes.arrayOf(PropTypes.shape({
+      content: PropTypes.string.isRequired,
+      duration: PropTypes.number.isRequired,
+    })).isRequired,
+    expiration: PropTypes.string,
+  })),
+});
+
+export { signConfigType, signContentType };

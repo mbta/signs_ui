@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Socket } from 'phoenix';
 import Viewer from './Viewer';
-import { updateSigns } from './helpers';
 import lineToColor from './colors';
-import { signConfigType } from './types';
+import { signConfigType, signContentType } from './types';
 
 class ViewerApp extends Component {
   constructor(props) {
@@ -31,13 +30,12 @@ class ViewerApp extends Component {
       .join()
       .receive('ok', () => { });
 
-    channel.on('sign_update', ({
-      sign_id: signId, duration, line_number: lineNumber, text: content,
-    }) => {
+    channel.on('sign_update', (sign) => {
       this.setState(prevState => ({
-        signs: updateSigns(prevState.signs, {
-          signId, duration, lineNumber, content,
-        }),
+        signs: {
+          ...prevState.signs,
+          [sign.sign_id]: sign,
+        },
       }));
     });
 
@@ -46,7 +44,6 @@ class ViewerApp extends Component {
     });
 
     channel.on('auth_expired', () => {
-      console.log('auth_expired');
       window.location.reload(true);
     });
 
@@ -128,9 +125,7 @@ class ViewerApp extends Component {
 }
 
 ViewerApp.propTypes = {
-  initialSigns: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.shape({
-    text: PropTypes.string, duration: PropTypes.string,
-  }))).isRequired,
+  initialSigns: PropTypes.objectOf(signContentType).isRequired,
   initialSignConfigs: PropTypes.objectOf(signConfigType).isRequired,
 };
 

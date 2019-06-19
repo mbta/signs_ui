@@ -35,16 +35,14 @@ defmodule SignsUi.Signs.Sign do
     )
   end
 
-  @spec to_json(t()) :: [map()]
+  @spec to_json(t()) :: %{sign_id: String.t(), lines: map()}
   def to_json(sign) do
-    Enum.map([1, 2], fn line_number ->
-      case sign.lines[line_number] do
-        nil ->
-          %{text: "", duration: Timex.now()}
-
-        %SignLine{} = line ->
-          SignLine.to_json(line)
-      end
-    end)
+    %{
+      sign_id: "#{sign.station}-#{sign.zone}",
+      lines:
+        Map.new(sign.lines, fn {line_number, line} ->
+          {line_number, SignLine.to_json(line)}
+        end)
+    }
   end
 end

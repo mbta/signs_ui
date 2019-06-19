@@ -1,14 +1,18 @@
-function updateSigns(oldSigns, {
-  signId, lineNumber, content, duration,
-}) {
-  const newValues = oldSigns[signId] ? oldSigns[signId].slice(0) : [{ text: '', duration: '0' }, { text: '', duration: '0' }];
-  newValues[lineNumber - 1] = { text: content, duration };
+function choosePage(pages, elapsedSeconds) {
+  if (pages.length === 1) { return pages[0].content; }
 
-  return {
-    ...oldSigns,
-    [signId]: newValues,
-  };
+  const repeatTime = pages.reduce((acc, pg) => acc + pg.duration, 0);
+  let excessTime = elapsedSeconds % repeatTime;
+
+  for (let i = 0; i < pages.length; i += 1) {
+    if (excessTime <= pages[i].duration) {
+      return pages[i].content;
+    }
+    excessTime -= pages[i].duration;
+  }
+
+  return '';
 }
 
 /* eslint-disable import/prefer-default-export */
-export { updateSigns };
+export { choosePage };
