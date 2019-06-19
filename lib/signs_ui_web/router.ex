@@ -28,6 +28,10 @@ defmodule SignsUiWeb.Router do
     plug(Guardian.Plug.EnsureAuthenticated)
   end
 
+  pipeline :ensure_signs_ui_group do
+    plug(SignsUiWeb.EnsureSignsUiGroup)
+  end
+
   scope "/auth", SignsUiWeb do
     pipe_through([:redirect_prod_http, :browser])
 
@@ -39,10 +43,18 @@ defmodule SignsUiWeb.Router do
     pipe_through([:redirect_prod_http, :browser, :auth])
 
     get("/", PageController, :index)
+    get("/unauthorized", UnauthorizedController, :index)
   end
 
   scope "/", SignsUiWeb do
-    pipe_through([:redirect_prod_http, :browser, :auth, :ensure_auth, :put_user_token])
+    pipe_through([
+      :redirect_prod_http,
+      :browser,
+      :auth,
+      :ensure_auth,
+      :ensure_signs_ui_group,
+      :put_user_token
+    ])
 
     get("/viewer", MessagesController, :index)
   end

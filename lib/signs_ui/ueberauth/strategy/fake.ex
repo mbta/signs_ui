@@ -24,7 +24,8 @@ defmodule SignsUi.Ueberauth.Strategy.Fake do
       token: "fake_access_token",
       refresh_token: "fake_refresh_token",
       expires: true,
-      expires_at: System.system_time(:seconds) + 60 * 60
+      expires_at: System.system_time(:seconds) + 60 * 60,
+      other: %{groups: ["signs-ui-admin"]}
     }
   end
 
