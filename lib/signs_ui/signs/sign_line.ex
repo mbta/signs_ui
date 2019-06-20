@@ -7,6 +7,8 @@ defmodule SignsUi.Signs.SignLine do
   @enforce_keys [:expiration, :text]
   defstruct @enforce_keys
 
+  alias SignsUi.Messages.SignContent
+
   @type page :: {String.t(), non_neg_integer()}
 
   @type t :: %__MODULE__{
@@ -14,13 +16,15 @@ defmodule SignsUi.Signs.SignLine do
           text: [page]
         }
 
-  def new_from_message(%SignsUi.Messages.SignContent{} = msg) do
+  @spec new_from_message(SignContent.t()) :: t()
+  def new_from_message(%SignContent{} = msg) do
     %__MODULE__{
       expiration: msg.expiration,
       text: Enum.map(msg.pages, &normalize_page/1)
     }
   end
 
+  @spec to_json(t()) :: map()
   def to_json(%__MODULE__{text: pages} = line) do
     %{
       text: Enum.map(pages, &page_to_json/1),
@@ -28,8 +32,10 @@ defmodule SignsUi.Signs.SignLine do
     }
   end
 
+  @spec normalize_page(String.t() | {String.t(), integer()}) :: {String.t(), integer()}
   defp normalize_page({text, duration}), do: {text, duration}
   defp normalize_page(text) when is_binary(text), do: {text, 5}
 
+  @spec page_to_json({String.t(), integer()}) :: map()
   defp page_to_json({text, duration}), do: %{content: text, duration: duration}
 end
