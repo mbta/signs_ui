@@ -49,7 +49,8 @@ function timeString(currentTime) {
 function line1DisplayText(lineContent, currentTime, initialTime) {
   if (lineContent !== undefined && isNotExpired(lineContent.expiration, currentTime)) {
     const text = choosePage(lineContent.text, (currentTime - initialTime) / 1000);
-    return `${text}${timeString(currentTime)}`;
+
+    return `${text.padEnd(19)}${timeString(currentTime)}`;
   }
   return '';
 }
