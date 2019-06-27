@@ -41,7 +41,7 @@ defmodule SignsUiWeb.SignsChannel do
     token = Guardian.Phoenix.Socket.current_token(socket)
 
     with {:ok, claims} <- SignsUiWeb.AuthManager.decode_and_verify(token, claims),
-         true <- SignsUiWeb.AuthManager.claims_grant_signs_access?(claims) do
+         true <- SignsUiWeb.AuthManager.claims_access_level(claims) == :admin do
       true
     else
       _ -> false
