@@ -27,6 +27,24 @@ defmodule SignsUiWeb.MessagesControllerTest do
 
       assert {:ok, _claims} = Guardian.decode_and_verify(SignsUiWeb.AuthManager, token)
     end
+
+    @tag :authenticated
+    test "doesn't include read-only view when user has admin access", %{conn: conn} do
+      conn = get(conn, messages_path(conn, :index))
+
+      response = html_response(conn, 200)
+
+      assert response =~ "readOnly = false"
+    end
+
+    @tag :authenticated_read_only
+    test "includes read-only view when user doesn't have admin access", %{conn: conn} do
+      conn = get(conn, messages_path(conn, :index))
+
+      response = html_response(conn, 200)
+
+      assert response =~ "readOnly = true"
+    end
   end
 
   describe "create messages" do

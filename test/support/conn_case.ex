@@ -29,13 +29,20 @@ defmodule SignsUiWeb.ConnCase do
 
   setup tags do
     {conn, user} =
-      if tags[:authenticated] do
+      if tags[:authenticated] || tags[:authenticated_read_only] do
         user = "test_user"
+
+        groups =
+          if tags[:authenticated] do
+            ["signs-ui-admin"]
+          else
+            ["signs-ui-read-only"]
+          end
 
         conn =
           Phoenix.ConnTest.build_conn()
           |> init_test_session(%{})
-          |> Guardian.Plug.sign_in(SignsUiWeb.AuthManager, user, %{groups: ["signs-ui-admin"]})
+          |> Guardian.Plug.sign_in(SignsUiWeb.AuthManager, user, %{groups: groups})
 
         {conn, user}
       else

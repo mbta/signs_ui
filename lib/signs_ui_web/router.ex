@@ -53,7 +53,8 @@ defmodule SignsUiWeb.Router do
       :auth,
       :ensure_auth,
       :ensure_signs_ui_group,
-      :put_user_token
+      :put_user_token,
+      :put_read_only_view
     ])
 
     get("/viewer", MessagesController, :index)
@@ -76,6 +77,16 @@ defmodule SignsUiWeb.Router do
   defp put_user_token(conn, _) do
     token = Guardian.Plug.current_token(conn)
     assign(conn, :user_token, token)
+  end
+
+  defp put_read_only_view(conn, _) do
+    if conn
+       |> Guardian.Plug.current_claims()
+       |> SignsUiWeb.AuthManager.claims_access_level() == :read_only do
+      assign(conn, :read_only_view, true)
+    else
+      conn
+    end
   end
 
   defp api_auth(conn, _) do
