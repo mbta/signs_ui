@@ -13,7 +13,7 @@ defmodule SignsUiWeb.EnsureSignsUiGroupTest do
       assert conn == SignsUiWeb.EnsureSignsUiGroup.call(conn, [])
     end
 
-    test "redirects when user is not in the signs-ui-admin group" do
+    test "redirects when user is not in the signs-ui-admin group", %{conn: conn} do
       conn = SignsUiWeb.EnsureSignsUiGroup.call(conn, [])
 
       response = html_response(conn, 302)
