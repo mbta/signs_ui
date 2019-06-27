@@ -15,7 +15,7 @@ function zoneDescription(stationConfig, zone) {
   return zones[zone];
 }
 
-function makeSign(config, zone, signs, currentTime, line, signConfigs, setConfigs) {
+function makeSign(config, zone, signs, currentTime, line, signConfigs, setConfigs, readOnly) {
   if (config.zones[zone]) {
     const key = `${config.id}-${zone}`;
     const signContent = signs[key] || { sign_id: key, lines: {} };
@@ -32,6 +32,7 @@ function makeSign(config, zone, signs, currentTime, line, signConfigs, setConfig
         signConfig={signConfig}
         setConfigs={setConfigs}
         realtimeId={realtimeId}
+        readOnly={readOnly}
       />
     );
   }
@@ -40,7 +41,7 @@ function makeSign(config, zone, signs, currentTime, line, signConfigs, setConfig
 }
 
 function Station({
-  config, signs, currentTime, line, signConfigs, setConfigs,
+  config, signs, currentTime, line, signConfigs, setConfigs, readOnly,
 }) {
   return (
     <div key={config.id}>
@@ -55,16 +56,16 @@ function Station({
       </h3>
       <div className="row">
         <div className="col">
-          {makeSign(config, 's', signs, currentTime, line, signConfigs, setConfigs)}
-          {makeSign(config, 'w', signs, currentTime, line, signConfigs, setConfigs)}
+          {makeSign(config, 's', signs, currentTime, line, signConfigs, setConfigs, readOnly)}
+          {makeSign(config, 'w', signs, currentTime, line, signConfigs, setConfigs, readOnly)}
         </div>
         <div className="col">
-          {makeSign(config, 'c', signs, currentTime, line, signConfigs, setConfigs)}
-          {makeSign(config, 'm', signs, currentTime, line, signConfigs, setConfigs)}
+          {makeSign(config, 'c', signs, currentTime, line, signConfigs, setConfigs, readOnly)}
+          {makeSign(config, 'm', signs, currentTime, line, signConfigs, setConfigs, readOnly)}
         </div>
         <div className="col">
-          {makeSign(config, 'n', signs, currentTime, line, signConfigs, setConfigs)}
-          {makeSign(config, 'e', signs, currentTime, line, signConfigs, setConfigs)}
+          {makeSign(config, 'n', signs, currentTime, line, signConfigs, setConfigs, readOnly)}
+          {makeSign(config, 'e', signs, currentTime, line, signConfigs, setConfigs, readOnly)}
         </div>
       </div>
       <hr />
@@ -90,6 +91,7 @@ Station.propTypes = {
   line: PropTypes.string.isRequired,
   signConfigs: PropTypes.objectOf(signConfigType).isRequired,
   setConfigs: PropTypes.func.isRequired,
+  readOnly: PropTypes.bool.isRequired,
 };
 
 export default Station;

@@ -37,13 +37,22 @@ function parseDate(str) {
 }
 
 function SetExpiration({
-  realtimeId, signConfig, setConfigs,
+  realtimeId, signConfig, setConfigs, readOnly,
 }) {
-  return (
+  return (signConfig.expires || !readOnly) && (
     <div>
-      <strong>
-        Schedule return to &quot;Auto&quot;
-      </strong>
+      {(!readOnly
+        && (
+          <strong>
+            Schedule return to &quot;Auto&quot;
+          </strong>
+        ))
+       || (
+         <strong>
+           Scheduled return to &quot;Auto&quot;
+         </strong>
+       )
+      }
 
       <DatePicker
         selected={parseDate(signConfig.expires)}
@@ -52,16 +61,20 @@ function SetExpiration({
         timeFormat="HH:mm"
         timeIntervals={15}
         dateFormat="MMM d @ h:mm aa"
+        disabled={readOnly}
       />
-      {signConfig.expires && (
-        <button
-          className="viewer--cancel-expiration-button"
-          type="button"
-          onClick={() => updateConfig(setConfigs, realtimeId, signConfig, null)}
-        >
-          Cancel
-        </button>
-      )
+
+      {signConfig.expires
+        && !readOnly
+        && (
+          <button
+            className="viewer--cancel-expiration-button"
+            type="button"
+            onClick={() => updateConfig(setConfigs, realtimeId, signConfig, null)}
+          >
+            Cancel
+          </button>
+        )
       }
     </div>
   );
@@ -71,6 +84,7 @@ SetExpiration.propTypes = {
   realtimeId: PropTypes.string.isRequired,
   signConfig: signConfigType.isRequired,
   setConfigs: PropTypes.func.isRequired,
+  readOnly: PropTypes.bool.isRequired,
 };
 
 export default SetExpiration;

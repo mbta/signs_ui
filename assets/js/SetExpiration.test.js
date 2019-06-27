@@ -10,6 +10,8 @@ test('Can set the expiration time', () => {
     requests.push(arg);
   };
 
+  const readOnly = false;
+
   const wrapper = mount(
     React.createElement(SetExpiration, {
       realtimeId: 'rtID',
@@ -20,6 +22,7 @@ test('Can set the expiration time', () => {
         expires: null,
       },
       setConfigs,
+      readOnly,
     }),
   );
 
@@ -37,6 +40,8 @@ test('Can clear the expiration time', () => {
     requests.push(arg);
   };
 
+  const readOnly = false;
+
   const wrapper = mount(
     React.createElement(SetExpiration, {
       realtimeId: 'rtID',
@@ -47,6 +52,7 @@ test('Can clear the expiration time', () => {
         expires: (new Date()).toISOString(),
       },
       setConfigs,
+      readOnly,
     }),
   );
 
@@ -54,4 +60,70 @@ test('Can clear the expiration time', () => {
   expect(requests.length).toBe(1);
   const newConf = requests[0].rtID;
   expect(newConf.expires).toBe(null);
+});
+
+test('Shows widget when no expiration set if not in read-only mode', () => {
+  const setConfigs = () => { };
+
+  const readOnly = false;
+
+  const wrapper = mount(
+    React.createElement(SetExpiration, {
+      realtimeId: 'rtID',
+      signConfig: {
+        mode: 'static_text',
+        line1: 'line1',
+        line2: 'line2',
+        expires: '',
+      },
+      setConfigs,
+      readOnly,
+    }),
+  );
+
+  expect(wrapper.text()).toMatch('Schedule return');
+});
+
+test('Suppresses widget when no expiration set if in read-only mode', () => {
+  const setConfigs = () => { };
+
+  const readOnly = true;
+
+  const wrapper = mount(
+    React.createElement(SetExpiration, {
+      realtimeId: 'rtID',
+      signConfig: {
+        mode: 'static_text',
+        line1: 'line1',
+        line2: 'line2',
+        expires: '',
+      },
+      setConfigs,
+      readOnly,
+    }),
+  );
+
+  expect(wrapper.text()).toBe(null);
+});
+
+test('Shows \'Scheduled\' when expiration is set if in read-only mode', () => {
+  const setConfigs = () => { };
+
+  const readOnly = true;
+
+  const wrapper = mount(
+    React.createElement(SetExpiration, {
+      realtimeId: 'rtID',
+      signConfig: {
+        mode: 'static_text',
+        line1: 'line1',
+        line2: 'line2',
+        expires: (new Date()).toISOString(),
+      },
+      setConfigs,
+      readOnly,
+    }),
+  );
+
+  expect(wrapper.text()).toMatch('Scheduled return');
 });

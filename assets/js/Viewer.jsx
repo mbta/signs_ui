@@ -4,7 +4,7 @@ import Line from './Line';
 import { signConfigType, signContentType } from './types';
 
 function Viewer({
-  signs, currentTime, line, signConfigs, setConfigs,
+  signs, currentTime, line, signConfigs, setConfigs, readOnly,
 }) {
   return (
     <div>
@@ -14,6 +14,7 @@ function Viewer({
         line={line}
         signConfigs={signConfigs}
         setConfigs={setConfigs}
+        readOnly={readOnly}
       />
     </div>
   );
@@ -25,6 +26,7 @@ Viewer.propTypes = {
   line: PropTypes.string.isRequired,
   signConfigs: PropTypes.objectOf(signConfigType).isRequired,
   setConfigs: PropTypes.func.isRequired,
+  readOnly: PropTypes.bool.isRequired,
 };
 
 export default Viewer;

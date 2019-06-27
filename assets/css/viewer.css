@@ -69,6 +69,12 @@
   width: 20em;
 }
 
+.viewer--schedule-expires:empty {
+  padding: 0em 0em 0em 0em;
+  margin-bottom: 0em;
+  margin-top: 0em;
+}
+
 .viewer--mode-select {
   width: 70px;
 }
