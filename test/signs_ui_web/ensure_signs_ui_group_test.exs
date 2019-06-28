@@ -13,7 +13,12 @@ defmodule SignsUiWeb.EnsureSignsUiGroupTest do
       assert conn == SignsUiWeb.EnsureSignsUiGroup.call(conn, [])
     end
 
-    test "redirects when user is not in the signs-ui-admin group" do
+    @tag :authenticated_read_only
+    test "does nothing when user is in the signs-ui-read-only group", %{conn: conn} do
+      assert conn == SignsUiWeb.EnsureSignsUiGroup.call(conn, [])
+    end
+
+    test "redirects when user is not in the signs-ui-admin group", %{conn: conn} do
       conn = SignsUiWeb.EnsureSignsUiGroup.call(conn, [])
 
       response = html_response(conn, 302)

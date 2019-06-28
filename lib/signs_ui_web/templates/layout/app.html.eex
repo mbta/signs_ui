@@ -24,6 +24,11 @@
 
     </div> <!-- /container -->
     <script>window.userToken = "<%= assigns[:user_token] %>";</script>
+    <%= if assigns[:read_only_view] do %>
+      <script>window.readOnly = true;</script>
+    <% else %>
+      <script>window.readOnly = false;</script>
+    <% end %>
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
   </body>
 </html>

@@ -35,7 +35,7 @@ function setEnabledStations(setConfigFn, stations, line, enabled) {
 }
 
 function Line({
-  signs, currentTime, line, signConfigs, setConfigs,
+  signs, currentTime, line, signConfigs, setConfigs, readOnly,
 }) {
   const stations = stationConfig[line] || [];
 
@@ -45,25 +45,29 @@ function Line({
         {name(line)}
       </h1>
 
-      <div className="viewer--toggle-all">
-        <button
-          type="button"
-          className="btn btn-outline-secondary"
-          onClick={() => { setEnabledStations(setConfigs, stations, line, true); }}
-        >
-          Enable all
-        </button>
+      {!readOnly
+        && (
+          <div className="viewer--toggle-all">
+            <button
+              type="button"
+              className="btn btn-outline-secondary"
+              onClick={() => { setEnabledStations(setConfigs, stations, line, true); }}
+            >
+              Enable all
+            </button>
 
-        &nbsp;
+            &nbsp;
 
-        <button
-          type="button"
-          className="btn btn-outline-secondary"
-          onClick={() => { setEnabledStations(setConfigs, stations, line, false); }}
-        >
-          Disable all
-        </button>
-      </div>
+            <button
+              type="button"
+              className="btn btn-outline-secondary"
+              onClick={() => { setEnabledStations(setConfigs, stations, line, false); }}
+            >
+              Disable all
+            </button>
+          </div>
+        )
+      }
       {
         stations.map(station => (
           <Station
@@ -74,6 +78,7 @@ function Line({
             line={line}
             signConfigs={signConfigs}
             setConfigs={setConfigs}
+            readOnly={readOnly}
           />
         ))
       }
@@ -87,6 +92,7 @@ Line.propTypes = {
   line: PropTypes.string.isRequired,
   signConfigs: PropTypes.objectOf(signConfigType).isRequired,
   setConfigs: PropTypes.func.isRequired,
+  readOnly: PropTypes.bool.isRequired,
 };
 
 export default Line;

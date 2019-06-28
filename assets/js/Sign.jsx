@@ -126,6 +126,7 @@ class Sign extends Component {
       signConfig,
       setConfigs,
       realtimeId,
+      readOnly,
     } = this.props;
 
     const {
@@ -143,28 +144,32 @@ class Sign extends Component {
             <span style={fontSize(signId)}>
               {signId}
             </span>
-            <div>
-              <select
-                id={realtimeId}
-                className="viewer--mode-select"
-                value={signConfig.mode}
-                onChange={
-                  (event) => {
-                    setConfigs({ [realtimeId]: makeConfig(event.target.value) });
-                  }
-                }
-              >
-                <option value="auto">
-                  Auto
-                </option>
-                <option value="static_text">
-                  Custom
-                </option>
-                <option value="off">
-                  Off
-                </option>
-              </select>
-            </div>
+            {!readOnly
+              && (
+                <div>
+                  <select
+                    id={realtimeId}
+                    className="viewer--mode-select"
+                    value={signConfig.mode}
+                    onChange={
+                      (event) => {
+                        setConfigs({ [realtimeId]: makeConfig(event.target.value) });
+                      }
+                    }
+                  >
+                    <option value="auto">
+                      Auto
+                    </option>
+                    <option value="static_text">
+                      Custom
+                    </option>
+                    <option value="off">
+                      Off
+                    </option>
+                  </select>
+                </div>
+              )
+            }
           </div>
           <div className="viewer--sign-lines">
             <div className="viewer--sign-line">
@@ -177,6 +182,7 @@ class Sign extends Component {
         </div>
 
         {signConfig.mode === 'static_text'
+          && !readOnly
           && (
             <div className="viewer--static-text-form">
               <div>
@@ -228,6 +234,7 @@ class Sign extends Component {
               realtimeId={realtimeId}
               signConfig={signConfig}
               setConfigs={setConfigs}
+              readOnly={readOnly}
             />
           </div>
         )}
@@ -244,6 +251,7 @@ Sign.propTypes = {
   setConfigs: PropTypes.func.isRequired,
   signConfig: signConfigType.isRequired,
   realtimeId: PropTypes.string.isRequired,
+  readOnly: PropTypes.bool.isRequired,
 };
 
 export default Sign;

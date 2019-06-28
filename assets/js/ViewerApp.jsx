@@ -18,6 +18,7 @@ class ViewerApp extends Component {
       signConfigs: props.initialSignConfigs,
       currentTime: Date.now(),
       channel: null,
+      readOnly: props.readOnly,
     };
   }
 
@@ -85,7 +86,7 @@ class ViewerApp extends Component {
 
   render() {
     const {
-      signs, currentTime, line, signConfigs,
+      signs, currentTime, line, signConfigs, readOnly,
     } = this.state;
     return (
       <div className="viewer--main container">
@@ -117,6 +118,7 @@ class ViewerApp extends Component {
               setConfigs={this.setConfigs}
               currentTime={currentTime}
               line={line}
+              readOnly={readOnly}
             />
           )}
       </div>
@@ -127,6 +129,7 @@ class ViewerApp extends Component {
 ViewerApp.propTypes = {
   initialSigns: PropTypes.objectOf(signContentType).isRequired,
   initialSignConfigs: PropTypes.objectOf(signConfigType).isRequired,
+  readOnly: PropTypes.bool.isRequired,
 };
 
 export default ViewerApp;

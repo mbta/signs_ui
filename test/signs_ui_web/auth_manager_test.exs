@@ -17,4 +17,30 @@ defmodule SignsUiWeb.AuthManagerTest do
       assert {:error, :invalid_claims} == SignsUiWeb.AuthManager.resource_from_claims(%{})
     end
   end
+
+  describe "claims_access_level" do
+    test "works with no group information" do
+      assert SignsUiWeb.AuthManager.claims_access_level(%{}) == :none
+    end
+
+    test "works with nil groups" do
+      assert SignsUiWeb.AuthManager.claims_access_level(%{"groups" => nil}) == :none
+    end
+
+    test "read-only access" do
+      assert SignsUiWeb.AuthManager.claims_access_level(%{"groups" => ["signs-ui-read-only"]}) ==
+               :read_only
+    end
+
+    test "admin access" do
+      assert SignsUiWeb.AuthManager.claims_access_level(%{"groups" => ["signs-ui-admin"]}) ==
+               :admin
+    end
+
+    test "read-only access when both groups present" do
+      assert SignsUiWeb.AuthManager.claims_access_level(%{
+               "groups" => ["signs-ui-admin", "signs-ui-read-only"]
+             }) == :read_only
+    end
+  end
 end

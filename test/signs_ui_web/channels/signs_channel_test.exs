@@ -29,6 +29,29 @@ defmodule SignsUiWeb.SignsChannelTest do
       assert log =~ "foo@mbta.com"
     end
 
+    test "rejects changing signs when socket is authenticated with read-only view", %{
+      socket: socket
+    } do
+      current_time = System.system_time(:second)
+      expiration_time = current_time + 500
+
+      {:ok, token, claims} =
+        SignsUiWeb.AuthManager.encode_and_sign("foo@mbta.com", %{
+          "exp" => expiration_time,
+          "groups" => ["signs-ui-read-only"]
+        })
+
+      socket = Guardian.Phoenix.Socket.assign_rtc(socket, "foo@mbta.com", token, claims)
+
+      log =
+        capture_log([level: :info], fn ->
+          assert {:noreply, _socket} =
+                   SignsUiWeb.SignsChannel.handle_in("changeSigns", %{}, socket)
+        end)
+
+      refute log =~ "foo@mbta.com"
+    end
+
     test "rejects changing signs when socket is not authenticated", %{socket: socket} do
       current_time = System.system_time(:second)
       expired_time = current_time - 100
@@ -53,6 +76,23 @@ defmodule SignsUiWeb.SignsChannelTest do
         SignsUiWeb.AuthManager.encode_and_sign("foo@mbta.com", %{
           "exp" => expiration_time,
           "groups" => ["signs-ui-admin"]
+        })
+
+      socket = Guardian.Phoenix.Socket.assign_rtc(socket, "foo@mbta.com", token, claims)
+
+      assert {:noreply, _socket} = SignsUiWeb.SignsChannel.handle_out("sign_update", %{}, socket)
+    end
+
+    test "allows sending sign updates when socket is authenticated with read-only view", %{
+      socket: socket
+    } do
+      current_time = System.system_time(:second)
+      expiration_time = current_time + 500
+
+      {:ok, token, claims} =
+        SignsUiWeb.AuthManager.encode_and_sign("foo@mbta.com", %{
+          "exp" => expiration_time,
+          "groups" => ["signs-ui-read-only"]
         })
 
       socket = Guardian.Phoenix.Socket.assign_rtc(socket, "foo@mbta.com", token, claims)

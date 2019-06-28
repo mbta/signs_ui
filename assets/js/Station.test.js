@@ -16,10 +16,11 @@ test('shows the custom configuration information for a station', () => {
   const line = 'Orange';
   const signConfigs = {};
   const setConfigs = () => { };
+  const readOnly = false;
 
   const wrapper = mount(
     React.createElement(Station, {
-      config, signs, currentTime, line, signConfigs, setConfigs,
+      config, signs, currentTime, line, signConfigs, setConfigs, readOnly,
     }),
   );
 

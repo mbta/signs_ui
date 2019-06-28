@@ -6,7 +6,7 @@ defmodule SignsUiWeb.EnsureSignsUiGroup do
   def call(conn, _opts) do
     claims = Guardian.Plug.current_claims(conn)
 
-    if SignsUiWeb.AuthManager.claims_grant_signs_access?(claims) do
+    if SignsUiWeb.AuthManager.claims_access_level(claims) in [:read_only, :admin] do
       conn
     else
       conn

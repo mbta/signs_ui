@@ -9,25 +9,30 @@ defmodule SignsUiWeb.SignsChannel do
 
   @spec handle_in(String.t(), %{Sign.id() => map()}, any()) :: {:noreply, Phoenix.Socket.t()}
   def handle_in("changeSigns", changes, socket) do
-    if socket_authenticated?(socket) do
-      new_signs = Map.new(changes, fn {id, config} -> {id, Sign.from_config(id, config)} end)
+    case socket_access_level(socket) do
+      :admin ->
+        new_signs = Map.new(changes, fn {id, config} -> {id, Sign.from_config(id, config)} end)
 
-      {:ok, _new_state} = SignsUi.Config.State.update_some(new_signs)
+        {:ok, _new_state} = SignsUi.Config.State.update_some(new_signs)
 
-      username = Guardian.Phoenix.Socket.current_resource(socket)
+        username = Guardian.Phoenix.Socket.current_resource(socket)
 
-      Logger.info("sign_changed: user=#{username} changes=#{inspect(changes)}")
+        Logger.info("sign_changed: user=#{username} changes=#{inspect(changes)}")
 
-      {:noreply, socket}
-    else
-      {:stop, :normal, send_auth_expired_message(socket)}
+        {:noreply, socket}
+
+      :read_only ->
+        {:noreply, socket}
+
+      :none ->
+        {:stop, :normal, send_auth_expired_message(socket)}
     end
   end
 
   intercept(["sign_update"])
 
   def handle_out("sign_update", msg, socket) do
-    if socket_authenticated?(socket) do
+    if socket_access_level(socket) in [:admin, :read_only] do
       push(socket, "sign_update", msg)
       {:noreply, socket}
     else
@@ -35,16 +40,14 @@ defmodule SignsUiWeb.SignsChannel do
     end
   end
 
-  @spec socket_authenticated?(Phoenix.Socket.t()) :: boolean()
-  defp socket_authenticated?(socket) do
+  @spec socket_access_level(Phoenix.Socket.t()) :: SignsUiWeb.AuthManager.access_level()
+  defp socket_access_level(socket) do
     claims = Guardian.Phoenix.Socket.current_claims(socket)
     token = Guardian.Phoenix.Socket.current_token(socket)
 
-    with {:ok, claims} <- SignsUiWeb.AuthManager.decode_and_verify(token, claims),
-         true <- SignsUiWeb.AuthManager.claims_grant_signs_access?(claims) do
-      true
-    else
-      _ -> false
+    case SignsUiWeb.AuthManager.decode_and_verify(token, claims) do
+      {:ok, claims} -> SignsUiWeb.AuthManager.claims_access_level(claims)
+      _ -> :none
     end
   end
 
