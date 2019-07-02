@@ -160,6 +160,9 @@ class Sign extends Component {
                     <option value="auto">
                       Auto
                     </option>
+                    <option value="headway">
+                      Headways
+                    </option>
                     <option value="static_text">
                       Custom
                     </option>
