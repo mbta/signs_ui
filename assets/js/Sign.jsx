@@ -38,7 +38,7 @@ function makeConfig(mode) {
 }
 
 function isValidText(text) {
-  return !(/[^a-zA-Z0-9,.!@' +]/.test(text));
+  return !(/[^a-zA-Z0-9,/!@' +]/.test(text));
 }
 
 function timeString(currentTime) {
@@ -195,7 +195,7 @@ class Sign extends Component {
               </div>
               {tipText && (
                 <small className="viewer--error-text">
-                  You may use letters, numbers, and: ,.!@&quot;
+                  You may use letters, numbers, and: /,!@&quot;
                 </small>
               )}
               <div>
