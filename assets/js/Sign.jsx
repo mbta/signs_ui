@@ -38,7 +38,7 @@ function makeConfig(mode) {
 }
 
 function isValidText(text) {
-  return !(/[^a-zA-Z0-9,\/!@' +]/.test(text));
+  return !(/[^a-zA-Z0-9,/!@' +]/.test(text));
 }
 
 function timeString(currentTime) {
