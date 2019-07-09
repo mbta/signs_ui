@@ -20,7 +20,7 @@ defmodule SignsUiWeb.MessagesController do
   end
 
   @spec create(Plug.Conn.t(), map()) :: Plug.Conn.t()
-  def create(conn, %{"MsgType" => "SignContent", "c" => commands, "sta" => station} = params) do
+  def create(conn, %{"MsgType" => "SignContent", "c" => commands, "sta" => station} = _params) do
     Enum.each(commands, fn command_string ->
       with {:ok, sign_content} <- SignContent.new(station, command_string),
            :ok <- State.process_message(sign_content) do
