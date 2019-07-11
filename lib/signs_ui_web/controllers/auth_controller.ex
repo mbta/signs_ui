@@ -10,6 +10,11 @@ defmodule SignsUiWeb.AuthController do
 
     current_time = System.system_time(:second)
 
+    if credentials.refresh_token do
+      refresh_token_store = Application.get_env(:signs_ui, :refresh_token_store)
+      refresh_token_store.put_refresh_token(username, credentials.refresh_token)
+    end
+
     conn
     |> Guardian.Plug.sign_in(
       SignsUiWeb.AuthManager,
