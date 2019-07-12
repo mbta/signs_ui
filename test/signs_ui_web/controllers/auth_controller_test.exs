@@ -34,7 +34,7 @@ defmodule SignsUiWeb.AuthControllerTest do
       assert log =~ "stored_refresh_token username=foo@mbta.com refresh_token=bar"
     end
 
-    test "handles failure", %{conn: conn} do
+    test "handles generic failure", %{conn: conn} do
       conn =
         conn
         |> assign(:ueberauth_failure, %Ueberauth.Failure{})
@@ -43,6 +43,19 @@ defmodule SignsUiWeb.AuthControllerTest do
       response = response(conn, 403)
 
       assert response =~ "unauthenticated"
+    end
+
+    test "handles failure to use refresh token", %{conn: conn} do
+      conn =
+        conn
+        |> assign(:ueberauth_failure, %Ueberauth.Failure{
+          errors: [%Ueberauth.Failure.Error{message_key: "refresh_token_failure"}]
+        })
+        |> get(SignsUiWeb.Router.Helpers.auth_path(conn, :callback, "cognito"))
+
+      response = response(conn, 302)
+
+      assert response =~ SignsUiWeb.Router.Helpers.auth_path(conn, :request, "cognito")
     end
   end
 

@@ -26,7 +26,17 @@ defmodule SignsUiWeb.AuthController do
     |> redirect(to: SignsUiWeb.Router.Helpers.messages_path(conn, :index))
   end
 
-  def callback(%{assigns: %{ueberauth_failure: _failure}} = conn, _params) do
-    send_resp(conn, 403, "unauthenticated")
+  def callback(
+        %{assigns: %{ueberauth_failure: %Ueberauth.Failure{errors: errors}}} = conn,
+        _params
+      ) do
+    if Enum.any?(errors, fn e -> e.message_key == "refresh_token_failure" end) do
+      Phoenix.Controller.redirect(
+        conn,
+        to: SignsUiWeb.Router.Helpers.auth_path(conn, :request, "cognito")
+      )
+    else
+      send_resp(conn, 403, "unauthenticated")
+    end
   end
 end
