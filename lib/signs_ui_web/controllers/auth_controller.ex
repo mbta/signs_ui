@@ -10,6 +10,11 @@ defmodule SignsUiWeb.AuthController do
 
     current_time = System.system_time(:second)
 
+    if credentials.refresh_token do
+      refresh_token_store = Application.get_env(:signs_ui, :refresh_token_store)
+      refresh_token_store.put_refresh_token(username, credentials.refresh_token)
+    end
+
     conn
     |> Guardian.Plug.sign_in(
       SignsUiWeb.AuthManager,
@@ -17,10 +22,21 @@ defmodule SignsUiWeb.AuthController do
       %{groups: credentials.other[:groups]},
       ttl: {expiration - current_time, :seconds}
     )
+    |> Plug.Conn.put_session(:signs_ui_username, username)
     |> redirect(to: SignsUiWeb.Router.Helpers.messages_path(conn, :index))
   end
 
-  def callback(%{assigns: %{ueberauth_failure: _failure}} = conn, _params) do
-    send_resp(conn, 403, "unauthenticated")
+  def callback(
+        %{assigns: %{ueberauth_failure: %Ueberauth.Failure{errors: errors}}} = conn,
+        _params
+      ) do
+    if Enum.any?(errors, fn e -> e.message_key == "refresh_token_failure" end) do
+      Phoenix.Controller.redirect(
+        conn,
+        to: SignsUiWeb.Router.Helpers.auth_path(conn, :request, "cognito")
+      )
+    else
+      send_resp(conn, 403, "unauthenticated")
+    end
   end
 end

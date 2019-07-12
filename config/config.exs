@@ -15,7 +15,8 @@ config :signs_ui, SignsUiWeb.Endpoint,
 # Internal configuration
 config :signs_ui,
   signs_external_post_mod: SignsUi.Config.S3,
-  aws_requestor: ExAws
+  aws_requestor: ExAws,
+  refresh_token_store: SignsUi.RefreshTokenStore
 
 # HTTP config
 config :signs_ui, :redirect_http?, false
