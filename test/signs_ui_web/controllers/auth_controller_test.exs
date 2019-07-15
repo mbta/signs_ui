@@ -3,6 +3,7 @@ defmodule SignsUiWeb.AuthControllerTest do
   import Test.Support.Helpers
   require Logger
   import ExUnit.CaptureLog
+  use Plug.Test
 
   describe "callback" do
     test "redirects on success and saves refresh token", %{conn: conn} do
@@ -46,16 +47,24 @@ defmodule SignsUiWeb.AuthControllerTest do
     end
 
     test "handles failure to use refresh token", %{conn: conn} do
-      conn =
-        conn
-        |> assign(:ueberauth_failure, %Ueberauth.Failure{
-          errors: [%Ueberauth.Failure.Error{message_key: "refresh_token_failure"}]
-        })
-        |> get(SignsUiWeb.Router.Helpers.auth_path(conn, :callback, "cognito"))
+      reassign_env(:refresh_token_store, SignsUiWeb.AuthControllerTest.FakeRefreshTokenStore)
 
-      response = response(conn, 302)
+      log =
+        capture_log([level: :info], fn ->
+          conn =
+            conn
+            |> init_test_session(%{signs_ui_username: "foo@mbta.com"})
+            |> assign(:ueberauth_failure, %Ueberauth.Failure{
+              errors: [%Ueberauth.Failure.Error{message_key: "refresh_token_failure"}]
+            })
+            |> get(SignsUiWeb.Router.Helpers.auth_path(conn, :callback, "cognito"))
 
-      assert response =~ SignsUiWeb.Router.Helpers.auth_path(conn, :request, "cognito")
+          response = response(conn, 302)
+
+          assert response =~ SignsUiWeb.Router.Helpers.auth_path(conn, :request, "cognito")
+        end)
+
+      assert log =~ "cleared_refresh_token username=foo@mbta.com"
     end
   end
 
@@ -72,6 +81,10 @@ defmodule SignsUiWeb.AuthControllerTest do
   defmodule FakeRefreshTokenStore do
     def put_refresh_token(username, refresh_token) do
       Logger.info("stored_refresh_token username=#{username} refresh_token=#{refresh_token}")
+    end
+
+    def clear_refresh_token(username) do
+      Logger.info("cleared_refresh_token username=#{username}")
     end
   end
 end

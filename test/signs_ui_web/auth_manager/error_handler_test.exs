@@ -33,7 +33,5 @@ defmodule SignsUiWeb.AuthManager.ErrorHandlerTest do
   defmodule FakeRefreshTokenStore do
     def get_refresh_token("foo@mbta.com"), do: nil
     def get_refresh_token("bar@mbta.com"), do: "abcde"
-
-    def clear_refresh_token(_username), do: :ok
   end
 end
