@@ -31,6 +31,13 @@ defmodule SignsUiWeb.AuthController do
         _params
       ) do
     if Enum.any?(errors, fn e -> e.message_key == "refresh_token_failure" end) do
+      refresh_token_store = Application.get_env(:signs_ui, :refresh_token_store)
+
+      conn
+      |> Plug.Conn.fetch_session()
+      |> Plug.Conn.get_session(:signs_ui_username)
+      |> refresh_token_store.clear_refresh_token()
+
       Phoenix.Controller.redirect(
         conn,
         to: SignsUiWeb.Router.Helpers.auth_path(conn, :request, "cognito")
