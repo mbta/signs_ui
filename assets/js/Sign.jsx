@@ -144,6 +144,13 @@ class Sign extends Component {
             <span style={fontSize(signId)}>
               {signId}
             </span>
+            {readOnly
+              && (
+                <div class="viewer--mode-text">
+                {signConfig.mode}
+                </div>
+              )
+            }
             {!readOnly
               && (
                 <div>

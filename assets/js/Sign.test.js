@@ -85,6 +85,34 @@ test('does not show select in read-only mode', () => {
   expect(wrapper.html()).not.toMatch('select');
 });
 
+test('shows the mode the sign is in in read-only mode', () => {
+  const now = new Date('2019-01-15T20:15:00Z').valueOf();
+  const fresh = new Date(now + 5000).toLocaleString();
+  const currentTime = now + 2000;
+  const signId = 'RDAV-n';
+  const line = 'Red';
+  const signConfig = { mode: 'auto' };
+  const signContent = signContentWithExpirations(fresh, fresh);
+  const setConfigs = () => { };
+  const realtimeId = 'id';
+  const readOnly = true;
+
+  const wrapper = mount(
+    React.createElement(Sign, {
+      signId,
+      signContent,
+      currentTime,
+      line,
+      signConfig,
+      setConfigs,
+      realtimeId,
+      readOnly,
+    }, null),
+  );
+
+  expect(wrapper.html()).toMatch('auto');
+});
+
 test('does show select when not in read-only mode', () => {
   const now = new Date('2019-01-15T20:15:00Z').valueOf();
   const fresh = new Date(now + 5000).toLocaleString();
