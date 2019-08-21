@@ -146,8 +146,8 @@ class Sign extends Component {
             </span>
             {readOnly
               && (
-                <div class="viewer--mode-text">
-                {signConfig.mode}
+                <div className="viewer--mode-text">
+                  {signConfig.mode}
                 </div>
               )
             }
