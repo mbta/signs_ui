@@ -110,7 +110,7 @@ test('shows the mode the sign is in in read-only mode', () => {
     }, null),
   );
 
-  expect(wrapper.html()).toMatch('auto');
+  expect(wrapper.html()).toMatch('Auto');
 });
 
 test('does show select when not in read-only mode', () => {
