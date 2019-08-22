@@ -37,6 +37,15 @@ function makeConfig(mode) {
   return { mode: 'off', expires: null };
 }
 
+function displayName(mode) {
+  switch (mode) {
+    case 'static_text':
+      return 'Custom';
+    default:
+      return mode.charAt(0).toUpperCase() + mode.slice(1);
+  }
+}
+
 function isValidText(text) {
   return !(/[^a-zA-Z0-9,/!@' +]/.test(text));
 }
@@ -144,6 +153,13 @@ class Sign extends Component {
             <span style={fontSize(signId)}>
               {signId}
             </span>
+            {readOnly
+              && (
+                <div className="viewer--mode-text">
+                  {displayName(signConfig.mode)}
+                </div>
+              )
+            }
             {!readOnly
               && (
                 <div>
