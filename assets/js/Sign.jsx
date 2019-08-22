@@ -38,9 +38,9 @@ function makeConfig(mode) {
 }
 
 function displayName(mode) {
-  switch(mode) {
+  switch (mode) {
     case 'static_text':
-      return "Custom";
+      return 'Custom';
     default:
       return mode.charAt(0).toUpperCase() + mode.slice(1);
   }
