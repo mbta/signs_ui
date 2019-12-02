@@ -42,7 +42,7 @@ defmodule SignsUi.Mixfile do
     [
       {:excoveralls, "~> 0.9.0", only: :test},
       {:dialyxir, "~> 1.0.0-rc.4", only: [:dev, :test], runtime: false},
-      {:distillery, "~> 1.5", runtime: false},
+      {:distillery, "~> 2.1.1", runtime: false},
       {:phoenix, "~> 1.3.2"},
       {:phoenix_pubsub, "~> 1.0"},
       {:phoenix_html, "~> 2.10"},
