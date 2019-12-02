@@ -5,7 +5,7 @@ defmodule SignsUi.Mock.Write do
     json =
       signs
       |> SignsUi.Config.Signs.format_signs_for_json()
-      |> Poison.encode!()
+      |> Jason.encode!()
 
     case File.write(file_path, json) do
       :ok -> {:ok, :success}

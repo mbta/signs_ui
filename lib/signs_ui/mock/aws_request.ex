@@ -37,6 +37,6 @@ defmodule SignsUi.Mock.AwsRequest do
       }
     }
 
-    {:ok, %{body: Poison.encode!(signs)}}
+    {:ok, %{body: Jason.encode!(signs)}}
   end
 end

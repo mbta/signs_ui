@@ -50,7 +50,7 @@ defmodule SignsUi.Mixfile do
       {:gettext, "~> 0.11"},
       {:cowboy, "~> 1.0"},
       {:plug_cowboy, "~> 1.0"},
-      {:poison, "~> 3.1"},
+      {:jason, "~> 1.1.2"},
       {:httpoison, "~> 1.0"},
       {:ex_aws, "~> 2.0"},
       {:ex_aws_s3, "~> 2.0"},

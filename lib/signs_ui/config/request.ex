@@ -15,7 +15,7 @@ defmodule SignsUi.Config.Request do
   end
 
   defp parse(json) do
-    case Poison.decode(json) do
+    case Jason.decode(json) do
       {:ok, response} ->
         {:ok,
          Map.new(response, fn {sign_id, config} -> {sign_id, Sign.from_json(sign_id, config)} end)}
