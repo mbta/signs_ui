@@ -30,7 +30,7 @@ defmodule SignsUiWeb.Endpoint do
     parsers: [:urlencoded, :multipart, :json],
     pass: ["*/*"],
     body_reader: {RealtimeSignsBodyReader, :read_body, []},
-    json_decoder: Poison
+    json_decoder: Jason
   )
 
   plug(Plug.MethodOverride)
