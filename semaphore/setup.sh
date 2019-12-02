@@ -27,4 +27,4 @@ mix local.hex --force
 mix local.rebar --force
 mix deps.get
 
-npm --prefix assets ci
+yarn --cwd assets install
