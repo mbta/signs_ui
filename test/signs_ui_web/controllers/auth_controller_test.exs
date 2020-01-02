@@ -36,14 +36,17 @@ defmodule SignsUiWeb.AuthControllerTest do
     end
 
     test "handles generic failure", %{conn: conn} do
-      conn =
-        conn
-        |> assign(:ueberauth_failure, %Ueberauth.Failure{})
-        |> get(SignsUiWeb.Router.Helpers.auth_path(conn, :callback, "cognito"))
+      log =
+        capture_log([level: :error], fn ->
+          conn =
+            conn
+            |> assign(:ueberauth_failure, %Ueberauth.Failure{})
+            |> get(SignsUiWeb.Router.Helpers.auth_path(conn, :callback, "cognito"))
 
-      response = response(conn, 403)
+          assert response(conn, 403) =~ "unauthenticated"
+        end)
 
-      assert response =~ "unauthenticated"
+      assert log =~ "ueberauth_failure"
     end
 
     test "handles failure to use refresh token", %{conn: conn} do
