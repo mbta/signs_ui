@@ -1,6 +1,7 @@
 defmodule SignsUiWeb.AuthController do
   use SignsUiWeb, :controller
   plug(Ueberauth)
+  require Logger
 
   @spec callback(Plug.Conn.t(), map()) :: Plug.Conn.t()
   def callback(%{assigns: %{ueberauth_auth: auth}} = conn, _params) do
@@ -30,6 +31,8 @@ defmodule SignsUiWeb.AuthController do
         %{assigns: %{ueberauth_failure: %Ueberauth.Failure{errors: errors}}} = conn,
         _params
       ) do
+    Logger.error("ueberauth_failure #{inspect(errors)}")
+
     if Enum.any?(errors, fn e -> e.message_key == "refresh_token_failure" end) do
       refresh_token_store = Application.get_env(:signs_ui, :refresh_token_store)
 
