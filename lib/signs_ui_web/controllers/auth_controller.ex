@@ -33,20 +33,35 @@ defmodule SignsUiWeb.AuthController do
       ) do
     Logger.error("ueberauth_failure #{inspect(errors)}")
 
-    if Enum.any?(errors, fn e -> e.message_key == "refresh_token_failure" end) do
-      refresh_token_store = Application.get_env(:signs_ui, :refresh_token_store)
+    cond do
+      error?(errors, "refresh_token_failure") ->
+        refresh_token_store = Application.get_env(:signs_ui, :refresh_token_store)
 
-      conn
-      |> Plug.Conn.fetch_session()
-      |> Plug.Conn.get_session(:signs_ui_username)
-      |> refresh_token_store.clear_refresh_token()
+        conn
+        |> Plug.Conn.fetch_session()
+        |> Plug.Conn.get_session(:signs_ui_username)
+        |> refresh_token_store.clear_refresh_token()
 
-      Phoenix.Controller.redirect(
-        conn,
-        to: SignsUiWeb.Router.Helpers.auth_path(conn, :request, "cognito")
-      )
-    else
-      send_resp(conn, 403, "unauthenticated")
+        reauthenticate(conn)
+
+      error?(errors, "bad_state") ->
+        reauthenticate(conn)
+
+      true ->
+        send_resp(conn, 403, "unauthenticated")
     end
+  end
+
+  @spec error?([Ueberauth.Failure.t(), ...], String.t()) :: boolean
+  defp error?(errors, key) do
+    Enum.any?(errors, fn e -> e.message_key == key end)
+  end
+
+  @spec reauthenticate(Plug.Conn.t()) :: Plug.Conn.t()
+  defp reauthenticate(conn) do
+    Phoenix.Controller.redirect(
+      conn,
+      to: SignsUiWeb.Router.Helpers.auth_path(conn, :request, "cognito")
+    )
   end
 end
