@@ -103,7 +103,7 @@ test('Suppresses widget when no expiration set if in read-only mode', () => {
     }),
   );
 
-  expect(wrapper.text()).toBe(null);
+  expect(wrapper.text()).toBe('');
 });
 
 test('Shows \'Scheduled\' when expiration is set if in read-only mode', () => {
