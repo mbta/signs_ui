@@ -69,6 +69,20 @@ defmodule SignsUiWeb.AuthControllerTest do
 
       assert log =~ "cleared_refresh_token username=foo@mbta.com"
     end
+
+    @tag :capture_log
+    test "handles bad_state by redirecting to /auth/cognito", %{conn: conn} do
+      conn =
+        conn
+        |> assign(:ueberauth_failure, %Ueberauth.Failure{
+          errors: [%Ueberauth.Failure.Error{message_key: "bad_state"}]
+        })
+        |> get(SignsUiWeb.Router.Helpers.auth_path(conn, :callback, "cognito"))
+
+      response = response(conn, 302)
+
+      assert response =~ SignsUiWeb.Router.Helpers.auth_path(conn, :request, "cognito")
+    end
   end
 
   describe "request" do
