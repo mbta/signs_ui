@@ -56,6 +56,7 @@ defmodule SignsUi.Mixfile do
       {:ex_aws_s3, "~> 2.0"},
       {:timex, "~> 3.1"},
       {:guardian, "~> 2.0"},
+      {:guardian_phoenix, "~> 2.0"},
       {:ueberauth, "~> 0.1"},
       {:ueberauth_cognito, "~> 0.1"},
       {:nimble_parsec, "~> 0.1"}
