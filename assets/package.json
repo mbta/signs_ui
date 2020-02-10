@@ -33,7 +33,7 @@
     "phoenix_html": "^2.10.4",
     "prop-types": "^15.6.2",
     "react": "^16.4.1",
-    "react-datepicker": "^2.0.0",
+    "react-datepicker": "^2.12.1",
     "react-dom": "^16.4.1",
     "webpack": "^4.16.1",
     "webpack-cli": "^3.1.0"
