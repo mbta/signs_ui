@@ -10,32 +10,35 @@ defmodule SignsUi.Config.ExpirationTest do
       {:ok, time1, 0} = DateTime.from_iso8601("2019-01-15T12:00:00Z")
       {:ok, time2, 0} = DateTime.from_iso8601("2019-01-15T14:00:00Z")
 
-      signs = %{
-        "nil_expiration" => %Sign{
-          id: "nil_expiration",
-          config: %{
-            mode: :off,
-            expires: nil
+      state = %{
+        signs: %{
+          "nil_expiration" => %Sign{
+            id: "nil_expiration",
+            config: %{
+              mode: :off,
+              expires: nil
+            }
+          },
+          "past_expiration" => %Sign{
+            id: "past_expiration",
+            config: %{
+              mode: :off,
+              expires: time1
+            }
+          },
+          "future_expiration" => %Sign{
+            id: "future_expiration",
+            config: %{
+              mode: :off,
+              expires: time2
+            }
+          },
+          "already_auto" => %Sign{
+            id: "already_auto",
+            config: %{mode: :auto}
           }
         },
-        "past_expiration" => %Sign{
-          id: "past_expiration",
-          config: %{
-            mode: :off,
-            expires: time1
-          }
-        },
-        "future_expiration" => %Sign{
-          id: "future_expiration",
-          config: %{
-            mode: :off,
-            expires: time2
-          }
-        },
-        "already_auto" => %Sign{
-          id: "already_auto",
-          config: %{mode: :auto}
-        }
+        multi_sign_headways: %{}
       }
 
       expected_updates = %{
@@ -47,7 +50,7 @@ defmodule SignsUi.Config.ExpirationTest do
         }
       }
 
-      assert SignsUi.Config.Expiration.expire_signs(signs, fn ->
+      assert SignsUi.Config.Expiration.expire_signs(state, fn ->
                Timex.to_datetime(~N[2019-01-15 08:00:00], "America/New_York")
              end) == expected_updates
     end
@@ -78,9 +81,9 @@ defmodule SignsUi.Config.ExpirationTest do
 
       new_state = SignsUi.Config.State.get_all(:sign_state_test)
 
-      assert new_state["harvard_northbound"].config.mode == :auto
-      assert new_state["harvard_southbound"].config.mode == :static_text
-      assert new_state["central_southbound"].config.mode == :static_text
+      assert new_state.signs["harvard_northbound"].config.mode == :auto
+      assert new_state.signs["harvard_southbound"].config.mode == :static_text
+      assert new_state.signs["central_southbound"].config.mode == :static_text
     end
   end
 end

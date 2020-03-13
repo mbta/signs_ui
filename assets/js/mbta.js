@@ -1,3 +1,42 @@
+const branchConfig = {
+  Orange: [
+    {
+      id: 'orange_trunk',
+      name: 'Orange Line',
+    },
+  ],
+  Red: [
+    {
+      id: 'red_trunk',
+      name: 'Red Line Trunk',
+    },
+    {
+      id: 'red_ashmont',
+      name: 'Ashmont',
+    },
+    {
+      id: 'red_braintree',
+      name: 'Braintree',
+    },
+  ],
+  Blue: [
+    {
+      id: 'orange_trunk',
+      name: 'Orange Line',
+    },
+  ],
+  Green: [
+    {
+      id: 'green_trunk',
+      name: 'Green Line Trunk',
+    },
+    {
+      id: 'green_d',
+      name: 'Green - D',
+    },
+  ],
+};
+
 const stationConfig = {
   Orange: [
     {
@@ -972,4 +1011,4 @@ function arincToRealtimeId(stationZone, line) {
   return arincToRealtimeIdMap[stationZone];
 }
 
-export { stationConfig, arincToRealtimeId };
+export { branchConfig, stationConfig, arincToRealtimeId };

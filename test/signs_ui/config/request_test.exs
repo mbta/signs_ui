@@ -30,20 +30,26 @@ defmodule SignsUi.Config.RequestTest do
     test "works with old format" do
       assert {:ok,
               %{
-                "sign_id" => %Sign{
-                  id: "sign_id",
-                  config: %{mode: :auto}
-                }
+                signs: %{
+                  "sign_id" => %Sign{
+                    id: "sign_id",
+                    config: %{mode: :auto}
+                  }
+                },
+                multi_sign_headways: %{}
               }} = Request.get_signs({OldFormat, :get_object, []})
     end
 
     test "works with new format" do
       assert {:ok,
               %{
-                "sign_id" => %Sign{
-                  id: "sign_id",
-                  config: %{mode: :auto}
-                }
+                signs: %{
+                  "sign_id" => %Sign{
+                    id: "sign_id",
+                    config: %{mode: :auto}
+                  }
+                },
+                multi_sign_headways: %{}
               }} = Request.get_signs({NewFormat, :get_object, []})
     end
   end

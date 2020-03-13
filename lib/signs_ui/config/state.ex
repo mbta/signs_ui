@@ -8,7 +8,12 @@ defmodule SignsUi.Config.State do
   alias SignsUi.Config
 
   @type t :: %{
-          Config.Sign.id() => Config.Sign.t()
+          signs: %{
+            Config.Sign.id() => Config.Sign.t()
+          },
+          multi_sign_headways: %{
+            String.t() => Config.MultiSignHeadway.t()
+          }
         }
 
   def start_link(opts \\ []) do
@@ -20,18 +25,29 @@ defmodule SignsUi.Config.State do
     GenServer.call(pid, :get_all)
   end
 
-  @spec update_some(GenServer.server(), %{Config.Sign.id() => Config.Sign.t()}) :: {:ok, t()}
-  def update_some(pid \\ __MODULE__, changes) do
-    GenServer.call(pid, {:update_some, changes})
+  @spec update_sign_configs(GenServer.server(), %{Config.Sign.id() => Config.Sign.t()}) ::
+          {:ok, t()}
+  def update_sign_configs(pid \\ __MODULE__, changes) do
+    GenServer.call(pid, {:update_sign_configs, changes})
+  end
+
+  @spec update_multi_sign_headways(GenServer.server(), %{
+          String.t() => Config.MultiSignHeadway.t()
+        }) ::
+          {:ok, t()}
+  def update_multi_sign_headways(pid \\ __MODULE__, changes) do
+    GenServer.call(pid, {:update_multi_sign_headways, changes})
   end
 
   @spec init(any()) :: {:ok, t()} | {:stop, any()}
   def init(_) do
     case Config.Request.get_signs() do
-      {:ok, state} ->
+      {:ok, config} ->
         # re-save state, since format was updated
-        save_changes(%{}, state)
-        {:ok, state}
+        save_sign_config_changes(%{}, config)
+        save_multi_sign_headways_changes(config.multi_sign_headways, config)
+
+        {:ok, config}
 
       {:error, reason} ->
         {:stop, reason}
@@ -42,17 +58,22 @@ defmodule SignsUi.Config.State do
     {:reply, signs, signs}
   end
 
-  def handle_call({:update_some, changes}, _from, old_state) do
-    new_state = save_changes(changes, old_state)
+  def handle_call({:update_sign_configs, changes}, _from, old_state) do
+    new_state = save_sign_config_changes(changes, old_state)
     {:reply, {:ok, new_state}, new_state}
   end
 
-  @spec save_changes(t(), t()) :: t()
-  defp save_changes(changes, old_state) do
+  def handle_call({:update_multi_sign_headways, changes}, _from, old_state) do
+    new_state = save_multi_sign_headways_changes(changes, old_state)
+    {:reply, {:ok, new_state}, new_state}
+  end
+
+  @spec save_sign_config_changes(%{Config.Sign.id() => Config.Sign.t()}, t()) :: t()
+  defp save_sign_config_changes(changes, %{signs: old_signs} = old_state) do
     external_post_mod = Application.get_env(:signs_ui, :signs_external_post_mod)
 
-    signs = Map.merge(old_state, changes)
-    {:ok, _} = external_post_mod.update(signs)
+    signs = Map.merge(old_signs, changes)
+    {:ok, _} = external_post_mod.update(%{old_state | signs: signs})
 
     broadcast_data =
       signs
@@ -61,6 +82,26 @@ defmodule SignsUi.Config.State do
 
     SignsUiWeb.Endpoint.broadcast!("signs:all", "new_sign_configs_state", broadcast_data)
 
-    signs
+    %{old_state | signs: signs}
+  end
+
+  @spec save_multi_sign_headways_changes(%{String.t() => Config.MultiSignHeadway.t()}, t()) :: t()
+  defp save_multi_sign_headways_changes(
+         new_multi_sign_headways,
+         old_state
+       ) do
+    external_post_mod = Application.get_env(:signs_ui, :signs_external_post_mod)
+
+    new_state = %{old_state | multi_sign_headways: new_multi_sign_headways}
+
+    {:ok, _} = external_post_mod.update(new_state)
+
+    SignsUiWeb.Endpoint.broadcast!(
+      "signs:all",
+      "new_multi_sign_headways_state",
+      new_multi_sign_headways
+    )
+
+    new_state
   end
 end

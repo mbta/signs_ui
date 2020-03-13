@@ -11,6 +11,7 @@ defmodule SignsUiWeb.MessagesController do
 
     sign_configs =
       SignsUi.Config.State.get_all()
+      |> Map.get(:signs)
       |> Enum.map(fn {_id, sign} ->
         {sign.id, sign.config}
       end)

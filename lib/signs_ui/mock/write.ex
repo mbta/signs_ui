@@ -1,5 +1,5 @@
 defmodule SignsUi.Mock.Write do
-  def update(signs) do
+  def update(%{signs: signs}) do
     file_path = Application.get_env(:signs_ui, :local_write_path)
 
     json =
@@ -12,4 +12,6 @@ defmodule SignsUi.Mock.Write do
       error -> error
     end
   end
+
+  def update(foo), do: IO.inspect(foo)
 end

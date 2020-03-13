@@ -12,11 +12,9 @@ defmodule SignsUi.Config.SignsTest do
   describe "format_signs_for_json/1" do
     test "puts all signs in json format" do
       expected = %{
-        "signs" => %{
-          "sign1" => %{"id" => "sign1", "mode" => "auto"},
-          "sign2" => %{"id" => "sign2", "mode" => "off", "expires" => nil},
-          "sign3" => %{"id" => "sign3", "mode" => "auto"}
-        }
+        "sign1" => %{"id" => "sign1", "mode" => "auto"},
+        "sign2" => %{"id" => "sign2", "mode" => "off", "expires" => nil},
+        "sign3" => %{"id" => "sign3", "mode" => "auto"}
       }
 
       assert format_signs_for_json(@signs) == expected
