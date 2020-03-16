@@ -41,10 +41,16 @@ test('Shows all signs for a line', () => {
   const line = 'Red';
   const initialSignConfigs = {};
   const readOnly = false;
+  const multiSignHeadwayConfigs = {};
 
   const wrapper = mount(
     React.createElement(ViewerApp, {
-      initialSigns: signs, currentTime, line, initialSignConfigs, readOnly,
+      initialSigns: signs,
+      initialMultiSignHeadwayConfigs: multiSignHeadwayConfigs,
+      currentTime,
+      line,
+      initialSignConfigs,
+      readOnly,
     }, null),
   );
 
@@ -64,10 +70,16 @@ test('Can enable/disable a sign', () => {
   const line = 'Red';
   const initialSignConfigs = { davis_southbound: { mode: 'auto' } };
   const readOnly = false;
+  const multiSignHeadwayConfigs = {};
 
   const wrapper = mount(
     React.createElement(ViewerApp, {
-      initialSigns: signs, currentTime, line, initialSignConfigs, readOnly,
+      initialSigns: signs,
+      initialMultiSignHeadwayConfigs: multiSignHeadwayConfigs,
+      currentTime,
+      line,
+      initialSignConfigs,
+      readOnly,
     }, null),
   );
 

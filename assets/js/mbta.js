@@ -21,8 +21,8 @@ const branchConfig = {
   ],
   Blue: [
     {
-      id: 'orange_trunk',
-      name: 'Orange Line',
+      id: 'blue_trunk',
+      name: 'Blue Line',
     },
   ],
   Green: [
@@ -33,6 +33,22 @@ const branchConfig = {
     {
       id: 'green_d',
       name: 'Green - D',
+    },
+    {
+      id: 'green_e',
+      name: 'Green - E',
+    },
+  ],
+  Mattapan: [
+    {
+      id: 'mattapan_trunk',
+      name: 'Mattapan Line',
+    },
+  ],
+  SL3: [
+    {
+      id: 'sl3_trunk',
+      name: 'SL3',
     },
   ],
 };

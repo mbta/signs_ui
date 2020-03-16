@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import MultiSignHeadwayForm from './MultiSignHeadwayForm';
 import Station from './Station';
-import { stationConfig, arincToRealtimeId } from './mbta';
-import { signConfigType, signContentType } from './types';
+import { stationConfig, arincToRealtimeId, branchConfig } from './mbta';
+import { signConfigType, signContentType, multiSignHeadwayConfigType } from './types';
 
 function name(line) {
   if (line === 'Red') { return 'Red Line'; }
@@ -35,16 +36,33 @@ function setEnabledStations(setConfigFn, stations, line, enabled) {
 }
 
 function Line({
-  signs, currentTime, line, signConfigs, setConfigs, readOnly,
+  signs,
+  currentTime,
+  line,
+  signConfigs,
+  setConfigs,
+  readOnly,
+  multiSignHeadwayConfigs,
+  setMultiSignHeadwayConfigs,
+  unsetMultiSignHeadwayConfigs,
 }) {
   const stations = stationConfig[line] || [];
+  const branches = branchConfig[line] || [];
 
   return (
     <div>
       <h1>
         {name(line)}
       </h1>
-
+      {branches.length > 0 && (
+        <MultiSignHeadwayForm
+          branches={branches}
+          multiSignHeadwayConfigs={multiSignHeadwayConfigs}
+          setMultiSignHeadwayConfigs={setMultiSignHeadwayConfigs}
+          unsetMultiSignHeadwayConfigs={unsetMultiSignHeadwayConfigs}
+          readOnly={readOnly}
+        />
+      )}
       {!readOnly
         && (
           <div className="viewer--toggle-all">
@@ -91,8 +109,11 @@ Line.propTypes = {
   currentTime: PropTypes.number.isRequired,
   line: PropTypes.string.isRequired,
   signConfigs: PropTypes.objectOf(signConfigType).isRequired,
+  multiSignHeadwayConfigs: PropTypes.objectOf(multiSignHeadwayConfigType).isRequired,
   setConfigs: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
+  setMultiSignHeadwayConfigs: PropTypes.func.isRequired,
+  unsetMultiSignHeadwayConfigs: PropTypes.func.isRequired,
 };
 
 export default Line;

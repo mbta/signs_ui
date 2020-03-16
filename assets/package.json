@@ -1,6 +1,7 @@
 {
   "private": true,
   "devDependencies": {
+    "@testing-library/react": "^10.0.1",
     "babel-jest": "^23.4.0",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
@@ -10,16 +11,20 @@
     "eslint-plugin-jest": "^21.18.0",
     "eslint-plugin-jsx-a11y": "^6.1.1",
     "eslint-plugin-react": "^7.18.0",
-    "jest": "^23.4.1"
+    "jest": "^23.4.1",
+    "jest-environment-jsdom-sixteen": "^1.0.3"
   },
   "scripts": {
     "deploy": "webpack --mode production",
     "lint": "eslint js/**",
     "start": "yarn run watch",
-    "test": "node scripts/tester.js --env=jsdom",
+    "test": "node scripts/tester.js --env=jest-environment-jsdom-sixteen",
     "watch": "webpack --mode development --watch-stdin"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.27",
+    "@fortawesome/free-solid-svg-icons": "^5.12.1",
+    "@fortawesome/react-fontawesome": "^0.1.9",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",
     "babel-preset-env": "^1.7.0",
@@ -28,6 +33,7 @@
     "copy-webpack-plugin": "^5.1.1",
     "css-loader": "^1.0.0",
     "dateformat": "^3.0.3",
+    "formik": "^2.1.4",
     "mini-css-extract-plugin": "^0.4.1",
     "phoenix": "^1.3.0",
     "phoenix_html": "^2.10.4",
@@ -36,7 +42,8 @@
     "react-datepicker": "^2.0.0",
     "react-dom": "^16.4.1",
     "webpack": "^4.16.1",
-    "webpack-cli": "^3.1.0"
+    "webpack-cli": "^3.1.0",
+    "yup": "^0.28.3"
   },
   "jest": {
     "setupTestFrameworkScriptFile": "./scripts/jestSetup.js",
