@@ -20,6 +20,9 @@
     "watch": "webpack --mode development --watch-stdin"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.27",
+    "@fortawesome/free-solid-svg-icons": "^5.12.1",
+    "@fortawesome/react-fontawesome": "^0.1.9",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",
     "babel-preset-env": "^1.7.0",
@@ -28,6 +31,7 @@
     "copy-webpack-plugin": "^5.1.1",
     "css-loader": "^1.0.0",
     "dateformat": "^3.0.3",
+    "formik": "^2.1.4",
     "mini-css-extract-plugin": "^0.4.1",
     "phoenix": "^1.3.0",
     "phoenix_html": "^2.10.4",
@@ -36,7 +40,8 @@
     "react-datepicker": "^2.0.0",
     "react-dom": "^16.4.1",
     "webpack": "^4.16.1",
-    "webpack-cli": "^3.1.0"
+    "webpack-cli": "^3.1.0",
+    "yup": "^0.28.3"
   },
   "jest": {
     "setupTestFrameworkScriptFile": "./scripts/jestSetup.js",

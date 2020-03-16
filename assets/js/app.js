@@ -10,9 +10,11 @@ import ViewerApp from './ViewerApp';
 
 const realtimeRoot = document.getElementById('viewer-root');
 if (realtimeRoot) {
-  const { initialSignsData: initialSigns, initialSignConfigs, readOnly } = window;
+  const {
+    initialSignsData: initialSigns, initialSignConfigs, readOnly, initialMultiSignHeadwayConfigs,
+  } = window;
   const viewerApp = React.createElement(ViewerApp, {
-    initialSigns, initialSignConfigs, readOnly,
+    initialSigns, initialSignConfigs, readOnly, initialMultiSignHeadwayConfigs,
   }, null);
   ReactDOM.render(viewerApp, realtimeRoot);
 }
