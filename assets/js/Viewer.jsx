@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Line from './Line';
-import { signConfigType, signContentType, multiSignHeadwayConfigType } from './types';
+import { signConfigType, signContentType, configuredHeadwayType } from './types';
 
 function Viewer({
   signs,
@@ -10,9 +10,8 @@ function Viewer({
   signConfigs,
   setConfigs,
   readOnly,
-  multiSignHeadwayConfigs,
-  setMultiSignHeadwayConfigs,
-  unsetMultiSignHeadwayConfigs,
+  configuredHeadways,
+  setConfiguredHeadways,
 }) {
   return (
     <div>
@@ -20,11 +19,10 @@ function Viewer({
         signs={signs}
         currentTime={currentTime}
         line={line}
-        multiSignHeadwayConfigs={multiSignHeadwayConfigs}
+        configuredHeadways={configuredHeadways}
         signConfigs={signConfigs}
         setConfigs={setConfigs}
-        setMultiSignHeadwayConfigs={setMultiSignHeadwayConfigs}
-        unsetMultiSignHeadwayConfigs={unsetMultiSignHeadwayConfigs}
+        setConfiguredHeadways={setConfiguredHeadways}
         readOnly={readOnly}
       />
     </div>
@@ -36,10 +34,9 @@ Viewer.propTypes = {
   currentTime: PropTypes.number.isRequired,
   line: PropTypes.string.isRequired,
   signConfigs: PropTypes.objectOf(signConfigType).isRequired,
-  multiSignHeadwayConfigs: PropTypes.objectOf(multiSignHeadwayConfigType).isRequired,
+  configuredHeadways: PropTypes.objectOf(configuredHeadwayType).isRequired,
   setConfigs: PropTypes.func.isRequired,
-  setMultiSignHeadwayConfigs: PropTypes.func.isRequired,
-  unsetMultiSignHeadwayConfigs: PropTypes.func.isRequired,
+  setConfiguredHeadways: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
 };
 

@@ -1,3 +1,14 @@
+const timePeriodConfig = [
+  {
+    id: 'weekday_rush',
+    name: 'Weekday Rush',
+  },
+  {
+    id: 'weekend',
+    name: 'Weekend',
+  },
+];
+
 const branchConfig = {
   Orange: [
     {
@@ -1027,4 +1038,6 @@ function arincToRealtimeId(stationZone, line) {
   return arincToRealtimeIdMap[stationZone];
 }
 
-export { branchConfig, stationConfig, arincToRealtimeId };
+export {
+  timePeriodConfig, branchConfig, stationConfig, arincToRealtimeId,
+};

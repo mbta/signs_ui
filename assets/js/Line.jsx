@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import MultiSignHeadwayForm from './MultiSignHeadwayForm';
+import ConfiguredHeadwaysForm from './ConfiguredHeadwaysForm';
 import Station from './Station';
 import { stationConfig, arincToRealtimeId, branchConfig } from './mbta';
-import { signConfigType, signContentType, multiSignHeadwayConfigType } from './types';
+import { signConfigType, signContentType, configuredHeadwayType } from './types';
 
 function name(line) {
   if (line === 'Red') { return 'Red Line'; }
@@ -42,9 +42,8 @@ function Line({
   signConfigs,
   setConfigs,
   readOnly,
-  multiSignHeadwayConfigs,
-  setMultiSignHeadwayConfigs,
-  unsetMultiSignHeadwayConfigs,
+  configuredHeadways,
+  setConfiguredHeadways,
 }) {
   const stations = stationConfig[line] || [];
   const branches = branchConfig[line] || [];
@@ -55,11 +54,10 @@ function Line({
         {name(line)}
       </h1>
       {branches.length > 0 && (
-        <MultiSignHeadwayForm
+        <ConfiguredHeadwaysForm
           branches={branches}
-          multiSignHeadwayConfigs={multiSignHeadwayConfigs}
-          setMultiSignHeadwayConfigs={setMultiSignHeadwayConfigs}
-          unsetMultiSignHeadwayConfigs={unsetMultiSignHeadwayConfigs}
+          configuredHeadways={configuredHeadways}
+          setConfiguredHeadways={setConfiguredHeadways}
           readOnly={readOnly}
         />
       )}
@@ -109,11 +107,10 @@ Line.propTypes = {
   currentTime: PropTypes.number.isRequired,
   line: PropTypes.string.isRequired,
   signConfigs: PropTypes.objectOf(signConfigType).isRequired,
-  multiSignHeadwayConfigs: PropTypes.objectOf(multiSignHeadwayConfigType).isRequired,
+  configuredHeadways: PropTypes.objectOf(configuredHeadwayType).isRequired,
   setConfigs: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
-  setMultiSignHeadwayConfigs: PropTypes.func.isRequired,
-  unsetMultiSignHeadwayConfigs: PropTypes.func.isRequired,
+  setConfiguredHeadways: PropTypes.func.isRequired,
 };
 
 export default Line;

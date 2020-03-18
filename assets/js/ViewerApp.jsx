@@ -3,21 +3,20 @@ import PropTypes from 'prop-types';
 import { Socket } from 'phoenix';
 import Viewer from './Viewer';
 import lineToColor from './colors';
-import { signConfigType, signContentType, multiSignHeadwayConfigType } from './types';
+import { signConfigType, signContentType, configuredHeadwayType } from './types';
 
 class ViewerApp extends Component {
   constructor(props) {
     super(props);
 
     this.setConfigs = this.setConfigs.bind(this);
-    this.setMultiSignHeadwayConfigs = this.setMultiSignHeadwayConfigs.bind(this);
-    this.unsetMultiSignHeadwayConfigs = this.unsetMultiSignHeadwayConfigs.bind(this);
+    this.setConfiguredHeadways = this.setConfiguredHeadways.bind(this);
     this.changeLine = this.changeLine.bind(this);
     this.updateTime = this.updateTime.bind(this);
     this.state = {
       signs: props.initialSigns,
       signConfigs: props.initialSignConfigs,
-      multiSignHeadwayConfigs: props.initialMultiSignHeadwayConfigs,
+      configuredHeadways: props.initialConfiguredHeadways,
       currentTime: Date.now(),
       channel: null,
       readOnly: props.readOnly,
@@ -47,7 +46,7 @@ class ViewerApp extends Component {
     });
 
     channel.on('new_multi_sign_headways_state', (state) => {
-      this.setState({ multiSignHeadwayConfigs: state });
+      this.setState({ configuredHeadways: state });
     });
 
     channel.on('auth_expired', () => {
@@ -79,32 +78,15 @@ class ViewerApp extends Component {
     }
   }
 
-  setMultiSignHeadwayConfigs(newConfigs) {
-    const { channel, multiSignHeadwayConfigs } = this.state;
+  setConfiguredHeadways(newConfigs) {
+    const { channel, configuredHeadways } = this.state;
 
     if (channel) {
-      const newConfigsState = { ...multiSignHeadwayConfigs, ...newConfigs };
+      const newConfigsState = { ...configuredHeadways, ...newConfigs };
       channel.push('changeHeadways', newConfigsState);
       this.setState(oldState => ({
         ...oldState,
-        multiSignHeadwayConfigs: newConfigsState,
-      }));
-    }
-  }
-
-  unsetMultiSignHeadwayConfigs(branchIds) {
-    const { channel, multiSignHeadwayConfigs } = this.state;
-
-    if (channel) {
-      branchIds.forEach((id) => {
-        delete multiSignHeadwayConfigs[id];
-      });
-      channel.push('changeHeadways', multiSignHeadwayConfigs);
-      this.setState(oldState => ({
-        ...oldState,
-        multiSignHeadwayConfigs: {
-          ...multiSignHeadwayConfigs,
-        },
+        configuredHeadways: newConfigsState,
       }));
     }
   }
@@ -122,7 +104,7 @@ class ViewerApp extends Component {
 
   render() {
     const {
-      signs, currentTime, line, signConfigs, readOnly, multiSignHeadwayConfigs,
+      signs, currentTime, line, signConfigs, readOnly, configuredHeadways,
     } = this.state;
     return (
       <div className="viewer--main container">
@@ -151,9 +133,8 @@ class ViewerApp extends Component {
             <Viewer
               signs={signs}
               signConfigs={signConfigs}
-              multiSignHeadwayConfigs={multiSignHeadwayConfigs}
-              setMultiSignHeadwayConfigs={this.setMultiSignHeadwayConfigs}
-              unsetMultiSignHeadwayConfigs={this.unsetMultiSignHeadwayConfigs}
+              configuredHeadways={configuredHeadways}
+              setConfiguredHeadways={this.setConfiguredHeadways}
               setConfigs={this.setConfigs}
               currentTime={currentTime}
               line={line}
@@ -168,7 +149,7 @@ class ViewerApp extends Component {
 ViewerApp.propTypes = {
   initialSigns: PropTypes.objectOf(signContentType).isRequired,
   initialSignConfigs: PropTypes.objectOf(signConfigType).isRequired,
-  initialMultiSignHeadwayConfigs: PropTypes.objectOf(multiSignHeadwayConfigType).isRequired,
+  initialConfiguredHeadways: PropTypes.objectOf(configuredHeadwayType).isRequired,
   readOnly: PropTypes.bool.isRequired,
 };
 

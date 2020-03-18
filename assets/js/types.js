@@ -22,9 +22,11 @@ const signContentType = PropTypes.shape({
   })),
 });
 
-const multiSignHeadwayConfigType = PropTypes.shape({
-  range_low: PropTypes.number.isRequired,
-  range_high: PropTypes.number.isRequired,
+const configuredHeadwayType = PropTypes.shape({
+  [PropTypes.string]: PropTypes.shape({
+    range_low: PropTypes.number,
+    range_high: PropTypes.number,
+  }),
 });
 
-export { signConfigType, signContentType, multiSignHeadwayConfigType };
+export { signConfigType, signContentType, configuredHeadwayType };
