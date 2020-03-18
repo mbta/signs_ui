@@ -85,9 +85,7 @@ defmodule SignsUi.Config.StateTest do
       assert get_all(pid).multi_sign_headways == %{
                "red_trunk" => %MultiSignHeadway{
                  range_low: 8,
-                 range_high: 10,
-                 non_platform_text_line1: "Test message",
-                 non_platform_text_line2: "Please ignore"
+                 range_high: 10
                }
              }
 

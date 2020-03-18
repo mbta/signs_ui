@@ -4,13 +4,11 @@ import {
   Formik, Form, Field, FieldArray,
 } from 'formik';
 import {
-  object, string, array, bool, number, ref,
+  object, string, array, number, ref,
 } from 'yup';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { multiSignHeadwayConfigType } from './types';
-
-const validCustomTextPattern = /^((?![^a-zA-Z0-9,/!@' +]).)*$/;
 
 const formSchema = object().shape({
   items: array().of(
@@ -18,12 +16,6 @@ const formSchema = object().shape({
       id: string().required(),
       range_low: number().required().positive(),
       range_high: number().required().positive().moreThan(ref('range_low')),
-      non_platform_text_enabled: bool(),
-      non_platform_text_line1: string().matches(validCustomTextPattern).nullable().when('non_platform_text_enabled', {
-        is: true,
-        then: string().required(),
-      }),
-      non_platform_text_line2: string().matches(validCustomTextPattern).nullable(),
     }),
   ),
 });
@@ -42,9 +34,6 @@ const MultiSignHeadwayForm = React.memo(({
         id: branch.id,
         range_low: config.range_low,
         range_high: config.range_high,
-        non_platform_text_enabled: !!config.non_platform_text_line1,
-        non_platform_text_line1: config.non_platform_text_line1,
-        non_platform_text_line2: config.non_platform_text_line2,
       };
     }),
   }), [branches, multiSignHeadwayConfigs]);
@@ -62,18 +51,11 @@ const MultiSignHeadwayForm = React.memo(({
 
   const handleSubmit = React.useCallback((values) => {
     const newConfig = values.items.reduce((acc, curr) => {
-      const config = {
+      acc[curr.id] = {
         id: curr.id,
         range_low: curr.range_low,
         range_high: curr.range_high,
       };
-      if (curr.non_platform_text_enabled) {
-        config.non_platform_text_line1 = curr.non_platform_text_line1;
-        if (curr.non_platform_text_line2) {
-          config.non_platform_text_line2 = curr.non_platform_text_line2;
-        }
-      }
-      acc[curr.id] = config;
       return acc;
     }, {});
     setMultiSignHeadwayConfigs(newConfig);
@@ -106,7 +88,7 @@ const MultiSignHeadwayForm = React.memo(({
           onSubmit={handleSubmit}
         >
           {({
-            values, dirty, isValid, resetForm,
+            dirty, isValid, resetForm,
           }) => (
             <Form
               className={`viewer--multi-sign-headway-form ${!inEditMode ? 'disabled' : ''}`}
@@ -166,49 +148,8 @@ const MultiSignHeadwayForm = React.memo(({
                             />
                             minutes
                           </div>
-                          <label className="d-flex align-items-center" htmlFor={`items.[${index}].non_platform_text_enabled`}> {/* eslint-disable-line */}
-                            <Field
-                              className="mr-2"
-                              type="checkbox"
-                              id={`items.[${index}].non_platform_text_enabled`}
-                              disabled={readOnly || !inEditMode}
-                              name={`items.[${index}].non_platform_text_enabled`}
-                            />
-                              Set custom text for center platform and mezzanine signs
-                          </label>
-                          { values.items[index]
-                                && values.items[index].non_platform_text_enabled && (
-                                <div>
-                                  <div>
-                                    <label className="d-flex align-items-center" htmlFor={`items.[${index}].non_platform_text_line1`}> {/* eslint-disable-line */}
-                                      Line 1
-                                      <Field
-                                        className="ml-2"
-                                        name={`items.[${index}].non_platform_text_line1`}
-                                        id={`items.[${index}].non_platform_text_line1`}
-                                        disabled={readOnly || !inEditMode}
-                                        type="text"
-                                      />
-                                    </label>
-                                  </div>
-                                  <div>
-                                    <label className="d-flex align-items-center" htmlFor={`items.[${index}].non_platform_text_line2`}> {/* eslint-disable-line */}
-                                      Line 2
-                                      <Field
-                                        className="ml-2"
-                                        name={`items.[${index}].non_platform_text_line2`}
-                                        id={`items.[${index}].non_platform_text_line2`}
-                                        disabled={readOnly || !inEditMode}
-                                        type="text"
-                                      />
-                                    </label>
-                                  </div>
-                                </div>
-                          )
-                          }
                         </div>
                       ))}
-
                     </div>
                   )}
                 />

@@ -88,38 +88,12 @@ describe('With Multi-sign Headway not enabled', () => {
       expect(container.querySelector('button#apply').disabled).toEqual(false);
     });
 
-    fireEvent.click(container.querySelector('input[name="items.[0].non_platform_text_enabled"]'));
-
-    await waitFor(() => {
-      expect(container.querySelector('button#apply').disabled).toEqual(true);
-      expect(container.querySelector('input[name="items.[0].non_platform_text_line1"]')).toBeDefined();
-      expect(container.querySelector('input[name="items.[0].non_platform_text_line1"]').disabled).toEqual(false);
-    });
-
-    fireEvent.change(container.querySelector('input[name="items.[0].non_platform_text_line1"]'), {
-      target: {
-        value: 'Some custom text',
-      },
-    });
-
-    fireEvent.change(container.querySelector('input[name="items.[0].non_platform_text_line2"]'), {
-      target: {
-        value: 'More custom text',
-      },
-    });
-
-    await waitFor(() => {
-      expect(container.querySelector('button#apply').disabled).toEqual(false);
-    });
-
     fireEvent.click(container.querySelector('button#apply'));
 
     await waitFor(() => {
       expect(setMultiSignHeadwayConfigs).toHaveBeenCalledWith({
         branch_1: {
           id: 'branch_1',
-          non_platform_text_line1: 'Some custom text',
-          non_platform_text_line2: 'More custom text',
           range_high: 5,
           range_low: 2,
         },
@@ -143,8 +117,6 @@ describe('With Multi-sign Headway enabled', () => {
       branch_2: {
         range_low: 1,
         range_high: 8,
-        non_platform_text_line1: 'Line 1 of custom text',
-        non_platform_text_line2: 'Line 2 of custom text',
       },
     };
   });
@@ -172,17 +144,17 @@ describe('With Multi-sign Headway enabled', () => {
 
   test('Inputs are initially disabled', () => {
     const wrapper = mountWrapper();
-    expect(wrapper.find('input').find({ disabled: true })).toHaveLength(8);
+    expect(wrapper.find('input').find({ disabled: true })).toHaveLength(4);
     expect(wrapper.find('input').find({ disabled: false })).toHaveLength(0);
   });
 
   test('Clicking button enables inputs', () => {
     const wrapper = mountWrapper();
-    expect(wrapper.find('input').find({ disabled: true })).toHaveLength(8);
+    expect(wrapper.find('input').find({ disabled: true })).toHaveLength(4);
     expect(wrapper.find('input').find({ disabled: false })).toHaveLength(0);
     wrapper.find('button#edit').simulate('click');
     expect(wrapper.find('input').find({ disabled: true })).toHaveLength(0);
-    expect(wrapper.find('input').find({ disabled: false })).toHaveLength(8);
+    expect(wrapper.find('input').find({ disabled: false })).toHaveLength(4);
   });
 
   test('Can apply new values after making edits', async () => {
@@ -205,18 +177,6 @@ describe('With Multi-sign Headway enabled', () => {
       },
     });
 
-    fireEvent.click(container.querySelector('input[name="items.[0].non_platform_text_enabled"]'));
-
-    await waitFor(() => {
-      expect(container.querySelector('input[name="items.[0].non_platform_text_line1"]')).toBeDefined();
-      expect(container.querySelector('input[name="items.[0].non_platform_text_line1"]').disabled).toEqual(false);
-    });
-    fireEvent.change(container.querySelector('input[name="items.[0].non_platform_text_line1"]'), {
-      target: {
-        value: 'Some custom text',
-      },
-    });
-
     await waitFor(() => {
       expect(container.querySelector('button#apply').disabled).toEqual(false);
     });
@@ -232,14 +192,11 @@ describe('With Multi-sign Headway enabled', () => {
         id: 'branch_1',
         range_low: 2,
         range_high: 8,
-        non_platform_text_line1: 'Some custom text',
       },
       branch_2: {
         id: 'branch_2',
         range_low: 1,
         range_high: 8,
-        non_platform_text_line1: 'Line 1 of custom text',
-        non_platform_text_line2: 'Line 2 of custom text',
       },
     });
   });

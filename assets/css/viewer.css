@@ -91,10 +91,6 @@
   width: 4rem;
 }
 
-.viewer--multi-sign-headway-form input[name*='non_platform_text_line'] {
-  width: 50%;
-}
-
 .viewer--multi-sign-headway-form-edit-button {
   cursor: pointer;
   position: absolute;

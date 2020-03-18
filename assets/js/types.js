@@ -25,8 +25,6 @@ const signContentType = PropTypes.shape({
 const multiSignHeadwayConfigType = PropTypes.shape({
   range_low: PropTypes.number.isRequired,
   range_high: PropTypes.number.isRequired,
-  non_platform_text_line1: PropTypes.string,
-  non_platform_text_line2: PropTypes.string,
 });
 
 export { signConfigType, signContentType, multiSignHeadwayConfigType };

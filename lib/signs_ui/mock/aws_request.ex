@@ -40,9 +40,7 @@ defmodule SignsUi.Mock.AwsRequest do
       "multi_sign_headways" => %{
         "red_trunk" => %{
           "range_low" => 8,
-          "range_high" => 10,
-          "non_platform_text_line1" => "Test message",
-          "non_platform_text_line2" => "Please ignore"
+          "range_high" => 10
         }
       }
     }
