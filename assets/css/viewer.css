@@ -7,6 +7,15 @@
   margin-bottom: 2em;
 }
 
+.viewer--toggle-all label {
+  border: 1px solid #6c757d;
+  margin-right: .75rem;
+}
+
+.viewer--toggle-all label.active {
+  background-color: rgb(251, 220, 75);
+}
+
 .viewer--line-switcher {
   margin-bottom: 2em;
 }
@@ -78,6 +87,12 @@
 .viewer--mode-select {
   width: 70px;
 }
+
+.viewer--batch-mode-select-label {
+  padding: 2rem;
+}
+
+/* .viewr--batch-mode-select- */
 
 .viewer--configured-headways-form {
   border: 1px solid #6c757d;
