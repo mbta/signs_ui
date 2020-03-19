@@ -22,10 +22,10 @@ defmodule SignsUiWeb.MessagesController do
     configured_headways =
       config
       |> Map.get(:configured_headways, %{})
-      |> Enum.map(fn {id, config} ->
-        {id, Map.from_struct(config)}
+      |> Map.new(fn {branch_id, periods} ->
+        {branch_id,
+         Map.new(periods, fn {period_id, config} -> {period_id, Map.from_struct(config)} end)}
       end)
-      |> Enum.into(%{})
 
     render(conn, "index.html",
       signs: signs,

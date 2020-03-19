@@ -2,13 +2,13 @@ defmodule SignsUi.Config.Request do
   require Logger
   alias SignsUi.Config.S3
   alias SignsUi.Config.Sign
-  alias SignsUi.Config.ConfiguredHeadway
+  alias SignsUi.Config.ConfiguredHeadways
 
   @spec get_signs({module(), atom(), []}) ::
           {:ok,
            %{
              signs: %{String.t() => Sign.t()},
-             configured_headways: %{String.t() => %{String.t() => ConfiguredHeadway.t()}}
+             configured_headways: ConfiguredHeadways.t()
            }}
           | {:error, any()}
   def get_signs({mod, fun, args} \\ {S3, :get_object, []}) do
@@ -26,7 +26,7 @@ defmodule SignsUi.Config.Request do
           {:ok,
            %{
              signs: %{String.t() => Sign.t()},
-             configured_headways: %{String.t() => %{String.t() => ConfiguredHeadway.t()}}
+             configured_headways: ConfiguredHeadways.t()
            }}
           | {:error, any()}
   defp parse(json) do
@@ -45,9 +45,7 @@ defmodule SignsUi.Config.Request do
                {sign_id, Sign.from_json(sign_id, config)}
              end),
            configured_headways:
-             Map.new(configured_headways, fn {branch_id, config} ->
-               {branch_id, ConfiguredHeadway.from_json(config)}
-             end)
+             ConfiguredHeadways.parse_configured_headways_json(configured_headways)
          }}
 
       {:error, reason} ->

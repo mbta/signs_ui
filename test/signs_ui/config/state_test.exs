@@ -83,9 +83,11 @@ defmodule SignsUi.Config.StateTest do
       @endpoint.subscribe("signs:all")
 
       assert get_all(pid).configured_headways == %{
-               "red_trunk" => %ConfiguredHeadway{
-                 range_low: 8,
-                 range_high: 10
+               "red_trunk" => %{
+                 "peak" => %ConfiguredHeadway{
+                   range_low: 8,
+                   range_high: 10
+                 }
                }
              }
 

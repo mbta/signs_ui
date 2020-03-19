@@ -4,9 +4,11 @@ defmodule SignsUi.Config.ConfiguredHeadwaysTest do
   import SignsUi.Config.ConfiguredHeadways
 
   @configured_headways %{
-    "red_trunk" => %ConfiguredHeadway{
-      range_low: 8,
-      range_high: 10
+    "red_trunk" => %{
+      "peak" => %ConfiguredHeadway{
+        range_low: 8,
+        range_high: 10
+      }
     }
   }
 
@@ -14,8 +16,10 @@ defmodule SignsUi.Config.ConfiguredHeadwaysTest do
     test "returns expected format" do
       expected = %{
         "red_trunk" => %{
-          "range_low" => 8,
-          "range_high" => 10
+          "peak" => %{
+            "range_low" => 8,
+            "range_high" => 10
+          }
         }
       }
 

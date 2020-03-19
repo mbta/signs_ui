@@ -39,8 +39,10 @@ defmodule SignsUi.Mock.AwsRequest do
       },
       "configured_headways" => %{
         "red_trunk" => %{
-          "range_low" => 8,
-          "range_high" => 10
+          "peak" => %{
+            "range_low" => 8,
+            "range_high" => 10
+          }
         }
       }
     }
