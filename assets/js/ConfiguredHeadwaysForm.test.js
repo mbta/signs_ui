@@ -27,12 +27,6 @@ const mountWrapper = () => mount(React.createElement(ConfiguredHeadwaysForm, {
 }, null));
 
 describe('With Multi-sign Headway not enabled', () => {
-  test('Shows "Enable Multi-sign Headways" button', () => {
-    const wrapper = mountWrapper();
-
-    expect(wrapper.text()).toMatch('Enable Multi-sign Headways');
-  });
-
   test('Form is initially closed', () => {
     const wrapper = mountWrapper();
 
@@ -41,10 +35,10 @@ describe('With Multi-sign Headway not enabled', () => {
 
   test('Can toggle form open/closed', () => {
     const wrapper = mountWrapper();
-    expect(wrapper.find('button.viewer--multi-sign-headway-form-toggle').prop('disabled')).toEqual(false);
-    wrapper.find('button.viewer--multi-sign-headway-form-toggle').simulate('click');
+    expect(wrapper.find('button.viewer--configured-headways-form-toggle').prop('disabled')).toEqual(false);
+    wrapper.find('button.viewer--configured-headways-form-toggle').simulate('click');
     expect(wrapper.find('form')).toHaveLength(1);
-    wrapper.find('button.viewer--multi-sign-headway-form-toggle').simulate('click');
+    wrapper.find('button.viewer--configured-headways-form-toggle').simulate('click');
     expect(wrapper.find('form')).toHaveLength(0);
   });
 
@@ -57,7 +51,7 @@ describe('With Multi-sign Headway not enabled', () => {
       timePeriods,
     }));
 
-    fireEvent.click(container.querySelector('button.viewer--multi-sign-headway-form-toggle'));
+    fireEvent.click(container.querySelector('button.viewer--configured-headways-form-toggle'));
     await waitFor(() => {
       expect(container.querySelector('form')).toBeDefined();
       expect(container.querySelector('input[disabled]')).toEqual(null);
@@ -151,12 +145,6 @@ describe('With Multi-sign Headway enabled', () => {
     };
   });
 
-  test('Shows "Multi-sign Headway Enabled" button if not currently enabled for line', () => {
-    const wrapper = mountWrapper();
-
-    expect(wrapper.text()).toMatch('Multi-sign Headways Enableded');
-  });
-
   test('Form is initially open', () => {
     const wrapper = mountWrapper();
 
@@ -167,8 +155,8 @@ describe('With Multi-sign Headway enabled', () => {
     const wrapper = mountWrapper();
 
     expect(wrapper.find('form')).toHaveLength(1);
-    expect(wrapper.find('button.viewer--multi-sign-headway-form-toggle').prop('disabled')).toEqual(true);
-    wrapper.find('button.viewer--multi-sign-headway-form-toggle').simulate('click');
+    expect(wrapper.find('button.viewer--configured-headways-form-toggle').prop('disabled')).toEqual(true);
+    wrapper.find('button.viewer--configured-headways-form-toggle').simulate('click');
     expect(wrapper.find('form')).toHaveLength(1);
   });
 

@@ -67,11 +67,11 @@ const ConfiguredHeadwaysForm = React.memo(({
       <div>
         <button
           type="button"
-          className={`btn btn-outline-secondary viewer--multi-sign-headway-form-toggle ${open ? 'open' : ''}`}
+          className={`btn btn-outline-secondary viewer--configured-headways-form-toggle ${open ? 'open' : ''}`}
           onClick={() => toggleOpen(!open)}
           disabled={isEnabled}
         >
-          <h5 className="mb-0">{isEnabled ? 'Multi-sign Headways Enabled' : 'Enable Multi-sign Headways'}</h5>
+          <h5 className="mb-0">Headways</h5>
           <i />
         </button>
       </div>
@@ -86,10 +86,10 @@ const ConfiguredHeadwaysForm = React.memo(({
             dirty, isValid, resetForm,
           }) => (
             <Form
-              className={`viewer--multi-sign-headway-form ${!inEditMode ? 'disabled' : ''}`}
+              className={`viewer--configured-headways-form ${!inEditMode ? 'disabled' : ''}`}
             >
               {!readOnly && isEnabled && (
-                <div className="viewer--multi-sign-headway-form-edit-button">
+                <div className="viewer--configured-headways-form-edit-button">
                   { !inEditMode ? (
                     <button
                       type="button"
@@ -117,37 +117,43 @@ const ConfiguredHeadwaysForm = React.memo(({
                 </div>
               )}
               <div>
-                {branches.map((branch, index) => (
+                {timePeriods.map(period => (
                   <FieldArray
-                    key={branch.id}
+                    key={period.id}
                     name="branches"
                     render={() => (
                       <div>
-                        <h3>{branch.name}</h3>
-                        {timePeriods.map(period => (
-                          <div key={period.id} className="mb-3">
-                            <h5>{period.name}</h5>
-                            <div className="mb-2">
-                                expect trains every
-                              <Field
-                                id={`branches.[${index}].${period.id}.range_low`}
-                                name={`branches.[${index}].${period.id}.range_low`}
-                                type="number"
-                                disabled={readOnly || !inEditMode}
-                                className="mx-2"
-                              />
-                                to
-                              <Field
-                                id={`branches.[${index}].${period.id}.range_high`}
-                                name={`branches.[${index}].${period.id}.range_high`}
-                                className="mx-2"
-                                disabled={readOnly || !inEditMode}
-                                type="number"
-                              />
-                                minutes
+                        <div className="d-flex align-items-center">
+                          <h3>{period.name}</h3>
+                          {period.description && (
+                            <span className="ml-2">{`(${period.description})`}</span>
+                          )}
+                        </div>
+                        <div className="row mb-3">
+                          {branches.map((branch, index) => (
+                            <div key={period.id} className="viewer--configured-headways-form-branch col-6 col-md-4">
+                              <h5>{branch.name}</h5>
+                              <div className="mb-3">
+                                <Field
+                                  id={`branches.[${index}].${period.id}.range_low`}
+                                  name={`branches.[${index}].${period.id}.range_low`}
+                                  type="number"
+                                  disabled={readOnly || !inEditMode}
+                                  className="mr-2"
+                                />
+                                    to
+                                <Field
+                                  id={`branches.[${index}].${period.id}.range_high`}
+                                  name={`branches.[${index}].${period.id}.range_high`}
+                                  className="mx-2"
+                                  disabled={readOnly || !inEditMode}
+                                  type="number"
+                                />
+                                    mins
+                              </div>
                             </div>
-                          </div>
-                        ))}
+                          ))}
+                        </div>
                       </div>
                     )}
                   />
@@ -185,7 +191,11 @@ ConfiguredHeadwaysForm.propTypes = {
       name: PropTypes.string,
     }),
   ).isRequired,
-  timePeriods: PropTypes.arrayOf(PropTypes.shape({ id: PropTypes.string, name: PropTypes.string })),
+  timePeriods: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    description: PropTypes.string,
+  })),
   configuredHeadways: PropTypes.objectOf(configuredHeadwayType).isRequired,
   setConfiguredHeadways: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
