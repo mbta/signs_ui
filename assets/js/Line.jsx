@@ -16,17 +16,17 @@ function name(line) {
   return '';
 }
 
-function setEnabledStations(setConfigFn, stations, line, enabled) {
+function setAllStationsMode(setConfigFn, stations, line, mode) {
   const statuses = {};
 
   stations.forEach((station) => {
     ['n', 's', 'e', 'w', 'm', 'c'].forEach((zone) => {
       const realtimeId = arincToRealtimeId(`${station.id}-${zone}`, line);
       if (realtimeId) {
-        if (enabled) {
+        if (mode === 'auto') {
           statuses[realtimeId] = { mode: 'auto' };
-        } else {
-          statuses[realtimeId] = { mode: 'off', expires: null };
+        } else if (mode === 'off' || mode === 'headway') {
+          statuses[realtimeId] = { mode, expires: null };
         }
       }
     });
@@ -67,9 +67,9 @@ function Line({
             <button
               type="button"
               className="btn btn-outline-secondary"
-              onClick={() => { setEnabledStations(setConfigs, stations, line, true); }}
+              onClick={() => { setAllStationsMode(setConfigs, stations, line, 'auto'); }}
             >
-              Enable all
+              Set all to auto
             </button>
 
             &nbsp;
@@ -77,9 +77,19 @@ function Line({
             <button
               type="button"
               className="btn btn-outline-secondary"
-              onClick={() => { setEnabledStations(setConfigs, stations, line, false); }}
+              onClick={() => { setAllStationsMode(setConfigs, stations, line, 'headway'); }}
             >
-              Disable all
+              Set all to headway
+            </button>
+
+            &nbsp;
+
+            <button
+              type="button"
+              className="btn btn-outline-secondary"
+              onClick={() => { setAllStationsMode(setConfigs, stations, line, 'off'); }}
+            >
+              Turn off all
             </button>
           </div>
         )

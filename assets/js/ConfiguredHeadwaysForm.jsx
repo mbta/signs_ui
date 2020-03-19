@@ -131,7 +131,7 @@ const ConfiguredHeadwaysForm = React.memo(({
                         </div>
                         <div className="row mb-3">
                           {branches.map((branch, index) => (
-                            <div key={period.id} className="viewer--configured-headways-form-branch col-6 col-md-4">
+                            <div key={branch.id} className="viewer--configured-headways-form-branch col-6 col-md-4">
                               <h5>{branch.name}</h5>
                               <div className="mb-3">
                                 <Field

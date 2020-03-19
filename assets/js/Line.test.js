@@ -53,8 +53,9 @@ test('Shows enable / disable all buttons when not read-only', () => {
     setConfiguredHeadways,
   }, null));
 
-  expect(wrapper.text()).toMatch('Enable all');
-  expect(wrapper.text()).toMatch('Disable all');
+  expect(wrapper.text()).toMatch('Set all to auto');
+  expect(wrapper.text()).toMatch('Set all to headway');
+  expect(wrapper.text()).toMatch('Turn off all');
 });
 
 test('Doesn\'t show enable / disable all buttons when read-only', () => {
@@ -80,8 +81,9 @@ test('Doesn\'t show enable / disable all buttons when read-only', () => {
     setConfiguredHeadways,
   }, null));
 
-  expect(wrapper.text()).not.toMatch('Enable all');
-  expect(wrapper.text()).not.toMatch('Disable all');
+  expect(wrapper.text()).not.toMatch('Set all to auto');
+  expect(wrapper.text()).not.toMatch('Set all to headway');
+  expect(wrapper.text()).not.toMatch('Turn off all');
 });
 
 test('Shows ConfiguredHeadwaysForm if current line has branches configured', () => {
