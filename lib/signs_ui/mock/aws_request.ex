@@ -37,7 +37,7 @@ defmodule SignsUi.Mock.AwsRequest do
           "expires" => nil
         }
       },
-      "multi_sign_headways" => %{
+      "configured_headways" => %{
         "red_trunk" => %{
           "range_low" => 8,
           "range_high" => 10

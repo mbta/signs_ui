@@ -10,7 +10,7 @@ defmodule SignsUi.Config.S3Test do
           "sign1" => %Sign{id: "sign1", config: %{mode: :auto}},
           "sign2" => %Sign{id: "sign2", config: %{mode: :auto}}
         },
-        multi_sign_headways: %{}
+        configured_headways: %{}
       }
 
       {:ok, object} = update(config)

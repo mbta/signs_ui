@@ -3,7 +3,7 @@ defmodule SignsUi.Config.StateTest do
   import SignsUi.Config.State
   alias SignsUi.Config
   alias SignsUi.Config.Sign
-  alias SignsUi.Config.MultiSignHeadway
+  alias SignsUi.Config.ConfiguredHeadway
 
   setup do
     {:ok, claims} =
@@ -76,34 +76,34 @@ defmodule SignsUi.Config.StateTest do
     end
   end
 
-  describe "update_multi_sign_headways" do
+  describe "update_configured_headways" do
     test "updates values properly" do
       {:ok, pid} = GenServer.start_link(SignsUi.Config.State, [], [])
 
       @endpoint.subscribe("signs:all")
 
-      assert get_all(pid).multi_sign_headways == %{
-               "red_trunk" => %MultiSignHeadway{
+      assert get_all(pid).configured_headways == %{
+               "red_trunk" => %ConfiguredHeadway{
                  range_low: 8,
                  range_high: 10
                }
              }
 
       {:ok, new_state} =
-        update_multi_sign_headways(pid, %{
-          "red_trunk" => %MultiSignHeadway{range_low: 13, range_high: 15}
+        update_configured_headways(pid, %{
+          "red_trunk" => %ConfiguredHeadway{range_low: 13, range_high: 15}
         })
 
-      assert new_state.multi_sign_headways == %{
-               "red_trunk" => %MultiSignHeadway{range_low: 13, range_high: 15}
+      assert new_state.configured_headways == %{
+               "red_trunk" => %ConfiguredHeadway{range_low: 13, range_high: 15}
              }
 
       expected_broadcast =
         pid
         |> get_all()
-        |> Map.get(:multi_sign_headways)
+        |> Map.get(:configured_headways)
 
-      assert_broadcast("new_multi_sign_headways_state", ^expected_broadcast)
+      assert_broadcast("new_configured_headways_state", ^expected_broadcast)
     end
 
     test "adds new values properly" do
@@ -112,22 +112,22 @@ defmodule SignsUi.Config.StateTest do
       @endpoint.subscribe("signs:all")
 
       {:ok, new_state} =
-        update_multi_sign_headways(pid, %{
-          "red_trunk" => %MultiSignHeadway{range_low: 13, range_high: 15},
-          "red_ashmont" => %MultiSignHeadway{range_low: 27, range_high: 30}
+        update_configured_headways(pid, %{
+          "red_trunk" => %ConfiguredHeadway{range_low: 13, range_high: 15},
+          "red_ashmont" => %ConfiguredHeadway{range_low: 27, range_high: 30}
         })
 
-      assert new_state.multi_sign_headways == %{
-               "red_trunk" => %MultiSignHeadway{range_low: 13, range_high: 15},
-               "red_ashmont" => %MultiSignHeadway{range_low: 27, range_high: 30}
+      assert new_state.configured_headways == %{
+               "red_trunk" => %ConfiguredHeadway{range_low: 13, range_high: 15},
+               "red_ashmont" => %ConfiguredHeadway{range_low: 27, range_high: 30}
              }
 
       expected_broadcast =
         pid
         |> get_all()
-        |> Map.get(:multi_sign_headways)
+        |> Map.get(:configured_headways)
 
-      assert_broadcast("new_multi_sign_headways_state", ^expected_broadcast)
+      assert_broadcast("new_configured_headways_state", ^expected_broadcast)
     end
 
     test "removes values properly" do
@@ -135,16 +135,16 @@ defmodule SignsUi.Config.StateTest do
 
       @endpoint.subscribe("signs:all")
 
-      {:ok, new_state} = update_multi_sign_headways(pid, %{})
+      {:ok, new_state} = update_configured_headways(pid, %{})
 
-      assert new_state.multi_sign_headways == %{}
+      assert new_state.configured_headways == %{}
 
       expected_broadcast =
         pid
         |> get_all()
-        |> Map.get(:multi_sign_headways)
+        |> Map.get(:configured_headways)
 
-      assert_broadcast("new_multi_sign_headways_state", ^expected_broadcast)
+      assert_broadcast("new_configured_headways_state", ^expected_broadcast)
     end
   end
 end

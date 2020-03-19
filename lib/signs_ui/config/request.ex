@@ -2,13 +2,13 @@ defmodule SignsUi.Config.Request do
   require Logger
   alias SignsUi.Config.S3
   alias SignsUi.Config.Sign
-  alias SignsUi.Config.MultiSignHeadway
+  alias SignsUi.Config.ConfiguredHeadway
 
   @spec get_signs({module(), atom(), []}) ::
           {:ok,
            %{
              signs: %{String.t() => Sign.t()},
-             multi_sign_headways: %{String.t() => MultiSignHeadway.t()}
+             configured_headways: %{String.t() => %{String.t() => ConfiguredHeadway.t()}}
            }}
           | {:error, any()}
   def get_signs({mod, fun, args} \\ {S3, :get_object, []}) do
@@ -26,7 +26,7 @@ defmodule SignsUi.Config.Request do
           {:ok,
            %{
              signs: %{String.t() => Sign.t()},
-             multi_sign_headways: %{String.t() => MultiSignHeadway.t()}
+             configured_headways: %{String.t() => %{String.t() => ConfiguredHeadway.t()}}
            }}
           | {:error, any()}
   defp parse(json) do
@@ -36,7 +36,7 @@ defmodule SignsUi.Config.Request do
         # old: { "sign_id": { ... }, "sign_id2": { ... }}
         # new: { "signs": { "sign_id" => { sign_config }, ...}}
         sign_configs = Map.get(response, "signs", response)
-        multi_sign_headways = Map.get(response, "multi_sign_headways", %{})
+        configured_headways = Map.get(response, "configured_headways", %{})
 
         {:ok,
          %{
@@ -44,9 +44,9 @@ defmodule SignsUi.Config.Request do
              Map.new(sign_configs, fn {sign_id, config} ->
                {sign_id, Sign.from_json(sign_id, config)}
              end),
-           multi_sign_headways:
-             Map.new(multi_sign_headways, fn {branch_id, config} ->
-               {branch_id, MultiSignHeadway.from_json(config)}
+           configured_headways:
+             Map.new(configured_headways, fn {branch_id, config} ->
+               {branch_id, ConfiguredHeadway.from_json(config)}
              end)
          }}
 

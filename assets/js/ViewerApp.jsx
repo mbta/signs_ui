@@ -45,7 +45,7 @@ class ViewerApp extends Component {
       this.setState({ signConfigs: state });
     });
 
-    channel.on('new_multi_sign_headways_state', (state) => {
+    channel.on('new_configured_headways_state', (state) => {
       this.setState({ configuredHeadways: state });
     });
 

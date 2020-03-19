@@ -36,7 +36,7 @@ defmodule SignsUi.Config.RequestTest do
                     config: %{mode: :auto}
                   }
                 },
-                multi_sign_headways: %{}
+                configured_headways: %{}
               }} = Request.get_signs({OldFormat, :get_object, []})
     end
 
@@ -49,7 +49,7 @@ defmodule SignsUi.Config.RequestTest do
                     config: %{mode: :auto}
                   }
                 },
-                multi_sign_headways: %{}
+                configured_headways: %{}
               }} = Request.get_signs({NewFormat, :get_object, []})
     end
   end

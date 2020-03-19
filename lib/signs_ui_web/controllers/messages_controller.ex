@@ -19,9 +19,9 @@ defmodule SignsUiWeb.MessagesController do
       end)
       |> Enum.into(%{})
 
-    multi_sign_headways =
+    configured_headways =
       config
-      |> Map.get(:multi_sign_headways)
+      |> Map.get(:configured_headways, %{})
       |> Enum.map(fn {id, config} ->
         {id, Map.from_struct(config)}
       end)
@@ -30,7 +30,7 @@ defmodule SignsUiWeb.MessagesController do
     render(conn, "index.html",
       signs: signs,
       sign_configs: sign_configs,
-      multi_sign_headways: multi_sign_headways
+      configured_headways: configured_headways
     )
   end
 

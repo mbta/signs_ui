@@ -1,7 +1,7 @@
 defmodule SignsUiWeb.SignsChannel do
   use Phoenix.Channel
   require Logger
-  alias SignsUi.Config.{Sign, MultiSignHeadway}
+  alias SignsUi.Config.{Sign, ConfiguredHeadway}
 
   def join("signs:all", _message, socket) do
     {:ok, socket}
@@ -33,9 +33,9 @@ defmodule SignsUiWeb.SignsChannel do
     case socket_access_level(socket) do
       :admin ->
         new_signs =
-          Map.new(changes, fn {id, config} -> {id, MultiSignHeadway.from_json(config)} end)
+          Map.new(changes, fn {id, config} -> {id, ConfiguredHeadway.from_json(config)} end)
 
-        {:ok, _new_state} = SignsUi.Config.State.update_multi_sign_headways(new_signs)
+        {:ok, _new_state} = SignsUi.Config.State.update_configured_headways(new_signs)
 
         username = Guardian.Phoenix.Socket.current_resource(socket)
 

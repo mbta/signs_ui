@@ -1,4 +1,4 @@
-defmodule SignsUi.Config.MultiSignHeadway do
+defmodule SignsUi.Config.ConfiguredHeadway do
   @moduledoc """
   Represents a headway range message set for an entire line / branch.
   """
@@ -12,7 +12,7 @@ defmodule SignsUi.Config.MultiSignHeadway do
         }
 
   @spec from_json(map()) :: t()
-  def from_json(%{"range_low" => range_low, "range_high" => range_high} = json_map) do
+  def from_json(%{"range_low" => range_low, "range_high" => range_high}) do
     %__MODULE__{
       range_low: range_low,
       range_high: range_high

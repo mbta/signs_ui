@@ -38,7 +38,7 @@ defmodule SignsUi.Config.ExpirationTest do
             config: %{mode: :auto}
           }
         },
-        multi_sign_headways: %{}
+        configured_headways: %{}
       }
 
       expected_updates = %{
