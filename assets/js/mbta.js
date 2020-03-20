@@ -2,11 +2,12 @@ const timePeriodConfig = [
   {
     id: 'peak',
     name: 'Peak Hours',
-    description: '8-10, 5-6, weekdays',
+    description: 'weekdays 7-9 AM, 4-6:30 PM',
   },
   {
     id: 'off_peak',
     name: 'Off Peak Hours',
+    description: 'weekends and weekdays, excluding peak hours',
   },
 ];
 
