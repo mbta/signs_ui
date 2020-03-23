@@ -58,12 +58,6 @@ const branchConfig = {
       name: 'Mattapan Line',
     },
   ],
-  SL3: [
-    {
-      id: 'sl3_trunk',
-      name: 'SL3',
-    },
-  ],
 };
 
 const stationConfig = {
