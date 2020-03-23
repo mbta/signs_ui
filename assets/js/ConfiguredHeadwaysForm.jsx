@@ -42,12 +42,9 @@ const ConfiguredHeadwaysForm = React.memo(({
 
   const isEnabled = React.useMemo(() => branches.some(branch => !!configuredHeadways[branch.id]), [branches, configuredHeadways]); // eslint-disable-line max-len
 
-  const [open, toggleOpen] = React.useState(isEnabled);
-
   const [inEditMode, setInEditMode] = React.useState(!isEnabled);
 
   React.useEffect(() => {
-    toggleOpen(isEnabled);
     setInEditMode(!isEnabled);
   }, [branches, configuredHeadways, isEnabled]);
 
@@ -65,117 +62,107 @@ const ConfiguredHeadwaysForm = React.memo(({
   return (
     <div className="mb-5">
       <div>
-        <button
-          type="button"
-          className={`btn btn-outline-secondary viewer--configured-headways-form-toggle ${open ? 'open' : ''}`}
-          onClick={() => toggleOpen(!open)}
-          disabled={isEnabled}
-        >
-          <h5 className="mb-0">Headways</h5>
-          <i />
-        </button>
+        <h5 className="viewer--configured-headways-form-header">Headways</h5>
       </div>
-      { open && (
-        <Formik
-          validationSchema={formSchema}
-          enableReinitialize
-          initialValues={initialFormValues}
-          onSubmit={handleSubmit}
-        >
-          {({
-            dirty, isValid, resetForm,
-          }) => (
-            <Form
-              className={`viewer--configured-headways-form ${!inEditMode ? 'disabled' : ''}`}
-            >
-              {!readOnly && isEnabled && (
-                <div className="viewer--configured-headways-form-edit-button">
-                  { !inEditMode ? (
-                    <button
-                      type="button"
-                      id="edit"
-                      className="btn p-0 bg-transparent d-flex align-items-center"
-                      onClick={() => setInEditMode(true)}
-                    >
-                      <FontAwesomeIcon className="mr-1" icon={faEdit} />
+      <Formik
+        validationSchema={formSchema}
+        enableReinitialize
+        initialValues={initialFormValues}
+        onSubmit={handleSubmit}
+      >
+        {({
+          dirty, isValid, resetForm,
+        }) => (
+          <Form
+            className={`viewer--configured-headways-form ${!inEditMode ? 'disabled' : ''}`}
+          >
+            {!readOnly && isEnabled && (
+            <div className="viewer--configured-headways-form-edit-button">
+              { !inEditMode ? (
+                <button
+                  type="button"
+                  id="edit"
+                  className="btn p-0 bg-transparent d-flex align-items-center"
+                  onClick={() => setInEditMode(true)}
+                >
+                  <FontAwesomeIcon className="mr-1" icon={faEdit} />
                       edit
-                    </button>
-                  ) : (
-                    <button
-                      type="button"
-                      id="cancel"
-                      className="text-danger btn p-0 bg-transparent d-flex align-items-center"
-                      onClick={() => {
-                        setInEditMode(false);
-                        resetForm();
-                      }}
-                    >
-                      <FontAwesomeIcon className="mr-1" icon={faTimes} />
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  id="cancel"
+                  className="text-danger btn p-0 bg-transparent d-flex align-items-center"
+                  onClick={() => {
+                    setInEditMode(false);
+                    resetForm();
+                  }}
+                >
+                  <FontAwesomeIcon className="mr-1" icon={faTimes} />
                       cancel
-                    </button>
-                  )}
-                </div>
+                </button>
               )}
-              <div>
-                {timePeriods.map(period => (
-                  <FieldArray
-                    key={period.id}
-                    name="branches"
-                    render={() => (
-                      <div>
-                        <div className="d-flex align-items-center">
-                          <h3>{period.name}</h3>
-                          {period.description && (
-                            <span className="ml-2">{`(${period.description})`}</span>
-                          )}
-                        </div>
-                        <div className="row mb-3">
-                          {branches.map((branch, index) => (
-                            <div key={branch.id} className="viewer--configured-headways-form-branch col-6 col-md-4">
-                              <h5>{branch.name}</h5>
-                              <div className="mb-3">
-                                <Field
-                                  id={`branches.[${index}].${period.id}.range_low`}
-                                  name={`branches.[${index}].${period.id}.range_low`}
-                                  type="number"
-                                  disabled={readOnly || !inEditMode}
-                                  className="mr-2"
-                                />
-                                    to
-                                <Field
-                                  id={`branches.[${index}].${period.id}.range_high`}
-                                  name={`branches.[${index}].${period.id}.range_high`}
-                                  className="mx-2"
-                                  disabled={readOnly || !inEditMode}
-                                  type="number"
-                                />
-                                    mins
-                              </div>
-                            </div>
-                          ))}
-                        </div>
+            </div>
+            )}
+            <div>
+              {timePeriods.map(period => (
+                <FieldArray
+                  key={period.id}
+                  name="branches"
+                  render={() => (
+                    <div>
+                      <div className="d-flex align-items-center">
+                        <h3>{period.name}</h3>
+                        {period.description && (
+                        <span className="ml-2">{`(${period.description})`}</span>
+                        )}
                       </div>
-                    )}
-                  />
-                ))}
-                { !readOnly && (
-                  <div>
-                    <button
-                      className="mr-2"
-                      id="apply"
-                      type="submit"
-                      disabled={!dirty || !isValid}
-                    >
+                      <div className="row mb-3">
+                        {branches.map((branch, index) => (
+                          <div key={branch.id} className="viewer--configured-headways-form-branch col-6 col-md-4">
+                            <h5>{branch.name}</h5>
+                            <div className="mb-3">
+                              <Field
+                                id={`branches.[${index}].${period.id}.range_low`}
+                                name={`branches.[${index}].${period.id}.range_low`}
+                                type="number"
+                                disabled={readOnly || !inEditMode}
+                                className="mr-2"
+                              />
+                                    to
+                              <Field
+                                id={`branches.[${index}].${period.id}.range_high`}
+                                name={`branches.[${index}].${period.id}.range_high`}
+                                className="mx-2"
+                                disabled={readOnly || !inEditMode}
+                                type="number"
+                              />
+                                    mins
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                />
+              ))}
+              { !readOnly && (
+              <div>
+                <button
+                  className="mr-2"
+                  id="apply"
+                  type="submit"
+                  disabled={!dirty || !isValid}
+                >
                         Apply
-                    </button>
-                  </div>
-                )}
+                </button>
               </div>
-            </Form>
-          )
+              )}
+            </div>
+          </Form>
+        )
           }
-        </Formik>
-      )}
+      </Formik>
     </div>
   );
 });

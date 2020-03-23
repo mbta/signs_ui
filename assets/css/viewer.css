@@ -117,26 +117,10 @@
   background-color: rgb(240,240,240);
 }
 
-.viewer--configured-headways-form-toggle {
-  align-items: center;
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-}
-
-.viewer--configured-headways-form-toggle i {
-  border-bottom: 4px solid black;
-  border-right: 4px solid black;
-  display: inline-block;
-  transform: rotate(225deg);
-  transition: transform .3s linear;
-  width: 10px; height: 10px;
-}
-
-.viewer--configured-headways-form-toggle.open {
+.viewer--configured-headways-form-header {
+  border: 1px solid #6c757d;
   border-radius: .25rem .25rem 0 0;
-}
-
-.viewer--configured-headways-form-toggle.open i {
-  transform: rotate(45deg);
+  margin-bottom: 0;
+  padding: .375rem .75rem;
+  width: 100%;
 }
