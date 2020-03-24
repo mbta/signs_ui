@@ -6356,10 +6356,10 @@ randomfill@^1.0.3:
     randombytes "^2.0.5"
     safe-buffer "^5.1.0"
 
-react-datepicker@^2.0.0:
-  version "2.10.1"
-  resolved "https://registry.yarnpkg.com/react-datepicker/-/react-datepicker-2.10.1.tgz#5db917a8e10af8b311715f4bdae8b8dfe64f9357"
-  integrity sha512-b9UjPy5/uZpzqBoGJdR9Mwnv/0ecHyUQUJf499hm2m2Luo3u9HZwAERSExYC4CvAecVUz88AsfowrjVAf7Kulg==
+react-datepicker@^2.14.1:
+  version "2.14.1"
+  resolved "https://registry.yarnpkg.com/react-datepicker/-/react-datepicker-2.14.1.tgz#83463beb85235a575475955f554290a95f89c65b"
+  integrity sha512-8eWHvrjXfKVkt5rERXC6/c/eEdcE2stIsl+QmTO5Efgpacf8MOCyVpBisJLVLDYjVlENczhOcRlIzvraODHKxA==
   dependencies:
     classnames "^2.2.6"
     date-fns "^2.0.1"
