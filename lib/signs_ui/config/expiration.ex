@@ -37,7 +37,9 @@ defmodule SignsUi.Config.Expiration do
 
     if updates != %{} do
       Logger.info("Cleaning expired settings for sign IDs: #{inspect(Map.keys(updates))}")
-      {:ok, _new_state} = SignsUi.Config.State.update_some(state.sign_state_server, updates)
+
+      {:ok, _new_state} =
+        SignsUi.Config.State.update_sign_configs(state.sign_state_server, updates)
     end
 
     schedule_loop(self(), state.loop_ms)
@@ -52,6 +54,7 @@ defmodule SignsUi.Config.Expiration do
     current_dt = time_fetcher.()
 
     state
+    |> Map.get(:signs)
     |> Enum.flat_map(&expire_single_sign(&1, current_dt))
     |> Enum.into(%{})
   end

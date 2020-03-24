@@ -4,6 +4,10 @@ const signConfigType = PropTypes.oneOfType([
   PropTypes.shape({ mode: PropTypes.oneOf(['off']), expires: PropTypes.string }),
   PropTypes.shape({ mode: PropTypes.oneOf(['auto']) }),
   PropTypes.shape({
+    mode: PropTypes.oneOf(['headway']),
+    expires: PropTypes.string,
+  }),
+  PropTypes.shape({
     mode: PropTypes.oneOf(['static_text']),
     line1: PropTypes.string.isRequired,
     line2: PropTypes.string.isRequired,
@@ -22,4 +26,11 @@ const signContentType = PropTypes.shape({
   })),
 });
 
-export { signConfigType, signContentType };
+const configuredHeadwayType = PropTypes.shape({
+  [PropTypes.string]: PropTypes.shape({
+    range_low: PropTypes.number,
+    range_high: PropTypes.number,
+  }),
+});
+
+export { signConfigType, signContentType, configuredHeadwayType };

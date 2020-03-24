@@ -7,6 +7,15 @@
   margin-bottom: 2em;
 }
 
+.viewer--toggle-all label {
+  border: 1px solid #6c757d;
+  margin-right: .75rem;
+}
+
+.viewer--toggle-all label.active {
+  background-color: rgb(251, 220, 75);
+}
+
 .viewer--line-switcher {
   margin-bottom: 2em;
 }
@@ -77,4 +86,41 @@
 
 .viewer--mode-select {
   width: 70px;
+}
+
+.viewer--batch-mode-select-label {
+  padding: 2rem;
+}
+
+/* .viewr--batch-mode-select- */
+
+.viewer--configured-headways-form {
+  border: 1px solid #6c757d;
+  border-radius: 0 0 .25rem .25rem;
+  border-top: 0;
+  padding: 1rem;
+  position: relative;
+}
+
+.viewer--configured-headways-form input[type='number'] {
+  width: 3rem;
+}
+
+.viewer--configured-headways-form-edit-button {
+  cursor: pointer;
+  position: absolute;
+  right: 1rem;
+}
+
+.viewer--configured-headways-form.disabled,
+.viewer--configured-headways-form.disabled input {
+  background-color: rgb(240,240,240);
+}
+
+.viewer--configured-headways-form-header {
+  border: 1px solid #6c757d;
+  border-radius: .25rem .25rem 0 0;
+  margin-bottom: 0;
+  padding: .375rem .75rem;
+  width: 100%;
 }

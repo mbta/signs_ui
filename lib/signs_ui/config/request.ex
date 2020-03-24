@@ -2,8 +2,15 @@ defmodule SignsUi.Config.Request do
   require Logger
   alias SignsUi.Config.S3
   alias SignsUi.Config.Sign
+  alias SignsUi.Config.ConfiguredHeadways
 
-  @spec get_signs({module(), atom(), []}) :: {:ok, %{String.t() => Sign.t()}} | {:error, any()}
+  @spec get_signs({module(), atom(), []}) ::
+          {:ok,
+           %{
+             signs: %{String.t() => Sign.t()},
+             configured_headways: ConfiguredHeadways.t()
+           }}
+          | {:error, any()}
   def get_signs({mod, fun, args} \\ {S3, :get_object, []}) do
     case apply(mod, fun, args) do
       {:ok, %{body: json}} ->
@@ -15,7 +22,13 @@ defmodule SignsUi.Config.Request do
     end
   end
 
-  @spec parse(String.t()) :: {:ok, %{String.t() => Sign.t()}} | {:error, any()}
+  @spec parse(String.t()) ::
+          {:ok,
+           %{
+             signs: %{String.t() => Sign.t()},
+             configured_headways: ConfiguredHeadways.t()
+           }}
+          | {:error, any()}
   defp parse(json) do
     case Jason.decode(json) do
       {:ok, response} ->
@@ -23,11 +36,17 @@ defmodule SignsUi.Config.Request do
         # old: { "sign_id": { ... }, "sign_id2": { ... }}
         # new: { "signs": { "sign_id" => { sign_config }, ...}}
         sign_configs = Map.get(response, "signs", response)
+        configured_headways = Map.get(response, "configured_headways", %{})
 
         {:ok,
-         Map.new(sign_configs, fn {sign_id, config} ->
-           {sign_id, Sign.from_json(sign_id, config)}
-         end)}
+         %{
+           signs:
+             Map.new(sign_configs, fn {sign_id, config} ->
+               {sign_id, Sign.from_json(sign_id, config)}
+             end),
+           configured_headways:
+             ConfiguredHeadways.parse_configured_headways_json(configured_headways)
+         }}
 
       {:error, reason} ->
         Logger.warn("Could not decode response: #{inspect(reason)}")

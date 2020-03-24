@@ -9,14 +9,29 @@ defmodule SignsUiWeb.MessagesController do
   def index(conn, _params) do
     signs = State.list_signs()
 
+    config = SignsUi.Config.State.get_all()
+
     sign_configs =
-      SignsUi.Config.State.get_all()
+      config
+      |> Map.get(:signs)
       |> Enum.map(fn {_id, sign} ->
         {sign.id, sign.config}
       end)
       |> Enum.into(%{})
 
-    render(conn, "index.html", signs: signs, sign_configs: sign_configs)
+    configured_headways =
+      config
+      |> Map.get(:configured_headways, %{})
+      |> Map.new(fn {branch_id, periods} ->
+        {branch_id,
+         Map.new(periods, fn {period_id, config} -> {period_id, Map.from_struct(config)} end)}
+      end)
+
+    render(conn, "index.html",
+      signs: signs,
+      sign_configs: sign_configs,
+      configured_headways: configured_headways
+    )
   end
 
   @spec create(Plug.Conn.t(), map()) :: Plug.Conn.t()

@@ -1,3 +1,65 @@
+const timePeriodConfig = [
+  {
+    id: 'peak',
+    name: 'Peak Hours',
+    description: 'weekdays 7-9 AM, 4-6:30 PM',
+  },
+  {
+    id: 'off_peak',
+    name: 'Off Peak Hours',
+    description: 'weekends and weekdays, excluding peak hours',
+  },
+];
+
+const branchConfig = {
+  Orange: [
+    {
+      id: 'orange_trunk',
+      name: 'Orange Line',
+    },
+  ],
+  Red: [
+    {
+      id: 'red_trunk',
+      name: 'Red Line Trunk',
+    },
+    {
+      id: 'red_ashmont',
+      name: 'Ashmont',
+    },
+    {
+      id: 'red_braintree',
+      name: 'Braintree',
+    },
+  ],
+  Blue: [
+    {
+      id: 'blue_trunk',
+      name: 'Blue Line',
+    },
+  ],
+  Green: [
+    {
+      id: 'green_trunk',
+      name: 'Green Line Trunk',
+    },
+    {
+      id: 'green_d',
+      name: 'Green - D',
+    },
+    {
+      id: 'green_e',
+      name: 'Green - E',
+    },
+  ],
+  Mattapan: [
+    {
+      id: 'mattapan_trunk',
+      name: 'Mattapan Line',
+    },
+  ],
+};
+
 const stationConfig = {
   Orange: [
     {
@@ -972,4 +1034,6 @@ function arincToRealtimeId(stationZone, line) {
   return arincToRealtimeIdMap[stationZone];
 }
 
-export { stationConfig, arincToRealtimeId };
+export {
+  timePeriodConfig, branchConfig, stationConfig, arincToRealtimeId,
+};

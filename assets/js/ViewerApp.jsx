@@ -3,19 +3,20 @@ import PropTypes from 'prop-types';
 import { Socket } from 'phoenix';
 import Viewer from './Viewer';
 import lineToColor from './colors';
-import { signConfigType, signContentType } from './types';
+import { signConfigType, signContentType, configuredHeadwayType } from './types';
 
 class ViewerApp extends Component {
   constructor(props) {
     super(props);
 
     this.setConfigs = this.setConfigs.bind(this);
+    this.setConfiguredHeadways = this.setConfiguredHeadways.bind(this);
     this.changeLine = this.changeLine.bind(this);
     this.updateTime = this.updateTime.bind(this);
-
     this.state = {
       signs: props.initialSigns,
       signConfigs: props.initialSignConfigs,
+      configuredHeadways: props.initialConfiguredHeadways,
       currentTime: Date.now(),
       channel: null,
       readOnly: props.readOnly,
@@ -42,6 +43,10 @@ class ViewerApp extends Component {
 
     channel.on('new_sign_configs_state', (state) => {
       this.setState({ signConfigs: state });
+    });
+
+    channel.on('new_configured_headways_state', (state) => {
+      this.setState({ configuredHeadways: state });
     });
 
     channel.on('auth_expired', () => {
@@ -73,6 +78,19 @@ class ViewerApp extends Component {
     }
   }
 
+  setConfiguredHeadways(newConfigs) {
+    const { channel, configuredHeadways } = this.state;
+
+    if (channel) {
+      const newConfigsState = { ...configuredHeadways, ...newConfigs };
+      channel.push('changeHeadways', newConfigsState);
+      this.setState(oldState => ({
+        ...oldState,
+        configuredHeadways: newConfigsState,
+      }));
+    }
+  }
+
   changeLine(line) {
     document.body.style.backgroundColor = lineToColor(line);
     this.setState({ line });
@@ -86,7 +104,7 @@ class ViewerApp extends Component {
 
   render() {
     const {
-      signs, currentTime, line, signConfigs, readOnly,
+      signs, currentTime, line, signConfigs, readOnly, configuredHeadways,
     } = this.state;
     return (
       <div className="viewer--main container">
@@ -115,6 +133,8 @@ class ViewerApp extends Component {
             <Viewer
               signs={signs}
               signConfigs={signConfigs}
+              configuredHeadways={configuredHeadways}
+              setConfiguredHeadways={this.setConfiguredHeadways}
               setConfigs={this.setConfigs}
               currentTime={currentTime}
               line={line}
@@ -129,6 +149,7 @@ class ViewerApp extends Component {
 ViewerApp.propTypes = {
   initialSigns: PropTypes.objectOf(signContentType).isRequired,
   initialSignConfigs: PropTypes.objectOf(signConfigType).isRequired,
+  initialConfiguredHeadways: PropTypes.objectOf(configuredHeadwayType).isRequired,
   readOnly: PropTypes.bool.isRequired,
 };
 
