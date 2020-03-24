@@ -86,7 +86,7 @@ const ConfiguredHeadwaysForm = React.memo(({
                   onClick={() => setInEditMode(true)}
                 >
                   <FontAwesomeIcon className="mr-1" icon={faEdit} />
-                      edit
+                  edit
                 </button>
               ) : (
                 <button
@@ -99,7 +99,7 @@ const ConfiguredHeadwaysForm = React.memo(({
                   }}
                 >
                   <FontAwesomeIcon className="mr-1" icon={faTimes} />
-                      cancel
+                  cancel
                 </button>
               )}
             </div>
@@ -129,7 +129,7 @@ const ConfiguredHeadwaysForm = React.memo(({
                                 disabled={readOnly || !inEditMode}
                                 className="mr-2"
                               />
-                                    to
+                              to
                               <Field
                                 id={`branches.[${index}].${period.id}.range_high`}
                                 name={`branches.[${index}].${period.id}.range_high`}
@@ -137,7 +137,7 @@ const ConfiguredHeadwaysForm = React.memo(({
                                 disabled={readOnly || !inEditMode}
                                 type="number"
                               />
-                                    mins
+                              mins
                             </div>
                           </div>
                         ))}
@@ -154,7 +154,7 @@ const ConfiguredHeadwaysForm = React.memo(({
                   type="submit"
                   disabled={!dirty || !isValid}
                 >
-                        Apply
+                  Apply
                 </button>
               </div>
               )}
