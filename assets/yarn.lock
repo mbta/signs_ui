@@ -5219,9 +5219,9 @@ phoenix@^1.3.0:
   version "1.4.16"
   resolved "https://registry.yarnpkg.com/phoenix/-/phoenix-1.4.16.tgz#83b887ddb69b676024fd1c6ea6849a46ae0d837f"
 
-phoenix_html@^2.10.4:
-  version "2.13.2"
-  resolved "https://registry.yarnpkg.com/phoenix_html/-/phoenix_html-2.13.2.tgz#28a2376b713e9d8dda0aee8710f7c73732ff0157"
+phoenix_html@^2.14.1:
+  version "2.14.1"
+  resolved "https://registry.yarnpkg.com/phoenix_html/-/phoenix_html-2.14.1.tgz#c0298757c98d5c3280d80c9038f563169854551a"
 
 picomatch@^2.0.4, picomatch@^2.0.5:
   version "2.2.2"
