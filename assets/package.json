@@ -12,7 +12,8 @@
     "eslint-plugin-jsx-a11y": "^6.1.1",
     "eslint-plugin-react": "^7.18.0",
     "jest": "^25.5.3",
-    "jest-environment-jsdom-sixteen": "^1.0.3"
+    "jest-environment-jsdom-sixteen": "^1.0.3",
+    "regenerator-runtime": "^0.13.5"
   },
   "scripts": {
     "deploy": "webpack --mode production",
@@ -22,13 +23,13 @@
     "watch": "webpack --mode development --watch-stdin"
   },
   "dependencies": {
+    "@babel/preset-env": "^7.9.6",
+    "@babel/preset-react": "^7.9.4",
     "@fortawesome/fontawesome-svg-core": "^1.2.27",
     "@fortawesome/free-solid-svg-icons": "^5.12.1",
     "@fortawesome/react-fontawesome": "^0.1.9",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-react-app": "^3.1.2",
     "babel-runtime": "^6.26.0",
     "copy-webpack-plugin": "^5.1.1",
     "css-loader": "^1.0.0",
@@ -46,7 +47,9 @@
     "yup": "^0.28.3"
   },
   "jest": {
-    "setupTestFrameworkScriptFile": "./scripts/jestSetup.js",
+    "setupFilesAfterEnv": [
+      "./scripts/jestSetup.js"
+    ],
     "testURL": "http://localhost/"
   }
 }
