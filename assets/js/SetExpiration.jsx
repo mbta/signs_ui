@@ -51,12 +51,11 @@ function SetExpiration({
          <strong>
            Scheduled return to &quot;Auto&quot;
          </strong>
-       )
-      }
+       )}
 
       <DatePicker
         selected={parseDate(signConfig.expires)}
-        onChange={dt => updateConfig(setConfigs, realtimeId, signConfig, dt)}
+        onChange={(dt) => updateConfig(setConfigs, realtimeId, signConfig, dt)}
         showTimeSelect
         timeFormat="HH:mm"
         timeIntervals={15}
@@ -74,8 +73,7 @@ function SetExpiration({
           >
             Cancel
           </button>
-        )
-      }
+        )}
     </div>
   );
 }

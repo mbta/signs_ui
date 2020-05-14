@@ -40,7 +40,7 @@ const ConfiguredHeadwaysForm = React.memo(({
     }),
   }), [branches, configuredHeadways]);
 
-  const isEnabled = React.useMemo(() => branches.some(branch => !!configuredHeadways[branch.id]), [branches, configuredHeadways]); // eslint-disable-line max-len
+  const isEnabled = React.useMemo(() => branches.some((branch) => !!configuredHeadways[branch.id]), [branches, configuredHeadways]); // eslint-disable-line max-len
 
   const [inEditMode, setInEditMode] = React.useState(!isEnabled);
 
@@ -105,7 +105,7 @@ const ConfiguredHeadwaysForm = React.memo(({
             </div>
             )}
             <div>
-              {timePeriods.map(period => (
+              {timePeriods.map((period) => (
                 <FieldArray
                   key={period.id}
                   name="branches"
@@ -160,8 +160,7 @@ const ConfiguredHeadwaysForm = React.memo(({
               )}
             </div>
           </Form>
-        )
-          }
+        )}
       </Formik>
     </div>
   );
