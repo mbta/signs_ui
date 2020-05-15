@@ -33,7 +33,7 @@ class ViewerApp extends Component {
       .receive('ok', () => { });
 
     channel.on('sign_update', (sign) => {
-      this.setState(prevState => ({
+      this.setState((prevState) => ({
         signs: {
           ...prevState.signs,
           [sign.sign_id]: sign,
@@ -71,7 +71,7 @@ class ViewerApp extends Component {
     if (channel) {
       channel.push('changeSigns', signConfigs);
 
-      this.setState(oldState => ({
+      this.setState((oldState) => ({
         ...oldState,
         signConfigs: { ...(oldState.signConfigs), ...signConfigs },
       }));
@@ -84,7 +84,7 @@ class ViewerApp extends Component {
     if (channel) {
       const newConfigsState = { ...configuredHeadways, ...newConfigs };
       channel.push('changeHeadways', newConfigsState);
-      this.setState(oldState => ({
+      this.setState((oldState) => ({
         ...oldState,
         configuredHeadways: newConfigsState,
       }));

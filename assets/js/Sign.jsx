@@ -158,8 +158,7 @@ class Sign extends Component {
                 <div className="viewer--mode-text">
                   {displayName(signConfig.mode)}
                 </div>
-              )
-            }
+              )}
             {!readOnly
               && (
                 <div>
@@ -187,8 +186,7 @@ class Sign extends Component {
                     </option>
                   </select>
                 </div>
-              )
-            }
+              )}
           </div>
           <div className="viewer--sign-lines">
             <div className="viewer--sign-line">
@@ -245,8 +243,7 @@ class Sign extends Component {
                 {customChanges ? '*' : ''}
               </div>
             </div>
-          )
-        }
+          )}
         {signConfig.mode !== 'auto' && (
           <div className="viewer--schedule-expires">
             <SetExpiration

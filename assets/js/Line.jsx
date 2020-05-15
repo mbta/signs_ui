@@ -49,7 +49,7 @@ function Line({
   const branches = branchConfig[line] || [];
   const batchMode = React.useMemo(() => {
     const uniqueModes = {};
-    const isMixed = stations.some(station => Object.keys(station.zones).some((zone) => {
+    const isMixed = stations.some((station) => Object.keys(station.zones).some((zone) => {
       if (station.zones[zone]) {
         const realtimeId = arincToRealtimeId(`${station.id}-${zone}`, line);
         const mode = signConfigs[realtimeId] && signConfigs[realtimeId].mode;
@@ -97,10 +97,9 @@ function Line({
               </label>
             )}
           </div>
-        )
-      }
+        )}
       {
-        stations.map(station => (
+        stations.map((station) => (
           <Station
             key={station.id}
             config={station}

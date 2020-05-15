@@ -2,17 +2,18 @@
   "private": true,
   "devDependencies": {
     "@testing-library/react": "^10.0.4",
-    "babel-jest": "^23.4.0",
+    "babel-jest": "^26.0.1",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
-    "eslint": "^5.16.0",
-    "eslint-config-airbnb": "^17.0.0",
+    "eslint": "^7.0.0",
+    "eslint-config-airbnb": "^18.1.0",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-jest": "^23.8.2",
     "eslint-plugin-jsx-a11y": "^6.1.1",
     "eslint-plugin-react": "^7.18.0",
-    "jest": "^23.4.1",
-    "jest-environment-jsdom-sixteen": "^1.0.3"
+    "jest": "^26.0.1",
+    "jest-environment-jsdom-sixteen": "^1.0.3",
+    "regenerator-runtime": "^0.13.5"
   },
   "scripts": {
     "deploy": "webpack --mode production",
@@ -22,16 +23,16 @@
     "watch": "webpack --mode development --watch-stdin"
   },
   "dependencies": {
+    "@babel/core": "^7.9.6",
+    "@babel/preset-env": "^7.9.6",
+    "@babel/preset-react": "^7.9.4",
     "@fortawesome/fontawesome-svg-core": "^1.2.27",
     "@fortawesome/free-solid-svg-icons": "^5.12.1",
     "@fortawesome/react-fontawesome": "^0.1.9",
-    "babel-core": "^6.26.3",
-    "babel-loader": "^7.1.5",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-react-app": "^3.1.2",
+    "babel-loader": "^8.1.0",
     "babel-runtime": "^6.26.0",
     "copy-webpack-plugin": "^5.1.1",
-    "css-loader": "^1.0.0",
+    "css-loader": "^3.5.3",
     "dateformat": "^3.0.3",
     "formik": "^2.1.4",
     "mini-css-extract-plugin": "^0.9.0",
@@ -46,7 +47,9 @@
     "yup": "^0.28.5"
   },
   "jest": {
-    "setupTestFrameworkScriptFile": "./scripts/jestSetup.js",
+    "setupFilesAfterEnv": [
+      "./scripts/jestSetup.js"
+    ],
     "testURL": "http://localhost/"
   }
 }
