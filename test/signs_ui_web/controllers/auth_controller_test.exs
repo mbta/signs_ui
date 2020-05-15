@@ -95,6 +95,49 @@ defmodule SignsUiWeb.AuthControllerTest do
     end
   end
 
+  describe "logout" do
+    @tag :authenticated
+    test "clears refresh token, logs user out, and redirects to Cognito logout", %{conn: conn} do
+      reassign_env(:refresh_token_store, SignsUiWeb.AuthControllerTest.FakeRefreshTokenStore)
+
+      log =
+        capture_log([level: :info], fn ->
+          conn = get(conn, SignsUiWeb.Router.Helpers.auth_path(conn, :logout))
+
+          response = response(conn, 302)
+
+          assert is_nil(Guardian.Plug.current_claims(conn))
+
+          assert response =~ "https://test_auth_domain/logout?client_id=test_client_secret"
+        end)
+
+      assert log =~ "cleared_refresh_token"
+    end
+
+    test "handles tuple format of application environment configuration", %{conn: conn} do
+      reassign_env(:refresh_token_store, SignsUiWeb.AuthControllerTest.FakeRefreshTokenStore)
+
+      old_config = Application.get_env(:ueberauth, Ueberauth.Strategy.Cognito)
+
+      new_config =
+        Keyword.put(
+          old_config,
+          :client_id,
+          {SignsUiWeb.AuthControllerTest, :id, ["test_client_secret_2"]}
+        )
+
+      on_exit(fn -> Application.put_env(:ueberauth, Ueberauth.Strategy.Cognito, old_config) end)
+
+      Application.put_env(:ueberauth, Ueberauth.Strategy.Cognito, new_config)
+
+      conn = get(conn, SignsUiWeb.Router.Helpers.auth_path(conn, :logout))
+
+      response = response(conn, 302)
+
+      assert response =~ "https://test_auth_domain/logout?client_id=test_client_secret_2"
+    end
+  end
+
   defmodule FakeRefreshTokenStore do
     def put_refresh_token(username, refresh_token) do
       Logger.info("stored_refresh_token username=#{username} refresh_token=#{refresh_token}")
@@ -104,4 +147,6 @@ defmodule SignsUiWeb.AuthControllerTest do
       Logger.info("cleared_refresh_token username=#{username}")
     end
   end
+
+  def id(x), do: x
 end
