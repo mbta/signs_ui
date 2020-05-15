@@ -35,6 +35,7 @@ defmodule SignsUiWeb.Router do
   scope "/auth", SignsUiWeb do
     pipe_through([:redirect_prod_http, :browser])
 
+    get("/logout", AuthController, :logout)
     get("/:provider", AuthController, :request)
     get("/:provider/callback", AuthController, :callback)
   end
