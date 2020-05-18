@@ -102,7 +102,7 @@ defmodule SignsUiWeb.AuthControllerTest do
 
       log =
         capture_log([level: :info], fn ->
-          conn = get(conn, SignsUiWeb.Router.Helpers.auth_path(conn, :logout))
+          conn = get(conn, SignsUiWeb.Router.Helpers.auth_path(conn, :logout, "cognito"))
 
           response = response(conn, 302)
 
@@ -130,7 +130,7 @@ defmodule SignsUiWeb.AuthControllerTest do
 
       Application.put_env(:ueberauth, Ueberauth.Strategy.Cognito, new_config)
 
-      conn = get(conn, SignsUiWeb.Router.Helpers.auth_path(conn, :logout))
+      conn = get(conn, SignsUiWeb.Router.Helpers.auth_path(conn, :logout, "cognito"))
 
       response = response(conn, 302)
 

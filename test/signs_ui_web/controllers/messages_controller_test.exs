@@ -52,7 +52,7 @@ defmodule SignsUiWeb.MessagesControllerTest do
 
       response = html_response(conn, 200)
 
-      assert response =~ "signOutPath = \"/auth/logout\""
+      assert response =~ "signOutPath = \"/auth/cognito/logout\""
     end
   end
 
