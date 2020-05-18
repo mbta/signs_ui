@@ -53,7 +53,7 @@ defmodule SignsUiWeb.AuthController do
   end
 
   @spec logout(Plug.Conn.t(), map()) :: Plug.Conn.t()
-  def logout(conn, _params) do
+  def logout(conn, params) do
     refresh_token_store = Application.get_env(:signs_ui, :refresh_token_store)
 
     conn
@@ -61,6 +61,28 @@ defmodule SignsUiWeb.AuthController do
     |> Plug.Conn.get_session(:signs_ui_username)
     |> refresh_token_store.clear_refresh_token()
 
+    redirect_url = logout_redirect_url_for_provider(conn, params["provider"])
+
+    conn
+    |> Guardian.Plug.sign_out(SignsUiWeb.AuthManager)
+    |> redirect(external: redirect_url)
+  end
+
+  @spec error?([Ueberauth.Failure.t(), ...], String.t()) :: boolean
+  defp error?(errors, key) do
+    Enum.any?(errors, fn e -> e.message_key == key end)
+  end
+
+  @spec reauthenticate(Plug.Conn.t()) :: Plug.Conn.t()
+  defp reauthenticate(conn) do
+    Phoenix.Controller.redirect(
+      conn,
+      to: SignsUiWeb.Router.Helpers.auth_path(conn, :request, "cognito")
+    )
+  end
+
+  @spec logout_redirect_url_for_provider(Plug.Conn.t(), String.t()) :: String.t()
+  defp logout_redirect_url_for_provider(conn, "cognito") do
     auth_domain =
       :ueberauth
       |> Application.get_env(Ueberauth.Strategy.Cognito)
@@ -77,24 +99,7 @@ defmodule SignsUiWeb.AuthController do
         "logout_uri" => SignsUiWeb.Router.Helpers.page_url(conn, :index)
       })
 
-    request_url = "https://#{auth_domain}/logout?" <> redirect_params
-
-    conn
-    |> Guardian.Plug.sign_out(SignsUiWeb.AuthManager)
-    |> redirect(external: request_url)
-  end
-
-  @spec error?([Ueberauth.Failure.t(), ...], String.t()) :: boolean
-  defp error?(errors, key) do
-    Enum.any?(errors, fn e -> e.message_key == key end)
-  end
-
-  @spec reauthenticate(Plug.Conn.t()) :: Plug.Conn.t()
-  defp reauthenticate(conn) do
-    Phoenix.Controller.redirect(
-      conn,
-      to: SignsUiWeb.Router.Helpers.auth_path(conn, :request, "cognito")
-    )
+    "https://#{auth_domain}/logout?" <> redirect_params
   end
 
   @spec config_value(binary() | {module(), atom(), [any()]}) :: any()

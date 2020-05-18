@@ -5,5 +5,5 @@ realtimeappsdl@mbta.com.
 </div>
 
 <div>
-    <%= link "sign out", to: SignsUiWeb.Router.Helpers.auth_path(@conn, :logout)%>
+    <%= link "sign out", to: @sign_out_path %>
 </div>

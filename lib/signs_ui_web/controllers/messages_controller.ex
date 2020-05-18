@@ -27,7 +27,7 @@ defmodule SignsUiWeb.MessagesController do
          Map.new(periods, fn {period_id, config} -> {period_id, Map.from_struct(config)} end)}
       end)
 
-    sign_out_path = SignsUiWeb.Router.Helpers.auth_path(conn, :logout)
+    sign_out_path = SignsUiWeb.Router.Helpers.auth_path(conn, :logout, "cognito")
 
     render(conn, "index.html",
       signs: signs,
