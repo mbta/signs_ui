@@ -45,6 +45,15 @@ defmodule SignsUiWeb.MessagesControllerTest do
 
       assert response =~ "readOnly = true"
     end
+
+    @tag :authenticated
+    test "includes path to sign out", %{conn: conn} do
+      conn = get(conn, messages_path(conn, :index))
+
+      response = html_response(conn, 200)
+
+      assert response =~ "signOutPath = \"/auth/logout\""
+    end
   end
 
   describe "create messages" do

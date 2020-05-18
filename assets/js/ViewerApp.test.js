@@ -42,6 +42,7 @@ test('Shows all signs for a line', () => {
   const initialSignConfigs = {};
   const readOnly = false;
   const configuredHeadways = {};
+  const signOutPath = '/path';
 
   const wrapper = mount(
     React.createElement(ViewerApp, {
@@ -51,6 +52,7 @@ test('Shows all signs for a line', () => {
       line,
       initialSignConfigs,
       readOnly,
+      signOutPath,
     }, null),
   );
 
@@ -71,6 +73,7 @@ test('Can enable/disable a sign', () => {
   const initialSignConfigs = { davis_southbound: { mode: 'auto' } };
   const readOnly = false;
   const configuredHeadways = {};
+  const signOutPath = '/path';
 
   const wrapper = mount(
     React.createElement(ViewerApp, {
@@ -80,6 +83,7 @@ test('Can enable/disable a sign', () => {
       line,
       initialSignConfigs,
       readOnly,
+      signOutPath,
     }, null),
   );
 
@@ -87,4 +91,29 @@ test('Can enable/disable a sign', () => {
   expect(wrapper.find('#davis_southbound').props().value).toBe('auto');
   wrapper.find('#davis_southbound').simulate('change', { target: { value: 'off' } });
   expect(wrapper.find('#davis_southbound').props().value).toBe('off');
+});
+
+test('Shows sign out link', () => {
+  const now = Date.now();
+  const signs = someSignContent();
+  const currentTime = now + 2000;
+  const line = 'Red';
+  const initialSignConfigs = { davis_southbound: { mode: 'auto' } };
+  const readOnly = false;
+  const configuredHeadways = {};
+  const signOutPath = '/path';
+
+  const wrapper = mount(
+    React.createElement(ViewerApp, {
+      initialSigns: signs,
+      initialConfiguredHeadways: configuredHeadways,
+      currentTime,
+      line,
+      initialSignConfigs,
+      readOnly,
+      signOutPath,
+    }, null),
+  );
+
+  expect(wrapper.find('#sign-out-link').props().href).toBe('/path');
 });

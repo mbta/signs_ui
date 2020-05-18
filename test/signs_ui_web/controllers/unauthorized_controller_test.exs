@@ -5,7 +5,10 @@ defmodule SignsUiWeb.UnauthorizedControllerTest do
     test "renders response", %{conn: conn} do
       conn = get(conn, unauthorized_path(conn, :index))
 
-      assert html_response(conn, 403) =~ "not authorized"
+      html = html_response(conn, 403)
+
+      assert html =~ "not authorized"
+      assert html =~ "/logout"
     end
   end
 end

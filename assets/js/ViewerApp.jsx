@@ -20,6 +20,7 @@ class ViewerApp extends Component {
       currentTime: Date.now(),
       channel: null,
       readOnly: props.readOnly,
+      signOutPath: props.signOutPath,
     };
   }
 
@@ -104,29 +105,34 @@ class ViewerApp extends Component {
 
   render() {
     const {
-      signs, currentTime, line, signConfigs, readOnly, configuredHeadways,
+      signs, currentTime, line, signConfigs, readOnly, configuredHeadways, signOutPath,
     } = this.state;
     return (
       <div className="viewer--main container">
-        <div className="viewer--line-switcher">
-          <button type="button" id="blue-button" onClick={() => this.changeLine('Blue')}>
-            Blue
-          </button>
-          <button type="button" id="red-button" onClick={() => this.changeLine('Red')}>
-            Red
-          </button>
-          <button type="button" id="orange-button" onClick={() => this.changeLine('Orange')}>
-            Orange
-          </button>
-          <button type="button" id="green-button" onClick={() => this.changeLine('Green')}>
-            Green
-          </button>
-          <button type="button" id="mattapan-button" onClick={() => this.changeLine('Mattapan')}>
-            Mattapan
-          </button>
-          <button type="button" id="sl3-button" onClick={() => this.changeLine('SL3')}>
-            Silver Line 3
-          </button>
+        <div className="row">
+          <div className="viewer--line-switcher col-auto mr-auto">
+            <button type="button" id="blue-button" onClick={() => this.changeLine('Blue')}>
+              Blue
+            </button>
+            <button type="button" id="red-button" onClick={() => this.changeLine('Red')}>
+              Red
+            </button>
+            <button type="button" id="orange-button" onClick={() => this.changeLine('Orange')}>
+              Orange
+            </button>
+            <button type="button" id="green-button" onClick={() => this.changeLine('Green')}>
+              Green
+            </button>
+            <button type="button" id="mattapan-button" onClick={() => this.changeLine('Mattapan')}>
+              Mattapan
+            </button>
+            <button type="button" id="sl3-button" onClick={() => this.changeLine('SL3')}>
+              Silver Line 3
+            </button>
+          </div>
+          <div className="col-auto">
+            <a href={signOutPath} id="sign-out-link">sign out</a>
+          </div>
         </div>
         {line
           && (
@@ -151,6 +157,7 @@ ViewerApp.propTypes = {
   initialSignConfigs: PropTypes.objectOf(signConfigType).isRequired,
   initialConfiguredHeadways: PropTypes.objectOf(configuredHeadwayType).isRequired,
   readOnly: PropTypes.bool.isRequired,
+  signOutPath: PropTypes.string.isRequired,
 };
 
 export default ViewerApp;

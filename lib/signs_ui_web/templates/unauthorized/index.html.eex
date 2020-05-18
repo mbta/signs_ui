@@ -1,3 +1,9 @@
+<div>
 You are not authorized to access the signs viewer. If you believe you
 should have access, please have your supervisor contact
 realtimeappsdl@mbta.com.
+</div>
+
+<div>
+    <%= link "sign out", to: SignsUiWeb.Router.Helpers.auth_path(@conn, :logout)%>
+</div>

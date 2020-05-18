@@ -3,3 +3,4 @@
 <script>window.initialSignsData = <%= raw(Jason.encode!(@signs)) %></script>
 <script>window.initialSignConfigs = <%= raw(Jason.encode!(@sign_configs)) %></script>
 <script>window.initialConfiguredHeadways = <%= raw(Jason.encode!(@configured_headways)) %></script>
+<script>window.signOutPath = "<%= @sign_out_path%>"</script>
