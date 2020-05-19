@@ -217,4 +217,41 @@ describe('With Multi-sign Headway enabled', () => {
       expect(container.querySelector('button#apply').disabled).toEqual(true);
     });
   });
+
+  test('Invalid headways show error message', async () => {
+    const { container } = render(React.createElement(ConfiguredHeadwaysForm, {
+      branches,
+      readOnly,
+      configuredHeadways,
+      setConfiguredHeadways,
+      timePeriods,
+    }));
+
+    fireEvent.click(container.querySelector('button#edit'));
+    await waitFor(() => {
+      expect(container.querySelector('input[disabled]')).toEqual(null);
+    });
+
+    fireEvent.change(container.querySelector('input[name="branches.[0].morning.range_high"]'), {
+      target: {
+        value: '8',
+      },
+    });
+
+    fireEvent.change(container.querySelector('input[name="branches.[0].morning.range_low"]'), {
+      target: {
+        value: '10',
+      },
+    });
+
+    await waitFor(() => {
+      expect(container.querySelector('.alert-danger')).toEqual(null);
+    });
+
+    fireEvent.blur(container.querySelector('input[name="branches.[0].morning.range_low"]'));
+
+    await waitFor(() => {
+      expect(container.querySelector('.alert-danger')).not.toEqual(null);
+    });
+  });
 });
