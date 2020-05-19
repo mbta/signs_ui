@@ -69,6 +69,8 @@ const ConfiguredHeadwaysForm = React.memo(({
         enableReinitialize
         initialValues={initialFormValues}
         onSubmit={handleSubmit}
+        validateOnBlur
+        validateOnChange={false}
       >
         {({
           dirty, isValid, resetForm,
@@ -105,6 +107,7 @@ const ConfiguredHeadwaysForm = React.memo(({
             </div>
             )}
             <div>
+              { !isValid ? <div className="alert alert-danger">Error: All headway ranges must be valid.</div> : null}
               {timePeriods.map((period) => (
                 <FieldArray
                   key={period.id}
