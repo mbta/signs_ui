@@ -30,7 +30,7 @@ module.exports = function(env) {
       extensions: ['.js', '.jsx'],
     },
     plugins: [
-      new CopyWebpackPlugin([{from: "./static", to: "../"}]),
+      new CopyWebpackPlugin({patterns: [{from: "./static", to: "../"}]}),
       new MiniCssExtractPlugin({ filename: "../css/app.css"})
     ]
   };
