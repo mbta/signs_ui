@@ -40,7 +40,7 @@ defmodule SignsUi.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:excoveralls, "~> 0.12.2", only: :test},
+      {:excoveralls, "~> 0.13.0", only: :test},
       {:dialyxir, "~> 1.0.0-rc.4", only: [:dev, :test], runtime: false},
       {:distillery, "~> 2.1.1", runtime: false},
       {:phoenix, "~> 1.4.17"},
