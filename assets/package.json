@@ -23,7 +23,7 @@
     "watch": "webpack --mode development --watch-stdin"
   },
   "dependencies": {
-    "@babel/core": "^7.9.6",
+    "@babel/core": "^7.10.0",
     "@babel/preset-env": "^7.9.6",
     "@babel/preset-react": "^7.9.4",
     "@fortawesome/fontawesome-svg-core": "^1.2.27",
