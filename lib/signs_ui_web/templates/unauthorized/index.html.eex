@@ -5,5 +5,5 @@ realtimeappsdl@mbta.com.
 </div>
 
 <div>
-    <%= link "sign out", to: @sign_out_path %>
+    <%= link "refresh credentials", to: @sign_out_path %>
 </div>
