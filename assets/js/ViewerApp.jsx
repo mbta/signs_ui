@@ -131,7 +131,7 @@ class ViewerApp extends Component {
             </button>
           </div>
           <div className="col-auto">
-            <a href={signOutPath} id="sign-out-link">sign out</a>
+            <a href={signOutPath} id="sign-out-link">refresh credentials</a>
           </div>
         </div>
         {line
