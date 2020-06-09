@@ -59,7 +59,8 @@ defmodule SignsUi.Mixfile do
       {:guardian_phoenix, "~> 2.0"},
       {:ueberauth, "~> 0.1"},
       {:ueberauth_cognito, "~> 0.1"},
-      {:nimble_parsec, "~> 0.1"}
+      {:nimble_parsec, "~> 0.1"},
+      {:sobelow, "~> 0.8", only: :dev}
     ]
   end
 end

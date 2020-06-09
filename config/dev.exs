@@ -45,6 +45,10 @@ config :signs_ui,
   aws_requestor: SignsUi.Mock.AwsRequest,
   local_write_path: "test/mock_write.json"
 
+config :signs_ui, SignsUiWeb.AuthManager,
+  issuer: "signs_ui",
+  secret_key: "test key"
+
 # Do not include metadata nor timestamps in development logs
 config :logger, :console, format: "[$level] $message\n"
 
