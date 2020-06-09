@@ -19,8 +19,6 @@ config :signs_ui, SignsUiWeb.Endpoint,
   secret_key_base: Map.fetch!(System.get_env(), "SECRET_KEY_BASE"),
   cache_static_manifest: "priv/static/cache_manifest.json"
 
-config :signs_ui, SignsUiWeb.AuthManager, secret_key: {System, :get_env, ["SIGNS_UI_AUTH_SECRET"]}
-
 config :signs_ui, :redirect_http?, true
 
 # Do not print debug messages in production

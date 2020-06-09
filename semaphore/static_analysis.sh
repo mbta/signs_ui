@@ -14,3 +14,5 @@ cp _build/test/*_deps-test.plt* $SEMAPHORE_CACHE_DIR
 
 MIX_ENV=test mix dialyzer --halt-exit-status
 mix format --check-formatted
+
+mix sobelow --skip --exit

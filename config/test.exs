@@ -12,6 +12,10 @@ config :signs_ui,
   aws_requestor: SignsUi.Mock.AwsRequest,
   realtime_signs_api_key: "placeholder_key"
 
+config :signs_ui, SignsUiWeb.AuthManager,
+  issuer: "signs_ui",
+  secret_key: "test key"
+
 config :ueberauth, Ueberauth.Strategy.Cognito,
   auth_domain: "test_auth_domain",
   client_id: "test_client_secret"
