@@ -28,7 +28,7 @@
     "@babel/preset-react": "^7.9.4",
     "@fortawesome/fontawesome-svg-core": "^1.2.27",
     "@fortawesome/free-solid-svg-icons": "^5.12.1",
-    "@fortawesome/react-fontawesome": "^0.1.10",
+    "@fortawesome/react-fontawesome": "^0.1.11",
     "babel-loader": "^8.1.0",
     "babel-runtime": "^6.26.0",
     "copy-webpack-plugin": "^6.0.2",
