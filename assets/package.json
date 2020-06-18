@@ -43,7 +43,7 @@
     "react-datepicker": "^3.0.0",
     "react-dom": "^16.4.1",
     "webpack": "^4.43.0",
-    "webpack-cli": "^3.1.0",
+    "webpack-cli": "^3.3.12",
     "yup": "^0.29.1"
   },
   "jest": {
