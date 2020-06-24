@@ -196,7 +196,6 @@ test('Doesn\t show ConfiguredHeadwaysForm if current line has no branches config
   expect(wrapper.find(ConfiguredHeadwaysForm)).toHaveLength(0);
 });
 
-
 test('Shows ConfiguredHeadwaysForm if current line has branches configured', () => {
   const now = Date.now();
   const signs = {};
