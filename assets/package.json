@@ -13,7 +13,7 @@
     "eslint-plugin-react": "^7.20.3",
     "jest": "^26.1.0",
     "jest-environment-jsdom-sixteen": "^1.0.3",
-    "regenerator-runtime": "^0.13.5"
+    "regenerator-runtime": "^0.13.7"
   },
   "scripts": {
     "deploy": "webpack --mode production",
