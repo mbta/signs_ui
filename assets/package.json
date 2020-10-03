@@ -31,7 +31,7 @@
     "@fortawesome/react-fontawesome": "^0.1.10",
     "babel-loader": "^8.1.0",
     "babel-runtime": "^6.26.0",
-    "copy-webpack-plugin": "^6.0.3",
+    "copy-webpack-plugin": "^6.2.0",
     "css-loader": "^4.3.0",
     "dateformat": "^3.0.3",
     "formik": "2.1.5",
