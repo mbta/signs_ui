@@ -5,6 +5,7 @@ const lineToColor = {
   Orange: 'rgb(237, 139, 0)',
   Green: 'rgb(0, 132, 61)',
   SL3: 'rgb(124, 135, 142)',
+  Busway: 'rgb(255, 199, 44)',
 };
 
 function colorForLine(line) {
