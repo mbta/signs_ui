@@ -533,15 +533,29 @@ const stationConfig = {
   ],
   SL3: [
     {
-      id: 'SCHS',
-      name: 'Chelsea',
+      id: 'SSOU',
+      name: 'South Station',
       zones: {
-        n: false, s: false, e: false, w: true, c: false, m: false,
+        n: false, s: false, e: true, w: false, c: false, m: false,
       },
     },
     {
-      id: 'SBSQ',
-      name: 'Bellingham Sq',
+      id: 'SCOU',
+      name: 'Courthouse',
+      zones: {
+        n: false, s: false, e: true, w: true, c: false, m: true,
+      },
+    },
+    {
+      id: 'SWTC',
+      name: 'World Trade Center',
+      zones: {
+        n: false, s: false, e: true, w: true, c: false, m: true,
+      },
+    },
+    {
+      id: 'SEAV',
+      name: 'Eastern Ave',
       zones: {
         n: false, s: false, e: true, w: true, c: false, m: false,
       },
@@ -554,38 +568,17 @@ const stationConfig = {
       },
     },
     {
-      id: 'SEAV',
-      name: 'Eastern Ave',
+      id: 'SBSQ',
+      name: 'Bellingham Sq',
       zones: {
         n: false, s: false, e: true, w: true, c: false, m: false,
       },
     },
     {
-      id: 'SSOU',
-      name: 'South Station',
+      id: 'SCHS',
+      name: 'Chelsea',
       zones: {
-        n: false, s: false, e: true, w: false, c: false, m: false,
-      },
-    },
-    {
-      id: 'RSOU',
-      name: 'South Station',
-      zones: {
-        n: false, s: false, e: false, w: false, c: false, m: true,
-      },
-    },
-    {
-      id: 'SCOU',
-      name: 'Courthouse',
-      zones: {
-        n: false, s: false, e: true, w: false, c: false, m: true,
-      },
-    },
-    {
-      id: 'SWTC',
-      name: 'World Trade Center',
-      zones: {
-        n: false, s: false, e: true, w: false, c: false, m: true,
+        n: false, s: false, e: false, w: true, c: false, m: false,
       },
     },
   ],
@@ -780,6 +773,57 @@ const stationConfig = {
       },
     },
   ],
+  Busway: [
+    {
+      id: 'SDUD',
+      name: 'Nubian',
+      zones: {
+        n: 'Platform F', s: 'Platform C', e: 'Platform D', w: 'Platform A', c: 'Platform E (East)', m: 'Platform E (West)',
+      },
+    },
+    {
+      id: 'GLEC',
+      name: 'Lechmere',
+      zones: {
+        n: 'North', s: 'South', e: false, w: false, c: false, m: false,
+      },
+    },
+    {
+      id: 'SHAR',
+      name: 'Harvard',
+      zones: {
+        n: 'Upper', s: false, e: false, w: false, c: false, m: 'Lower',
+      },
+    },
+    {
+      id: 'MMAT',
+      name: 'Mattapan',
+      zones: {
+        n: 'South', s: 'North', e: false, w: false, c: false, m: false,
+      },
+    },
+    {
+      id: 'SDAV',
+      name: 'Davis',
+      zones: {
+        n: false, s: false, e: false, w: false, c: false, m: 'Busway',
+      },
+    },
+    {
+      id: 'SFOR',
+      name: 'Forest Hills',
+      zones: {
+        n: 'Upper (Fence)', s: 'Upper (Island)', e: false, w: false, c: false, m: false,
+      },
+    },
+    {
+      id: 'RBRA',
+      name: 'Braintree',
+      zones: {
+        n: false, s: false, e: false, w: false, c: false, m: 'Busway',
+      },
+    },
+  ],
 };
 
 const arincToRealtimeIdMap = {
@@ -794,18 +838,20 @@ const arincToRealtimeIdMap = {
   'MVAL-n': 'valley_road_inbound',
   'MCAP-s': 'capen_street_outbound',
   'MCAP-n': 'capen_street_inbound',
-  'SCHS-w': 'chelsea_inbound',
-  'SBSQ-w': 'bellingham_square_inbound',
-  'SBSQ-e': 'bellingham_square_outbound',
-  'SBOX-w': 'box_district_inbound',
-  'SBOX-e': 'box_district_outbound',
-  'SEAV-w': 'eastern_ave_inbound',
-  'SEAV-e': 'eastern_ave_outbound',
-  'SSOU-e': 'south_station_silver_line_outbound',
-  'SCOU-e': 'courthouse_station_outbound',
-  'SWTC-e': 'world_trade_center_outbound',
-  'SWTC-m': 'world_trade_center_mezzanine',
-  'SCOU-m': 'courthouse_station_mezzanine',
+  'SCHS-w': 'Silver_Line.Chelsea_IB',
+  'SBSQ-w': 'Silver_Line.Bellingham_Square_IB',
+  'SBSQ-e': 'Silver_Line.Bellingham_Square_OB',
+  'SBOX-w': 'Silver_Line.Box_District_IB',
+  'SBOX-e': 'Silver_Line.Box_District_OB',
+  'SEAV-w': 'Silver_Line.Eastern_Ave_IB',
+  'SEAV-e': 'Silver_Line.Eastern_Ave_OB',
+  'SSOU-e': 'Silver_Line.South_Station_EB',
+  'SCOU-e': 'Silver_Line.Courthouse_EB',
+  'SCOU-w': 'Silver_Line.Courthouse_WB',
+  'SCOU-m': 'Silver_Line.Courthouse_mezz',
+  'SWTC-e': 'Silver_Line.World_Trade_Ctr_EB',
+  'SWTC-w': 'Silver_Line.World_Trade_Ctr_WB',
+  'SWTC-m': 'Silver_Line.World_Trade_Ctr_mezz',
   'BWON-w': 'wonderland_westbound',
   'BWON-m': 'wonderland_mezzanine',
   'BREV-e': 'revere_beach_eastbound',
@@ -1021,6 +1067,21 @@ const arincToRealtimeIdMap = {
   'GSCI-w': 'science_park_westbound',
   'GSCI-m': 'science_park_mezzanine',
   'GLEC-w': 'lechmere_green_line',
+  'SDUD-n': 'bus.Dudley_Platform_F',
+  'SDUD-s': 'bus.Dudley_Platform_C',
+  'SDUD-e': 'bus.Dudley_Platform_D',
+  'SDUD-w': 'bus.Dudley_Platform_A',
+  'SDUD-c': 'bus.Dudley_Platform_E_east',
+  'SDUD-m': 'bus.Dudley_Platform_E_west',
+  'GLEC-n': 'bus.Lechmere_bus_north',
+  'GLEC-s': 'bus.Lechmere_bus_south',
+  'SHAR-n': 'bus.Harvard_upper',
+  'SHAR-m': 'bus.Harvard_lower',
+  'MMAT-n': 'bus.Mattapan_south',
+  'MMAT-s': 'bus.Mattapan_north',
+  'SDAV-m': 'bus.Davis',
+  'SFOR-n': 'bus.Forest_Hills_upper_fence',
+  'SFOR-s': 'bus.Forest_Hills_upper_island',
 };
 
 function arincToRealtimeId(stationZone, line) {

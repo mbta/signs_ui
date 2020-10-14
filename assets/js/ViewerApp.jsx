@@ -129,6 +129,9 @@ class ViewerApp extends Component {
             <button type="button" id="sl3-button" onClick={() => this.changeLine('SL3')}>
               Silver Line 3
             </button>
+            <button type="button" id="busway-button" onClick={() => this.changeLine('Busway')}>
+              Busway
+            </button>
           </div>
           <div className="col-auto">
             <a href={signOutPath} id="sign-out-link">refresh credentials</a>
