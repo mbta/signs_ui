@@ -2881,7 +2881,7 @@ const stationConfig = {
           w: {
             value: false,
             modes: {
-              auto: false, custom: false, headway: false, off: true,
+              auto: true, custom: false, headway: false, off: true,
             },
           },
           c: {
@@ -2923,7 +2923,7 @@ const stationConfig = {
           w: {
             value: true,
             modes: {
-              auto: false, custom: false, headway: false, off: true,
+              auto: true, custom: false, headway: false, off: true,
             },
           },
           c: {
