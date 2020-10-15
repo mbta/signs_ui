@@ -159,7 +159,7 @@ const zoneConfig = PropTypes.shape({
     auto: PropTypes.bool,
     custom: PropTypes.bool,
     headway: PropTypes.bool,
-    off: PropTypes.config,
+    off: PropTypes.bool,
   }),
 });
 
