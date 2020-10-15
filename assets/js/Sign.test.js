@@ -8,17 +8,21 @@ function signContentWithExpirations(time1, time2) {
     sign_id: 'RDAV-n',
     lines: {
       1: {
-        text: [{
-          content: 'Alewife 1 min',
-          duration: 5,
-        }],
+        text: [
+          {
+            content: 'Alewife 1 min',
+            duration: 5,
+          },
+        ],
         expiration: time1,
       },
       2: {
-        text: [{
-          content: 'Alewife 3 min',
-          duration: 5,
-        }],
+        text: [
+          {
+            content: 'Alewife 3 min',
+            duration: 5,
+          },
+        ],
         expiration: time2,
       },
     },
@@ -34,21 +38,32 @@ test('does not show messages that have expired', () => {
   const line = 'Red';
   const signConfig = { mode: 'auto' };
   const signContent = signContentWithExpirations(fresh, expired);
-  const setConfigs = () => { };
+  const setConfigs = () => {};
   const realtimeId = 'id';
   const readOnly = false;
+  const modes = {
+    auto: true,
+    custom: true,
+    headway: true,
+    off: true,
+  };
 
   const wrapper = mount(
-    React.createElement(Sign, {
-      signId,
-      signContent,
-      currentTime,
-      line,
-      signConfig,
-      setConfigs,
-      realtimeId,
-      readOnly,
-    }, null),
+    React.createElement(
+      Sign,
+      {
+        signId,
+        signContent,
+        currentTime,
+        line,
+        signConfig,
+        setConfigs,
+        realtimeId,
+        readOnly,
+        modes,
+      },
+      null,
+    ),
   );
 
   expect(wrapper.text()).toMatch('Alewife 1 min      ');
@@ -65,21 +80,25 @@ test('does not show select in read-only mode', () => {
   const line = 'Red';
   const signConfig = { mode: 'auto' };
   const signContent = signContentWithExpirations(fresh, fresh);
-  const setConfigs = () => { };
+  const setConfigs = () => {};
   const realtimeId = 'id';
   const readOnly = true;
 
   const wrapper = mount(
-    React.createElement(Sign, {
-      signId,
-      signContent,
-      currentTime,
-      line,
-      signConfig,
-      setConfigs,
-      realtimeId,
-      readOnly,
-    }, null),
+    React.createElement(
+      Sign,
+      {
+        signId,
+        signContent,
+        currentTime,
+        line,
+        signConfig,
+        setConfigs,
+        realtimeId,
+        readOnly,
+      },
+      null,
+    ),
   );
 
   expect(wrapper.html()).not.toMatch('select');
@@ -93,21 +112,25 @@ test('shows the mode the sign is in in read-only mode', () => {
   const line = 'Red';
   const signConfig = { mode: 'auto' };
   const signContent = signContentWithExpirations(fresh, fresh);
-  const setConfigs = () => { };
+  const setConfigs = () => {};
   const realtimeId = 'id';
   const readOnly = true;
 
   const wrapper = mount(
-    React.createElement(Sign, {
-      signId,
-      signContent,
-      currentTime,
-      line,
-      signConfig,
-      setConfigs,
-      realtimeId,
-      readOnly,
-    }, null),
+    React.createElement(
+      Sign,
+      {
+        signId,
+        signContent,
+        currentTime,
+        line,
+        signConfig,
+        setConfigs,
+        realtimeId,
+        readOnly,
+      },
+      null,
+    ),
   );
 
   expect(wrapper.html()).toMatch('Auto');
@@ -121,22 +144,100 @@ test('does show select when not in read-only mode', () => {
   const line = 'Red';
   const signConfig = { mode: 'auto' };
   const signContent = signContentWithExpirations(fresh, fresh);
-  const setConfigs = () => { };
+  const setConfigs = () => {};
   const realtimeId = 'id';
   const readOnly = false;
+  const modes = {
+    auto: true,
+    custom: true,
+    headway: true,
+    off: true,
+  };
 
   const wrapper = mount(
-    React.createElement(Sign, {
-      signId,
-      signContent,
-      currentTime,
-      line,
-      signConfig,
-      setConfigs,
-      realtimeId,
-      readOnly,
-    }, null),
+    React.createElement(
+      Sign,
+      {
+        signId,
+        signContent,
+        currentTime,
+        line,
+        modes,
+        signConfig,
+        setConfigs,
+        realtimeId,
+        readOnly,
+      },
+      null,
+    ),
   );
 
   expect(wrapper.html()).toMatch('select');
+});
+
+test.each([
+  [
+    { auto: true },
+    {
+      auto: true, static_text: false, headway: false, off: false,
+    },
+  ],
+  [
+    { auto: true, headway: true },
+    {
+      auto: true, static_text: false, headway: true, off: false,
+    },
+  ],
+  [
+    { custom: true },
+    {
+      auto: false, static_text: true, headway: false, off: false,
+    },
+  ],
+  [
+    { off: true },
+    {
+      auto: false, static_text: false, headway: false, off: true,
+    },
+  ],
+])('shows configured mode select options', (modesOverride, expected) => {
+  const now = new Date('2019-01-15T20:15:00Z').valueOf();
+  const fresh = new Date(now + 5000).toLocaleString();
+  const currentTime = now + 2000;
+  const signId = 'RDAV-n';
+  const line = 'Red';
+  const signConfig = { mode: 'auto' };
+  const signContent = signContentWithExpirations(fresh, fresh);
+  const setConfigs = () => {};
+  const realtimeId = 'id';
+  const readOnly = false;
+  const modes = {
+    auto: false,
+    headway: false,
+    custom: false,
+    off: false,
+    ...modesOverride,
+  };
+
+  const wrapper = mount(
+    React.createElement(
+      Sign,
+      {
+        signId,
+        signContent,
+        currentTime,
+        line,
+        signConfig,
+        setConfigs,
+        realtimeId,
+        readOnly,
+        modes,
+      },
+      null,
+    ),
+  );
+  expect(wrapper.html()).toMatch('select');
+  Object.keys(expected).forEach((x) => {
+    expect(wrapper.find(`option[value="${x}"]`).exists()).toEqual(expected[x]);
+  });
 });

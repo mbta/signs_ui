@@ -3,15 +3,31 @@ import PropTypes from 'prop-types';
 import ConfiguredHeadwaysForm from './ConfiguredHeadwaysForm';
 import Station from './Station';
 import { stationConfig, arincToRealtimeId, branchConfig } from './mbta';
-import { signConfigType, signContentType, configuredHeadwayType } from './types';
+import {
+  signConfigType,
+  signContentType,
+  configuredHeadwayType,
+} from './types';
 
 function name(line) {
-  if (line === 'Red') { return 'Red Line'; }
-  if (line === 'Blue') { return 'Blue Line'; }
-  if (line === 'Orange') { return 'Orange Line'; }
-  if (line === 'Green') { return 'Green Line'; }
-  if (line === 'Mattapan') { return 'Mattapan'; }
-  if (line === 'SL3') { return 'SL3'; }
+  if (line === 'Red') {
+    return 'Red Line';
+  }
+  if (line === 'Blue') {
+    return 'Blue Line';
+  }
+  if (line === 'Orange') {
+    return 'Orange Line';
+  }
+  if (line === 'Green') {
+    return 'Green Line';
+  }
+  if (line === 'Mattapan') {
+    return 'Mattapan';
+  }
+  if (line === 'SL3') {
+    return 'SL3';
+  }
 
   return '';
 }
@@ -45,12 +61,13 @@ function Line({
   configuredHeadways,
   setConfiguredHeadways,
 }) {
-  const stations = stationConfig[line] || [];
+  const stations = (stationConfig[line] && stationConfig[line].stations) || [];
+  const batchModes = (stationConfig[line] && stationConfig[line].batchModes) || {};
   const branches = branchConfig[line] || [];
   const batchMode = React.useMemo(() => {
     const uniqueModes = {};
     const isMixed = stations.some((station) => Object.keys(station.zones).some((zone) => {
-      if (station.zones[zone]) {
+      if (station.zones[zone] && station.zones[zone].value) {
         const realtimeId = arincToRealtimeId(`${station.id}-${zone}`, line);
         const mode = signConfigs[realtimeId] && signConfigs[realtimeId].mode;
         if (mode) {
@@ -64,9 +81,7 @@ function Line({
   }, [signConfigs, stations, arincToRealtimeId]);
   return (
     <div>
-      <h1>
-        {name(line)}
-      </h1>
+      <h1>{name(line)}</h1>
       {branches.length > 0 && (
         <ConfiguredHeadwaysForm
           branches={branches}
@@ -75,43 +90,92 @@ function Line({
           readOnly={readOnly}
         />
       )}
-      {!readOnly
-        && (
-          <div className="viewer--toggle-all">
-            <label className={`btn ${batchMode === 'auto' ? 'active' : ''}`} htmlFor="auto">
+      {!readOnly && (
+        <div className="viewer--toggle-all">
+          {batchModes.auto && (
+            <label
+              className={`btn ${batchMode === 'auto' ? 'active' : ''}`}
+              htmlFor="auto"
+            >
               All to auto
-              <input className="sr-only" type="radio" id="auto" value="auto" checked={batchMode === 'auto'} onChange={() => { setAllStationsMode(setConfigs, stations, line, 'auto'); }} />
+              <input
+                className="sr-only"
+                type="radio"
+                id="auto"
+                value="auto"
+                checked={batchMode === 'auto'}
+                onChange={() => {
+                  setAllStationsMode(setConfigs, stations, line, 'auto');
+                }}
+              />
             </label>
-            <label className={`btn ${batchMode === 'headway' ? 'active' : ''}`} htmlFor="headway">
+          )}
+          {batchModes.headway && (
+            <label
+              className={`btn ${batchMode === 'headway' ? 'active' : ''}`}
+              htmlFor="headway"
+            >
               All to headway
-              <input className="sr-only" type="radio" id="headway" value="headway" checked={batchMode === 'headway'} onChange={() => { setAllStationsMode(setConfigs, stations, line, 'headway'); }} />
+              <input
+                className="sr-only"
+                type="radio"
+                id="headway"
+                value="headway"
+                checked={batchMode === 'headway'}
+                onChange={() => {
+                  setAllStationsMode(setConfigs, stations, line, 'headway');
+                }}
+              />
             </label>
-            <label className={`btn ${batchMode === 'off' ? 'active' : ''}`} htmlFor="off">
+          )}
+          {batchModes.off && (
+            <label
+              className={`btn ${batchMode === 'off' ? 'active' : ''}`}
+              htmlFor="off"
+            >
               All to off
-              <input className="sr-only" type="radio" id="off" value="off" checked={batchMode === 'off'} onChange={() => { setAllStationsMode(setConfigs, stations, line, 'off'); }} />
+              <input
+                className="sr-only"
+                type="radio"
+                id="off"
+                value="off"
+                checked={batchMode === 'off'}
+                onChange={() => {
+                  setAllStationsMode(setConfigs, stations, line, 'off');
+                }}
+              />
             </label>
-            {batchMode === 'mixed' && (
-              <label className={`btn ${batchMode === 'mixed' ? 'active' : ''}`} htmlFor="mixed">
-                Mixed
-                <input className="sr-only" id="mixed" type="radio" value="mixed" checked readOnly />
-              </label>
-            )}
-          </div>
-        )}
-      {
-        stations.map((station) => (
-          <Station
-            key={station.id}
-            config={station}
-            signs={signs}
-            currentTime={currentTime}
-            line={line}
-            signConfigs={signConfigs}
-            setConfigs={setConfigs}
-            readOnly={readOnly}
-          />
-        ))
-      }
+          )}
+          {batchMode === 'mixed' && (
+            <label
+              className={`btn ${batchMode === 'mixed' ? 'active' : ''}`}
+              htmlFor="mixed"
+            >
+              Mixed
+              <input
+                className="sr-only"
+                id="mixed"
+                type="radio"
+                value="mixed"
+                checked
+                readOnly
+              />
+            </label>
+          )}
+        </div>
+      )}
+      {stations.map((station) => (
+        <Station
+          key={station.id}
+          config={station}
+          signs={signs}
+          currentTime={currentTime}
+          line={line}
+          signConfigs={signConfigs}
+          setConfigs={setConfigs}
+          readOnly={readOnly}
+        />
+      ))}
     </div>
   );
 }

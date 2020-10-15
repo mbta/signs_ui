@@ -61,769 +61,4535 @@ const branchConfig = {
 };
 
 const stationConfig = {
-  Orange: [
-    {
-      id: 'OOAK',
-      name: 'Oak Grove',
-      zones: {
-        n: false, s: 'Platform', e: 'Busway', w: false, c: false, m: true,
-      },
-    },
-    {
-      id: 'OMAL',
-      name: 'Malden Center',
-      zones: {
-        n: 'Platform', s: false, e: false, w: false, c: false, m: 'Lobby',
-      },
-    },
-    {
-      id: 'OWEL',
-      name: 'Wellington',
-      zones: {
-        n: true, s: true, e: false, w: false, c: false, m: true,
-      },
-    },
-    {
-      id: 'OASQ',
-      name: 'Assembly',
-      zones: {
-        n: true, s: true, e: false, w: false, c: false, m: true,
-      },
-    },
-    {
-      id: 'OSUL',
-      name: 'Sullivan Sq',
-      zones: {
-        n: true, s: true, e: false, w: false, c: false, m: true,
-      },
-    },
-    {
-      id: 'OCOM',
-      name: 'Community College',
-      zones: {
-        n: true, s: true, e: false, w: false, c: false, m: true,
-      },
-    },
-    {
-      id: 'ONST',
-      name: 'North Station',
-      zones: {
-        n: true, s: true, e: false, w: false, c: true, m: 'CR Exit',
-      },
-    },
-    {
-      id: 'OHAY',
-      name: 'Haymarket',
-      zones: {
-        n: true, s: true, e: false, w: false, c: false, m: true,
-      },
-    },
-    {
-      id: 'OSTN',
-      name: 'State North',
-      zones: {
-        n: true, s: false, e: false, w: false, c: false, m: true,
-      },
-    },
-    {
-      id: 'OSTS',
-      name: 'State South',
-      zones: {
-        n: false, s: true, e: false, w: false, c: false, m: false,
-      },
-    },
-    {
-      id: 'ODTN',
-      name: 'Downtown Crossing North',
-      zones: {
-        n: true, s: false, e: false, w: false, c: false, m: false,
-      },
-    },
-    {
-      id: 'ODTS',
-      name: 'Downtown Crossing South',
-      zones: {
-        n: false, s: true, e: false, w: false, c: false, m: false,
-      },
-    },
-    {
-      id: 'OCHN',
-      name: 'Chinatown North',
-      zones: {
-        n: true, s: false, e: false, w: false, c: false, m: 'Lobby',
-      },
-    },
-    {
-      id: 'OCHS',
-      name: 'Chinatown South',
-      zones: {
-        n: false, s: true, e: false, w: false, c: false, m: 'Lobby',
-      },
-    },
-    {
-      id: 'ONEM',
-      name: 'Tufts Medical Center',
-      zones: {
-        n: true, s: true, e: false, w: false, c: false, m: true,
-      },
-    },
-    {
-      id: 'OBAC',
-      name: 'Back Bay',
-      zones: {
-        n: true, s: true, e: false, w: false, c: false, m: true,
-      },
-    },
-    {
-      id: 'OMAS',
-      name: 'Mass. Ave',
-      zones: {
-        n: true, s: true, e: false, w: false, c: false, m: true,
-      },
-    },
-    {
-      id: 'ORUG',
-      name: 'Ruggles',
-      zones: {
-        n: true, s: true, e: false, w: false, c: true, m: true,
-      },
-    },
-    {
-      id: 'SRUG',
-      name: 'Ruggles Upper Busway',
-      zones: {
-        n: false, s: false, e: false, w: false, c: false, m: true,
-      },
-    },
-    {
-      id: 'OROX',
-      name: 'Roxbury Crossing',
-      zones: {
-        n: true, s: true, e: false, w: false, c: false, m: true,
-      },
-    },
-    {
-      id: 'OJAC',
-      name: 'Jackson Sq',
-      zones: {
-        n: true, s: true, e: false, w: false, c: false, m: true,
-      },
-    },
-    {
-      id: 'OSTO',
-      name: 'Stony Brook',
-      zones: {
-        n: true, s: true, e: false, w: false, c: false, m: true,
-      },
-    },
-    {
-      id: 'OGRE',
-      name: 'Green St',
-      zones: {
-        n: true, s: true, e: false, w: false, c: false, m: true,
-      },
-    },
-    {
-      id: 'OFOR',
-      name: 'Forest Hills',
-      zones: {
-        n: 'Platform', s: false, e: false, w: false, c: false, m: 'Main Lobby',
-      },
-    },
-    {
-      id: 'SFOR',
-      name: 'Forest Hills Entrances from Busways',
-      zones: {
-        n: false, s: false, e: false, w: false, c: false, m: true,
-      },
-    },
-  ],
-  Red: [
-    {
-      id: 'RALE',
-      name: 'Alewife',
-      zones: {
-        n: false, s: false, e: false, w: false, c: true, m: true,
-      },
-    },
-    {
-      id: 'RDAV',
-      name: 'Davis',
-      zones: {
-        n: true, s: true, e: false, w: false, c: false, m: true,
-      },
-    },
-    {
-      id: 'RPOR',
-      name: 'Porter',
-      zones: {
-        n: true, s: true, e: false, w: false, c: false, m: true,
-      },
-    },
-    {
-      id: 'RHAR',
-      name: 'Harvard',
-      zones: {
-        n: true, s: true, e: false, w: false, c: false, m: true,
-      },
-    },
-    {
-      id: 'RCEN',
-      name: 'Central',
-      zones: {
-        n: true, s: true, e: false, w: false, c: false, m: false,
-      },
-    },
-    {
-      id: 'RKEN',
-      name: 'Kendall/MIT',
-      zones: {
-        n: true, s: true, e: false, w: false, c: false, m: false,
-      },
-    },
-    {
-      id: 'RMGH',
-      name: 'Charles/MGH',
-      zones: {
-        n: true, s: true, e: false, w: false, c: false, m: false,
-      },
-    },
-    {
-      id: 'RPRK',
-      name: 'Park St',
-      zones: {
-        n: true, s: true, e: false, w: false, c: true, m: false,
-      },
-    },
-    {
-      id: 'RDTC',
-      name: 'Downtown Crossing',
-      zones: {
-        n: true, s: true, e: false, w: false, c: false, m: false,
-      },
-    },
-    {
-      id: 'RSOU',
-      name: 'South Station',
-      zones: {
-        n: true, s: true, e: false, w: false, c: false, m: true,
-      },
-    },
-    {
-      id: 'SSOU',
-      name: 'South Station Silver Line',
-      zones: {
-        n: false, s: false, e: false, w: false, c: false, m: 'Arrival Platform',
-      },
-    },
-    {
-      id: 'RBRO',
-      name: 'Broadway',
-      zones: {
-        n: true, s: true, e: false, w: false, c: false, m: true,
-      },
-    },
-    {
-      id: 'RAND',
-      name: 'Andrew',
-      zones: {
-        n: true, s: true, e: false, w: false, c: false, m: true,
-      },
-    },
-    {
-      id: 'RJFK',
-      name: 'JFK/UMass',
-      zones: {
-        n: 'Braintree Platform', s: 'Braintree Platform', e: 'Ashmont Platform', w: 'Ashmont Platform', c: false, m: true,
-      },
-    },
-    {
-      id: 'RSAV',
-      name: 'Savin Hill',
-      zones: {
-        n: true, s: true, e: false, w: false, c: false, m: true,
-      },
-    },
-    {
-      id: 'RFIE',
-      name: 'Fields Corner',
-      zones: {
-        n: true, s: true, e: false, w: false, c: false, m: true,
-      },
-    },
-    {
-      id: 'RSHA',
-      name: 'Shawmut',
-      zones: {
-        n: true, s: true, e: false, w: false, c: false, m: true,
-      },
-    },
-    {
-      id: 'RASH',
-      name: 'Ashmont',
-      zones: {
-        n: true, s: false, e: false, w: false, c: false, m: true,
-      },
-    },
-    {
-      id: 'RNQU',
-      name: 'North Quincy',
-      zones: {
-        n: true, s: true, e: false, w: false, c: false, m: true,
-      },
-    },
-    {
-      id: 'RWOL',
-      name: 'Wollaston',
-      zones: {
-        n: true, s: true, e: false, w: false, c: false, m: true,
-      },
-    },
-    {
-      id: 'RQUC',
-      name: 'Quincy Center',
-      zones: {
-        n: true, s: true, e: false, w: false, c: false, m: true,
-      },
-    },
-    {
-      id: 'RQUA',
-      name: 'Quincy Adams',
-      zones: {
-        n: true, s: true, e: false, w: false, c: false, m: true,
-      },
-    },
-    {
-      id: 'RBRA',
-      name: 'Braintree',
-      zones: {
-        n: false, s: false, e: false, w: false, c: true, m: true,
-      },
-    },
-  ],
-  Blue: [
-    {
-      id: 'BWON',
-      name: 'Wonderland',
-      zones: {
-        n: false, s: false, e: false, w: true, c: false, m: true,
-      },
-    },
-    {
-      id: 'BREV',
-      name: 'Revere Beach',
-      zones: {
-        n: false, s: false, e: true, w: true, c: false, m: true,
-      },
-    },
-    {
-      id: 'BBEA',
-      name: 'Beachmont',
-      zones: {
-        n: false, s: false, e: true, w: true, c: false, m: false,
-      },
-    },
-    {
-      id: 'BSUF',
-      name: 'Suffolk Downs',
-      zones: {
-        n: false, s: false, e: true, w: true, c: false, m: false,
-      },
-    },
-    {
-      id: 'BORH',
-      name: 'Orient Heights',
-      zones: {
-        n: false, s: false, e: true, w: true, c: false, m: true,
-      },
-    },
-    {
-      id: 'BWOO',
-      name: 'Wood Island',
-      zones: {
-        n: false, s: false, e: true, w: true, c: false, m: true,
-      },
-    },
-    {
-      id: 'BAIR',
-      name: 'Airport',
-      zones: {
-        n: false, s: false, e: true, w: true, c: false, m: false,
-      },
-    },
-    {
-      id: 'BMAV',
-      name: 'Maverick',
-      zones: {
-        n: false, s: false, e: true, w: true, c: false, m: false,
-      },
-    },
-    {
-      id: 'BAQU',
-      name: 'Aquarium',
-      zones: {
-        n: false, s: false, e: true, w: true, c: false, m: true,
-      },
-    },
-    {
-      id: 'BSTA',
-      name: 'State',
-      zones: {
-        n: false, s: false, e: true, w: true, c: false, m: true,
-      },
-    },
-    {
-      id: 'BGOV',
-      name: 'Government Center',
-      zones: {
-        n: false, s: false, e: true, w: true, c: false, m: true,
-      },
-    },
-    {
-      id: 'BBOW',
-      name: 'Bowdoin',
-      zones: {
-        n: false, s: false, e: true, w: false, c: false, m: true,
-      },
-    },
-  ],
-  Mattapan: [
-    {
-      id: 'MCED',
-      name: 'Cedar Grove',
-      zones: {
-        n: true, s: true, e: false, w: false, c: false, m: false,
-      },
-    },
-    {
-      id: 'MBUT',
-      name: 'Butler',
-      zones: {
-        n: false, s: false, e: false, w: false, c: true, m: false,
-      },
-    },
-    {
-      id: 'MMIL',
-      name: 'Milton',
-      zones: {
-        n: true, s: true, e: false, w: false, c: false, m: false,
-      },
-    },
-    {
-      id: 'MCEN',
-      name: 'Central Ave',
-      zones: {
-        n: true, s: true, e: false, w: false, c: false, m: false,
-      },
-    },
-    {
-      id: 'MVAL',
-      name: 'Valley Rd',
-      zones: {
-        n: true, s: true, e: false, w: false, c: false, m: false,
-      },
-    },
-    {
-      id: 'MCAP',
-      name: 'Capen St',
-      zones: {
-        n: true, s: false, e: false, w: false, c: false, m: false,
-      },
-    },
-  ],
-  SL3: [
-    {
-      id: 'SSOU',
-      name: 'South Station',
-      zones: {
-        n: false, s: false, e: true, w: false, c: false, m: false,
-      },
-    },
-    {
-      id: 'SCOU',
-      name: 'Courthouse',
-      zones: {
-        n: false, s: false, e: true, w: true, c: false, m: true,
-      },
-    },
-    {
-      id: 'SWTC',
-      name: 'World Trade Center',
-      zones: {
-        n: false, s: false, e: true, w: true, c: false, m: true,
-      },
-    },
-    {
-      id: 'SEAV',
-      name: 'Eastern Ave',
-      zones: {
-        n: false, s: false, e: true, w: true, c: false, m: false,
-      },
-    },
-    {
-      id: 'SBOX',
-      name: 'Box District',
-      zones: {
-        n: false, s: false, e: true, w: true, c: false, m: false,
-      },
-    },
-    {
-      id: 'SBSQ',
-      name: 'Bellingham Sq',
-      zones: {
-        n: false, s: false, e: true, w: true, c: false, m: false,
-      },
-    },
-    {
-      id: 'SCHS',
-      name: 'Chelsea',
-      zones: {
-        n: false, s: false, e: false, w: true, c: false, m: false,
-      },
-    },
-  ],
-  Green: [
-    {
-      id: 'GLEC',
-      name: 'Lechmere',
-      zones: {
-        n: false, s: false, e: false, w: 'Green Line', c: false, m: false,
-      },
-    },
-    {
-      id: 'GSCI',
-      name: 'Science Park',
-      zones: {
-        n: false, s: false, e: true, w: true, c: false, m: true,
-      },
-    },
-    {
-      id: 'GNST',
-      name: 'North Station',
-      zones: {
-        n: false, s: false, e: true, w: true, c: false, m: 'CR Exit',
-      },
-    },
-    {
-      id: 'GHAY',
-      name: 'Haymarket',
-      zones: {
-        n: false, s: false, e: true, w: true, c: false, m: false,
-      },
-    },
-    {
-      id: 'GGOV',
-      name: 'Government Center',
-      zones: {
-        n: false, s: false, e: true, w: true, c: false, m: true,
-      },
-    },
-    {
-      id: 'GPRKE',
-      name: 'Park St. Eastbound',
-      zones: {
-        n: false, s: false, e: true, w: false, c: false, m: 'Winter St Concourse',
-      },
-    },
-    {
-      id: 'GPRKW',
-      name: 'Park St. Westbound',
-      zones: {
-        n: 'Fence Track', s: false, e: false, w: 'Wall Track', c: false, m: false,
-      },
-    },
-    {
-      id: 'GBOY',
-      name: 'Boylston',
-      zones: {
-        n: false, s: false, e: true, w: true, c: false, m: false,
-      },
-    },
-    {
-      id: 'GARL',
-      name: 'Arlington',
-      zones: {
-        n: false, s: false, e: true, w: true, c: false, m: true,
-      },
-    },
-    {
-      id: 'GCOP',
-      name: 'Copley',
-      zones: {
-        n: false, s: false, e: true, w: true, c: false, m: false,
-      },
-    },
-    {
-      id: 'GPRU',
-      name: 'Prudential',
-      zones: {
-        n: false, s: false, e: true, w: true, c: false, m: true,
-      },
-    },
-    {
-      id: 'GSYM',
-      name: 'Symphony',
-      zones: {
-        n: false, s: false, e: true, w: true, c: false, m: false,
-      },
-    },
-    {
-      id: 'GAUD',
-      name: 'Hynes',
-      zones: {
-        n: false, s: false, e: true, w: true, c: false, m: true,
-      },
-    },
-    {
-      id: 'GKEN',
-      name: 'Kenmore',
-      zones: {
-        n: 'C/D East', s: 'C/D West', e: 'B East', w: 'B West', c: false, m: true,
-      },
-    },
-    {
-      id: 'GFEN',
-      name: 'Fenway',
-      zones: {
-        n: false, s: false, e: true, w: true, c: false, m: false,
-      },
-    },
-    {
-      id: 'GLON',
-      name: 'Longwood',
-      zones: {
-        n: false, s: false, e: true, w: true, c: false, m: false,
-      },
-    },
-    {
-      id: 'GBRV',
-      name: 'Brookline Village',
-      zones: {
-        n: false, s: false, e: true, w: true, c: false, m: false,
-      },
-    },
-    {
-      id: 'GBRH',
-      name: 'Brookline Hills',
-      zones: {
-        n: false, s: false, e: true, w: true, c: false, m: false,
-      },
-    },
-    {
-      id: 'GBEA',
-      name: 'Beaconsfield',
-      zones: {
-        n: false, s: false, e: true, w: true, c: false, m: false,
-      },
-    },
-    {
-      id: 'GRES',
-      name: 'Reservoir',
-      zones: {
-        n: false, s: false, e: true, w: true, c: false, m: false,
-      },
-    },
-    {
-      id: 'GCHE',
-      name: 'Chestnut Hill',
-      zones: {
-        n: false, s: false, e: true, w: true, c: false, m: false,
-      },
-    },
-    {
-      id: 'GNEC',
-      name: 'Newton Centre',
-      zones: {
-        n: false, s: false, e: true, w: true, c: false, m: false,
-      },
-    },
-    {
-      id: 'GNEH',
-      name: 'Newton Highlands',
-      zones: {
-        n: false, s: false, e: true, w: true, c: false, m: false,
-      },
-    },
-    {
-      id: 'GELI',
-      name: 'Eliot',
-      zones: {
-        n: false, s: false, e: true, w: true, c: false, m: false,
-      },
-    },
-    {
-      id: 'GWAB',
-      name: 'Waban',
-      zones: {
-        n: false, s: false, e: true, w: true, c: false, m: false,
-      },
-    },
-    {
-      id: 'GWOO',
-      name: 'Woodland',
-      zones: {
-        n: false, s: false, e: true, w: true, c: false, m: false,
-      },
-    },
-    {
-      id: 'GRIV',
-      name: 'Riverside',
-      zones: {
-        n: false, s: false, e: false, w: 'Entire Station', c: false, m: false,
-      },
-    },
-  ],
-  Busway: [
-    {
-      id: 'SDUD',
-      name: 'Nubian',
-      zones: {
-        n: 'Platform F', s: 'Platform C', e: 'Platform D', w: 'Platform A', c: 'Platform E (East)', m: 'Platform E (West)',
-      },
-    },
-    {
-      id: 'GLEC',
-      name: 'Lechmere',
-      zones: {
-        n: 'North', s: 'South', e: false, w: false, c: false, m: false,
-      },
-    },
-    {
-      id: 'SHAR',
-      name: 'Harvard',
-      zones: {
-        n: 'Upper', s: false, e: false, w: false, c: false, m: 'Lower',
-      },
-    },
-    {
-      id: 'MMAT',
-      name: 'Mattapan',
-      zones: {
-        n: 'South', s: 'North', e: false, w: false, c: false, m: false,
-      },
-    },
-    {
-      id: 'SDAV',
-      name: 'Davis',
-      zones: {
-        n: false, s: false, e: false, w: false, c: false, m: 'Busway',
-      },
-    },
-    {
-      id: 'SFOR',
-      name: 'Forest Hills',
-      zones: {
-        n: 'Upper (Fence)', s: 'Upper (Island)', e: false, w: false, c: false, m: false,
-      },
-    },
-    {
-      id: 'RBRA',
-      name: 'Braintree',
-      zones: {
-        n: false, s: false, e: false, w: false, c: false, m: 'Busway',
-      },
-    },
-  ],
+  Orange: {
+    batchModes: { auto: true, headway: true, off: true },
+    stations: [
+      {
+        id: 'OOAK',
+        name: 'Oak Grove',
+        zones: {
+          n: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: 'Platform',
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: 'Busway',
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'OMAL',
+        name: 'Malden Center',
+        zones: {
+          n: {
+            value: 'Platform',
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: 'Lobby',
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'OWEL',
+        name: 'Wellington',
+        zones: {
+          n: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'OASQ',
+        name: 'Assembly',
+        zones: {
+          n: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'OSUL',
+        name: 'Sullivan Sq',
+        zones: {
+          n: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'OCOM',
+        name: 'Community College',
+        zones: {
+          n: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'ONST',
+        name: 'North Station',
+        zones: {
+          n: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: 'CR Exit',
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'OHAY',
+        name: 'Haymarket',
+        zones: {
+          n: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'OSTN',
+        name: 'State North',
+        zones: {
+          n: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'OSTS',
+        name: 'State South',
+        zones: {
+          n: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'ODTN',
+        name: 'Downtown Crossing North',
+        zones: {
+          n: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'ODTS',
+        name: 'Downtown Crossing South',
+        zones: {
+          n: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'OCHN',
+        name: 'Chinatown North',
+        zones: {
+          n: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: 'Lobby',
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'OCHS',
+        name: 'Chinatown South',
+        zones: {
+          n: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: 'Lobby',
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'ONEM',
+        name: 'Tufts Medical Center',
+        zones: {
+          n: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'OBAC',
+        name: 'Back Bay',
+        zones: {
+          n: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'OMAS',
+        name: 'Mass. Ave',
+        zones: {
+          n: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'ORUG',
+        name: 'Ruggles',
+        zones: {
+          n: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'SRUG',
+        name: 'Ruggles Upper Busway',
+        zones: {
+          n: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'OROX',
+        name: 'Roxbury Crossing',
+        zones: {
+          n: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'OJAC',
+        name: 'Jackson Sq',
+        zones: {
+          n: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'OSTO',
+        name: 'Stony Brook',
+        zones: {
+          n: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'OGRE',
+        name: 'Green St',
+        zones: {
+          n: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'OFOR',
+        name: 'Forest Hills',
+        zones: {
+          n: {
+            value: 'Platform',
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: 'Main Lobby',
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'SFOR',
+        name: 'Forest Hills Entrances from Busways',
+        zones: {
+          n: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+    ],
+  },
+  Red: {
+    batchModes: { auto: true, headway: true, off: true },
+    stations: [
+      {
+        id: 'RALE',
+        name: 'Alewife',
+        zones: {
+          n: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'RDAV',
+        name: 'Davis',
+        zones: {
+          n: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'RPOR',
+        name: 'Porter',
+        zones: {
+          n: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'RHAR',
+        name: 'Harvard',
+        zones: {
+          n: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'RCEN',
+        name: 'Central',
+        zones: {
+          n: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'RKEN',
+        name: 'Kendall/MIT',
+        zones: {
+          n: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'RMGH',
+        name: 'Charles/MGH',
+        zones: {
+          n: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'RPRK',
+        name: 'Park St',
+        zones: {
+          n: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'RDTC',
+        name: 'Downtown Crossing',
+        zones: {
+          n: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'RSOU',
+        name: 'South Station',
+        zones: {
+          n: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'SSOU',
+        name: 'South Station Silver Line',
+        zones: {
+          n: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: 'Arrival Platform',
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'RBRO',
+        name: 'Broadway',
+        zones: {
+          n: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'RAND',
+        name: 'Andrew',
+        zones: {
+          n: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'RJFK',
+        name: 'JFK/UMass',
+        zones: {
+          n: {
+            value: 'Braintree Platform',
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: 'Braintree Platform',
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: 'Ashmont Platform',
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: 'Ashmont Platform',
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'RSAV',
+        name: 'Savin Hill',
+        zones: {
+          n: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'RFIE',
+        name: 'Fields Corner',
+        zones: {
+          n: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'RSHA',
+        name: 'Shawmut',
+        zones: {
+          n: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'RASH',
+        name: 'Ashmont',
+        zones: {
+          n: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'RNQU',
+        name: 'North Quincy',
+        zones: {
+          n: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'RWOL',
+        name: 'Wollaston',
+        zones: {
+          n: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'RQUC',
+        name: 'Quincy Center',
+        zones: {
+          n: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'RQUA',
+        name: 'Quincy Adams',
+        zones: {
+          n: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'RBRA',
+        name: 'Braintree',
+        zones: {
+          n: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+    ],
+  },
+  Blue: {
+    batchModes: { auto: true, headway: true, off: true },
+    stations: [
+      {
+        id: 'BWON',
+        name: 'Wonderland',
+        zones: {
+          n: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'BREV',
+        name: 'Revere Beach',
+        zones: {
+          n: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'BBEA',
+        name: 'Beachmont',
+        zones: {
+          n: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'BSUF',
+        name: 'Suffolk Downs',
+        zones: {
+          n: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'BORH',
+        name: 'Orient Heights',
+        zones: {
+          n: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'BWOO',
+        name: 'Wood Island',
+        zones: {
+          n: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'BAIR',
+        name: 'Airport',
+        zones: {
+          n: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'BMAV',
+        name: 'Maverick',
+        zones: {
+          n: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'BAQU',
+        name: 'Aquarium',
+        zones: {
+          n: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'BSTA',
+        name: 'State',
+        zones: {
+          n: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'BGOV',
+        name: 'Government Center',
+        zones: {
+          n: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'BBOW',
+        name: 'Bowdoin',
+        zones: {
+          n: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+    ],
+  },
+  Mattapan: {
+    batchModes: { auto: true, headway: true, off: true },
+    stations: [
+      {
+        id: 'MCED',
+        name: 'Cedar Grove',
+        zones: {
+          n: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'MBUT',
+        name: 'Butler',
+        zones: {
+          n: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'MMIL',
+        name: 'Milton',
+        zones: {
+          n: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'MCEN',
+        name: 'Central Ave',
+        zones: {
+          n: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'MVAL',
+        name: 'Valley Rd',
+        zones: {
+          n: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'MCAP',
+        name: 'Capen St',
+        zones: {
+          n: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+    ],
+  },
+  SL3: {
+    batchModes: { auto: true, headway: false, off: true },
+    stations: [
+      {
+        id: 'SSOU',
+        name: 'South Station',
+        zones: {
+          n: {
+            value: false,
+            modes: {
+              auto: false, custom: false, headway: false, off: true,
+            },
+          },
+          s: {
+            value: false,
+            modes: {
+              auto: false, custom: false, headway: false, off: true,
+            },
+          },
+          e: {
+            value: true,
+            modes: {
+              auto: false, custom: false, headway: false, off: true,
+            },
+          },
+          w: {
+            value: false,
+            modes: {
+              auto: false, custom: false, headway: false, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: false, custom: false, headway: false, off: true,
+            },
+          },
+          m: {
+            value: false,
+            modes: {
+              auto: false, custom: false, headway: false, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'SCOU',
+        name: 'Courthouse',
+        zones: {
+          n: {
+            value: false,
+            modes: {
+              auto: false, custom: false, headway: false, off: true,
+            },
+          },
+          s: {
+            value: false,
+            modes: {
+              auto: false, custom: false, headway: false, off: true,
+            },
+          },
+          e: {
+            value: true,
+            modes: {
+              auto: false, custom: false, headway: false, off: true,
+            },
+          },
+          w: {
+            value: true,
+            modes: {
+              auto: false, custom: false, headway: false, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: false, custom: false, headway: false, off: true,
+            },
+          },
+          m: {
+            value: true,
+            modes: {
+              auto: false, custom: false, headway: false, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'SWTC',
+        name: 'World Trade Center',
+        zones: {
+          n: {
+            value: false,
+            modes: {
+              auto: true, custom: false, headway: false, off: true,
+            },
+          },
+          s: {
+            value: false,
+            modes: {
+              auto: true, custom: false, headway: false, off: true,
+            },
+          },
+          e: {
+            value: true,
+            modes: {
+              auto: false, custom: false, headway: false, off: true,
+            },
+          },
+          w: {
+            value: true,
+            modes: {
+              auto: true, custom: false, headway: false, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: false, headway: false, off: true,
+            },
+          },
+          m: {
+            value: true,
+            modes: {
+              auto: true, custom: false, headway: false, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'SEAV',
+        name: 'Eastern Ave',
+        zones: {
+          n: {
+            value: false,
+            modes: {
+              auto: true, custom: false, headway: false, off: true,
+            },
+          },
+          s: {
+            value: false,
+            modes: {
+              auto: true, custom: false, headway: false, off: true,
+            },
+          },
+          e: {
+            value: true,
+            modes: {
+              auto: true, custom: false, headway: false, off: true,
+            },
+          },
+          w: {
+            value: true,
+            modes: {
+              auto: true, custom: false, headway: false, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: false, headway: false, off: true,
+            },
+          },
+          m: {
+            value: false,
+            modes: {
+              auto: true, custom: false, headway: false, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'SBOX',
+        name: 'Box District',
+        zones: {
+          n: {
+            value: false,
+            modes: {
+              auto: true, custom: false, headway: false, off: true,
+            },
+          },
+          s: {
+            value: false,
+            modes: {
+              auto: true, custom: false, headway: false, off: true,
+            },
+          },
+          e: {
+            value: true,
+            modes: {
+              auto: true, custom: false, headway: false, off: true,
+            },
+          },
+          w: {
+            value: true,
+            modes: {
+              auto: true, custom: false, headway: false, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: false, headway: false, off: true,
+            },
+          },
+          m: {
+            value: false,
+            modes: {
+              auto: true, custom: false, headway: false, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'SBSQ',
+        name: 'Bellingham Sq',
+        zones: {
+          n: {
+            value: false,
+            modes: {
+              auto: true, custom: false, headway: false, off: true,
+            },
+          },
+          s: {
+            value: false,
+            modes: {
+              auto: true, custom: false, headway: false, off: true,
+            },
+          },
+          e: {
+            value: true,
+            modes: {
+              auto: true, custom: false, headway: false, off: true,
+            },
+          },
+          w: {
+            value: true,
+            modes: {
+              auto: true, custom: false, headway: false, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: false, headway: false, off: true,
+            },
+          },
+          m: {
+            value: false,
+            modes: {
+              auto: true, custom: false, headway: false, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'SCHS',
+        name: 'Chelsea',
+        zones: {
+          n: {
+            value: false,
+            modes: {
+              auto: true, custom: false, headway: false, off: true,
+            },
+          },
+          s: {
+            value: false,
+            modes: {
+              auto: true, custom: false, headway: false, off: true,
+            },
+          },
+          e: {
+            value: false,
+            modes: {
+              auto: true, custom: false, headway: false, off: true,
+            },
+          },
+          w: {
+            value: true,
+            modes: {
+              auto: true, custom: false, headway: false, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: false, headway: false, off: true,
+            },
+          },
+          m: {
+            value: false,
+            modes: {
+              auto: true, custom: false, headway: false, off: true,
+            },
+          },
+        },
+      },
+    ],
+  },
+  Green: {
+    batchModes: { auto: true, headway: true, off: true },
+    stations: [
+      {
+        id: 'GLEC',
+        name: 'Lechmere',
+        zones: {
+          n: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: 'Green Line',
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'GSCI',
+        name: 'Science Park',
+        zones: {
+          n: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'GNST',
+        name: 'North Station',
+        zones: {
+          n: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: 'CR Exit',
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'GHAY',
+        name: 'Haymarket',
+        zones: {
+          n: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'GGOV',
+        name: 'Government Center',
+        zones: {
+          n: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'GPRKE',
+        name: 'Park St. Eastbound',
+        zones: {
+          n: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: 'Winter St Concourse',
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'GPRKW',
+        name: 'Park St. Westbound',
+        zones: {
+          n: {
+            value: 'Fence Track',
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: 'Wall Track',
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'GBOY',
+        name: 'Boylston',
+        zones: {
+          n: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'GARL',
+        name: 'Arlington',
+        zones: {
+          n: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'GCOP',
+        name: 'Copley',
+        zones: {
+          n: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'GPRU',
+        name: 'Prudential',
+        zones: {
+          n: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'GSYM',
+        name: 'Symphony',
+        zones: {
+          n: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'GAUD',
+        name: 'Hynes',
+        zones: {
+          n: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'GKEN',
+        name: 'Kenmore',
+        zones: {
+          n: {
+            value: 'C/D East',
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: 'C/D West',
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: 'B East',
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: 'B West',
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'GFEN',
+        name: 'Fenway',
+        zones: {
+          n: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'GLON',
+        name: 'Longwood',
+        zones: {
+          n: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'GBRV',
+        name: 'Brookline Village',
+        zones: {
+          n: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'GBRH',
+        name: 'Brookline Hills',
+        zones: {
+          n: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'GBEA',
+        name: 'Beaconsfield',
+        zones: {
+          n: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'GRES',
+        name: 'Reservoir',
+        zones: {
+          n: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'GCHE',
+        name: 'Chestnut Hill',
+        zones: {
+          n: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'GNEC',
+        name: 'Newton Centre',
+        zones: {
+          n: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'GNEH',
+        name: 'Newton Highlands',
+        zones: {
+          n: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'GELI',
+        name: 'Eliot',
+        zones: {
+          n: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'GWAB',
+        name: 'Waban',
+        zones: {
+          n: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'GWOO',
+        name: 'Woodland',
+        zones: {
+          n: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: true,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'GRIV',
+        name: 'Riverside',
+        zones: {
+          n: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          s: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          e: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          w: {
+            value: 'Entire Station',
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+          m: {
+            value: false,
+            modes: {
+              auto: true, custom: true, headway: true, off: true,
+            },
+          },
+        },
+      },
+    ],
+  },
+  Busway: {
+    batchModes: { auto: true, headway: false, off: true },
+    stations: [
+      {
+        id: 'SDUD',
+        name: 'Nubian',
+        zones: {
+          n: {
+            value: 'Platform F',
+            modes: {
+              auto: true, custom: false, headway: false, off: true,
+            },
+          },
+          s: {
+            value: 'Platform C',
+            modes: {
+              auto: true, custom: false, headway: false, off: true,
+            },
+          },
+          e: {
+            value: 'Platform D',
+            modes: {
+              auto: true, custom: false, headway: false, off: true,
+            },
+          },
+          w: {
+            value: 'Platform A',
+            modes: {
+              auto: true, custom: false, headway: false, off: true,
+            },
+          },
+          c: {
+            value: 'Platform E (East)',
+            modes: {
+              auto: true, custom: false, headway: false, off: true,
+            },
+          },
+          m: {
+            value: 'Platform E (West)',
+            modes: {
+              auto: true, custom: false, headway: false, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'GLEC',
+        name: 'Lechmere',
+        zones: {
+          n: {
+            value: 'North',
+            modes: {
+              auto: true, custom: false, headway: false, off: true,
+            },
+          },
+          s: {
+            value: 'South',
+            modes: {
+              auto: true, custom: false, headway: false, off: true,
+            },
+          },
+          e: {
+            value: false,
+            modes: {
+              auto: true, custom: false, headway: false, off: true,
+            },
+          },
+          w: {
+            value: false,
+            modes: {
+              auto: true, custom: false, headway: false, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: false, headway: false, off: true,
+            },
+          },
+          m: {
+            value: false,
+            modes: {
+              auto: true, custom: false, headway: false, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'SHAR',
+        name: 'Harvard',
+        zones: {
+          n: {
+            value: 'Upper',
+            modes: {
+              auto: true, custom: false, headway: false, off: true,
+            },
+          },
+          s: {
+            value: false,
+            modes: {
+              auto: true, custom: false, headway: false, off: true,
+            },
+          },
+          e: {
+            value: false,
+            modes: {
+              auto: true, custom: false, headway: false, off: true,
+            },
+          },
+          w: {
+            value: false,
+            modes: {
+              auto: true, custom: false, headway: false, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: false, headway: false, off: true,
+            },
+          },
+          m: {
+            value: 'Lower',
+            modes: {
+              auto: true, custom: false, headway: false, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'MMAT',
+        name: 'Mattapan',
+        zones: {
+          n: {
+            value: 'South',
+            modes: {
+              auto: true, custom: false, headway: false, off: true,
+            },
+          },
+          s: {
+            value: 'North',
+            modes: {
+              auto: true, custom: false, headway: false, off: true,
+            },
+          },
+          e: {
+            value: false,
+            modes: {
+              auto: true, custom: false, headway: false, off: true,
+            },
+          },
+          w: {
+            value: false,
+            modes: {
+              auto: true, custom: false, headway: false, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: false, headway: false, off: true,
+            },
+          },
+          m: {
+            value: false,
+            modes: {
+              auto: true, custom: false, headway: false, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'SDAV',
+        name: 'Davis',
+        zones: {
+          n: {
+            value: false,
+            modes: {
+              auto: true, custom: false, headway: false, off: true,
+            },
+          },
+          s: {
+            value: false,
+            modes: {
+              auto: true, custom: false, headway: false, off: true,
+            },
+          },
+          e: {
+            value: false,
+            modes: {
+              auto: true, custom: false, headway: false, off: true,
+            },
+          },
+          w: {
+            value: false,
+            modes: {
+              auto: true, custom: false, headway: false, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: false, headway: false, off: true,
+            },
+          },
+          m: {
+            value: 'Busway',
+            modes: {
+              auto: true, custom: false, headway: false, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'SFOR',
+        name: 'Forest Hills',
+        zones: {
+          n: {
+            value: 'Upper (Fence)',
+            modes: {
+              auto: true, custom: false, headway: false, off: true,
+            },
+          },
+          s: {
+            value: 'Upper (Island)',
+            modes: {
+              auto: true, custom: false, headway: false, off: true,
+            },
+          },
+          e: {
+            value: false,
+            modes: {
+              auto: true, custom: false, headway: false, off: true,
+            },
+          },
+          w: {
+            value: false,
+            modes: {
+              auto: true, custom: false, headway: false, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: false, headway: false, off: true,
+            },
+          },
+          m: {
+            value: false,
+            modes: {
+              auto: true, custom: false, headway: false, off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'RBRA',
+        name: 'Braintree',
+        zones: {
+          n: {
+            value: false,
+            modes: {
+              auto: true, custom: false, headway: false, off: true,
+            },
+          },
+          s: {
+            value: false,
+            modes: {
+              auto: true, custom: false, headway: false, off: true,
+            },
+          },
+          e: {
+            value: false,
+            modes: {
+              auto: true, custom: false, headway: false, off: true,
+            },
+          },
+          w: {
+            value: false,
+            modes: {
+              auto: true, custom: false, headway: false, off: true,
+            },
+          },
+          c: {
+            value: false,
+            modes: {
+              auto: true, custom: false, headway: false, off: true,
+            },
+          },
+          m: {
+            value: 'Busway',
+            modes: {
+              auto: true, custom: false, headway: false, off: true,
+            },
+          },
+        },
+      },
+    ],
+  },
 };
 
 const arincToRealtimeIdMap = {
