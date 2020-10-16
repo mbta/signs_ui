@@ -2863,13 +2863,13 @@ const stationConfig = {
           n: {
             value: false,
             modes: {
-              auto: false, custom: false, headway: false, off: true,
+              auto: true, custom: false, headway: false, off: true,
             },
           },
           s: {
             value: false,
             modes: {
-              auto: false, custom: false, headway: false, off: true,
+              auto: true, custom: false, headway: false, off: true,
             },
           },
           e: {
@@ -2887,13 +2887,13 @@ const stationConfig = {
           c: {
             value: false,
             modes: {
-              auto: false, custom: false, headway: false, off: true,
+              auto: true, custom: false, headway: false, off: true,
             },
           },
           m: {
             value: false,
             modes: {
-              auto: false, custom: false, headway: false, off: true,
+              auto: true, custom: false, headway: false, off: true,
             },
           },
         },
@@ -2905,13 +2905,13 @@ const stationConfig = {
           n: {
             value: false,
             modes: {
-              auto: false, custom: false, headway: false, off: true,
+              auto: true, custom: false, headway: false, off: true,
             },
           },
           s: {
             value: false,
             modes: {
-              auto: false, custom: false, headway: false, off: true,
+              auto: true, custom: false, headway: false, off: true,
             },
           },
           e: {
@@ -2929,13 +2929,13 @@ const stationConfig = {
           c: {
             value: false,
             modes: {
-              auto: false, custom: false, headway: false, off: true,
+              auto: true, custom: false, headway: false, off: true,
             },
           },
           m: {
             value: true,
             modes: {
-              auto: false, custom: false, headway: false, off: true,
+              auto: true, custom: false, headway: false, off: true,
             },
           },
         },
