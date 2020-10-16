@@ -5,26 +5,46 @@ import { arincToRealtimeId } from './mbta';
 import { signConfigType, signContentType } from './types';
 
 function zoneDescription(stationConfig, zone) {
-  if (stationConfig.zones[zone] !== true) {
-    return stationConfig.zones[zone];
+  if (stationConfig.zones[zone].value !== true) {
+    return stationConfig.zones[zone].value;
   }
 
   const zones = {
-    n: 'NB', s: 'SB', e: 'EB', w: 'WB', m: 'MZ', c: 'CP',
+    n: 'NB',
+    s: 'SB',
+    e: 'EB',
+    w: 'WB',
+    m: 'MZ',
+    c: 'CP',
   };
   return zones[zone];
 }
 
-function makeSign(config, zone, signs, currentTime, line, signConfigs, setConfigs, readOnly) {
-  if (config.zones[zone]) {
+function makeSign(
+  config,
+  zone,
+  signs,
+  currentTime,
+  line,
+  signConfigs,
+  setConfigs,
+  readOnly,
+) {
+  if (config.zones[zone].value) {
     const key = `${config.id}-${zone}`;
     const signContent = signs[key] || { sign_id: key, lines: {} };
     const realtimeId = arincToRealtimeId(key, line);
     const signConfig = signConfigs[realtimeId] || { mode: 'off' };
-
+    const modes = (config.zones[zone] && config.zones[zone].modes) || {
+      auto: true,
+      headway: true,
+      custom: true,
+      off: true,
+    };
     return (
       <Sign
         key={key}
+        modes={modes}
         signId={zoneDescription(config, zone)}
         line={line}
         signContent={signContent}
@@ -41,7 +61,13 @@ function makeSign(config, zone, signs, currentTime, line, signConfigs, setConfig
 }
 
 function Station({
-  config, signs, currentTime, line, signConfigs, setConfigs, readOnly,
+  config,
+  signs,
+  currentTime,
+  line,
+  signConfigs,
+  setConfigs,
+  readOnly,
 }) {
   return (
     <div key={config.id}>
@@ -56,16 +82,70 @@ function Station({
       </h3>
       <div className="row">
         <div className="col">
-          {makeSign(config, 's', signs, currentTime, line, signConfigs, setConfigs, readOnly)}
-          {makeSign(config, 'w', signs, currentTime, line, signConfigs, setConfigs, readOnly)}
+          {makeSign(
+            config,
+            's',
+            signs,
+            currentTime,
+            line,
+            signConfigs,
+            setConfigs,
+            readOnly,
+          )}
+          {makeSign(
+            config,
+            'w',
+            signs,
+            currentTime,
+            line,
+            signConfigs,
+            setConfigs,
+            readOnly,
+          )}
         </div>
         <div className="col">
-          {makeSign(config, 'c', signs, currentTime, line, signConfigs, setConfigs, readOnly)}
-          {makeSign(config, 'm', signs, currentTime, line, signConfigs, setConfigs, readOnly)}
+          {makeSign(
+            config,
+            'c',
+            signs,
+            currentTime,
+            line,
+            signConfigs,
+            setConfigs,
+            readOnly,
+          )}
+          {makeSign(
+            config,
+            'm',
+            signs,
+            currentTime,
+            line,
+            signConfigs,
+            setConfigs,
+            readOnly,
+          )}
         </div>
         <div className="col">
-          {makeSign(config, 'n', signs, currentTime, line, signConfigs, setConfigs, readOnly)}
-          {makeSign(config, 'e', signs, currentTime, line, signConfigs, setConfigs, readOnly)}
+          {makeSign(
+            config,
+            'n',
+            signs,
+            currentTime,
+            line,
+            signConfigs,
+            setConfigs,
+            readOnly,
+          )}
+          {makeSign(
+            config,
+            'e',
+            signs,
+            currentTime,
+            line,
+            signConfigs,
+            setConfigs,
+            readOnly,
+          )}
         </div>
       </div>
       <hr />
@@ -73,17 +153,27 @@ function Station({
   );
 }
 
+const zoneConfig = PropTypes.shape({
+  value: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  modes: PropTypes.shape({
+    auto: PropTypes.bool,
+    custom: PropTypes.bool,
+    headway: PropTypes.bool,
+    off: PropTypes.bool,
+  }),
+});
+
 Station.propTypes = {
   config: PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     zones: PropTypes.shape({
-      n: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-      e: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-      s: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-      w: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-      c: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-      m: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+      n: zoneConfig,
+      e: zoneConfig,
+      s: zoneConfig,
+      w: zoneConfig,
+      c: zoneConfig,
+      m: zoneConfig,
     }).isRequired,
   }).isRequired,
   signs: PropTypes.objectOf(signContentType).isRequired,

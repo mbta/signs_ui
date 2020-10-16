@@ -10,21 +10,27 @@ test('Shows all signs for a line', () => {
   const currentTime = now + 2000;
   const line = 'Red';
   const signConfigs = {};
-  const setConfigs = () => { };
+  const setConfigs = () => {};
   const setConfiguredHeadways = () => {};
   const readOnly = false;
   const configuredHeadways = {};
 
-  const wrapper = mount(React.createElement(Line, {
-    signs,
-    currentTime,
-    line,
-    signConfigs,
-    setConfigs,
-    readOnly,
-    configuredHeadways,
-    setConfiguredHeadways,
-  }, null));
+  const wrapper = mount(
+    React.createElement(
+      Line,
+      {
+        signs,
+        currentTime,
+        line,
+        signConfigs,
+        setConfigs,
+        readOnly,
+        configuredHeadways,
+        setConfiguredHeadways,
+      },
+      null,
+    ),
+  );
 
   expect(wrapper.text()).toMatch('Alewife (RALE)');
   expect(wrapper.text()).not.toMatch('Oak Grove (OOAK)');
@@ -37,26 +43,68 @@ test('Shows batch mode buttons when not read-only', () => {
   const currentTime = now + 2000;
   const line = 'Red';
   const signConfigs = {};
-  const setConfigs = () => { };
+  const setConfigs = () => {};
   const readOnly = false;
   const configuredHeadways = {};
   const setConfiguredHeadways = () => {};
 
-  const wrapper = mount(React.createElement(Line, {
-    signs,
-    currentTime,
-    line,
-    signConfigs,
-    setConfigs,
-    readOnly,
-    configuredHeadways,
-    setConfiguredHeadways,
-  }, null));
+  const wrapper = mount(
+    React.createElement(
+      Line,
+      {
+        signs,
+        currentTime,
+        line,
+        signConfigs,
+        setConfigs,
+        readOnly,
+        configuredHeadways,
+        setConfiguredHeadways,
+      },
+      null,
+    ),
+  );
 
   expect(wrapper.text()).toMatch('All to auto');
   expect(wrapper.text()).toMatch('All to headway');
   expect(wrapper.text()).toMatch('All to off');
 });
+
+test.each([['SL3'], ['Busway']])(
+  'Does not show headway batch mode button',
+  (line) => {
+    const now = Date.now();
+    const signs = {};
+
+    const currentTime = now + 2000;
+    const signConfigs = {};
+    const setConfigs = () => {};
+    const readOnly = false;
+    const configuredHeadways = {};
+    const setConfiguredHeadways = () => {};
+
+    const wrapper = mount(
+      React.createElement(
+        Line,
+        {
+          signs,
+          currentTime,
+          line,
+          signConfigs,
+          setConfigs,
+          readOnly,
+          configuredHeadways,
+          setConfiguredHeadways,
+        },
+        null,
+      ),
+    );
+
+    expect(wrapper.text()).toMatch('All to auto');
+    expect(wrapper.text()).not.toMatch('All to headway');
+    expect(wrapper.text()).toMatch('All to off');
+  },
+);
 
 test('Shows "Mixed" batch mode buttons when multiple modes are chosen', () => {
   const now = Date.now();
@@ -64,22 +112,31 @@ test('Shows "Mixed" batch mode buttons when multiple modes are chosen', () => {
 
   const currentTime = now + 2000;
   const line = 'Red';
-  const signConfigs = { red_south_station_northbound: { expires: null, mode: 'headway' }, central_southbound: { expires: null, mode: 'auto' } };
-  const setConfigs = () => { };
+  const signConfigs = {
+    red_south_station_northbound: { expires: null, mode: 'headway' },
+    central_southbound: { expires: null, mode: 'auto' },
+  };
+  const setConfigs = () => {};
   const readOnly = false;
   const configuredHeadways = {};
   const setConfiguredHeadways = () => {};
 
-  const wrapper = mount(React.createElement(Line, {
-    signs,
-    currentTime,
-    line,
-    signConfigs,
-    setConfigs,
-    readOnly,
-    configuredHeadways,
-    setConfiguredHeadways,
-  }, null));
+  const wrapper = mount(
+    React.createElement(
+      Line,
+      {
+        signs,
+        currentTime,
+        line,
+        signConfigs,
+        setConfigs,
+        readOnly,
+        configuredHeadways,
+        setConfiguredHeadways,
+      },
+      null,
+    ),
+  );
 
   expect(wrapper.text()).toMatch('All to auto');
   expect(wrapper.text()).toMatch('All to headway');
@@ -93,22 +150,31 @@ test('Does not show "Mixed" batch mode buttons when one mode is chosen', () => {
 
   const currentTime = now + 2000;
   const line = 'Red';
-  const signConfigs = { red_south_station_northbound: { expires: null, mode: 'headway' }, central_southbound: { expires: null, mode: 'headway' } };
-  const setConfigs = () => { };
+  const signConfigs = {
+    red_south_station_northbound: { expires: null, mode: 'headway' },
+    central_southbound: { expires: null, mode: 'headway' },
+  };
+  const setConfigs = () => {};
   const readOnly = false;
   const configuredHeadways = {};
   const setConfiguredHeadways = () => {};
 
-  const wrapper = mount(React.createElement(Line, {
-    signs,
-    currentTime,
-    line,
-    signConfigs,
-    setConfigs,
-    readOnly,
-    configuredHeadways,
-    setConfiguredHeadways,
-  }, null));
+  const wrapper = mount(
+    React.createElement(
+      Line,
+      {
+        signs,
+        currentTime,
+        line,
+        signConfigs,
+        setConfigs,
+        readOnly,
+        configuredHeadways,
+        setConfiguredHeadways,
+      },
+      null,
+    ),
+  );
 
   expect(wrapper.text()).toMatch('All to auto');
   expect(wrapper.text()).toMatch('All to headway');
@@ -116,28 +182,34 @@ test('Does not show "Mixed" batch mode buttons when one mode is chosen', () => {
   expect(wrapper.text()).not.toMatch('Mixed');
 });
 
-test('Doesn\'t show batch mode buttons when read-only', () => {
+test("Doesn't show batch mode buttons when read-only", () => {
   const now = Date.now();
   const signs = {};
 
   const currentTime = now + 2000;
   const line = 'Red';
   const signConfigs = {};
-  const setConfigs = () => { };
+  const setConfigs = () => {};
   const readOnly = true;
   const configuredHeadways = {};
   const setConfiguredHeadways = () => {};
 
-  const wrapper = mount(React.createElement(Line, {
-    signs,
-    currentTime,
-    line,
-    signConfigs,
-    setConfigs,
-    readOnly,
-    configuredHeadways,
-    setConfiguredHeadways,
-  }, null));
+  const wrapper = mount(
+    React.createElement(
+      Line,
+      {
+        signs,
+        currentTime,
+        line,
+        signConfigs,
+        setConfigs,
+        readOnly,
+        configuredHeadways,
+        setConfiguredHeadways,
+      },
+      null,
+    ),
+  );
 
   expect(wrapper.text()).not.toMatch('All to auto');
   expect(wrapper.text()).not.toMatch('Set all to headway');
@@ -151,21 +223,27 @@ test('Shows ConfiguredHeadwaysForm if current line has branches configured', () 
   const currentTime = now + 2000;
   const line = 'Red';
   const signConfigs = {};
-  const setConfigs = () => { };
+  const setConfigs = () => {};
   const readOnly = false;
   const configuredHeadways = {};
   const setConfiguredHeadways = () => {};
 
-  const wrapper = shallow(React.createElement(Line, {
-    signs,
-    currentTime,
-    line,
-    signConfigs,
-    setConfigs,
-    readOnly,
-    configuredHeadways,
-    setConfiguredHeadways,
-  }, null));
+  const wrapper = shallow(
+    React.createElement(
+      Line,
+      {
+        signs,
+        currentTime,
+        line,
+        signConfigs,
+        setConfigs,
+        readOnly,
+        configuredHeadways,
+        setConfiguredHeadways,
+      },
+      null,
+    ),
+  );
 
   expect(wrapper.find(ConfiguredHeadwaysForm)).toHaveLength(1);
 });
@@ -177,21 +255,27 @@ test('Doesn\t show ConfiguredHeadwaysForm if current line has no branches config
   const currentTime = now + 2000;
   const line = 'Another Line';
   const signConfigs = {};
-  const setConfigs = () => { };
+  const setConfigs = () => {};
   const readOnly = true;
   const configuredHeadways = {};
   const setConfiguredHeadways = () => {};
 
-  const wrapper = shallow(React.createElement(Line, {
-    signs,
-    currentTime,
-    line,
-    signConfigs,
-    setConfigs,
-    readOnly,
-    configuredHeadways,
-    setConfiguredHeadways,
-  }, null));
+  const wrapper = shallow(
+    React.createElement(
+      Line,
+      {
+        signs,
+        currentTime,
+        line,
+        signConfigs,
+        setConfigs,
+        readOnly,
+        configuredHeadways,
+        setConfiguredHeadways,
+      },
+      null,
+    ),
+  );
 
   expect(wrapper.find(ConfiguredHeadwaysForm)).toHaveLength(0);
 });
@@ -203,21 +287,27 @@ test('Shows ConfiguredHeadwaysForm if current line has branches configured', () 
   const currentTime = now + 2000;
   const line = 'Red';
   const signConfigs = {};
-  const setConfigs = () => { };
+  const setConfigs = () => {};
   const readOnly = true;
   const configuredHeadways = {};
   const setConfiguredHeadways = () => {};
 
-  const wrapper = shallow(React.createElement(Line, {
-    signs,
-    currentTime,
-    line,
-    signConfigs,
-    setConfigs,
-    readOnly,
-    configuredHeadways,
-    setConfiguredHeadways,
-  }, null));
+  const wrapper = shallow(
+    React.createElement(
+      Line,
+      {
+        signs,
+        currentTime,
+        line,
+        signConfigs,
+        setConfigs,
+        readOnly,
+        configuredHeadways,
+        setConfiguredHeadways,
+      },
+      null,
+    ),
+  );
 
   expect(wrapper.find(ConfiguredHeadwaysForm)).toHaveLength(1);
 });
