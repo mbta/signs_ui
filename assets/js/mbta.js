@@ -1562,7 +1562,7 @@ const stationConfig = {
             },
           },
           w: {
-            value: false,
+            value: 'Arrival Platform',
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -1574,7 +1574,7 @@ const stationConfig = {
             },
           },
           m: {
-            value: 'Arrival Platform',
+            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -4734,7 +4734,7 @@ const arincToRealtimeIdMap = {
   'RDTC-s': 'red_downtown_crossing_southbound',
   'RSOU-n': 'red_south_station_northbound',
   'RSOU-s': 'red_south_station_southbound',
-  'SSOU-m': 'south_station_silver_line_arrival_platform',
+  'SSOU-w': 'south_station_silver_line_arrival_platform',
   'RBRO-m': 'broadway_mezzanine',
   'RBRO-n': 'broadway_northbound',
   'RBRO-s': 'broadway_southbound',
