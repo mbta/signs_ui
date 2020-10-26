@@ -30,7 +30,7 @@ function makeSign(
   setConfigs,
   readOnly,
 ) {
-  if (config.zones[zone].value) {
+  if (zone && config.zones[zone].value) {
     const key = `${config.id}-${zone}`;
     const signContent = signs[key] || { sign_id: key, lines: {} };
     const realtimeId = arincToRealtimeId(key, line);
@@ -69,6 +69,12 @@ function Station({
   setConfigs,
   readOnly,
 }) {
+  const zonePositions = config.zonePositions || {
+    left: ['s', 'w'],
+    center: ['c', 'm'],
+    right: ['n', 'e'],
+  };
+
   return (
     <div key={config.id}>
       <h3>
@@ -84,7 +90,7 @@ function Station({
         <div className="col">
           {makeSign(
             config,
-            's',
+            zonePositions.left[0],
             signs,
             currentTime,
             line,
@@ -94,29 +100,7 @@ function Station({
           )}
           {makeSign(
             config,
-            'w',
-            signs,
-            currentTime,
-            line,
-            signConfigs,
-            setConfigs,
-            readOnly,
-          )}
-        </div>
-        <div className="col">
-          {makeSign(
-            config,
-            'c',
-            signs,
-            currentTime,
-            line,
-            signConfigs,
-            setConfigs,
-            readOnly,
-          )}
-          {makeSign(
-            config,
-            'm',
+            zonePositions.left[1],
             signs,
             currentTime,
             line,
@@ -128,7 +112,7 @@ function Station({
         <div className="col">
           {makeSign(
             config,
-            'n',
+            zonePositions.center[0],
             signs,
             currentTime,
             line,
@@ -138,7 +122,29 @@ function Station({
           )}
           {makeSign(
             config,
-            'e',
+            zonePositions.center[1],
+            signs,
+            currentTime,
+            line,
+            signConfigs,
+            setConfigs,
+            readOnly,
+          )}
+        </div>
+        <div className="col">
+          {makeSign(
+            config,
+            zonePositions.right[0],
+            signs,
+            currentTime,
+            line,
+            signConfigs,
+            setConfigs,
+            readOnly,
+          )}
+          {makeSign(
+            config,
+            zonePositions.right[1],
             signs,
             currentTime,
             line,
@@ -163,19 +169,28 @@ const zoneConfig = PropTypes.shape({
   }),
 });
 
-Station.propTypes = {
-  config: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    zones: PropTypes.shape({
-      n: zoneConfig,
-      e: zoneConfig,
-      s: zoneConfig,
-      w: zoneConfig,
-      c: zoneConfig,
-      m: zoneConfig,
-    }).isRequired,
+const zonePositions = PropTypes.shape({
+  left: PropTypes.arrayOf(PropTypes.oneOf(['n', 'e', 's', 'w', 'c', 'm'])),
+  center: PropTypes.arrayOf(PropTypes.oneOf(['n', 'e', 's', 'w', 'c', 'm'])),
+  right: PropTypes.arrayOf(PropTypes.oneOf(['n', 'e', 's', 'w', 'c', 'm'])),
+});
+
+const StationConfig = PropTypes.shape({
+  id: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  zonePositions,
+  zones: PropTypes.shape({
+    n: zoneConfig,
+    e: zoneConfig,
+    s: zoneConfig,
+    w: zoneConfig,
+    c: zoneConfig,
+    m: zoneConfig,
   }).isRequired,
+});
+
+Station.propTypes = {
+  config: StationConfig.isRequired,
   signs: PropTypes.objectOf(signContentType).isRequired,
   currentTime: PropTypes.number.isRequired,
   line: PropTypes.string.isRequired,

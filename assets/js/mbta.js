@@ -4297,6 +4297,11 @@ const stationConfig = {
       {
         id: 'SDUD',
         name: 'Nubian',
+        zonePositions: {
+          left: ['w', 'c'],
+          center: ['s', 'm'],
+          right: ['e', 'n'],
+        },
         zones: {
           n: {
             value: 'Platform F',
@@ -4339,6 +4344,11 @@ const stationConfig = {
       {
         id: 'GLEC',
         name: 'Lechmere',
+        zonePositions: {
+          left: ['n'],
+          center: [],
+          right: ['m'],
+        },
         zones: {
           n: {
             value: 'North',
@@ -4347,7 +4357,7 @@ const stationConfig = {
             },
           },
           s: {
-            value: 'South',
+            value: false,
             modes: {
               auto: true, custom: false, headway: false, off: true,
             },
@@ -4371,7 +4381,7 @@ const stationConfig = {
             },
           },
           m: {
-            value: false,
+            value: 'South',
             modes: {
               auto: true, custom: false, headway: false, off: true,
             },
@@ -4381,6 +4391,11 @@ const stationConfig = {
       {
         id: 'SHAR',
         name: 'Harvard',
+        zonePositions: {
+          left: ['m'],
+          center: [],
+          right: ['n'],
+        },
         zones: {
           n: {
             value: 'Upper',
@@ -4507,6 +4522,11 @@ const stationConfig = {
       {
         id: 'SFOR',
         name: 'Forest Hills',
+        zonePositions: {
+          left: ['n'],
+          center: [],
+          right: ['s'],
+        },
         zones: {
           n: {
             value: 'Upper (Fence)',
@@ -4840,7 +4860,7 @@ const arincToRealtimeIdMap = {
   'SDUD-c': 'bus.Nubian_Platform_E_east',
   'SDUD-m': 'bus.Nubian_Platform_E_west',
   'GLEC-n': 'bus.Lechmere_bus_north',
-  'GLEC-s': 'bus.Lechmere_bus_south',
+  'GLEC-m': 'bus.Lechmere_bus_south',
   'SHAR-n': 'bus.Harvard_upper',
   'SHAR-m': 'bus.Harvard_lower',
   'MMAT-n': 'bus.Mattapan_south',
