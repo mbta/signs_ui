@@ -2999,13 +2999,13 @@ const stationConfig = {
             },
           },
           e: {
-            value: true,
+            value: 'Outbound',
             modes: {
               auto: true, custom: false, headway: false, off: true,
             },
           },
           w: {
-            value: true,
+            value: 'Inbound',
             modes: {
               auto: true, custom: false, headway: false, off: true,
             },
@@ -3041,13 +3041,13 @@ const stationConfig = {
             },
           },
           e: {
-            value: true,
+            value: 'Outbound',
             modes: {
               auto: true, custom: false, headway: false, off: true,
             },
           },
           w: {
-            value: true,
+            value: 'Inbound',
             modes: {
               auto: true, custom: false, headway: false, off: true,
             },
@@ -3083,13 +3083,13 @@ const stationConfig = {
             },
           },
           e: {
-            value: true,
+            value: 'Outbound',
             modes: {
               auto: true, custom: false, headway: false, off: true,
             },
           },
           w: {
-            value: true,
+            value: 'Inbound',
             modes: {
               auto: true, custom: false, headway: false, off: true,
             },
@@ -3131,7 +3131,7 @@ const stationConfig = {
             },
           },
           w: {
-            value: true,
+            value: 'Inbound',
             modes: {
               auto: true, custom: false, headway: false, off: true,
             },
