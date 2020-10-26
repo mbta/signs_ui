@@ -4566,48 +4566,6 @@ const stationConfig = {
           },
         },
       },
-      {
-        id: 'RBRA',
-        name: 'Braintree',
-        zones: {
-          n: {
-            value: false,
-            modes: {
-              auto: true, custom: false, headway: false, off: true,
-            },
-          },
-          s: {
-            value: false,
-            modes: {
-              auto: true, custom: false, headway: false, off: true,
-            },
-          },
-          e: {
-            value: false,
-            modes: {
-              auto: true, custom: false, headway: false, off: true,
-            },
-          },
-          w: {
-            value: false,
-            modes: {
-              auto: true, custom: false, headway: false, off: true,
-            },
-          },
-          c: {
-            value: false,
-            modes: {
-              auto: true, custom: false, headway: false, off: true,
-            },
-          },
-          m: {
-            value: 'Busway',
-            modes: {
-              auto: true, custom: false, headway: false, off: true,
-            },
-          },
-        },
-      },
     ],
   },
 };
