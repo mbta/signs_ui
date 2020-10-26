@@ -4,7 +4,7 @@ const lineToColor = {
   Blue: 'rgb(0, 61, 165)',
   Orange: 'rgb(237, 139, 0)',
   Green: 'rgb(0, 132, 61)',
-  SL3: 'rgb(124, 135, 142)',
+  Silver: 'rgb(124, 135, 142)',
   Busway: 'rgb(255, 199, 44)',
 };
 

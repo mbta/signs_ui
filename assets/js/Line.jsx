@@ -25,8 +25,11 @@ function name(line) {
   if (line === 'Mattapan') {
     return 'Mattapan';
   }
-  if (line === 'SL3') {
-    return 'SL3';
+  if (line === 'Silver') {
+    return 'Silver Line';
+  }
+  if (line === 'Busway') {
+    return 'Busways';
   }
 
   return '';
