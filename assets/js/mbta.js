@@ -2853,7 +2853,7 @@ const stationConfig = {
       },
     ],
   },
-  SL3: {
+  Silver: {
     batchModes: { auto: true, headway: false, off: true },
     stations: [
       {
@@ -4832,7 +4832,7 @@ function arincToRealtimeId(stationZone, line) {
   if (stationZone === 'RSOU-m' && line === 'Red') {
     return 'red_south_station_mezzanine';
   }
-  if (stationZone === 'RSOU-m' && line === 'SL3') {
+  if (stationZone === 'RSOU-m' && line === 'Silver') {
     return 'south_station_mezzanine';
   }
 

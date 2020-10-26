@@ -70,7 +70,7 @@ test('Shows batch mode buttons when not read-only', () => {
   expect(wrapper.text()).toMatch('All to off');
 });
 
-test.each([['SL3'], ['Busway']])(
+test.each([['Silver'], ['Busway']])(
   'Does not show headway batch mode button',
   (line) => {
     const now = Date.now();
