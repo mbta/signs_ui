@@ -23,7 +23,7 @@ defmodule SignsUi.Messages.SignContent do
   page_text =
     ignore(string("-"))
     |> ignore(string("\""))
-    |> optional(ascii_string([?a..?z, ?A..?Z, ?0..?9, ?/, ?', ?\s, ?,, ?!, ?@, ?+], min: 1))
+    |> ascii_string([?a..?z, ?A..?Z, ?0..?9, ?/, ?', ?\s, ?,, ?!, ?@, ?+], min: 0)
     |> ignore(string("\""))
     |> optional(
       ignore(string("."))

@@ -62,6 +62,11 @@ defmodule SignsUi.Messages.SignContentTest do
                SignContent.new("XYZ", ~s(e1~w1-"pg1".3-"pg2".5))
     end
 
+    test "parses pages with empty text" do
+      assert {:ok, %SignContent{pages: [{"pg1", 3}, {"", 5}]}} =
+               SignContent.new("XYZ", ~s(e1~w1-"pg1".3-"".5))
+    end
+
     test "parses text with a + in it" do
       assert {:ok, %SignContent{pages: ["30+ min"]}} = SignContent.new("XYZ", ~s(e1~w1-"30+ min"))
     end
