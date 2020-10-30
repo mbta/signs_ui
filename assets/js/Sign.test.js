@@ -241,3 +241,81 @@ test.each([
     expect(wrapper.find(`option[value="${x}"]`).exists()).toEqual(expected[x]);
   });
 });
+
+test('shows the return to auto time field if sign can be set to auto', () => {
+  const now = new Date('2019-01-15T20:15:00Z').valueOf();
+  const fresh = new Date(now + 5000).toLocaleString();
+  const currentTime = now + 2000;
+  const signId = 'RDAV-n';
+  const line = 'Red';
+  const signConfig = { mode: 'custom' };
+  const signContent = signContentWithExpirations(fresh, fresh);
+  const setConfigs = () => { };
+  const realtimeId = 'id';
+  const readOnly = false;
+  const modes = {
+    auto: true,
+    custom: true,
+    headway: true,
+    off: true,
+  };
+
+  const wrapper = mount(
+    React.createElement(
+      Sign,
+      {
+        signId,
+        signContent,
+        currentTime,
+        line,
+        modes,
+        signConfig,
+        setConfigs,
+        realtimeId,
+        readOnly,
+      },
+      null,
+    ),
+  );
+
+  expect(wrapper.html()).toMatch('Schedule return to "Auto"');
+});
+
+test('does not show the return to auto time field if sign can be set to auto', () => {
+  const now = new Date('2019-01-15T20:15:00Z').valueOf();
+  const fresh = new Date(now + 5000).toLocaleString();
+  const currentTime = now + 2000;
+  const signId = 'RDAV-n';
+  const line = 'Red';
+  const signConfig = { mode: 'off' };
+  const signContent = signContentWithExpirations(fresh, fresh);
+  const setConfigs = () => { };
+  const realtimeId = 'id';
+  const readOnly = false;
+  const modes = {
+    auto: false,
+    custom: false,
+    headway: false,
+    off: true,
+  };
+
+  const wrapper = mount(
+    React.createElement(
+      Sign,
+      {
+        signId,
+        signContent,
+        currentTime,
+        line,
+        modes,
+        signConfig,
+        setConfigs,
+        realtimeId,
+        readOnly,
+      },
+      null,
+    ),
+  );
+
+  expect(wrapper.html()).not.toMatch('Schedule return to "Auto"');
+});
