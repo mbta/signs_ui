@@ -260,7 +260,7 @@ class Sign extends Component {
             </div>
           </div>
         )}
-        {signConfig.mode !== 'auto' && (
+        {signConfig.mode !== 'auto' && modes.auto && (
           <div className="viewer--schedule-expires">
             <SetExpiration
               realtimeId={realtimeId}
