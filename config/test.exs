@@ -10,7 +10,7 @@ config :signs_ui,
   signs_external_post_mod: SignsUi.Mock.Write,
   local_write_path: "test/mock_write.json",
   aws_requestor: SignsUi.Mock.AwsRequest,
-  realtime_signs_api_key: "placeholder_key"
+  messages_api_keys: "test_user_1:test_key_1,test_user_2:test_key_2"
 
 config :signs_ui, SignsUiWeb.AuthManager,
   issuer: "signs_ui",

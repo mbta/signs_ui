@@ -57,13 +57,18 @@ defmodule SignsUiWeb.MessagesControllerTest do
   end
 
   describe "create messages" do
-    test "responds with the 201 when its valid", %{conn: conn} do
-      conn =
-        conn
-        |> add_api_req_header()
-        |> post(messages_path(conn, :create), @update_attrs)
+    test "responds with 201 and logs the access", %{conn: conn} do
+      log =
+        capture_log([level: :info], fn ->
+          conn =
+            conn
+            |> add_api_req_header()
+            |> post(messages_path(conn, :create), @update_attrs)
 
-      assert response(conn, 201)
+          assert response(conn, 201)
+        end)
+
+      assert log =~ "messages_api_user=test_user_2"
     end
 
     test "responds with 201 when receiving an unknown message type", %{conn: conn} do
@@ -103,6 +108,6 @@ defmodule SignsUiWeb.MessagesControllerTest do
   end
 
   defp add_api_req_header(conn) do
-    %{conn | req_headers: [{"x-api-key", "placeholder_key"}]}
+    %{conn | req_headers: [{"x-api-key", "test_key_2"}]}
   end
 end

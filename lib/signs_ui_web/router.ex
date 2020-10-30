@@ -15,7 +15,7 @@ defmodule SignsUiWeb.Router do
 
   pipeline :api do
     plug(:accepts, ["json"])
-    plug(:api_auth)
+    plug(SignsUiWeb.Plugs.ApiAuth)
   end
 
   pipeline :redirect_prod_http do
@@ -91,20 +91,6 @@ defmodule SignsUiWeb.Router do
       assign(conn, :read_only_view, true)
     else
       conn
-    end
-  end
-
-  defp api_auth(conn, _) do
-    secret_key = Application.get_env(:signs_ui, :realtime_signs_api_key)
-
-    case get_req_header(conn, "x-api-key") do
-      [^secret_key] ->
-        conn
-
-      _ ->
-        conn
-        |> send_resp(401, "unauthorized")
-        |> halt()
     end
   end
 end

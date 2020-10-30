@@ -26,7 +26,7 @@ config :signs_ui, SignsUiWeb.AuthManager, secret_key: {System, :get_env, ["SIGNS
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
-  metadata: [:user_id]
+  metadata: [:messages_api_user, :user_id]
 
 config :ueberauth, Ueberauth,
   providers: [
