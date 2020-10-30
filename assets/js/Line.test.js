@@ -311,3 +311,106 @@ test('Shows ConfiguredHeadwaysForm if current line has branches configured', () 
 
   expect(wrapper.find(ConfiguredHeadwaysForm)).toHaveLength(1);
 });
+
+test('Sign config is not affected by batch updates if sign does not support mode', () => {
+  const now = Date.now();
+  const signs = {};
+
+  const currentTime = now + 2000;
+  const line = 'Red';
+  const signConfigs = {};
+  const setConfigs = jest.fn(() => true);
+  const setConfiguredHeadways = () => {};
+  const readOnly = false;
+  const configuredHeadways = {};
+  const stationConfigs = [{
+    id: 'RDAV',
+    name: 'Alewife',
+    zones: {
+      n: {
+        value: false,
+        modes: {
+          auto: true, custom: true, headway: false, off: false,
+        },
+      },
+      s: {
+        value: false,
+        modes: {
+          auto: false, custom: true, headway: true, off: false,
+        },
+      },
+      m: {
+        value: true,
+        modes: {
+          auto: false, custom: true, headway: false, off: true,
+        },
+      },
+      e: {
+        value: false,
+        modes: {
+          auto: false, custom: true, headway: false, off: true,
+        },
+      },
+      w: {
+        value: false,
+        modes: {
+          auto: false, custom: true, headway: false, off: false,
+        },
+      },
+      c: {
+        value: true,
+        modes: {
+          auto: false, custom: true, headway: false, off: false,
+        },
+      },
+
+    },
+  }];
+
+  const wrapper = mount(
+    React.createElement(
+      Line,
+      {
+        signs,
+        currentTime,
+        line,
+        signConfigs,
+        setConfigs,
+        readOnly,
+        configuredHeadways,
+        setConfiguredHeadways,
+        stationConfigs,
+      },
+      null,
+    ),
+  );
+
+  const offInput = wrapper.find('input#off');
+  offInput.simulate('change');
+  expect(setConfigs.mock.calls.length).toEqual(1);
+  expect(setConfigs).toHaveBeenCalledWith({
+    davis_mezzanine: {
+      expires: null,
+      mode: 'off',
+    },
+  });
+
+  const autoInput = wrapper.find('input#auto');
+  autoInput.simulate('change');
+  expect(setConfigs.mock.calls.length).toEqual(2);
+  expect(setConfigs).toHaveBeenCalledWith({
+    davis_northbound: {
+      mode: 'auto',
+    },
+  });
+
+  const headwayInput = wrapper.find('input#headway');
+  headwayInput.simulate('change');
+  expect(setConfigs.mock.calls.length).toEqual(3);
+  expect(setConfigs).toHaveBeenCalledWith({
+    davis_southbound: {
+      expires: null,
+      mode: 'headway',
+    },
+  });
+});
