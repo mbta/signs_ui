@@ -2977,7 +2977,7 @@ const stationConfig = {
           m: {
             value: true,
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: false, custom: false, headway: false, off: true,
             },
           },
         },
