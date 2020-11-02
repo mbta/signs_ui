@@ -41,10 +41,11 @@ function setAllStationsMode(setConfigFn, stations, line, mode) {
   stations.forEach((station) => {
     ['n', 's', 'e', 'w', 'm', 'c'].forEach((zone) => {
       const realtimeId = arincToRealtimeId(`${station.id}-${zone}`, line);
+      const { modes } = station.zones[zone];
       if (realtimeId) {
-        if (mode === 'auto') {
+        if (mode === 'auto' && modes.auto) {
           statuses[realtimeId] = { mode: 'auto' };
-        } else if (mode === 'off' || mode === 'headway') {
+        } else if ((mode === 'off' || mode === 'headway') && modes[mode]) {
           statuses[realtimeId] = { mode, expires: null };
         }
       }
@@ -63,8 +64,9 @@ function Line({
   readOnly,
   configuredHeadways,
   setConfiguredHeadways,
+  stationConfigs,
 }) {
-  const stations = (stationConfig[line] && stationConfig[line].stations) || [];
+  const stations = stationConfigs || (stationConfig[line] && stationConfig[line].stations) || [];
   const batchModes = (stationConfig[line] && stationConfig[line].batchModes) || {};
   const branches = branchConfig[line] || [];
   const batchMode = React.useMemo(() => {
@@ -192,6 +194,22 @@ Line.propTypes = {
   setConfigs: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
   setConfiguredHeadways: PropTypes.func.isRequired,
+  stationConfigs: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string,
+    name: PropTypes.string,
+    zones: PropTypes.objectOf(PropTypes.shape({
+      [PropTypes.string]: PropTypes.shape({
+        auto: PropTypes.bool,
+        off: PropTypes.bool,
+        custom: PropTypes.bool,
+        headway: PropTypes.bool,
+      }),
+    })),
+  })),
+};
+
+Line.defaultProps = {
+  stationConfigs: null,
 };
 
 export default Line;
