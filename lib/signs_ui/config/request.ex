@@ -8,7 +8,8 @@ defmodule SignsUi.Config.Request do
           {:ok,
            %{
              signs: %{String.t() => Sign.t()},
-             configured_headways: ConfiguredHeadways.t()
+             configured_headways: ConfiguredHeadways.t(),
+             chelsea_bridge_announcements: String.t()
            }}
           | {:error, any()}
   def get_signs({mod, fun, args} \\ {S3, :get_object, []}) do
@@ -26,7 +27,8 @@ defmodule SignsUi.Config.Request do
           {:ok,
            %{
              signs: %{String.t() => Sign.t()},
-             configured_headways: ConfiguredHeadways.t()
+             configured_headways: ConfiguredHeadways.t(),
+             chelsea_bridge_announcements: String.t()
            }}
           | {:error, any()}
   defp parse(json) do
@@ -37,6 +39,7 @@ defmodule SignsUi.Config.Request do
         # new: { "signs": { "sign_id" => { sign_config }, ...}}
         sign_configs = Map.get(response, "signs", response)
         configured_headways = Map.get(response, "configured_headways", %{})
+        chelsea_bridge_announcements = Map.get(response, "chelsea_bridge_announcements", "off")
 
         {:ok,
          %{
@@ -45,7 +48,8 @@ defmodule SignsUi.Config.Request do
                {sign_id, Sign.from_json(sign_id, config)}
              end),
            configured_headways:
-             ConfiguredHeadways.parse_configured_headways_json(configured_headways)
+             ConfiguredHeadways.parse_configured_headways_json(configured_headways),
+           chelsea_bridge_announcements: chelsea_bridge_announcements
          }}
 
       {:error, reason} ->

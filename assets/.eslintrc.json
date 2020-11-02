@@ -4,5 +4,12 @@
       "jest/globals": true
     },
     "extends": "airbnb",
-    "plugins": ["jest"]
+    "plugins": ["jest"],
+    "rules": {
+      "jsx-a11y/label-has-associated-control": [ "error", {
+        "required": {
+          "some": [ "nesting", "id"  ]
+        }
+      }]
+    }
 }

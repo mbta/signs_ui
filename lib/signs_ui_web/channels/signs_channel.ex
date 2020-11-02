@@ -50,6 +50,27 @@ defmodule SignsUiWeb.SignsChannel do
     end
   end
 
+  def handle_in("changeChelseaBridgeAnnouncements", changes, socket) do
+    case socket_access_level(socket) do
+      :admin ->
+        {:ok, _new_state} = SignsUi.Config.State.update_chelsea_bridge_announcements(changes)
+
+        username = Guardian.Phoenix.Socket.current_resource(socket)
+
+        Logger.info(
+          "chelsea_bridge_announcements_changed: user=#{username} changes=#{inspect(changes)}"
+        )
+
+        {:noreply, socket}
+
+      :read_only ->
+        {:noreply, socket}
+
+      :none ->
+        {:stop, :normal, send_auth_expired_message(socket)}
+    end
+  end
+
   intercept(["sign_update"])
 
   def handle_out("sign_update", msg, socket) do

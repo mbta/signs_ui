@@ -414,3 +414,81 @@ test('Sign config is not affected by batch updates if sign does not support mode
     },
   });
 });
+
+test('can toggle chelsea boarding announcements on and off on Silver Line page', () => {
+  const now = Date.now();
+  const signs = {};
+
+  const currentTime = now + 2000;
+  const line = 'Silver';
+  const signConfigs = {};
+  const setConfigs = jest.fn(() => true);
+  const chelseaBridgeAnnouncements = 'off';
+  const setChelseaBridgeAnnouncements = jest.fn(() => true);
+  const setConfiguredHeadways = () => {};
+  const readOnly = false;
+  const configuredHeadways = {};
+  const wrapper = mount(
+    React.createElement(
+      Line,
+      {
+        signs,
+        currentTime,
+        line,
+        signConfigs,
+        setConfigs,
+        readOnly,
+        configuredHeadways,
+        setConfiguredHeadways,
+        chelseaBridgeAnnouncements,
+        setChelseaBridgeAnnouncements,
+      },
+      null,
+    ),
+  );
+
+  const chelseaInput = wrapper.find('input#chelsea_boarding');
+  chelseaInput.simulate('change', { target: { checked: true } });
+  expect(setChelseaBridgeAnnouncements.mock.calls.length).toEqual(1);
+  expect(setChelseaBridgeAnnouncements).toHaveBeenCalledWith('auto');
+
+  chelseaInput.simulate('change', { target: { checked: false } });
+  expect(setChelseaBridgeAnnouncements.mock.calls.length).toEqual(2);
+  expect(setChelseaBridgeAnnouncements).toHaveBeenCalledWith('off');
+});
+
+test('does not show chelsea bridge announcements toggle on non-Silver Line pages', () => {
+  const now = Date.now();
+  const signs = {};
+
+  const currentTime = now + 2000;
+  const line = 'Red';
+  const signConfigs = {};
+  const setConfigs = jest.fn(() => true);
+  const chelseaBridgeAnnouncements = 'off';
+  const setChelseaBridgeAnnouncements = jest.fn(() => true);
+  const setConfiguredHeadways = () => {};
+  const readOnly = false;
+  const configuredHeadways = {};
+  const wrapper = mount(
+    React.createElement(
+      Line,
+      {
+        signs,
+        currentTime,
+        line,
+        signConfigs,
+        setConfigs,
+        readOnly,
+        configuredHeadways,
+        setConfiguredHeadways,
+        chelseaBridgeAnnouncements,
+        setChelseaBridgeAnnouncements,
+      },
+      null,
+    ),
+  );
+
+  const chelseaInput = wrapper.find('input#chelsea_boarding');
+  expect(chelseaInput.exists()).toEqual(false);
+});

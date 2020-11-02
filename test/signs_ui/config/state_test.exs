@@ -152,4 +152,30 @@ defmodule SignsUi.Config.StateTest do
       assert_broadcast("new_configured_headways_state", ^expected_broadcast)
     end
   end
+
+  describe "update_chelsea_bridge_announcements" do
+    test "updates values properly" do
+      {:ok, pid} = GenServer.start_link(SignsUi.Config.State, [], [])
+
+      @endpoint.subscribe("signs:all")
+
+      assert get_all(pid).chelsea_bridge_announcements == "off"
+
+      {:ok, new_state} = update_chelsea_bridge_announcements(pid, "auto")
+
+      assert new_state.chelsea_bridge_announcements == "auto"
+
+      assert_broadcast("new_chelsea_bridge_announcements_state", %{
+        chelsea_bridge_announcements: "auto"
+      })
+
+      {:ok, new_state} = update_chelsea_bridge_announcements(pid, "off")
+
+      assert new_state.chelsea_bridge_announcements == "off"
+
+      assert_broadcast("new_chelsea_bridge_announcements_state", %{
+        chelsea_bridge_announcements: "off"
+      })
+    end
+  end
 end

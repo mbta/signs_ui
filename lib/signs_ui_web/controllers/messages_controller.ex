@@ -27,12 +27,14 @@ defmodule SignsUiWeb.MessagesController do
          Map.new(periods, fn {period_id, config} -> {period_id, Map.from_struct(config)} end)}
       end)
 
+    chelsea_bridge_announcements = Map.get(config, :chelsea_bridge_announcements, "off")
     sign_out_path = SignsUiWeb.Router.Helpers.auth_path(conn, :logout, "cognito")
 
     render(conn, "index.html",
       signs: signs,
       sign_configs: sign_configs,
       configured_headways: configured_headways,
+      chelsea_bridge_announcements: chelsea_bridge_announcements,
       sign_out_path: sign_out_path
     )
   end
