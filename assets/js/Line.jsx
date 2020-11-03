@@ -99,11 +99,10 @@ function Line({
       )}
       {line === 'Silver' && (
         <div>
-          <label htmlFor="chelsea_boarding">
+          <label>
             Bridge Announcements
             <div className="switch">
               <input
-                id="chelsea_boarding"
                 name="chelsea_boarding"
                 type="checkbox"
                 className="switch-input"
