@@ -416,31 +416,20 @@ test('Sign config is not affected by batch updates if sign does not support mode
 });
 
 test('can toggle chelsea bridge announcements on and off on Silver Line page', () => {
-  const now = Date.now();
-  const signs = {};
-
-  const currentTime = now + 2000;
-  const line = 'Silver';
-  const signConfigs = {};
-  const setConfigs = jest.fn(() => true);
-  const chelseaBridgeAnnouncements = 'off';
   const setChelseaBridgeAnnouncements = jest.fn(() => true);
-  const setConfiguredHeadways = () => {};
-  const readOnly = false;
-  const configuredHeadways = {};
   const wrapper = mount(
     React.createElement(
       Line,
       {
-        signs,
-        currentTime,
-        line,
-        signConfigs,
-        setConfigs,
-        readOnly,
-        configuredHeadways,
-        setConfiguredHeadways,
-        chelseaBridgeAnnouncements,
+        signs: {},
+        currentTime: Date.now() + 2000,
+        line: 'Silver',
+        signConfigs: {},
+        setConfigs: jest.fn(() => true),
+        readOnly: false,
+        configuredHeadways: {},
+        setConfiguredHeadways: () => {},
+        chelseaBridgeAnnouncements: "off",
         setChelseaBridgeAnnouncements,
       },
       null,
@@ -458,31 +447,20 @@ test('can toggle chelsea bridge announcements on and off on Silver Line page', (
 });
 
 test('does not show chelsea bridge announcements toggle on non-Silver Line pages', () => {
-  const now = Date.now();
-  const signs = {};
-
-  const currentTime = now + 2000;
-  const line = 'Red';
-  const signConfigs = {};
-  const setConfigs = jest.fn(() => true);
-  const chelseaBridgeAnnouncements = 'off';
   const setChelseaBridgeAnnouncements = jest.fn(() => true);
-  const setConfiguredHeadways = () => {};
-  const readOnly = false;
-  const configuredHeadways = {};
   const wrapper = mount(
     React.createElement(
       Line,
       {
-        signs,
-        currentTime,
-        line,
-        signConfigs,
-        setConfigs,
-        readOnly,
-        configuredHeadways,
-        setConfiguredHeadways,
-        chelseaBridgeAnnouncements,
+        signs: {},
+        currentTime: Date.now() + 2000,
+        line: 'Red',
+        signConfigs: {},
+        setConfigs: jest.fn(() => true),
+        readOnly: false,
+        configuredHeadways: {},
+        setConfiguredHeadways: () => {},
+        chelseaBridgeAnnouncements: "off",
         setChelseaBridgeAnnouncements,
       },
       null,
