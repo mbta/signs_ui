@@ -12,6 +12,8 @@ function Viewer({
   readOnly,
   configuredHeadways,
   setConfiguredHeadways,
+  chelseaBridgeAnnouncements,
+  setChelseaBridgeAnnouncements,
 }) {
   return (
     <div>
@@ -23,6 +25,8 @@ function Viewer({
         signConfigs={signConfigs}
         setConfigs={setConfigs}
         setConfiguredHeadways={setConfiguredHeadways}
+        chelseaBridgeAnnouncements={chelseaBridgeAnnouncements}
+        setChelseaBridgeAnnouncements={setChelseaBridgeAnnouncements}
         readOnly={readOnly}
       />
     </div>
@@ -34,9 +38,11 @@ Viewer.propTypes = {
   currentTime: PropTypes.number.isRequired,
   line: PropTypes.string.isRequired,
   signConfigs: PropTypes.objectOf(signConfigType).isRequired,
+  chelseaBridgeAnnouncements: PropTypes.oneOf(['auto', 'off']).isRequired,
   configuredHeadways: PropTypes.objectOf(configuredHeadwayType).isRequired,
   setConfigs: PropTypes.func.isRequired,
   setConfiguredHeadways: PropTypes.func.isRequired,
+  setChelseaBridgeAnnouncements: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
 };
 

@@ -64,6 +64,8 @@ function Line({
   readOnly,
   configuredHeadways,
   setConfiguredHeadways,
+  chelseaBridgeAnnouncements,
+  setChelseaBridgeAnnouncements,
   stationConfigs,
 }) {
   const stations = stationConfigs || (stationConfig[line] && stationConfig[line].stations) || [];
@@ -94,6 +96,25 @@ function Line({
           setConfiguredHeadways={setConfiguredHeadways}
           readOnly={readOnly}
         />
+      )}
+      {line === 'Silver' && (
+        <div>
+          <label>
+            Bridge Announcements
+            <div className="switch">
+              <input
+                name="chelsea_boarding"
+                type="checkbox"
+                className="switch-input"
+                checked={chelseaBridgeAnnouncements === 'auto'}
+                onChange={(e) => {
+                  setChelseaBridgeAnnouncements(e.target.checked ? 'auto' : 'off');
+                }}
+              />
+              <span className="switch-label">Switch</span>
+            </div>
+          </label>
+        </div>
       )}
       {!readOnly && (
         <div className="viewer--toggle-all">
@@ -194,6 +215,8 @@ Line.propTypes = {
   setConfigs: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
   setConfiguredHeadways: PropTypes.func.isRequired,
+  chelseaBridgeAnnouncements: PropTypes.oneOf(['auto', 'off']).isRequired,
+  setChelseaBridgeAnnouncements: PropTypes.func.isRequired,
   stationConfigs: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string,
     name: PropTypes.string,

@@ -2,13 +2,18 @@ defmodule SignsUi.Config.S3 do
   alias SignsUi.Config
 
   @spec update(SignsUi.Config.State.t()) :: ExAws.Operation.S3.t() | {:error, any}
-  def update(%{signs: signs, configured_headways: configured_headways}) do
+  def update(%{
+        signs: signs,
+        configured_headways: configured_headways,
+        chelsea_bridge_announcements: chelsea_bridge_announcements
+      }) do
     json =
       Jason.encode(
         %{
           "signs" => Config.Signs.format_signs_for_json(signs),
           "configured_headways" =>
-            Config.ConfiguredHeadways.format_configured_headways_for_json(configured_headways)
+            Config.ConfiguredHeadways.format_configured_headways_for_json(configured_headways),
+          "chelsea_bridge_announcements" => chelsea_bridge_announcements
         },
         pretty: true
       )

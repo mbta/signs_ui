@@ -10,12 +10,14 @@ defmodule SignsUi.Config.S3Test do
           "sign1" => %Sign{id: "sign1", config: %{mode: :auto}},
           "sign2" => %Sign{id: "sign2", config: %{mode: :auto}}
         },
-        configured_headways: %{}
+        configured_headways: %{},
+        chelsea_bridge_announcements: "auto"
       }
 
       {:ok, object} = update(config)
       assert object.body =~ "sign1"
       assert object.body =~ "sign2"
+      assert object.body =~ "chelsea_bridge_announcements"
     end
   end
 end

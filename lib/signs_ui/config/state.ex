@@ -13,7 +13,8 @@ defmodule SignsUi.Config.State do
           },
           configured_headways: %{
             String.t() => %{String.t() => Config.ConfiguredHeadway.t()}
-          }
+          },
+          chelsea_bridge_announcements: String.t()
         }
 
   def start_link(opts \\ []) do
@@ -39,6 +40,14 @@ defmodule SignsUi.Config.State do
     GenServer.call(pid, {:update_configured_headways, changes})
   end
 
+  @spec update_chelsea_bridge_announcements(GenServer.server(), %{
+          String.t() => String.t()
+        }) ::
+          {:ok, t()}
+  def update_chelsea_bridge_announcements(pid \\ __MODULE__, changes) do
+    GenServer.call(pid, {:update_chelsea_bridge_announcements, changes})
+  end
+
   @spec init(any()) :: {:ok, t()} | {:stop, any()}
   def init(_) do
     case Config.Request.get_signs() do
@@ -46,6 +55,11 @@ defmodule SignsUi.Config.State do
         # re-save state, since format was updated
         save_sign_config_changes(%{}, config)
         save_configured_headways_changes(config.configured_headways, config)
+
+        save_chelsea_bridge_announcements(
+          Map.get(config, :chelsea_bridge_announcements, "off"),
+          config
+        )
 
         {:ok, config}
 
@@ -65,6 +79,11 @@ defmodule SignsUi.Config.State do
 
   def handle_call({:update_configured_headways, changes}, _from, old_state) do
     new_state = save_configured_headways_changes(changes, old_state)
+    {:reply, {:ok, new_state}, new_state}
+  end
+
+  def handle_call({:update_chelsea_bridge_announcements, changes}, _from, old_state) do
+    new_state = save_chelsea_bridge_announcements(changes, old_state)
     {:reply, {:ok, new_state}, new_state}
   end
 
@@ -101,6 +120,21 @@ defmodule SignsUi.Config.State do
       "signs:all",
       "new_configured_headways_state",
       Config.ConfiguredHeadways.format_configured_headways_for_json(new_configured_headways)
+    )
+
+    new_state
+  end
+
+  @spec save_chelsea_bridge_announcements(String.t(), t()) :: t()
+  defp save_chelsea_bridge_announcements(value, old_state) do
+    external_post_mod = Application.get_env(:signs_ui, :signs_external_post_mod)
+    new_state = Map.put(old_state, :chelsea_bridge_announcements, value)
+    {:ok, _} = external_post_mod.update(new_state)
+
+    SignsUiWeb.Endpoint.broadcast!(
+      "signs:all",
+      "new_chelsea_bridge_announcements_state",
+      %{chelsea_bridge_announcements: value}
     )
 
     new_state

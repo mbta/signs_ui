@@ -13,12 +13,18 @@ if (realtimeRoot) {
   const {
     initialSignsData: initialSigns,
     initialSignConfigs,
+    initialChelseaBridgeAnnouncements,
     readOnly,
     initialConfiguredHeadways,
     signOutPath,
   } = window;
   const viewerApp = React.createElement(ViewerApp, {
-    initialSigns, initialSignConfigs, readOnly, initialConfiguredHeadways, signOutPath,
+    initialSigns,
+    initialSignConfigs,
+    readOnly,
+    initialConfiguredHeadways,
+    signOutPath,
+    initialChelseaBridgeAnnouncements,
   }, null);
   ReactDOM.render(viewerApp, realtimeRoot);
 }
