@@ -44,7 +44,8 @@ defmodule SignsUi.Mock.AwsRequest do
             "range_high" => 10
           }
         }
-      }
+      },
+      "chelsea_bridge_announcements" => "auto"
     }
 
     {:ok, %{body: Jason.encode!(config)}}

@@ -159,15 +159,7 @@ defmodule SignsUi.Config.StateTest do
 
       @endpoint.subscribe("signs:all")
 
-      assert get_all(pid).chelsea_bridge_announcements == "off"
-
-      {:ok, new_state} = update_chelsea_bridge_announcements(pid, "auto")
-
-      assert new_state.chelsea_bridge_announcements == "auto"
-
-      assert_broadcast("new_chelsea_bridge_announcements_state", %{
-        chelsea_bridge_announcements: "auto"
-      })
+      assert get_all(pid).chelsea_bridge_announcements == "auto"
 
       {:ok, new_state} = update_chelsea_bridge_announcements(pid, "off")
 
@@ -175,6 +167,14 @@ defmodule SignsUi.Config.StateTest do
 
       assert_broadcast("new_chelsea_bridge_announcements_state", %{
         chelsea_bridge_announcements: "off"
+      })
+
+      {:ok, new_state} = update_chelsea_bridge_announcements(pid, "auto")
+
+      assert new_state.chelsea_bridge_announcements == "auto"
+
+      assert_broadcast("new_chelsea_bridge_announcements_state", %{
+        chelsea_bridge_announcements: "auto"
       })
     end
   end
