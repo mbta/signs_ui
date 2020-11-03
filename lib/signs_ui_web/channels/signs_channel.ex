@@ -72,7 +72,7 @@ defmodule SignsUiWeb.SignsChannel do
     socket
   end
 
-  @spec with_admin_access(Phoenix.Socket.t(), fun()) :: {:noreply, Phoenix.Socket.t()}
+  @spec with_admin_access(Phoenix.Socket.t(), fun()) :: {:noreply, Phoenix.Socket.t()} | {:stop, :normal, Phoenix.Socket.t()}
   defp with_admin_access(socket, callback) do
     case socket_access_level(socket) do
       :admin ->
