@@ -9,66 +9,39 @@ defmodule SignsUiWeb.SignsChannel do
 
   @spec handle_in(String.t(), %{Sign.id() => map()}, any()) :: {:noreply, Phoenix.Socket.t()}
   def handle_in("changeSigns", changes, socket) do
-    case socket_access_level(socket) do
-      :admin ->
-        new_signs = Map.new(changes, fn {id, config} -> {id, Sign.from_config(id, config)} end)
+    with_admin_access(socket, fn ->
+      new_signs = Map.new(changes, fn {id, config} -> {id, Sign.from_config(id, config)} end)
 
-        {:ok, _new_state} = SignsUi.Config.State.update_sign_configs(new_signs)
+      {:ok, _new_state} = SignsUi.Config.State.update_sign_configs(new_signs)
 
-        username = Guardian.Phoenix.Socket.current_resource(socket)
+      username = Guardian.Phoenix.Socket.current_resource(socket)
 
-        Logger.info("sign_changed: user=#{username} changes=#{inspect(changes)}")
-
-        {:noreply, socket}
-
-      :read_only ->
-        {:noreply, socket}
-
-      :none ->
-        {:stop, :normal, send_auth_expired_message(socket)}
-    end
+      Logger.info("sign_changed: user=#{username} changes=#{inspect(changes)}")
+    end)
   end
 
   def handle_in("changeHeadways", changes, socket) do
-    case socket_access_level(socket) do
-      :admin ->
-        new_signs = ConfiguredHeadways.parse_configured_headways_json(changes)
+    with_admin_access(socket, fn ->
+      new_signs = ConfiguredHeadways.parse_configured_headways_json(changes)
 
-        {:ok, _new_state} = SignsUi.Config.State.update_configured_headways(new_signs)
+      {:ok, _new_state} = SignsUi.Config.State.update_configured_headways(new_signs)
 
-        username = Guardian.Phoenix.Socket.current_resource(socket)
+      username = Guardian.Phoenix.Socket.current_resource(socket)
 
-        Logger.info("headway_changed: user=#{username} changes=#{inspect(changes)}")
-
-        {:noreply, socket}
-
-      :read_only ->
-        {:noreply, socket}
-
-      :none ->
-        {:stop, :normal, send_auth_expired_message(socket)}
-    end
+      Logger.info("headway_changed: user=#{username} changes=#{inspect(changes)}")
+    end)
   end
 
   def handle_in("changeChelseaBridgeAnnouncements", changes, socket) do
-    case socket_access_level(socket) do
-      :admin ->
-        {:ok, _new_state} = SignsUi.Config.State.update_chelsea_bridge_announcements(changes)
+    with_admin_access(socket, fn ->
+      {:ok, _new_state} = SignsUi.Config.State.update_chelsea_bridge_announcements(changes)
 
-        username = Guardian.Phoenix.Socket.current_resource(socket)
+      username = Guardian.Phoenix.Socket.current_resource(socket)
 
-        Logger.info(
-          "chelsea_bridge_announcements_changed: user=#{username} changes=#{inspect(changes)}"
-        )
-
-        {:noreply, socket}
-
-      :read_only ->
-        {:noreply, socket}
-
-      :none ->
-        {:stop, :normal, send_auth_expired_message(socket)}
-    end
+      Logger.info(
+        "chelsea_bridge_announcements_changed: user=#{username} changes=#{inspect(changes)}"
+      )
+    end)
   end
 
   intercept(["sign_update"])
@@ -97,5 +70,21 @@ defmodule SignsUiWeb.SignsChannel do
   defp send_auth_expired_message(socket) do
     :ok = push(socket, "auth_expired", %{})
     socket
+  end
+
+  @spec with_admin_access(Phoenix.Socket.t(), fun()) :: {:noreply, Phoenix.Socket.t()}
+  defp with_admin_access(socket, callback) do
+    case socket_access_level(socket) do
+      :admin ->
+        callback.()
+
+        {:noreply, socket}
+
+      :read_only ->
+        {:noreply, socket}
+
+      :none ->
+        {:stop, :normal, send_auth_expired_message(socket)}
+    end
   end
 end
