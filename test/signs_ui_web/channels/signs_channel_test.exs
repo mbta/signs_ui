@@ -128,7 +128,7 @@ defmodule SignsUiWeb.SignsChannelTest do
     end
   end
 
-  test "allows changing chelsea boarding announcements when socket is authenticated", %{
+  test "allows changing chelsea bridge announcements when socket is authenticated", %{
     socket: socket
   } do
     current_time = System.system_time(:second)
@@ -155,7 +155,7 @@ defmodule SignsUiWeb.SignsChannelTest do
     assert log =~ "foo@mbta.com"
   end
 
-  test "rejects changing chelsea boarding announcements when socket is authenticated with read-only view",
+  test "rejects changing chelsea bridge announcements when socket is authenticated with read-only view",
        %{
          socket: socket
        } do
@@ -183,7 +183,7 @@ defmodule SignsUiWeb.SignsChannelTest do
     refute log =~ "foo@mbta.com"
   end
 
-  test "rejects changing chelsea boarding announcements when socket is not authenticated", %{
+  test "rejects changing chelsea bridge announcements when socket is not authenticated", %{
     socket: socket
   } do
     current_time = System.system_time(:second)

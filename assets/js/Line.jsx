@@ -100,7 +100,7 @@ function Line({
       {line === 'Silver' && (
         <div>
           <label htmlFor="chelsea_boarding">
-            Boarding Announcements
+            Bridge Announcements
             <div className="switch">
               <input
                 id="chelsea_boarding"

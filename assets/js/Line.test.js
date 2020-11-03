@@ -415,7 +415,7 @@ test('Sign config is not affected by batch updates if sign does not support mode
   });
 });
 
-test('can toggle chelsea boarding announcements on and off on Silver Line page', () => {
+test('can toggle chelsea bridge announcements on and off on Silver Line page', () => {
   const now = Date.now();
   const signs = {};
 

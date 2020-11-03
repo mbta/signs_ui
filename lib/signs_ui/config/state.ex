@@ -57,7 +57,7 @@ defmodule SignsUi.Config.State do
         save_configured_headways_changes(config.configured_headways, config)
 
         save_chelsea_bridge_announcements(
-          Map.get(config, :chelsea_boarding_announcements, "off"),
+          Map.get(config, :chelsea_bridge_announcements, "off"),
           config
         )
 
