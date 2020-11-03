@@ -100,7 +100,7 @@ defmodule SignsUi.Config.State do
     SignsUiWeb.Endpoint.broadcast!(
       "signs:all",
       "new_configured_headways_state",
-      new_configured_headways
+      Config.ConfiguredHeadways.format_configured_headways_for_json(new_configured_headways)
     )
 
     new_state

@@ -4,6 +4,7 @@ defmodule SignsUi.Config.StateTest do
   alias SignsUi.Config
   alias SignsUi.Config.Sign
   alias SignsUi.Config.ConfiguredHeadway
+  alias SignsUi.Config.ConfiguredHeadways
 
   setup do
     {:ok, claims} =
@@ -93,17 +94,18 @@ defmodule SignsUi.Config.StateTest do
 
       {:ok, new_state} =
         update_configured_headways(pid, %{
-          "red_trunk" => %ConfiguredHeadway{range_low: 13, range_high: 15}
+          "red_trunk" => %{"peak" => %ConfiguredHeadway{range_low: 13, range_high: 15}}
         })
 
       assert new_state.configured_headways == %{
-               "red_trunk" => %ConfiguredHeadway{range_low: 13, range_high: 15}
+               "red_trunk" => %{"peak" => %ConfiguredHeadway{range_low: 13, range_high: 15}}
              }
 
       expected_broadcast =
         pid
         |> get_all()
         |> Map.get(:configured_headways)
+        |> ConfiguredHeadways.format_configured_headways_for_json()
 
       assert_broadcast("new_configured_headways_state", ^expected_broadcast)
     end
@@ -115,19 +117,20 @@ defmodule SignsUi.Config.StateTest do
 
       {:ok, new_state} =
         update_configured_headways(pid, %{
-          "red_trunk" => %ConfiguredHeadway{range_low: 13, range_high: 15},
-          "red_ashmont" => %ConfiguredHeadway{range_low: 27, range_high: 30}
+          "red_trunk" => %{"peak" => %ConfiguredHeadway{range_low: 13, range_high: 15}},
+          "red_ashmont" => %{"peak" => %ConfiguredHeadway{range_low: 27, range_high: 30}}
         })
 
       assert new_state.configured_headways == %{
-               "red_trunk" => %ConfiguredHeadway{range_low: 13, range_high: 15},
-               "red_ashmont" => %ConfiguredHeadway{range_low: 27, range_high: 30}
+               "red_trunk" => %{"peak" => %ConfiguredHeadway{range_low: 13, range_high: 15}},
+               "red_ashmont" => %{"peak" => %ConfiguredHeadway{range_low: 27, range_high: 30}}
              }
 
       expected_broadcast =
         pid
         |> get_all()
         |> Map.get(:configured_headways)
+        |> ConfiguredHeadways.format_configured_headways_for_json()
 
       assert_broadcast("new_configured_headways_state", ^expected_broadcast)
     end
