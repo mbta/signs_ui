@@ -436,7 +436,7 @@ test('can toggle chelsea bridge announcements on and off on Silver Line page', (
     ),
   );
 
-  const chelseaInput = wrapper.find('input[name="chelsea_boarding"]');
+  const chelseaInput = wrapper.find('input[name="chelsea_bridge"]');
   chelseaInput.simulate('change', { target: { checked: true } });
   expect(setChelseaBridgeAnnouncements.mock.calls.length).toEqual(1);
   expect(setChelseaBridgeAnnouncements).toHaveBeenCalledWith('auto');
@@ -467,6 +467,6 @@ test('does not show chelsea bridge announcements toggle on non-Silver Line pages
     ),
   );
 
-  const chelseaInput = wrapper.find('input[name="chelsea_boarding"]');
+  const chelseaInput = wrapper.find('input[name="chelsea_bridge"]');
   expect(chelseaInput.exists()).toEqual(false);
 });
