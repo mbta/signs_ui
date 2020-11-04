@@ -1,8 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
 import Sign from './Sign';
 import { arincToRealtimeId } from './mbta';
-import { signConfigType, signContentType } from './types';
+import { SignConfigs, SignContent, StationConfig } from './types';
 
 function zoneDescription(stationConfig, zone) {
   if (stationConfig.zones[zone].value !== true) {
@@ -68,7 +67,7 @@ function Station({
   signConfigs,
   setConfigs,
   readOnly,
-}) {
+}: StationProps): JSX.Element {
   const zonePositions = config.zonePositions || {
     left: ['s', 'w'],
     center: ['c', 'm'],
@@ -159,44 +158,14 @@ function Station({
   );
 }
 
-const zoneConfig = PropTypes.shape({
-  value: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-  modes: PropTypes.shape({
-    auto: PropTypes.bool,
-    custom: PropTypes.bool,
-    headway: PropTypes.bool,
-    off: PropTypes.bool,
-  }),
-});
-
-const zonePositions = PropTypes.shape({
-  left: PropTypes.arrayOf(PropTypes.oneOf(['n', 'e', 's', 'w', 'c', 'm'])),
-  center: PropTypes.arrayOf(PropTypes.oneOf(['n', 'e', 's', 'w', 'c', 'm'])),
-  right: PropTypes.arrayOf(PropTypes.oneOf(['n', 'e', 's', 'w', 'c', 'm'])),
-});
-
-const StationConfig = PropTypes.shape({
-  id: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  zonePositions,
-  zones: PropTypes.shape({
-    n: zoneConfig,
-    e: zoneConfig,
-    s: zoneConfig,
-    w: zoneConfig,
-    c: zoneConfig,
-    m: zoneConfig,
-  }).isRequired,
-});
-
-Station.propTypes = {
-  config: StationConfig.isRequired,
-  signs: PropTypes.objectOf(signContentType).isRequired,
-  currentTime: PropTypes.number.isRequired,
-  line: PropTypes.string.isRequired,
-  signConfigs: PropTypes.objectOf(signConfigType).isRequired,
-  setConfigs: PropTypes.func.isRequired,
-  readOnly: PropTypes.bool.isRequired,
-};
+interface StationProps {
+  config: StationConfig;
+  signs: SignContent;
+  currentTime: number;
+  line: string;
+  signConfigs: SignConfigs;
+  setConfigs: (x: SignConfigs) => void;
+  readOnly: boolean;
+}
 
 export default Station;

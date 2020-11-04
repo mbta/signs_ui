@@ -1,15 +1,15 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
 import ConfiguredHeadwaysForm from './ConfiguredHeadwaysForm';
 import Station from './Station';
 import { stationConfig, arincToRealtimeId, branchConfig } from './mbta';
 import {
-  signConfigType,
-  signContentType,
-  configuredHeadwayType,
+  SignContent,
+  ConfiguredHeadways,
+  SignConfigs,
+  StationConfig,
 } from './types';
 
-function name(line) {
+function name(line: string) {
   if (line === 'Red') {
     return 'Red Line';
   }
@@ -64,11 +64,11 @@ function Line({
   readOnly,
   configuredHeadways,
   setConfiguredHeadways,
-  chelseaBridgeAnnouncements,
-  setChelseaBridgeAnnouncements,
   stationConfigs,
-}) {
-  const stations = stationConfigs || (stationConfig[line] && stationConfig[line].stations) || [];
+}: LineProps): JSX.Element {
+  const stations = stationConfigs
+    || (stationConfig[line] && stationConfig[line].stations)
+    || [];
   const batchModes = (stationConfig[line] && stationConfig[line].batchModes) || {};
   const branches = branchConfig[line] || [];
   const batchMode = React.useMemo(() => {
@@ -96,23 +96,6 @@ function Line({
           setConfiguredHeadways={setConfiguredHeadways}
           readOnly={readOnly}
         />
-      )}
-      {line === 'Silver' && (
-      <label className="mt-1 mb-4">
-        Chelsea Drawbridge Announcements
-        <div className="switch">
-          <input
-            name="chelsea_bridge"
-            type="checkbox"
-            className="switch-input"
-            checked={chelseaBridgeAnnouncements === 'auto'}
-            onChange={(e) => {
-              setChelseaBridgeAnnouncements(e.target.checked ? 'auto' : 'off');
-            }}
-          />
-          <span className="switch-label">Switch</span>
-        </div>
-      </label>
       )}
       {!readOnly && (
         <div className="viewer--toggle-all">
@@ -204,33 +187,20 @@ function Line({
   );
 }
 
-Line.propTypes = {
-  signs: PropTypes.objectOf(signContentType).isRequired,
-  currentTime: PropTypes.number.isRequired,
-  line: PropTypes.string.isRequired,
-  signConfigs: PropTypes.objectOf(signConfigType).isRequired,
-  configuredHeadways: PropTypes.objectOf(configuredHeadwayType).isRequired,
-  setConfigs: PropTypes.func.isRequired,
-  readOnly: PropTypes.bool.isRequired,
-  setConfiguredHeadways: PropTypes.func.isRequired,
-  chelseaBridgeAnnouncements: PropTypes.oneOf(['auto', 'off']).isRequired,
-  setChelseaBridgeAnnouncements: PropTypes.func.isRequired,
-  stationConfigs: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string,
-    name: PropTypes.string,
-    zones: PropTypes.objectOf(PropTypes.shape({
-      [PropTypes.string]: PropTypes.shape({
-        auto: PropTypes.bool,
-        off: PropTypes.bool,
-        custom: PropTypes.bool,
-        headway: PropTypes.bool,
-      }),
-    })),
-  })),
+Line.defaultProps = {
+  stationConfigs: undefined,
 };
 
-Line.defaultProps = {
-  stationConfigs: null,
-};
+interface LineProps {
+  signs: SignContent;
+  currentTime: number;
+  line: string;
+  signConfigs: SignConfigs;
+  configuredHeadways: ConfiguredHeadways;
+  setConfigs: (x: SignConfigs) => void;
+  readOnly: boolean;
+  setConfiguredHeadways: (x: ConfiguredHeadways) => void;
+  stationConfigs?: StationConfig[];
+}
 
 export default Line;

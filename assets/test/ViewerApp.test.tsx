@@ -1,8 +1,9 @@
-import React from 'react';
+import * as React from 'react';
 import { mount } from 'enzyme';
-import ViewerApp from './ViewerApp';
+import ViewerApp from '../js/ViewerApp';
+import { SignConfigs, SignContent } from '../js/types';
 
-function someSignContent(now) {
+function someSignContent(now: number): SignContent {
   const fresh = new Date(now + 5000).toLocaleString();
   return {
     'RDAV-s': {
@@ -37,23 +38,24 @@ function someSignContent(now) {
 test('Shows all signs for a line', () => {
   const now = Date.now();
   const signs = someSignContent(now);
-  const currentTime = now + 2000;
-  const line = 'Red';
   const initialSignConfigs = {};
   const readOnly = false;
   const configuredHeadways = {};
   const signOutPath = '/path';
 
   const wrapper = mount(
-    React.createElement(ViewerApp, {
-      initialSigns: signs,
-      initialConfiguredHeadways: configuredHeadways,
-      currentTime,
-      line,
-      initialSignConfigs,
-      readOnly,
-      signOutPath,
-    }, null),
+    React.createElement(
+      ViewerApp,
+      {
+        initialSigns: signs,
+        initialConfiguredHeadways: configuredHeadways,
+        initialChelseaBridgeAnnouncements: false,
+        initialSignConfigs,
+        readOnly,
+        signOutPath,
+      },
+      null,
+    ),
   );
 
   wrapper.find('#red-button').simulate('click');
@@ -67,52 +69,60 @@ test('Shows all signs for a line', () => {
 
 test('Can enable/disable a sign', () => {
   const now = Date.now();
-  const signs = someSignContent();
-  const currentTime = now + 2000;
-  const line = 'Red';
-  const initialSignConfigs = { davis_southbound: { mode: 'auto' } };
+  const signs = someSignContent(now);
+  const initialSignConfigs: SignConfigs = {
+    davis_southbound: { mode: 'auto' },
+  };
   const readOnly = false;
   const configuredHeadways = {};
   const signOutPath = '/path';
 
   const wrapper = mount(
-    React.createElement(ViewerApp, {
-      initialSigns: signs,
-      initialConfiguredHeadways: configuredHeadways,
-      currentTime,
-      line,
-      initialSignConfigs,
-      readOnly,
-      signOutPath,
-    }, null),
+    React.createElement(
+      ViewerApp,
+      {
+        initialSigns: signs,
+        initialConfiguredHeadways: configuredHeadways,
+        initialChelseaBridgeAnnouncements: false,
+        initialSignConfigs,
+        readOnly,
+        signOutPath,
+      },
+      null,
+    ),
   );
 
   wrapper.find('#red-button').simulate('click');
   expect(wrapper.find('#davis_southbound').props().value).toBe('auto');
-  wrapper.find('#davis_southbound').simulate('change', { target: { value: 'off' } });
+  wrapper
+    .find('#davis_southbound')
+    .simulate('change', { target: { value: 'off' } });
   expect(wrapper.find('#davis_southbound').props().value).toBe('off');
 });
 
 test('Shows sign out link', () => {
   const now = Date.now();
-  const signs = someSignContent();
-  const currentTime = now + 2000;
-  const line = 'Red';
-  const initialSignConfigs = { davis_southbound: { mode: 'auto' } };
+  const signs = someSignContent(now);
+  const initialSignConfigs: SignConfigs = {
+    davis_southbound: { mode: 'auto' },
+  };
   const readOnly = false;
   const configuredHeadways = {};
   const signOutPath = '/path';
 
   const wrapper = mount(
-    React.createElement(ViewerApp, {
-      initialSigns: signs,
-      initialConfiguredHeadways: configuredHeadways,
-      currentTime,
-      line,
-      initialSignConfigs,
-      readOnly,
-      signOutPath,
-    }, null),
+    React.createElement(
+      ViewerApp,
+      {
+        initialSigns: signs,
+        initialConfiguredHeadways: configuredHeadways,
+        initialChelseaBridgeAnnouncements: false,
+        initialSignConfigs,
+        readOnly,
+        signOutPath,
+      },
+      null,
+    ),
   );
 
   expect(wrapper.find('#sign-out-link').props().href).toBe('/path');

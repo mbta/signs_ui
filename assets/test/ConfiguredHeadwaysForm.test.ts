@@ -1,7 +1,10 @@
-import React from 'react';
+import * as React from 'react';
 import { mount } from 'enzyme';
 import { render, waitFor, fireEvent } from '@testing-library/react';
-import ConfiguredHeadwaysForm from './ConfiguredHeadwaysForm';
+import ConfiguredHeadwaysForm from '../js/ConfiguredHeadwaysForm';
+
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+/* eslint-disable camelcase */
 
 let branches;
 let timePeriods;
@@ -13,7 +16,7 @@ window.confirm = jest.fn(() => true);
 beforeEach(() => {
   branches = [{ id: 'branch_1', name: 'Branch 1' }, { id: 'branch_2', name: 'Branch' }];
   timePeriods = [{ id: 'morning', name: 'Morning' }, { id: 'evening', name: 'Evening' }];
-  setConfiguredHeadways = jest.fn(() => {});
+  setConfiguredHeadways = jest.fn(() => true);
   readOnly = false;
   configuredHeadways = {};
 });
@@ -36,52 +39,52 @@ describe('With Multi-sign Headway not enabled', () => {
       timePeriods,
     }));
 
-    fireEvent.change(container.querySelector('input[name="branches.[0].morning.range_low"]'), {
+    fireEvent.change(container.querySelector('input[name="branches.[0].morning.range_low"]')!, {
       target: {
         value: '2',
       },
     });
-    fireEvent.change(container.querySelector('input[name="branches.[0].morning.range_high"]'), {
+    fireEvent.change(container.querySelector('input[name="branches.[0].morning.range_high"]')!, {
       target: {
         value: '5',
       },
     });
-    fireEvent.change(container.querySelector('input[name="branches.[0].evening.range_low"]'), {
+    fireEvent.change(container.querySelector('input[name="branches.[0].evening.range_low"]')!, {
       target: {
         value: '2',
       },
     });
-    fireEvent.change(container.querySelector('input[name="branches.[0].evening.range_high"]'), {
+    fireEvent.change(container.querySelector('input[name="branches.[0].evening.range_high"]')!, {
       target: {
         value: '5',
       },
     });
-    fireEvent.change(container.querySelector('input[name="branches.[1].morning.range_low"]'), {
+    fireEvent.change(container.querySelector('input[name="branches.[1].morning.range_low"]')!, {
       target: {
         value: '5',
       },
     });
-    fireEvent.change(container.querySelector('input[name="branches.[1].morning.range_high"]'), {
+    fireEvent.change(container.querySelector('input[name="branches.[1].morning.range_high"]')!, {
       target: {
         value: '10',
       },
     });
-    fireEvent.change(container.querySelector('input[name="branches.[1].evening.range_low"]'), {
+    fireEvent.change(container.querySelector('input[name="branches.[1].evening.range_low"]')!, {
       target: {
         value: '5',
       },
     });
-    fireEvent.change(container.querySelector('input[name="branches.[1].evening.range_high"]'), {
+    fireEvent.change(container.querySelector('input[name="branches.[1].evening.range_high"]')!, {
       target: {
         value: '10',
       },
     });
 
     await waitFor(() => {
-      expect(container.querySelector('button#apply').disabled).toEqual(false);
+      expect((container.querySelector('button#apply') as HTMLButtonElement).disabled).toEqual(false);
     });
 
-    fireEvent.click(container.querySelector('button#apply'));
+    fireEvent.click(container.querySelector('button#apply')!);
 
     await waitFor(() => {
       expect(setConfiguredHeadways).toHaveBeenCalledWith({
@@ -154,22 +157,22 @@ describe('With Multi-sign Headway enabled', () => {
       timePeriods,
     }));
 
-    fireEvent.click(container.querySelector('button#edit'));
+    fireEvent.click(container.querySelector('button#edit')!);
     await waitFor(() => {
       expect(container.querySelector('input[disabled]')).toEqual(null);
     });
 
-    fireEvent.change(container.querySelector('input[name="branches.[0].morning.range_high"]'), {
+    fireEvent.change(container.querySelector('input[name="branches.[0].morning.range_high"]')!, {
       target: {
         value: '8',
       },
     });
 
     await waitFor(() => {
-      expect(container.querySelector('button#apply').disabled).toEqual(false);
+      expect((container.querySelector('button#apply') as HTMLButtonElement).disabled).toEqual(false);
     });
 
-    fireEvent.click(container.querySelector('button#apply'));
+    fireEvent.click(container.querySelector('button#apply')!);
 
     await waitFor(() => {
       expect(container.querySelector('button#edit')).toBeDefined();
@@ -196,25 +199,25 @@ describe('With Multi-sign Headway enabled', () => {
       timePeriods,
     }));
 
-    fireEvent.click(container.querySelector('button#edit'));
+    fireEvent.click(container.querySelector('button#edit')!);
     await waitFor(() => {
       expect(container.querySelector('input[disabled]')).toEqual(null);
     });
 
-    fireEvent.change(container.querySelector('input[name="branches.[0].morning.range_high"]'), {
+    fireEvent.change(container.querySelector('input[name="branches.[0].morning.range_high"]')!, {
       target: {
         value: '8',
       },
     });
     await waitFor(() => {
-      expect(container.querySelector('button#apply').disabled).toEqual(false);
+      expect((container.querySelector('button#apply') as HTMLButtonElement).disabled).toEqual(false);
     });
 
-    fireEvent.click(container.querySelector('button#cancel'));
+    fireEvent.click(container.querySelector('button#cancel')!);
     await waitFor(() => {
-      expect(container.querySelector('input[name="branches.[0].morning.range_high"]').value).toEqual('3');
+      expect((container.querySelector('input[name="branches.[0].morning.range_high"]') as HTMLInputElement).value).toEqual('3');
       expect(container.querySelector('button#edit')).toBeDefined();
-      expect(container.querySelector('button#apply').disabled).toEqual(true);
+      expect((container.querySelector('button#apply') as HTMLButtonElement).disabled).toEqual(true);
     });
   });
 
@@ -227,18 +230,18 @@ describe('With Multi-sign Headway enabled', () => {
       timePeriods,
     }));
 
-    fireEvent.click(container.querySelector('button#edit'));
+    fireEvent.click(container.querySelector('button#edit')!);
     await waitFor(() => {
       expect(container.querySelector('input[disabled]')).toEqual(null);
     });
 
-    fireEvent.change(container.querySelector('input[name="branches.[0].morning.range_high"]'), {
+    fireEvent.change(container.querySelector('input[name="branches.[0].morning.range_high"]')!, {
       target: {
         value: '8',
       },
     });
 
-    fireEvent.change(container.querySelector('input[name="branches.[0].morning.range_low"]'), {
+    fireEvent.change(container.querySelector('input[name="branches.[0].morning.range_low"]')!, {
       target: {
         value: '10',
       },
@@ -248,7 +251,7 @@ describe('With Multi-sign Headway enabled', () => {
       expect(container.querySelector('.alert-danger')).toEqual(null);
     });
 
-    fireEvent.blur(container.querySelector('input[name="branches.[0].morning.range_low"]'));
+    fireEvent.blur(container.querySelector('input[name="branches.[0].morning.range_low"]')!);
 
     await waitFor(() => {
       expect(container.querySelector('.alert-danger')).not.toEqual(null);

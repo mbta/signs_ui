@@ -1,9 +1,10 @@
-import React from 'react';
+import * as React from 'react';
 import { mount } from 'enzyme';
 
-import Sign from './Sign';
+import Sign from '../js/Sign';
+import { SignConfig, SingleSignContent } from '../js/types';
 
-function signContentWithExpirations(time1, time2) {
+function signContentWithExpirations(time1: string, time2: string): SingleSignContent {
   return {
     sign_id: 'RDAV-n',
     lines: {
@@ -36,9 +37,9 @@ test('does not show messages that have expired', () => {
   const currentTime = now + 2000;
   const signId = 'RDAV-n';
   const line = 'Red';
-  const signConfig = { mode: 'auto' };
+  const signConfig: SignConfig = { mode: 'auto' };
   const signContent = signContentWithExpirations(fresh, expired);
-  const setConfigs = () => {};
+  const setConfigs = () => true;
   const realtimeId = 'id';
   const readOnly = false;
   const modes = {
@@ -78,16 +79,23 @@ test('does not show select in read-only mode', () => {
   const currentTime = now + 2000;
   const signId = 'RDAV-n';
   const line = 'Red';
-  const signConfig = { mode: 'auto' };
-  const signContent = signContentWithExpirations(fresh, fresh);
-  const setConfigs = () => {};
+  const signConfig: SignConfig = { mode: 'auto' };
+  const signContent: SingleSignContent = signContentWithExpirations(fresh, fresh);
+  const setConfigs = () => true;
   const realtimeId = 'id';
   const readOnly = true;
+  const modes = {
+    auto: true,
+    custom: true,
+    headway: true,
+    off: true,
+  };
 
   const wrapper = mount(
     React.createElement(
       Sign,
       {
+        modes,
         signId,
         signContent,
         currentTime,
@@ -110,16 +118,20 @@ test('shows the mode the sign is in in read-only mode', () => {
   const currentTime = now + 2000;
   const signId = 'RDAV-n';
   const line = 'Red';
-  const signConfig = { mode: 'auto' };
-  const signContent = signContentWithExpirations(fresh, fresh);
-  const setConfigs = () => {};
+  const signConfig: SignConfig = { mode: 'auto' };
+  const signContent: SingleSignContent = signContentWithExpirations(fresh, fresh);
+  const setConfigs = () => true;
   const realtimeId = 'id';
   const readOnly = true;
+  const modes = {
+    auto: true, off: true, headway: true, custom: true,
+  };
 
   const wrapper = mount(
     React.createElement(
       Sign,
       {
+        modes,
         signId,
         signContent,
         currentTime,
@@ -142,9 +154,9 @@ test('does show select when not in read-only mode', () => {
   const currentTime = now + 2000;
   const signId = 'RDAV-n';
   const line = 'Red';
-  const signConfig = { mode: 'auto' };
+  const signConfig: SignConfig = { mode: 'auto' };
   const signContent = signContentWithExpirations(fresh, fresh);
-  const setConfigs = () => {};
+  const setConfigs = () => true;
   const realtimeId = 'id';
   const readOnly = false;
   const modes = {
@@ -206,9 +218,9 @@ test.each([
   const currentTime = now + 2000;
   const signId = 'RDAV-n';
   const line = 'Red';
-  const signConfig = { mode: 'auto' };
+  const signConfig: SignConfig = { mode: 'auto' };
   const signContent = signContentWithExpirations(fresh, fresh);
-  const setConfigs = () => {};
+  const setConfigs = () => true;
   const realtimeId = 'id';
   const readOnly = false;
   const modes = {
@@ -248,9 +260,9 @@ test('shows the return to auto time field if sign can be set to auto', () => {
   const currentTime = now + 2000;
   const signId = 'RDAV-n';
   const line = 'Red';
-  const signConfig = { mode: 'custom' };
+  const signConfig: SignConfig = { mode: 'static_text' };
   const signContent = signContentWithExpirations(fresh, fresh);
-  const setConfigs = () => { };
+  const setConfigs = () => true;
   const realtimeId = 'id';
   const readOnly = false;
   const modes = {
@@ -287,9 +299,9 @@ test('does not show the return to auto time field if sign can be set to auto', (
   const currentTime = now + 2000;
   const signId = 'RDAV-n';
   const line = 'Red';
-  const signConfig = { mode: 'off' };
+  const signConfig: SignConfig = { mode: 'off' };
   const signContent = signContentWithExpirations(fresh, fresh);
-  const setConfigs = () => { };
+  const setConfigs = () => true;
   const realtimeId = 'id';
   const readOnly = false;
   const modes = {

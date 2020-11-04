@@ -3,7 +3,7 @@ if (toggleOn) {
   toggleOn.addEventListener('click', (event) => {
     const checkboxes = document.querySelectorAll('.js-sign-toggle');
     for (let i = 0; i < checkboxes.length; i += 1) {
-      checkboxes[i].checked = 'checked';
+      (checkboxes[i] as HTMLInputElement).checked = true;
     }
     event.preventDefault();
   }, false);
@@ -14,7 +14,7 @@ if (toggleOff) {
   toggleOff.addEventListener('click', (event) => {
     const checkboxes = document.querySelectorAll('.js-sign-toggle');
     for (let i = 0; i < checkboxes.length; i += 1) {
-      checkboxes[i].checked = null;
+      (checkboxes[i] as HTMLInputElement).checked = false;
     }
     event.preventDefault();
   }, false);

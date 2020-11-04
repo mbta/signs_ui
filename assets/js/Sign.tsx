@@ -1,8 +1,7 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
 import dateFormat from 'dateformat';
 import lineToColor from './colors';
-import { signConfigType, signContentType } from './types';
+import { SignConfig, SignConfigs, SingleSignContent } from './types';
 import { choosePage } from './helpers';
 import SetExpiration from './SetExpiration';
 
@@ -24,7 +23,7 @@ function fontSize(signId) {
   return {};
 }
 
-function makeConfig(mode) {
+function makeConfig(mode): SignConfig {
   if (mode === 'auto') {
     return { mode: 'auto' };
   }
@@ -91,8 +90,17 @@ function line2DisplayText(lineContent, currentTime, initialTime) {
   return '';
 }
 
-class Sign extends Component {
-  constructor(props) {
+class Sign extends React.Component<
+  SignProps,
+  {
+    staticLine1: string;
+    staticLine2: string;
+    customChanges: boolean;
+    tipText: boolean;
+    initialTime: number;
+  }
+> {
+  constructor(props: SignProps) {
     super(props);
 
     this.saveStaticText = this.saveStaticText.bind(this);
@@ -108,8 +116,8 @@ class Sign extends Component {
     };
   }
 
-  handleInputLine1(evt) {
-    const text = evt.target.value;
+  handleInputLine1(evt: React.FormEvent<HTMLInputElement>): void {
+    const text = evt.currentTarget.value;
 
     if (isValidText(text)) {
       this.setState({ staticLine1: text, customChanges: true });
@@ -118,8 +126,8 @@ class Sign extends Component {
     }
   }
 
-  handleInputLine2(evt) {
-    const text = evt.target.value;
+  handleInputLine2(evt: React.FormEvent<HTMLInputElement>): void {
+    const text = evt.currentTarget.value;
 
     if (isValidText(text)) {
       this.setState({ staticLine2: text, customChanges: true });
@@ -128,13 +136,13 @@ class Sign extends Component {
     }
   }
 
-  saveStaticText() {
+  saveStaticText(): void {
     const { signConfig, setConfigs, realtimeId } = this.props;
     const { staticLine1, staticLine2 } = this.state;
 
     this.setState({ customChanges: false, tipText: false });
 
-    const newConfig = {
+    const newConfig: SignConfig = {
       ...signConfig,
       mode: 'static_text',
       line1: staticLine1,
@@ -146,19 +154,23 @@ class Sign extends Component {
     });
   }
 
-  render() {
+  render(): JSX.Element {
     const {
       signId,
       signContent,
       currentTime,
       line,
-      modes,
       signConfig,
       setConfigs,
       realtimeId,
       readOnly,
+      modes = {
+        auto: true,
+        custom: true,
+        headway: true,
+        off: true,
+      },
     } = this.props;
-
     const {
       tipText,
       staticLine1,
@@ -275,30 +287,21 @@ class Sign extends Component {
   }
 }
 
-Sign.defaultProps = {
+interface SignProps {
+  signId: string;
   modes: {
-    auto: true,
-    custom: true,
-    headway: true,
-    off: true,
-  },
-};
-
-Sign.propTypes = {
-  signId: PropTypes.string.isRequired,
-  modes: PropTypes.shape({
-    auto: PropTypes.bool,
-    custom: PropTypes.bool,
-    headway: PropTypes.bool,
-    off: PropTypes.bool,
-  }),
-  signContent: signContentType.isRequired,
-  currentTime: PropTypes.number.isRequired,
-  line: PropTypes.string.isRequired,
-  setConfigs: PropTypes.func.isRequired,
-  signConfig: signConfigType.isRequired,
-  realtimeId: PropTypes.string.isRequired,
-  readOnly: PropTypes.bool.isRequired,
-};
+    auto: boolean;
+    custom: boolean;
+    headway: boolean;
+    off: boolean;
+  };
+  signContent: SingleSignContent;
+  currentTime: number;
+  line: string;
+  setConfigs: (x: SignConfigs) => void;
+  signConfig: SignConfig;
+  realtimeId: string;
+  readOnly: boolean;
+}
 
 export default Sign;

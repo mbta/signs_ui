@@ -4828,7 +4828,7 @@ const arincToRealtimeIdMap = {
   'SFOR-s': 'bus.Forest_Hills_upper_island',
 };
 
-function arincToRealtimeId(stationZone, line) {
+function arincToRealtimeId(stationZone: string, line: string): string {
   if (stationZone === 'RSOU-m' && line === 'Red') {
     return 'red_south_station_mezzanine';
   }
