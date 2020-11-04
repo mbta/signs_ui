@@ -98,23 +98,21 @@ function Line({
         />
       )}
       {line === 'Silver' && (
-        <div>
-          <label>
-            Bridge Announcements
-            <div className="switch">
-              <input
-                name="chelsea_boarding"
-                type="checkbox"
-                className="switch-input"
-                checked={chelseaBridgeAnnouncements === 'auto'}
-                onChange={(e) => {
-                  setChelseaBridgeAnnouncements(e.target.checked ? 'auto' : 'off');
-                }}
-              />
-              <span className="switch-label">Switch</span>
-            </div>
-          </label>
+      <label className="mt-1 mb-4">
+        Chelsea Drawbridge Announcements
+        <div className="switch">
+          <input
+            name="chelsea_bridge"
+            type="checkbox"
+            className="switch-input"
+            checked={chelseaBridgeAnnouncements === 'auto'}
+            onChange={(e) => {
+              setChelseaBridgeAnnouncements(e.target.checked ? 'auto' : 'off');
+            }}
+          />
+          <span className="switch-label">Switch</span>
         </div>
+      </label>
       )}
       {!readOnly && (
         <div className="viewer--toggle-all">
