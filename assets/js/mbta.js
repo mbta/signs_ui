@@ -2863,37 +2863,37 @@ const stationConfig = {
           n: {
             value: false,
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
           s: {
             value: false,
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
           e: {
             value: true,
             modes: {
-              auto: false, custom: false, headway: false, off: true,
+              auto: false, custom: true, headway: false, off: true,
             },
           },
           w: {
             value: false,
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
           c: {
             value: false,
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
           m: {
             value: false,
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
         },
@@ -2905,37 +2905,37 @@ const stationConfig = {
           n: {
             value: false,
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
           s: {
             value: false,
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
           e: {
             value: true,
             modes: {
-              auto: false, custom: false, headway: false, off: true,
+              auto: false, custom: true, headway: false, off: true,
             },
           },
           w: {
             value: true,
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
           c: {
             value: false,
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
           m: {
             value: true,
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
         },
@@ -2947,37 +2947,37 @@ const stationConfig = {
           n: {
             value: false,
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
           s: {
             value: false,
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
           e: {
             value: true,
             modes: {
-              auto: false, custom: false, headway: false, off: true,
+              auto: false, custom: true, headway: false, off: true,
             },
           },
           w: {
             value: true,
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
           c: {
             value: false,
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
           m: {
             value: true,
             modes: {
-              auto: false, custom: false, headway: false, off: true,
+              auto: false, custom: true, headway: false, off: true,
             },
           },
         },
@@ -2989,37 +2989,37 @@ const stationConfig = {
           n: {
             value: false,
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
           s: {
             value: false,
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
           e: {
             value: 'Outbound',
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
           w: {
             value: 'Inbound',
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
           c: {
             value: false,
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
           m: {
             value: false,
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
         },
@@ -3031,37 +3031,37 @@ const stationConfig = {
           n: {
             value: false,
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
           s: {
             value: false,
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
           e: {
             value: 'Outbound',
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
           w: {
             value: 'Inbound',
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
           c: {
             value: false,
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
           m: {
             value: false,
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
         },
@@ -3073,37 +3073,37 @@ const stationConfig = {
           n: {
             value: false,
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
           s: {
             value: false,
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
           e: {
             value: 'Outbound',
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
           w: {
             value: 'Inbound',
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
           c: {
             value: false,
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
           m: {
             value: false,
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
         },
@@ -3115,37 +3115,37 @@ const stationConfig = {
           n: {
             value: false,
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
           s: {
             value: false,
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
           e: {
             value: false,
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
           w: {
             value: 'Inbound',
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
           c: {
             value: false,
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
           m: {
             value: false,
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
         },
@@ -4306,37 +4306,37 @@ const stationConfig = {
           n: {
             value: 'Platform F',
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
           s: {
             value: 'Platform C',
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
           e: {
             value: 'Platform D',
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
           w: {
             value: 'Platform A',
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
           c: {
             value: 'Platform E (East)',
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
           m: {
             value: 'Platform E (West)',
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
         },
@@ -4353,37 +4353,37 @@ const stationConfig = {
           n: {
             value: 'North',
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
           s: {
             value: false,
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
           e: {
             value: false,
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
           w: {
             value: false,
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
           c: {
             value: false,
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
           m: {
             value: 'South',
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
         },
@@ -4400,37 +4400,37 @@ const stationConfig = {
           n: {
             value: 'Upper',
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
           s: {
             value: false,
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
           e: {
             value: false,
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
           w: {
             value: false,
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
           c: {
             value: false,
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
           m: {
             value: 'Lower',
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
         },
@@ -4442,37 +4442,37 @@ const stationConfig = {
           n: {
             value: 'South',
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
           s: {
             value: 'North',
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
           e: {
             value: false,
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
           w: {
             value: false,
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
           c: {
             value: false,
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
           m: {
             value: false,
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
         },
@@ -4484,37 +4484,37 @@ const stationConfig = {
           n: {
             value: false,
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
           s: {
             value: false,
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
           e: {
             value: false,
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
           w: {
             value: false,
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
           c: {
             value: false,
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
           m: {
             value: 'Busway',
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
         },
@@ -4531,37 +4531,37 @@ const stationConfig = {
           n: {
             value: 'Upper (Fence)',
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
           s: {
             value: 'Upper (Island)',
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
           e: {
             value: false,
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
           w: {
             value: false,
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
           c: {
             value: false,
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
           m: {
             value: false,
             modes: {
-              auto: true, custom: false, headway: false, off: true,
+              auto: true, custom: true, headway: false, off: true,
             },
           },
         },
