@@ -15,12 +15,13 @@ type ZoneConfig = {
 type StationConfig = {
     id: string;
     name: string;
-    zonePositions: {
+    zonePositions?: {
       left: Zone[];
       right: Zone[];
       center: Zone[];
     };
     zones: {
+      [key: string]: ZoneConfig;
       n: ZoneConfig;
       e: ZoneConfig;
       s: ZoneConfig;
@@ -53,11 +54,13 @@ type SignContent = {
 
 type ConfiguredHeadways = {
   [id: string]: {
-    range_lwo: number,
-    range_high: number
+    [timePeriod: string]: {
+      range_low: number,
+      range_high: number
+    }
   }
 }
 
 export {
-  StationConfig, SignConfig, SignConfigs, SingleSignContent, SignContent, ConfiguredHeadways,
+  StationConfig, SignConfig, SignConfigs, SingleSignContent, SignContent, ConfiguredHeadways, Zone,
 };

@@ -1,4 +1,4 @@
-const lineToColor = {
+const lineToColor: { [key: string]: string } = {
   Mattapan: 'rgb(218, 41, 28)',
   Red: 'rgb(218, 41, 28)',
   Blue: 'rgb(0, 61, 165)',

@@ -15,7 +15,7 @@ declare global {
     initialSignsData: SignContent
     initialSignConfigs: SignConfigs
     readOnly: boolean
-    initialChelseaBridgeAnnouncements: boolean
+    initialChelseaBridgeAnnouncements: 'auto' | 'off'
     initialConfiguredHeadways: ConfiguredHeadways
   }
 }

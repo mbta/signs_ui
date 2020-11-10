@@ -1,9 +1,13 @@
 import * as React from 'react';
 import Sign from './Sign';
 import { arincToRealtimeId } from './mbta';
-import { SignConfigs, SignContent, StationConfig } from './types';
+import {
+  SignConfig, SignConfigs, SignContent, SingleSignContent, StationConfig, Zone,
+} from './types';
 
-function zoneDescription(stationConfig, zone) {
+/* eslint-disable camelcase */
+
+function zoneDescription(stationConfig: StationConfig, zone: Zone): boolean | string | undefined {
   if (stationConfig.zones[zone].value !== true) {
     return stationConfig.zones[zone].value;
   }
@@ -20,14 +24,28 @@ function zoneDescription(stationConfig, zone) {
 }
 
 function makeSign(
-  config,
-  zone,
-  signs,
-  currentTime,
-  line,
-  signConfigs,
-  setConfigs,
-  readOnly,
+  config: StationConfig,
+  zone: Zone,
+  signs: {
+    [x: string]: SingleSignContent
+    |
+    {
+      sign_id: string; lines: {
+        [key: string]: {
+          text: {
+            content: string
+            duration: number
+          }[]
+          expiration: string
+        }
+      };
+    };
+  },
+  currentTime: number,
+  line: string,
+  signConfigs: { [x: string]: SignConfig },
+  setConfigs: (x: SignConfigs) => void,
+  readOnly: boolean,
 ) {
   if (zone && config.zones[zone].value) {
     const key = `${config.id}-${zone}`;

@@ -16,7 +16,7 @@ interface ViewerAppProps {
   initialConfiguredHeadways: ConfiguredHeadways;
   readOnly: boolean;
   signOutPath: string;
-  initialChelseaBridgeAnnouncements: boolean;
+  initialChelseaBridgeAnnouncements?: 'auto' | 'off';
 }
 
 class ViewerApp extends React.Component<
@@ -30,6 +30,7 @@ class ViewerApp extends React.Component<
     readOnly: boolean;
     signOutPath: string;
     line?: string;
+    chelseaBridgeAnnouncements: 'auto' | 'off'
   }
 > {
   private timerID?: ReturnType<typeof setTimeout>;
@@ -49,6 +50,7 @@ class ViewerApp extends React.Component<
       channel: null,
       readOnly: props.readOnly,
       signOutPath: props.signOutPath,
+      chelseaBridgeAnnouncements: props.initialChelseaBridgeAnnouncements || 'off',
     };
   }
 
@@ -119,6 +121,16 @@ class ViewerApp extends React.Component<
     }
   }
 
+  setChelseaBridgeAnnouncements(state: 'off' | 'auto'): void {
+    const { channel } = this.state;
+
+    if (channel) {
+      channel.push('changeChelseaBridgeAnnouncements', state);
+
+      this.setState(() => ({ chelseaBridgeAnnouncements: state }));
+    }
+  }
+
   changeLine(line: string): void {
     document.body.style.backgroundColor = lineToColor(line);
     this.setState({ line });
@@ -139,6 +151,7 @@ class ViewerApp extends React.Component<
       readOnly,
       configuredHeadways,
       signOutPath,
+      chelseaBridgeAnnouncements,
     } = this.state;
     return (
       <div className="viewer--main container">
@@ -209,6 +222,8 @@ class ViewerApp extends React.Component<
             setConfigs={this.setConfigs}
             currentTime={currentTime}
             line={line}
+            chelseaBridgeAnnouncements={chelseaBridgeAnnouncements}
+            setChelseaBridgeAnnouncements={this.setChelseaBridgeAnnouncements}
             readOnly={readOnly}
           />
         )}

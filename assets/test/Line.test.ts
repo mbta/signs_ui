@@ -422,3 +422,117 @@ test('Sign config is not affected by batch updates if sign does not support mode
     },
   });
 });
+
+
+test('can toggle chelsea bridge announcements on and off on Silver Line page', () => {	
+  const setChelseaBridgeAnnouncements = jest.fn(() => true);	
+  const wrapper = mount(	
+    React.createElement(	
+      Line,	
+      {	
+        signs: {},	
+        currentTime: Date.now() + 2000,	
+        line: 'Silver',	
+        signConfigs: {},	
+        setConfigs: jest.fn(() => true),	
+        readOnly: false,	
+        configuredHeadways: {},	
+        setConfiguredHeadways: () => {},	
+        chelseaBridgeAnnouncements: 'off',	
+        setChelseaBridgeAnnouncements,	
+      },	
+      null,	
+    ),	
+  );	
+
+  const chelseaInput = wrapper.find('input[name="chelsea_bridge"]');	
+  chelseaInput.simulate('change', { target: { checked: true } });	
+  expect(setChelseaBridgeAnnouncements.mock.calls.length).toEqual(1);	
+  expect(setChelseaBridgeAnnouncements).toHaveBeenCalledWith('auto');	
+
+  chelseaInput.simulate('change', { target: { checked: false } });	
+  expect(setChelseaBridgeAnnouncements.mock.calls.length).toEqual(2);	
+  expect(setChelseaBridgeAnnouncements).toHaveBeenCalledWith('off');	
+});	
+
+test('does not show chelsea bridge announcements toggle on non-Silver Line pages', () => {	
+  const setChelseaBridgeAnnouncements = jest.fn(() => true);	
+  const wrapper = mount(	
+    React.createElement(	
+      Line,	
+      {	
+        signs: {},	
+        currentTime: Date.now() + 2000,	
+        line: 'Red',	
+        signConfigs: {},	
+        setConfigs: jest.fn(() => true),	
+        readOnly: false,	
+        configuredHeadways: {},	
+        setConfiguredHeadways: () => {},	
+        chelseaBridgeAnnouncements: 'off',	
+        setChelseaBridgeAnnouncements,	
+      },	
+      null,	
+    ),	
+  );	
+
+  const chelseaInput = wrapper.find('input[name="chelsea_bridge"]');	
+  expect(chelseaInput.exists()).toEqual(false);	
+});
+
+
+test('can toggle chelsea bridge announcements on and off on Silver Line page', () => {	
+  const setChelseaBridgeAnnouncements = jest.fn(() => true);	
+  const wrapper = mount(	
+    React.createElement(	
+      Line,	
+      {	
+        signs: {},	
+        currentTime: Date.now() + 2000,	
+        line: 'Silver',	
+        signConfigs: {},	
+        setConfigs: jest.fn(() => true),	
+        readOnly: false,	
+        configuredHeadways: {},	
+        setConfiguredHeadways: () => {},	
+        chelseaBridgeAnnouncements: 'off',	
+        setChelseaBridgeAnnouncements,	
+      },	
+      null,	
+    ),	
+  );	
+
+  const chelseaInput = wrapper.find('input[name="chelsea_bridge"]');	
+  chelseaInput.simulate('change', { target: { checked: true } });	
+  expect(setChelseaBridgeAnnouncements.mock.calls.length).toEqual(1);	
+  expect(setChelseaBridgeAnnouncements).toHaveBeenCalledWith('auto');	
+
+  chelseaInput.simulate('change', { target: { checked: false } });	
+  expect(setChelseaBridgeAnnouncements.mock.calls.length).toEqual(2);	
+  expect(setChelseaBridgeAnnouncements).toHaveBeenCalledWith('off');	
+});	
+
+test('does not show chelsea bridge announcements toggle on non-Silver Line pages', () => {	
+  const setChelseaBridgeAnnouncements = jest.fn(() => true);	
+  const wrapper = mount(	
+    React.createElement(	
+      Line,	
+      {	
+        signs: {},	
+        currentTime: Date.now() + 2000,	
+        line: 'Red',	
+        signConfigs: {},	
+        setConfigs: jest.fn(() => true),	
+        readOnly: false,	
+        configuredHeadways: {},	
+        setConfiguredHeadways: () => {},	
+        chelseaBridgeAnnouncements: 'off',	
+        setChelseaBridgeAnnouncements,	
+      },	
+      null,	
+    ),	
+  );	
+
+  const chelseaInput = wrapper.find('input[name="chelsea_bridge"]');	
+  expect(chelseaInput.exists()).toEqual(false);	
+});

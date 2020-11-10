@@ -1,3 +1,5 @@
+import { StationConfig } from './types';
+
 const timePeriodConfig = [
   {
     id: 'peak',
@@ -11,7 +13,7 @@ const timePeriodConfig = [
   },
 ];
 
-const branchConfig = {
+const branchConfig: { [key: string]: { id: string; name: string }[] } = {
   Orange: [
     {
       id: 'orange_trunk',
@@ -60,7 +62,16 @@ const branchConfig = {
   ],
 };
 
-const stationConfig = {
+const stationConfig: {
+  [key: string]: {
+    batchModes: {
+      auto: boolean;
+      headway: boolean;
+      off: boolean
+    },
+    stations: StationConfig[]
+  }
+} = {
   Orange: {
     batchModes: { auto: true, headway: true, off: true },
     stations: [
@@ -4570,7 +4581,7 @@ const stationConfig = {
   },
 };
 
-const arincToRealtimeIdMap = {
+const arincToRealtimeIdMap: { [key: string]: string } = {
   'MCED-s': 'cedar_grove_outbound',
   'MCED-n': 'cedar_grove_inbound',
   'MBUT-c': 'butler_center',

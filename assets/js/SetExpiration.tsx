@@ -11,7 +11,7 @@ function stringify(expires: Date | null) {
 }
 
 function updateConfig(
-  setConfigsFn,
+  setConfigsFn: (x: SignConfigs) => void,
   realtimeId: string,
   signConfig: SignConfig,
   expires: Date | [Date, Date] | null,
@@ -31,7 +31,7 @@ function updateConfig(
   });
 }
 
-function parseDate(str) {
+function parseDate(str: string | null | undefined) {
   if (str) {
     const date = new Date(str);
 

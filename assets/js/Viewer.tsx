@@ -11,6 +11,8 @@ interface ViewerProps {
   setConfigs: (x: SignConfigs) => void;
   setConfiguredHeadways: (x: ConfiguredHeadways) => void;
   readOnly: boolean;
+  chelseaBridgeAnnouncements: 'auto' | 'off'
+  setChelseaBridgeAnnouncements: (x: 'auto' | 'off') => void
 }
 
 function Viewer({
@@ -22,6 +24,8 @@ function Viewer({
   readOnly,
   configuredHeadways,
   setConfiguredHeadways,
+  setChelseaBridgeAnnouncements,
+  chelseaBridgeAnnouncements,
 }: ViewerProps): JSX.Element {
   return (
     <div>
@@ -33,6 +37,8 @@ function Viewer({
         signConfigs={signConfigs}
         setConfigs={setConfigs}
         setConfiguredHeadways={setConfiguredHeadways}
+        chelseaBridgeAnnouncements={chelseaBridgeAnnouncements}
+        setChelseaBridgeAnnouncements={setChelseaBridgeAnnouncements}
         readOnly={readOnly}
       />
     </div>

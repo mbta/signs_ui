@@ -5,11 +5,11 @@ import { SignConfig, SignConfigs, SingleSignContent } from './types';
 import { choosePage } from './helpers';
 import SetExpiration from './SetExpiration';
 
-function isNotExpired(expiration, currentTime) {
+function isNotExpired(expiration: string, currentTime: number) {
   return Date.parse(expiration) - currentTime > 0;
 }
 
-function fontSize(signId) {
+function fontSize(signId: string | boolean | undefined) {
   if (
     signId === 'NB'
     || signId === 'SB'
@@ -23,7 +23,7 @@ function fontSize(signId) {
   return {};
 }
 
-function makeConfig(mode): SignConfig {
+function makeConfig(mode: 'auto' | 'headway' | 'off' | 'static_text'): SignConfig {
   if (mode === 'auto') {
     return { mode: 'auto' };
   }
@@ -47,7 +47,7 @@ function makeConfig(mode): SignConfig {
   return { mode: 'off', expires: null };
 }
 
-function displayName(mode) {
+function displayName(mode: 'auto' | 'headway' | 'off' | 'static_text') {
   switch (mode) {
     case 'static_text':
       return 'Custom';
@@ -56,16 +56,26 @@ function displayName(mode) {
   }
 }
 
-function isValidText(text) {
+function isValidText(text: string) {
   return !/[^a-zA-Z0-9,/!@' +]/.test(text);
 }
 
-function timeString(currentTime) {
+function timeString(currentTime: number) {
   const date = new Date(currentTime);
   return dateFormat(date, 'h:MM').padStart(5);
 }
 
-function line1DisplayText(lineContent, currentTime, initialTime) {
+function line1DisplayText(
+  lineContent: {
+    text: {
+      content: string;
+      duration: number
+    }[];
+    expiration: string;
+  } | undefined,
+  currentTime: number,
+  initialTime: number,
+) {
   if (
     lineContent !== undefined
     && isNotExpired(lineContent.expiration, currentTime)
@@ -80,7 +90,17 @@ function line1DisplayText(lineContent, currentTime, initialTime) {
   return '';
 }
 
-function line2DisplayText(lineContent, currentTime, initialTime) {
+function line2DisplayText(
+  lineContent: {
+    text: {
+      content: string;
+      duration: number
+    }[];
+    expiration: string;
+  } | undefined,
+  currentTime: number,
+  initialTime: number,
+) {
   if (
     lineContent !== undefined
     && isNotExpired(lineContent.expiration, currentTime)
@@ -91,7 +111,7 @@ function line2DisplayText(lineContent, currentTime, initialTime) {
 }
 
 interface SignProps {
-  signId: string;
+  signId: string | boolean | undefined;
   modes: {
     auto: boolean;
     custom: boolean;
@@ -217,7 +237,7 @@ class Sign extends React.Component<
                   value={signConfig.mode}
                   onChange={(event) => {
                     setConfigs({
-                      [realtimeId]: makeConfig(event.target.value),
+                      [realtimeId]: makeConfig(event.target.value as 'auto' | 'headway' | 'off' | 'static_text'),
                     });
                   }}
                 >

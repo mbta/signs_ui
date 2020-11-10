@@ -735,6 +735,11 @@
   resolved "https://registry.yarnpkg.com/@types/normalize-package-data/-/normalize-package-data-2.4.0.tgz#e486d0d97396d79beedd0a6e33f4534ff6b4973e"
   integrity sha512-f5j5b/Gf71L+dbqxIpQ4Z2WlmI/mPJ0fOkGGmFgtb6sAu97EPczzbS3/tJKxmcYDj55OX6ssqwDAWOHIYDRDGA==
 
+"@types/phoenix@^1.5.0":
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/@types/phoenix/-/phoenix-1.5.0.tgz#588a87fb29e8cfc7d1c346b939a6d624aff17a81"
+  integrity sha512-GeYodP7A7mjK739EWJVCQNfOiQuWWpmzMigQ4i1GbRKuAzs7fTJwi23AW1ulx/rs9XSkW2pbl9vmeHVYY9Y6Jg==
+
 "@types/prettier@^2.0.0":
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/@types/prettier/-/prettier-2.1.1.tgz#be148756d5480a84cde100324c03a86ae5739fb5"

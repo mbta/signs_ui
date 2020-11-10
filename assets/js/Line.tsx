@@ -35,10 +35,15 @@ function name(line: string) {
   return '';
 }
 
-function setAllStationsMode(setConfigFn, stations, line, mode) {
-  const statuses = {};
+function setAllStationsMode(
+  setConfigFn: (x: SignConfigs) => void,
+  stations: StationConfig[],
+  line: string,
+  mode: string,
+) {
+  const statuses: {[key: string]: {mode: 'auto' | 'off' | 'headway', expires?: null}} = {};
 
-  stations.forEach((station) => {
+  stations.forEach((station: StationConfig) => {
     ['n', 's', 'e', 'w', 'm', 'c'].forEach((zone) => {
       const realtimeId = arincToRealtimeId(`${station.id}-${zone}`, line);
       const { modes } = station.zones[zone];
@@ -65,6 +70,8 @@ interface LineProps {
   readOnly: boolean;
   setConfiguredHeadways: (x: ConfiguredHeadways) => void;
   stationConfigs?: StationConfig[];
+  chelseaBridgeAnnouncements: 'auto' | 'off'
+  setChelseaBridgeAnnouncements: (x: 'auto' | 'off') => void
 }
 
 function Line({
@@ -76,15 +83,17 @@ function Line({
   readOnly,
   configuredHeadways,
   setConfiguredHeadways,
+  chelseaBridgeAnnouncements,
+  setChelseaBridgeAnnouncements,
   stationConfigs,
 }: LineProps): JSX.Element {
-  const stations = stationConfigs
+  const stations: StationConfig[] = stationConfigs
     || (stationConfig[line] && stationConfig[line].stations)
     || [];
   const batchModes = (stationConfig[line] && stationConfig[line].batchModes) || {};
   const branches = branchConfig[line] || [];
   const batchMode = React.useMemo(() => {
-    const uniqueModes = {};
+    const uniqueModes: {[key: string]: string} = {};
     const isMixed = stations.some((station) => Object.keys(station.zones).some((zone) => {
       if (station.zones[zone] && station.zones[zone].value) {
         const realtimeId = arincToRealtimeId(`${station.id}-${zone}`, line);
@@ -109,9 +118,28 @@ function Line({
           readOnly={readOnly}
         />
       )}
+
       {!readOnly && (
-        <div className="viewer--toggle-all">
-          {batchModes.auto && (
+        <>
+          {line === 'Silver' && (
+          <label className="mt-1 mb-4">
+            Chelsea Drawbridge Announcements
+            <div className="switch">
+              <input
+                name="chelsea_bridge"
+                type="checkbox"
+                className="switch-input"
+                checked={chelseaBridgeAnnouncements === 'auto'}
+                onChange={(e) => {
+                  setChelseaBridgeAnnouncements(e.target.checked ? 'auto' : 'off');
+                }}
+              />
+              <span className="switch-label">Switch</span>
+            </div>
+          </label>
+          )}
+          <div className="viewer--toggle-all">
+            {batchModes.auto && (
             <label
               className={`btn ${batchMode === 'auto' ? 'active' : ''}`}
               htmlFor="auto"
@@ -128,8 +156,8 @@ function Line({
                 }}
               />
             </label>
-          )}
-          {batchModes.headway && (
+            )}
+            {batchModes.headway && (
             <label
               className={`btn ${batchMode === 'headway' ? 'active' : ''}`}
               htmlFor="headway"
@@ -146,8 +174,8 @@ function Line({
                 }}
               />
             </label>
-          )}
-          {batchModes.off && (
+            )}
+            {batchModes.off && (
             <label
               className={`btn ${batchMode === 'off' ? 'active' : ''}`}
               htmlFor="off"
@@ -164,8 +192,8 @@ function Line({
                 }}
               />
             </label>
-          )}
-          {batchMode === 'mixed' && (
+            )}
+            {batchMode === 'mixed' && (
             <label
               className={`btn ${batchMode === 'mixed' ? 'active' : ''}`}
               htmlFor="mixed"
@@ -180,10 +208,11 @@ function Line({
                 readOnly
               />
             </label>
-          )}
-        </div>
+            )}
+          </div>
+        </>
       )}
-      {stations.map((station) => (
+      {stations.map((station: StationConfig) => (
         <Station
           key={station.id}
           config={station}

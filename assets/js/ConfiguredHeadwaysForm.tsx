@@ -16,6 +16,12 @@ interface ConfiguredHeadwaysFormProps {
   branches: {
     id: string;
     name: string;
+    [timePeriodId: string]:
+        | {
+            range_high: number;
+            range_low: number;
+          }
+        | string;
   }[];
   timePeriods?: {
     id: string;
@@ -85,7 +91,17 @@ const ConfiguredHeadwaysForm = ({
   }, [branches, configuredHeadways, isEnabled]);
 
   const handleSubmit = React.useCallback(
-    (values) => {
+    (values: {
+        branches: {
+          id: string;
+          [timePeriodId: string]:
+            | {
+                range_high: number;
+                range_low: number;
+              }
+            | string;
+        }[];
+      }) => {
       const newConfig = values.branches.reduce(
         (branchAcc, branchCurr, index) => ({
           ...branchAcc,

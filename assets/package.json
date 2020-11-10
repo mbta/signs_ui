@@ -17,7 +17,8 @@
   },
   "scripts": {
     "deploy": "webpack --mode production",
-    "lint": "eslint js/**",
+    "lint": "eslint js/** --ext .js,.jsx,.ts,.tsx",
+    "typecheck": "tsc --noEmit",
     "start": "yarn run watch",
     "test": "node scripts/tester.js --env=jest-environment-jsdom-sixteen",
     "watch": "webpack --mode development --watch-stdin"
@@ -29,6 +30,7 @@
     "@types/dateformat": "^3.0.1",
     "@types/enzyme": "^3.10.8",
     "@types/jest": "^26.0.15",
+    "@types/phoenix": "^1.5.0",
     "@types/react": "^16.9.56",
     "@types/react-datepicker": "^3.1.1",
     "@types/react-dom": "^16.9.9",
@@ -59,9 +61,14 @@
       "./scripts/jestSetup.js"
     ],
     "testURL": "http://localhost/",
-    "preset": "ts-jest/presets/js-with-babel",
+    "preset": "ts-jest",
     "transform": {
       "^.+\\.(j|t)sx?$": "ts-jest"
+    },
+    "globals": {
+      "ts-jest": {
+        "isolatedModules": true
+      }
     }
   }
 }
