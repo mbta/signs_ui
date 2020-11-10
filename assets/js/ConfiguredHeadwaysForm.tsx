@@ -12,6 +12,21 @@ import { ConfiguredHeadways } from './types';
 
 /* eslint-disable camelcase */
 
+interface ConfiguredHeadwaysFormProps {
+  branches: {
+    id: string;
+    name: string;
+  }[];
+  timePeriods?: {
+    id: string;
+    name: string;
+    description: string;
+  }[];
+  configuredHeadways: ConfiguredHeadways;
+  setConfiguredHeadways: (x: ConfiguredHeadways) => void;
+  readOnly: boolean;
+}
+
 const ConfiguredHeadwaysForm = ({
   branches,
   configuredHeadways,
@@ -219,20 +234,5 @@ const ConfiguredHeadwaysForm = ({
 ConfiguredHeadwaysForm.defaultProps = {
   timePeriods: timePeriodConfig,
 };
-
-interface ConfiguredHeadwaysFormProps {
-  branches: {
-    id: string;
-    name: string;
-  }[];
-  timePeriods?: {
-    id: string;
-    name: string;
-    description: string;
-  }[];
-  configuredHeadways: ConfiguredHeadways;
-  setConfiguredHeadways: (x: ConfiguredHeadways) => void;
-  readOnly: boolean;
-}
 
 export default React.memo(ConfiguredHeadwaysForm);

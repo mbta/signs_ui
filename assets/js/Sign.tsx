@@ -90,6 +90,23 @@ function line2DisplayText(lineContent, currentTime, initialTime) {
   return '';
 }
 
+interface SignProps {
+  signId: string;
+  modes: {
+    auto: boolean;
+    custom: boolean;
+    headway: boolean;
+    off: boolean;
+  };
+  signContent: SingleSignContent;
+  currentTime: number;
+  line: string;
+  setConfigs: (x: SignConfigs) => void;
+  signConfig: SignConfig;
+  realtimeId: string;
+  readOnly: boolean;
+}
+
 class Sign extends React.Component<
   SignProps,
   {
@@ -285,23 +302,6 @@ class Sign extends React.Component<
       </div>
     );
   }
-}
-
-interface SignProps {
-  signId: string;
-  modes: {
-    auto: boolean;
-    custom: boolean;
-    headway: boolean;
-    off: boolean;
-  };
-  signContent: SingleSignContent;
-  currentTime: number;
-  line: string;
-  setConfigs: (x: SignConfigs) => void;
-  signConfig: SignConfig;
-  realtimeId: string;
-  readOnly: boolean;
 }
 
 export default Sign;

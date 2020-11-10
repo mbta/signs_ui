@@ -43,6 +43,13 @@ function parseDate(str) {
   return null;
 }
 
+interface SetExpirationProps {
+  realtimeId: string;
+  signConfig: SignConfig;
+  setConfigs: (x: SignConfigs) => void;
+  readOnly: boolean;
+}
+
 function SetExpiration({
   realtimeId,
   signConfig,
@@ -76,13 +83,6 @@ function SetExpiration({
       )}
     </div>
   ) : null;
-}
-
-interface SetExpirationProps {
-  realtimeId: string;
-  signConfig: SignConfig;
-  setConfigs: (x: SignConfigs) => void;
-  readOnly: boolean;
 }
 
 export default SetExpiration;

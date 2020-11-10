@@ -55,6 +55,18 @@ function setAllStationsMode(setConfigFn, stations, line, mode) {
   setConfigFn(statuses);
 }
 
+interface LineProps {
+  signs: SignContent;
+  currentTime: number;
+  line: string;
+  signConfigs: SignConfigs;
+  configuredHeadways: ConfiguredHeadways;
+  setConfigs: (x: SignConfigs) => void;
+  readOnly: boolean;
+  setConfiguredHeadways: (x: ConfiguredHeadways) => void;
+  stationConfigs?: StationConfig[];
+}
+
 function Line({
   signs,
   currentTime,
@@ -190,17 +202,5 @@ function Line({
 Line.defaultProps = {
   stationConfigs: undefined,
 };
-
-interface LineProps {
-  signs: SignContent;
-  currentTime: number;
-  line: string;
-  signConfigs: SignConfigs;
-  configuredHeadways: ConfiguredHeadways;
-  setConfigs: (x: SignConfigs) => void;
-  readOnly: boolean;
-  setConfiguredHeadways: (x: ConfiguredHeadways) => void;
-  stationConfigs?: StationConfig[];
-}
 
 export default Line;

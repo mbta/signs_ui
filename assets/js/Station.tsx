@@ -59,6 +59,16 @@ function makeSign(
   return null;
 }
 
+interface StationProps {
+  config: StationConfig;
+  signs: SignContent;
+  currentTime: number;
+  line: string;
+  signConfigs: SignConfigs;
+  setConfigs: (x: SignConfigs) => void;
+  readOnly: boolean;
+}
+
 function Station({
   config,
   signs,
@@ -156,16 +166,6 @@ function Station({
       <hr />
     </div>
   );
-}
-
-interface StationProps {
-  config: StationConfig;
-  signs: SignContent;
-  currentTime: number;
-  line: string;
-  signConfigs: SignConfigs;
-  setConfigs: (x: SignConfigs) => void;
-  readOnly: boolean;
 }
 
 export default Station;
