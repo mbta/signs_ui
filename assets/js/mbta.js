@@ -1546,19 +1546,19 @@ const stationConfig = {
           n: {
             value: false,
             modes: {
-              auto: true, custom: true, headway: true, off: true,
+              auto: false, custom: false, headway: false, off: false,
             },
           },
           s: {
             value: false,
             modes: {
-              auto: true, custom: true, headway: true, off: true,
+              auto: false, custom: false, headway: false, off: false,
             },
           },
           e: {
             value: false,
             modes: {
-              auto: true, custom: true, headway: true, off: true,
+              auto: false, custom: false, headway: false, off: false,
             },
           },
           w: {
@@ -1570,13 +1570,13 @@ const stationConfig = {
           c: {
             value: false,
             modes: {
-              auto: true, custom: true, headway: true, off: true,
+              auto: false, custom: false, headway: false, off: false,
             },
           },
           m: {
             value: false,
             modes: {
-              auto: true, custom: true, headway: true, off: true,
+              auto: false, custom: false, headway: false, off: false,
             },
           },
         },
