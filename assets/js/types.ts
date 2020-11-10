@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 
-type Zones = 'n' | 'e' | 's' | 'w' | 'c' | 'm';
+type Zone = 'n' | 'e' | 's' | 'w' | 'c' | 'm';
 
 type ZoneConfig = {
   value: string | boolean;
@@ -16,9 +16,9 @@ type StationConfig = {
     id: string;
     name: string;
     zonePositions: {
-      left: Zones[];
-      right: Zones[];
-      center: Zones[];
+      left: Zone[];
+      right: Zone[];
+      center: Zone[];
     };
     zones: {
       n: ZoneConfig;
