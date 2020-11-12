@@ -119,98 +119,96 @@ function Line({
         />
       )}
 
+      {line === 'Silver' && (
+      <label className="mt-1 mb-4">
+        Chelsea Drawbridge Announcements
+        <div className="switch">
+          <input
+            name="chelsea_bridge"
+            type="checkbox"
+            className="switch-input"
+            checked={chelseaBridgeAnnouncements === 'auto'}
+            onChange={(e) => {
+              setChelseaBridgeAnnouncements(e.target.checked ? 'auto' : 'off');
+            }}
+          />
+          <span className="switch-label">Switch</span>
+        </div>
+      </label>
+      )}
       {!readOnly && (
-        <>
-          {line === 'Silver' && (
-          <label className="mt-1 mb-4">
-            Chelsea Drawbridge Announcements
-            <div className="switch">
-              <input
-                name="chelsea_bridge"
-                type="checkbox"
-                className="switch-input"
-                checked={chelseaBridgeAnnouncements === 'auto'}
-                onChange={(e) => {
-                  setChelseaBridgeAnnouncements(e.target.checked ? 'auto' : 'off');
-                }}
-              />
-              <span className="switch-label">Switch</span>
-            </div>
-          </label>
-          )}
-          <div className="viewer--toggle-all">
-            {batchModes.auto && (
-            <label
-              className={`btn ${batchMode === 'auto' ? 'active' : ''}`}
-              htmlFor="auto"
-            >
-              All to auto
-              <input
-                className="sr-only"
-                type="radio"
-                id="auto"
-                value="auto"
-                checked={batchMode === 'auto'}
-                onChange={() => {
-                  setAllStationsMode(setConfigs, stations, line, 'auto');
-                }}
-              />
-            </label>
-            )}
-            {batchModes.headway && (
-            <label
-              className={`btn ${batchMode === 'headway' ? 'active' : ''}`}
-              htmlFor="headway"
-            >
-              All to headway
-              <input
-                className="sr-only"
-                type="radio"
-                id="headway"
-                value="headway"
-                checked={batchMode === 'headway'}
-                onChange={() => {
-                  setAllStationsMode(setConfigs, stations, line, 'headway');
-                }}
-              />
-            </label>
-            )}
-            {batchModes.off && (
-            <label
-              className={`btn ${batchMode === 'off' ? 'active' : ''}`}
-              htmlFor="off"
-            >
-              All to off
-              <input
-                className="sr-only"
-                type="radio"
-                id="off"
-                value="off"
-                checked={batchMode === 'off'}
-                onChange={() => {
-                  setAllStationsMode(setConfigs, stations, line, 'off');
-                }}
-              />
-            </label>
-            )}
-            {batchMode === 'mixed' && (
-            <label
-              className={`btn ${batchMode === 'mixed' ? 'active' : ''}`}
-              htmlFor="mixed"
-            >
-              Mixed
-              <input
-                className="sr-only"
-                id="mixed"
-                type="radio"
-                value="mixed"
-                checked
-                readOnly
-              />
-            </label>
-            )}
-          </div>
-        </>
+      <div className="viewer--toggle-all">
+        {batchModes.auto && (
+        <label
+          className={`btn ${batchMode === 'auto' ? 'active' : ''}`}
+          htmlFor="auto"
+        >
+          All to auto
+          <input
+            className="sr-only"
+            type="radio"
+            id="auto"
+            value="auto"
+            checked={batchMode === 'auto'}
+            onChange={() => {
+              setAllStationsMode(setConfigs, stations, line, 'auto');
+            }}
+          />
+        </label>
+        )}
+        {batchModes.headway && (
+        <label
+          className={`btn ${batchMode === 'headway' ? 'active' : ''}`}
+          htmlFor="headway"
+        >
+          All to headway
+          <input
+            className="sr-only"
+            type="radio"
+            id="headway"
+            value="headway"
+            checked={batchMode === 'headway'}
+            onChange={() => {
+              setAllStationsMode(setConfigs, stations, line, 'headway');
+            }}
+          />
+        </label>
+        )}
+        {batchModes.off && (
+        <label
+          className={`btn ${batchMode === 'off' ? 'active' : ''}`}
+          htmlFor="off"
+        >
+          All to off
+          <input
+            className="sr-only"
+            type="radio"
+            id="off"
+            value="off"
+            checked={batchMode === 'off'}
+            onChange={() => {
+              setAllStationsMode(setConfigs, stations, line, 'off');
+            }}
+          />
+        </label>
+        )}
+        {batchMode === 'mixed' && (
+        <label
+          className={`btn ${batchMode === 'mixed' ? 'active' : ''}`}
+          htmlFor="mixed"
+        >
+          Mixed
+          <input
+            className="sr-only"
+            id="mixed"
+            type="radio"
+            value="mixed"
+            checked
+            readOnly
+          />
+        </label>
+        )}
+      </div>
       )}
       {stations.map((station: StationConfig) => (
         <Station
