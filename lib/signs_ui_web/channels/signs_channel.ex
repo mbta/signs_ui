@@ -32,7 +32,7 @@ defmodule SignsUiWeb.SignsChannel do
     end)
   end
 
-  def handle_in("changeChelseaBridgeAnnouncements", changes, socket) do
+  def handle_in("changeChelseaBridgeAnnouncements", %{"mode" => changes}, socket) do
     with_admin_access(socket, fn ->
       {:ok, _new_state} = SignsUi.Config.State.update_chelsea_bridge_announcements(changes)
 

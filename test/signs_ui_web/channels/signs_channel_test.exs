@@ -147,7 +147,7 @@ defmodule SignsUiWeb.SignsChannelTest do
         assert {:noreply, _socket} =
                  SignsUiWeb.SignsChannel.handle_in(
                    "changeChelseaBridgeAnnouncements",
-                   "auto",
+                   %{"mode" => "auto"},
                    socket
                  )
       end)
@@ -175,7 +175,7 @@ defmodule SignsUiWeb.SignsChannelTest do
         assert {:noreply, _socket} =
                  SignsUiWeb.SignsChannel.handle_in(
                    "changeChelseaBridgeAnnouncements",
-                   "auto",
+                   %{"mode" => "auto"},
                    socket
                  )
       end)
@@ -195,7 +195,11 @@ defmodule SignsUiWeb.SignsChannelTest do
     socket = Guardian.Phoenix.Socket.assign_rtc(socket, "foo@mbta.com", token, claims)
 
     {:stop, :normal, _socket} =
-      SignsUiWeb.SignsChannel.handle_in("changeChelseaBridgeAnnouncements", "auto", socket)
+      SignsUiWeb.SignsChannel.handle_in(
+        "changeChelseaBridgeAnnouncements",
+        %{"mode" => "auto"},
+        socket
+      )
 
     assert_push("auth_expired", %{})
   end
