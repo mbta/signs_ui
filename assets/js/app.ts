@@ -1,5 +1,5 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
 
 import '../css/app.css';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -7,6 +7,18 @@ import './toggle-all';
 import 'phoenix_html';
 
 import ViewerApp from './ViewerApp';
+import { ConfiguredHeadways, SignConfigs, SignContent } from './types';
+
+declare global {
+  interface Window {
+    signOutPath: string;
+    initialSignsData: SignContent
+    initialSignConfigs: SignConfigs
+    readOnly: boolean
+    initialChelseaBridgeAnnouncements: 'auto' | 'off'
+    initialConfiguredHeadways: ConfiguredHeadways
+  }
+}
 
 const realtimeRoot = document.getElementById('viewer-root');
 if (realtimeRoot) {

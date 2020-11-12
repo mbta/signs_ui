@@ -1,19 +1,22 @@
-import React from 'react';
+import * as React from 'react';
 import { mount, shallow } from 'enzyme';
-import Line from './Line';
-import ConfiguredHeadwaysForm from './ConfiguredHeadwaysForm';
+import Line from '../js/Line';
+import ConfiguredHeadwaysForm from '../js/ConfiguredHeadwaysForm';
+import {
+  ConfiguredHeadways, SignConfigs, SignContent, StationConfig,
+} from '../js/types';
 
 test('Shows all signs for a line', () => {
   const now = Date.now();
-  const signs = {};
+  const signs: SignContent = {};
 
   const currentTime = now + 2000;
   const line = 'Red';
-  const signConfigs = {};
-  const setConfigs = () => {};
-  const setConfiguredHeadways = () => {};
+  const signConfigs: SignConfigs = {};
+  const setConfigs = () => true;
+  const setConfiguredHeadways = () => true;
   const readOnly = false;
-  const configuredHeadways = {};
+  const configuredHeadways: ConfiguredHeadways = {};
 
   const wrapper = mount(
     React.createElement(
@@ -43,10 +46,10 @@ test('Shows batch mode buttons when not read-only', () => {
   const currentTime = now + 2000;
   const line = 'Red';
   const signConfigs = {};
-  const setConfigs = () => {};
+  const setConfigs = () => true;
   const readOnly = false;
   const configuredHeadways = {};
-  const setConfiguredHeadways = () => {};
+  const setConfiguredHeadways = () => true;
 
   const wrapper = mount(
     React.createElement(
@@ -78,10 +81,10 @@ test.each([['Silver'], ['Busway']])(
 
     const currentTime = now + 2000;
     const signConfigs = {};
-    const setConfigs = () => {};
+    const setConfigs = () => true;
     const readOnly = false;
     const configuredHeadways = {};
-    const setConfiguredHeadways = () => {};
+    const setConfiguredHeadways = () => true;
 
     const wrapper = mount(
       React.createElement(
@@ -112,14 +115,14 @@ test('Shows "Mixed" batch mode buttons when multiple modes are chosen', () => {
 
   const currentTime = now + 2000;
   const line = 'Red';
-  const signConfigs = {
+  const signConfigs: SignConfigs = {
     red_south_station_northbound: { expires: null, mode: 'headway' },
     central_southbound: { expires: null, mode: 'auto' },
   };
-  const setConfigs = () => {};
+  const setConfigs = () => true;
   const readOnly = false;
   const configuredHeadways = {};
-  const setConfiguredHeadways = () => {};
+  const setConfiguredHeadways = () => true;
 
   const wrapper = mount(
     React.createElement(
@@ -150,14 +153,14 @@ test('Does not show "Mixed" batch mode buttons when one mode is chosen', () => {
 
   const currentTime = now + 2000;
   const line = 'Red';
-  const signConfigs = {
+  const signConfigs: SignConfigs = {
     red_south_station_northbound: { expires: null, mode: 'headway' },
     central_southbound: { expires: null, mode: 'headway' },
   };
-  const setConfigs = () => {};
+  const setConfigs = () => true;
   const readOnly = false;
   const configuredHeadways = {};
-  const setConfiguredHeadways = () => {};
+  const setConfiguredHeadways = () => true;
 
   const wrapper = mount(
     React.createElement(
@@ -189,10 +192,10 @@ test("Doesn't show batch mode buttons when read-only", () => {
   const currentTime = now + 2000;
   const line = 'Red';
   const signConfigs = {};
-  const setConfigs = () => {};
+  const setConfigs = () => true;
   const readOnly = true;
   const configuredHeadways = {};
-  const setConfiguredHeadways = () => {};
+  const setConfiguredHeadways = () => true;
 
   const wrapper = mount(
     React.createElement(
@@ -222,11 +225,11 @@ test('Shows ConfiguredHeadwaysForm if current line has branches configured', () 
 
   const currentTime = now + 2000;
   const line = 'Red';
-  const signConfigs = {};
-  const setConfigs = () => {};
+  const signConfigs: SignConfigs = {};
+  const setConfigs = () => true;
   const readOnly = false;
   const configuredHeadways = {};
-  const setConfiguredHeadways = () => {};
+  const setConfiguredHeadways = () => true;
 
   const wrapper = shallow(
     React.createElement(
@@ -255,10 +258,10 @@ test('Doesn\t show ConfiguredHeadwaysForm if current line has no branches config
   const currentTime = now + 2000;
   const line = 'Another Line';
   const signConfigs = {};
-  const setConfigs = () => {};
+  const setConfigs = () => true;
   const readOnly = true;
   const configuredHeadways = {};
-  const setConfiguredHeadways = () => {};
+  const setConfiguredHeadways = () => true;
 
   const wrapper = shallow(
     React.createElement(
@@ -287,10 +290,10 @@ test('Shows ConfiguredHeadwaysForm if current line has branches configured', () 
   const currentTime = now + 2000;
   const line = 'Red';
   const signConfigs = {};
-  const setConfigs = () => {};
+  const setConfigs = () => true;
   const readOnly = true;
   const configuredHeadways = {};
-  const setConfiguredHeadways = () => {};
+  const setConfiguredHeadways = () => true;
 
   const wrapper = shallow(
     React.createElement(
@@ -318,14 +321,19 @@ test('Sign config is not affected by batch updates if sign does not support mode
 
   const currentTime = now + 2000;
   const line = 'Red';
-  const signConfigs = {};
+  const signConfigs: SignConfigs = {};
   const setConfigs = jest.fn(() => true);
-  const setConfiguredHeadways = () => {};
+  const setConfiguredHeadways = () => true;
   const readOnly = false;
   const configuredHeadways = {};
-  const stationConfigs = [{
+  const stationConfigs: StationConfig[] = [{
     id: 'RDAV',
     name: 'Alewife',
+    zonePositions: {
+      left: ['n'],
+      center: [],
+      right: ['m'],
+    },
     zones: {
       n: {
         value: false,
@@ -415,58 +423,116 @@ test('Sign config is not affected by batch updates if sign does not support mode
   });
 });
 
-test('can toggle chelsea bridge announcements on and off on Silver Line page', () => {
-  const setChelseaBridgeAnnouncements = jest.fn(() => true);
-  const wrapper = mount(
-    React.createElement(
-      Line,
-      {
-        signs: {},
-        currentTime: Date.now() + 2000,
-        line: 'Silver',
-        signConfigs: {},
-        setConfigs: jest.fn(() => true),
-        readOnly: false,
-        configuredHeadways: {},
-        setConfiguredHeadways: () => {},
-        chelseaBridgeAnnouncements: 'off',
-        setChelseaBridgeAnnouncements,
-      },
-      null,
-    ),
-  );
 
-  const chelseaInput = wrapper.find('input[name="chelsea_bridge"]');
-  chelseaInput.simulate('change', { target: { checked: true } });
-  expect(setChelseaBridgeAnnouncements.mock.calls.length).toEqual(1);
-  expect(setChelseaBridgeAnnouncements).toHaveBeenCalledWith('auto');
+test('can toggle chelsea bridge announcements on and off on Silver Line page', () => {	
+  const setChelseaBridgeAnnouncements = jest.fn(() => true);	
+  const wrapper = mount(	
+    React.createElement(	
+      Line,	
+      {	
+        signs: {},	
+        currentTime: Date.now() + 2000,	
+        line: 'Silver',	
+        signConfigs: {},	
+        setConfigs: jest.fn(() => true),	
+        readOnly: false,	
+        configuredHeadways: {},	
+        setConfiguredHeadways: () => {},	
+        chelseaBridgeAnnouncements: 'off',	
+        setChelseaBridgeAnnouncements,	
+      },	
+      null,	
+    ),	
+  );	
 
-  chelseaInput.simulate('change', { target: { checked: false } });
-  expect(setChelseaBridgeAnnouncements.mock.calls.length).toEqual(2);
-  expect(setChelseaBridgeAnnouncements).toHaveBeenCalledWith('off');
+  const chelseaInput = wrapper.find('input[name="chelsea_bridge"]');	
+  chelseaInput.simulate('change', { target: { checked: true } });	
+  expect(setChelseaBridgeAnnouncements.mock.calls.length).toEqual(1);	
+  expect(setChelseaBridgeAnnouncements).toHaveBeenCalledWith('auto');	
+
+  chelseaInput.simulate('change', { target: { checked: false } });	
+  expect(setChelseaBridgeAnnouncements.mock.calls.length).toEqual(2);	
+  expect(setChelseaBridgeAnnouncements).toHaveBeenCalledWith('off');	
+});	
+
+test('does not show chelsea bridge announcements toggle on non-Silver Line pages', () => {	
+  const setChelseaBridgeAnnouncements = jest.fn(() => true);	
+  const wrapper = mount(	
+    React.createElement(	
+      Line,	
+      {	
+        signs: {},	
+        currentTime: Date.now() + 2000,	
+        line: 'Red',	
+        signConfigs: {},	
+        setConfigs: jest.fn(() => true),	
+        readOnly: false,	
+        configuredHeadways: {},	
+        setConfiguredHeadways: () => {},	
+        chelseaBridgeAnnouncements: 'off',	
+        setChelseaBridgeAnnouncements,	
+      },	
+      null,	
+    ),	
+  );	
+
+  const chelseaInput = wrapper.find('input[name="chelsea_bridge"]');	
+  expect(chelseaInput.exists()).toEqual(false);	
 });
 
-test('does not show chelsea bridge announcements toggle on non-Silver Line pages', () => {
-  const setChelseaBridgeAnnouncements = jest.fn(() => true);
-  const wrapper = mount(
-    React.createElement(
-      Line,
-      {
-        signs: {},
-        currentTime: Date.now() + 2000,
-        line: 'Red',
-        signConfigs: {},
-        setConfigs: jest.fn(() => true),
-        readOnly: false,
-        configuredHeadways: {},
-        setConfiguredHeadways: () => {},
-        chelseaBridgeAnnouncements: 'off',
-        setChelseaBridgeAnnouncements,
-      },
-      null,
-    ),
-  );
 
-  const chelseaInput = wrapper.find('input[name="chelsea_bridge"]');
-  expect(chelseaInput.exists()).toEqual(false);
+test('can toggle chelsea bridge announcements on and off on Silver Line page', () => {	
+  const setChelseaBridgeAnnouncements = jest.fn(() => true);	
+  const wrapper = mount(	
+    React.createElement(	
+      Line,	
+      {	
+        signs: {},	
+        currentTime: Date.now() + 2000,	
+        line: 'Silver',	
+        signConfigs: {},	
+        setConfigs: jest.fn(() => true),	
+        readOnly: false,	
+        configuredHeadways: {},	
+        setConfiguredHeadways: () => {},	
+        chelseaBridgeAnnouncements: 'off',	
+        setChelseaBridgeAnnouncements,	
+      },	
+      null,	
+    ),	
+  );	
+
+  const chelseaInput = wrapper.find('input[name="chelsea_bridge"]');	
+  chelseaInput.simulate('change', { target: { checked: true } });	
+  expect(setChelseaBridgeAnnouncements.mock.calls.length).toEqual(1);	
+  expect(setChelseaBridgeAnnouncements).toHaveBeenCalledWith('auto');	
+
+  chelseaInput.simulate('change', { target: { checked: false } });	
+  expect(setChelseaBridgeAnnouncements.mock.calls.length).toEqual(2);	
+  expect(setChelseaBridgeAnnouncements).toHaveBeenCalledWith('off');	
+});	
+
+test('does not show chelsea bridge announcements toggle on non-Silver Line pages', () => {	
+  const setChelseaBridgeAnnouncements = jest.fn(() => true);	
+  const wrapper = mount(	
+    React.createElement(	
+      Line,	
+      {	
+        signs: {},	
+        currentTime: Date.now() + 2000,	
+        line: 'Red',	
+        signConfigs: {},	
+        setConfigs: jest.fn(() => true),	
+        readOnly: false,	
+        configuredHeadways: {},	
+        setConfiguredHeadways: () => {},	
+        chelseaBridgeAnnouncements: 'off',	
+        setChelseaBridgeAnnouncements,	
+      },	
+      null,	
+    ),	
+  );	
+
+  const chelseaInput = wrapper.find('input[name="chelsea_bridge"]');	
+  expect(chelseaInput.exists()).toEqual(false);	
 });

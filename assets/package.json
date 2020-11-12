@@ -17,20 +17,27 @@
   },
   "scripts": {
     "deploy": "webpack --mode production",
-    "lint": "eslint js/**",
+    "lint": "eslint js/** --ext .js,.jsx,.ts,.tsx",
+    "typecheck": "tsc --noEmit",
+    "check": "yarn run lint && yarn run typecheck",
     "start": "yarn run watch",
     "test": "node scripts/tester.js --env=jest-environment-jsdom-sixteen",
     "watch": "webpack --mode development --watch-stdin"
   },
   "dependencies": {
-    "@babel/core": "7.11.6",
-    "@babel/preset-env": "^7.10.4",
-    "@babel/preset-react": "^7.10.4",
     "@fortawesome/fontawesome-svg-core": "1.2.32",
     "@fortawesome/free-solid-svg-icons": "5.15.1",
     "@fortawesome/react-fontawesome": "^0.1.10",
-    "babel-loader": "^8.1.0",
-    "babel-runtime": "^6.26.0",
+    "@types/dateformat": "^3.0.1",
+    "@types/enzyme": "^3.10.8",
+    "@types/jest": "^26.0.15",
+    "@types/phoenix": "^1.5.0",
+    "@types/react": "^16.9.56",
+    "@types/react-datepicker": "^3.1.1",
+    "@types/react-dom": "^16.9.9",
+    "@types/yup": "^0.29.9",
+    "@typescript-eslint/eslint-plugin": "^4.6.1",
+    "@typescript-eslint/parser": "^4.6.1",
     "copy-webpack-plugin": "6.2.1",
     "css-loader": "^4.3.0",
     "dateformat": "^3.0.3",
@@ -39,10 +46,13 @@
     "mini-css-extract-plugin": "1.2.0",
     "phoenix": "1.5.6",
     "phoenix_html": "^2.10.4",
-    "prop-types": "^15.6.2",
     "react": "^16.4.1",
     "react-datepicker": "3.3.0",
     "react-dom": "^16.4.1",
+    "source-map-loader": "^1.1.2",
+    "ts-jest": "^26.4.4",
+    "ts-loader": "^8.0.11",
+    "typescript": "^4.0.5",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.12",
     "yup": "^0.29.1"
@@ -51,6 +61,15 @@
     "setupFilesAfterEnv": [
       "./scripts/jestSetup.js"
     ],
-    "testURL": "http://localhost/"
+    "testURL": "http://localhost/",
+    "preset": "ts-jest",
+    "transform": {
+      "^.+\\.(j|t)sx?$": "ts-jest"
+    },
+    "globals": {
+      "ts-jest": {
+        "isolatedModules": true
+      }
+    }
   }
 }

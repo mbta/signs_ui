@@ -1,4 +1,4 @@
-import { choosePage } from './helpers';
+import { choosePage } from '../js/helpers';
 
 test('choosePage returns the first page when there is only one', () => {
   const pages = [{ content: 'the page', duration: 5 }];

@@ -6,7 +6,7 @@ module.exports = function(env) {
   const production = process.env.NODE_ENV === 'production';
 
   return {
-    entry: './js/app.js',
+    entry: './js/app.ts',
     output: {
       path: path.resolve(__dirname, '../priv/static/js'),
       filename: 'app.js',
@@ -14,11 +14,7 @@ module.exports = function(env) {
     },
     module: {
       rules: [
-        {
-          test: /\.(js|jsx)$/,
-          exclude: /node_modules/,
-          use: [{loader: 'babel-loader'}]
-        },
+        { test: /\.tsx?$/, loader: "ts-loader" },
         {
           test: /\.css$/,
           use: [MiniCssExtractPlugin.loader, 'css-loader']
@@ -27,7 +23,7 @@ module.exports = function(env) {
     },
     resolve: {
       modules: ['node_modules', path.resolve(__dirname, 'js')],
-      extensions: ['.js', '.jsx'],
+      extensions: ['.js', '.jsx', '.ts', '.tsx'],
     },
     plugins: [
       new CopyWebpackPlugin({patterns: [{from: "./static", to: "../"}]}),

@@ -1,10 +1,13 @@
-import React from 'react';
+import * as React from 'react';
 import { mount } from 'enzyme';
 
-import SetExpiration from './SetExpiration';
+import SetExpiration from '../js/SetExpiration';
+import { SignConfigs } from '../js/types';
+
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 
 test('Can set the expiration time', () => {
-  const requests = [];
+  const requests: SignConfigs[] = [];
 
   const setConfigs = (arg) => {
     requests.push(arg);
@@ -16,6 +19,7 @@ test('Can set the expiration time', () => {
     React.createElement(SetExpiration, {
       realtimeId: 'rtID',
       signConfig: {
+        id: '1',
         mode: 'static_text',
         line1: 'line1',
         line2: 'line2',
@@ -30,11 +34,11 @@ test('Can set the expiration time', () => {
   wrapper.find('.react-datepicker__day--015').simulate('click');
   expect(requests.length).toBe(1);
   const newConf = requests[0].rtID;
-  expect(new Date(newConf.expires)).toBeInstanceOf(Date);
+  expect(new Date(newConf.expires!)).toBeInstanceOf(Date);
 });
 
 test('Can clear the expiration time', () => {
-  const requests = [];
+  const requests: SignConfigs[] = [];
 
   const setConfigs = (arg) => {
     requests.push(arg);
@@ -46,6 +50,7 @@ test('Can clear the expiration time', () => {
     React.createElement(SetExpiration, {
       realtimeId: 'rtID',
       signConfig: {
+        id: '1',
         mode: 'static_text',
         line1: 'line1',
         line2: 'line2',
@@ -63,7 +68,7 @@ test('Can clear the expiration time', () => {
 });
 
 test('Shows widget when no expiration set if not in read-only mode', () => {
-  const setConfigs = () => { };
+  const setConfigs = () => true;
 
   const readOnly = false;
 
@@ -71,10 +76,11 @@ test('Shows widget when no expiration set if not in read-only mode', () => {
     React.createElement(SetExpiration, {
       realtimeId: 'rtID',
       signConfig: {
+        id: '1',
         mode: 'static_text',
         line1: 'line1',
         line2: 'line2',
-        expires: '',
+        expires: null,
       },
       setConfigs,
       readOnly,
@@ -85,7 +91,7 @@ test('Shows widget when no expiration set if not in read-only mode', () => {
 });
 
 test('Suppresses widget when no expiration set if in read-only mode', () => {
-  const setConfigs = () => { };
+  const setConfigs = () => true;
 
   const readOnly = true;
 
@@ -93,6 +99,7 @@ test('Suppresses widget when no expiration set if in read-only mode', () => {
     React.createElement(SetExpiration, {
       realtimeId: 'rtID',
       signConfig: {
+        id: '1',
         mode: 'static_text',
         line1: 'line1',
         line2: 'line2',
@@ -107,7 +114,7 @@ test('Suppresses widget when no expiration set if in read-only mode', () => {
 });
 
 test('Shows \'Scheduled\' when expiration is set if in read-only mode', () => {
-  const setConfigs = () => { };
+  const setConfigs = () => true;
 
   const readOnly = true;
 
@@ -115,6 +122,7 @@ test('Shows \'Scheduled\' when expiration is set if in read-only mode', () => {
     React.createElement(SetExpiration, {
       realtimeId: 'rtID',
       signConfig: {
+        id: '1',
         mode: 'static_text',
         line1: 'line1',
         line2: 'line2',
