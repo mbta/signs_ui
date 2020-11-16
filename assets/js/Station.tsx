@@ -8,8 +8,14 @@ import {
 /* eslint-disable camelcase */
 
 function zoneDescription(stationConfig: StationConfig, zone: Zone): boolean | string | undefined {
-  if (stationConfig.zones[zone].value !== true) {
-    return stationConfig.zones[zone].value;
+  const zoneConfig = stationConfig.zones[zone];
+
+  if (zoneConfig === undefined) {
+    return '';
+  }
+
+  if (zoneConfig.label) {
+    return zoneConfig.label;
   }
 
   const zones = {
@@ -47,21 +53,17 @@ function makeSign(
   setConfigs: (x: SignConfigs) => void,
   readOnly: boolean,
 ) {
-  if (zone && config.zones[zone].value) {
+  const zoneConfig = config.zones[zone];
+  if (zone && zoneConfig) {
     const key = `${config.id}-${zone}`;
     const signContent = signs[key] || { sign_id: key, lines: {} };
     const realtimeId = arincToRealtimeId(key, line);
     const signConfig = signConfigs[realtimeId] || { mode: 'off' };
-    const modes = (config.zones[zone] && config.zones[zone].modes) || {
-      auto: true,
-      headway: true,
-      custom: true,
-      off: true,
-    };
+
     return (
       <Sign
         key={key}
-        modes={modes}
+        modes={zoneConfig.modes}
         signId={zoneDescription(config, zone)}
         line={line}
         signContent={signContent}

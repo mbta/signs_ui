@@ -46,12 +46,15 @@ function setAllStationsMode(
   stations.forEach((station: StationConfig) => {
     ['n', 's', 'e', 'w', 'm', 'c'].forEach((zone) => {
       const realtimeId = arincToRealtimeId(`${station.id}-${zone}`, line);
-      const { modes } = station.zones[zone];
-      if (realtimeId) {
-        if (mode === 'auto' && modes.auto) {
-          statuses[realtimeId] = { mode: 'auto' };
-        } else if ((mode === 'off' || mode === 'headway') && modes[mode]) {
-          statuses[realtimeId] = { mode, expires: null };
+      const zoneConfig = station.zones[zone];
+      if (zoneConfig !== undefined) {
+        const { modes } = zoneConfig;
+        if (realtimeId) {
+          if (mode === 'auto' && modes.auto) {
+            statuses[realtimeId] = { mode: 'auto' };
+          } else if ((mode === 'off' || mode === 'headway') && modes[mode]) {
+            statuses[realtimeId] = { mode, expires: null };
+          }
         }
       }
     });
@@ -95,7 +98,7 @@ function Line({
   const batchMode = React.useMemo(() => {
     const uniqueModes: {[key: string]: string} = {};
     const isMixed = stations.some((station) => Object.keys(station.zones).some((zone) => {
-      if (station.zones[zone] && station.zones[zone].value) {
+      if (station.zones[zone]) {
         const realtimeId = arincToRealtimeId(`${station.id}-${zone}`, line);
         const mode = signConfigs[realtimeId] && signConfigs[realtimeId].mode;
         if (mode) {

@@ -17,12 +17,7 @@ test('shows the custom configuration information for a station', () => {
       right: [],
     },
     zones: {
-      n: { value: false, modes },
-      s: { value: false, modes },
-      e: { value: false, modes },
-      w: { value: false, modes },
-      c: { value: false, modes },
-      m: { value: 'Entire Station', modes },
+      m: { label: 'Entire Station', modes },
     },
   };
   const currentTime = Date.now() + 2000;
@@ -60,12 +55,8 @@ test('allows custom reordering of sign positions', () => {
       right: ['s'],
     },
     zones: {
-      n: { value: 'foo', modes },
-      s: { value: 'bar', modes },
-      e: { value: false, modes },
-      w: { value: false, modes },
-      c: { value: false, modes },
-      m: { value: false, modes },
+      n: { label: 'foo', modes },
+      s: { label: 'bar', modes },
     },
   };
   const currentTime = Date.now() + 2000;
