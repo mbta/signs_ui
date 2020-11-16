@@ -3,13 +3,23 @@
 type Zone = 'n' | 'e' | 's' | 'w' | 'c' | 'm';
 
 type ZoneConfig = {
-  value: string | boolean;
+  label?: string;
   modes: {
     auto: boolean;
     off: boolean;
     headway: boolean;
     custom: boolean;
   };
+}
+
+type ConfigByZone = {
+  [key: string]: ZoneConfig;
+  n: ZoneConfig;
+  e: ZoneConfig;
+  s: ZoneConfig;
+  w: ZoneConfig;
+  c: ZoneConfig;
+  m: ZoneConfig;
 }
 
 type StationConfig = {
@@ -20,15 +30,7 @@ type StationConfig = {
       right: Zone[];
       center: Zone[];
     };
-    zones: {
-      [key: string]: ZoneConfig;
-      n: ZoneConfig;
-      e: ZoneConfig;
-      s: ZoneConfig;
-      w: ZoneConfig;
-      c: ZoneConfig;
-      m: ZoneConfig;
-    };
+    zones: Partial<ConfigByZone>;
   }
 
 type SignConfig = { id?: string, mode: 'auto' | 'headway' | 'off' | 'static_text', expires?: string | null, line1?: string; line2?: string}

@@ -79,38 +79,19 @@ const stationConfig: {
         id: 'OOAK',
         name: 'Oak Grove',
         zones: {
-          n: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
           s: {
-            value: 'Platform',
+            label: 'Platform',
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           e: {
-            value: 'Busway',
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          w: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
+            label: 'Busway',
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           m: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -122,37 +103,13 @@ const stationConfig: {
         name: 'Malden Center',
         zones: {
           n: {
-            value: 'Platform',
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          s: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          e: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          w: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
+            label: 'Platform',
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           m: {
-            value: 'Lobby',
+            label: 'Lobby',
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -164,37 +121,16 @@ const stationConfig: {
         name: 'Wellington',
         zones: {
           n: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           s: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          e: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          w: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           m: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -206,37 +142,16 @@ const stationConfig: {
         name: 'Assembly',
         zones: {
           n: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           s: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          e: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          w: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           m: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -248,37 +163,16 @@ const stationConfig: {
         name: 'Sullivan Sq',
         zones: {
           n: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           s: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          e: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          w: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           m: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -290,37 +184,16 @@ const stationConfig: {
         name: 'Community College',
         zones: {
           n: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           s: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          e: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          w: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           m: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -332,37 +205,22 @@ const stationConfig: {
         name: 'North Station',
         zones: {
           n: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           s: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          e: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          w: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           c: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           m: {
-            value: 'CR Exit',
+            label: 'CR Exit',
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -374,37 +232,16 @@ const stationConfig: {
         name: 'Haymarket',
         zones: {
           n: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           s: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          e: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          w: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           m: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -416,37 +253,11 @@ const stationConfig: {
         name: 'State North',
         zones: {
           n: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          s: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          e: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          w: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           m: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -457,38 +268,7 @@ const stationConfig: {
         id: 'OSTS',
         name: 'State South',
         zones: {
-          n: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
           s: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          e: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          w: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          m: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -500,37 +280,6 @@ const stationConfig: {
         name: 'Downtown Crossing North',
         zones: {
           n: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          s: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          e: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          w: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          m: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -541,38 +290,7 @@ const stationConfig: {
         id: 'ODTS',
         name: 'Downtown Crossing South',
         zones: {
-          n: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
           s: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          e: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          w: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          m: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -584,37 +302,12 @@ const stationConfig: {
         name: 'Chinatown North',
         zones: {
           n: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          s: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          e: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          w: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           m: {
-            value: 'Lobby',
+            label: 'Lobby',
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -625,38 +318,13 @@ const stationConfig: {
         id: 'OCHS',
         name: 'Chinatown South',
         zones: {
-          n: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
           s: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          e: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          w: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           m: {
-            value: 'Lobby',
+            label: 'Lobby',
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -668,37 +336,16 @@ const stationConfig: {
         name: 'Tufts Medical Center',
         zones: {
           n: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           s: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          e: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          w: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           m: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -710,37 +357,16 @@ const stationConfig: {
         name: 'Back Bay',
         zones: {
           n: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           s: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          e: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          w: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           m: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -752,37 +378,16 @@ const stationConfig: {
         name: 'Mass. Ave',
         zones: {
           n: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           s: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          e: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          w: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           m: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -794,37 +399,21 @@ const stationConfig: {
         name: 'Ruggles',
         zones: {
           n: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           s: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          e: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          w: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           c: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           m: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -835,38 +424,7 @@ const stationConfig: {
         id: 'SRUG',
         name: 'Ruggles Upper Busway',
         zones: {
-          n: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          s: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          e: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          w: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
           m: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -878,37 +436,16 @@ const stationConfig: {
         name: 'Roxbury Crossing',
         zones: {
           n: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           s: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          e: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          w: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           m: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -920,37 +457,16 @@ const stationConfig: {
         name: 'Jackson Sq',
         zones: {
           n: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           s: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          e: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          w: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           m: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -962,37 +478,16 @@ const stationConfig: {
         name: 'Stony Brook',
         zones: {
           n: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           s: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          e: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          w: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           m: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -1004,37 +499,16 @@ const stationConfig: {
         name: 'Green St',
         zones: {
           n: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           s: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          e: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          w: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           m: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -1046,37 +520,13 @@ const stationConfig: {
         name: 'Forest Hills',
         zones: {
           n: {
-            value: 'Platform',
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          s: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          e: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          w: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
+            label: 'Platform',
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           m: {
-            value: 'Main Lobby',
+            label: 'Main Lobby',
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -1087,38 +537,7 @@ const stationConfig: {
         id: 'SFOR',
         name: 'Forest Hills Entrances from Busways',
         zones: {
-          n: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          s: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          e: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          w: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
           m: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -1134,38 +553,12 @@ const stationConfig: {
         id: 'RALE',
         name: 'Alewife',
         zones: {
-          n: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          s: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          e: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          w: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
           c: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           m: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -1177,37 +570,16 @@ const stationConfig: {
         name: 'Davis',
         zones: {
           n: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           s: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          e: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          w: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           m: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -1219,37 +591,16 @@ const stationConfig: {
         name: 'Porter',
         zones: {
           n: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           s: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          e: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          w: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           m: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -1261,37 +612,16 @@ const stationConfig: {
         name: 'Harvard',
         zones: {
           n: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           s: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          e: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          w: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           m: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -1303,37 +633,11 @@ const stationConfig: {
         name: 'Central',
         zones: {
           n: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           s: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          e: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          w: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          m: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -1345,37 +649,11 @@ const stationConfig: {
         name: 'Kendall/MIT',
         zones: {
           n: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           s: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          e: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          w: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          m: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -1387,37 +665,11 @@ const stationConfig: {
         name: 'Charles/MGH',
         zones: {
           n: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           s: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          e: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          w: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          m: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -1429,37 +681,16 @@ const stationConfig: {
         name: 'Park St',
         zones: {
           n: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           s: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          e: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          w: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           c: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          m: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -1471,37 +702,11 @@ const stationConfig: {
         name: 'Downtown Crossing',
         zones: {
           n: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           s: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          e: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          w: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          m: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -1513,37 +718,16 @@ const stationConfig: {
         name: 'South Station',
         zones: {
           n: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           s: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          e: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          w: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           m: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -1554,40 +738,10 @@ const stationConfig: {
         id: 'SSOU',
         name: 'South Station Silver Line',
         zones: {
-          n: {
-            value: false,
-            modes: {
-              auto: false, custom: false, headway: false, off: false,
-            },
-          },
-          s: {
-            value: false,
-            modes: {
-              auto: false, custom: false, headway: false, off: false,
-            },
-          },
-          e: {
-            value: false,
-            modes: {
-              auto: false, custom: false, headway: false, off: false,
-            },
-          },
           w: {
-            value: 'Arrival Platform',
+            label: 'Arrival Platform',
             modes: {
               auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
-            modes: {
-              auto: false, custom: false, headway: false, off: false,
-            },
-          },
-          m: {
-            value: false,
-            modes: {
-              auto: false, custom: false, headway: false, off: false,
             },
           },
         },
@@ -1597,37 +751,16 @@ const stationConfig: {
         name: 'Broadway',
         zones: {
           n: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           s: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          e: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          w: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           m: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -1639,37 +772,16 @@ const stationConfig: {
         name: 'Andrew',
         zones: {
           n: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           s: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          e: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          w: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           m: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -1681,37 +793,30 @@ const stationConfig: {
         name: 'JFK/UMass',
         zones: {
           n: {
-            value: 'Braintree Platform',
+            label: 'Braintree Platform',
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           s: {
-            value: 'Braintree Platform',
+            label: 'Braintree Platform',
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           e: {
-            value: 'Ashmont Platform',
+            label: 'Ashmont Platform',
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           w: {
-            value: 'Ashmont Platform',
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
+            label: 'Ashmont Platform',
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           m: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -1723,37 +828,16 @@ const stationConfig: {
         name: 'Savin Hill',
         zones: {
           n: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           s: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          e: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          w: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           m: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -1765,37 +849,16 @@ const stationConfig: {
         name: 'Fields Corner',
         zones: {
           n: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           s: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          e: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          w: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           m: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -1807,37 +870,16 @@ const stationConfig: {
         name: 'Shawmut',
         zones: {
           n: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           s: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          e: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          w: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           m: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -1849,37 +891,11 @@ const stationConfig: {
         name: 'Ashmont',
         zones: {
           n: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          s: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          e: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          w: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           m: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -1891,37 +907,16 @@ const stationConfig: {
         name: 'North Quincy',
         zones: {
           n: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           s: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          e: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          w: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           m: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -1933,37 +928,16 @@ const stationConfig: {
         name: 'Wollaston',
         zones: {
           n: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           s: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          e: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          w: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           m: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -1975,37 +949,16 @@ const stationConfig: {
         name: 'Quincy Center',
         zones: {
           n: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           s: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          e: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          w: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           m: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -2017,37 +970,16 @@ const stationConfig: {
         name: 'Quincy Adams',
         zones: {
           n: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           s: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          e: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          w: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           m: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -2058,38 +990,12 @@ const stationConfig: {
         id: 'RBRA',
         name: 'Braintree',
         zones: {
-          n: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          s: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          e: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          w: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
           c: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           m: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -2105,38 +1011,12 @@ const stationConfig: {
         id: 'BWON',
         name: 'Wonderland',
         zones: {
-          n: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          s: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          e: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
           w: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           m: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -2147,38 +1027,17 @@ const stationConfig: {
         id: 'BREV',
         name: 'Revere Beach',
         zones: {
-          n: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          s: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
           e: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           w: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           m: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -2189,38 +1048,12 @@ const stationConfig: {
         id: 'BBEA',
         name: 'Beachmont',
         zones: {
-          n: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          s: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
           e: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           w: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          m: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -2231,38 +1064,12 @@ const stationConfig: {
         id: 'BSUF',
         name: 'Suffolk Downs',
         zones: {
-          n: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          s: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
           e: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           w: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          m: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -2273,38 +1080,17 @@ const stationConfig: {
         id: 'BORH',
         name: 'Orient Heights',
         zones: {
-          n: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          s: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
           e: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           w: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           m: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -2315,38 +1101,17 @@ const stationConfig: {
         id: 'BWOO',
         name: 'Wood Island',
         zones: {
-          n: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          s: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
           e: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           w: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           m: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -2357,38 +1122,12 @@ const stationConfig: {
         id: 'BAIR',
         name: 'Airport',
         zones: {
-          n: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          s: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
           e: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           w: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          m: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -2399,38 +1138,12 @@ const stationConfig: {
         id: 'BMAV',
         name: 'Maverick',
         zones: {
-          n: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          s: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
           e: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           w: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          m: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -2441,38 +1154,17 @@ const stationConfig: {
         id: 'BAQU',
         name: 'Aquarium',
         zones: {
-          n: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          s: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
           e: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           w: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           m: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -2483,38 +1175,17 @@ const stationConfig: {
         id: 'BSTA',
         name: 'State',
         zones: {
-          n: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          s: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
           e: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           w: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           m: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -2525,38 +1196,17 @@ const stationConfig: {
         id: 'BGOV',
         name: 'Government Center',
         zones: {
-          n: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          s: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
           e: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           w: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           m: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -2567,38 +1217,12 @@ const stationConfig: {
         id: 'BBOW',
         name: 'Bowdoin',
         zones: {
-          n: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          s: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
           e: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          w: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           m: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -2615,37 +1239,11 @@ const stationConfig: {
         name: 'Cedar Grove',
         zones: {
           n: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           s: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          e: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          w: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          m: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -2656,38 +1254,7 @@ const stationConfig: {
         id: 'MBUT',
         name: 'Butler',
         zones: {
-          n: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          s: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          e: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          w: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
           c: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          m: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -2699,37 +1266,11 @@ const stationConfig: {
         name: 'Milton',
         zones: {
           n: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           s: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          e: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          w: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          m: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -2741,37 +1282,11 @@ const stationConfig: {
         name: 'Central Ave',
         zones: {
           n: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           s: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          e: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          w: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          m: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -2783,37 +1298,11 @@ const stationConfig: {
         name: 'Valley Rd',
         zones: {
           n: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           s: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          e: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          w: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          m: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -2825,37 +1314,6 @@ const stationConfig: {
         name: 'Capen St',
         zones: {
           n: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          s: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          e: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          w: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          m: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -2871,40 +1329,9 @@ const stationConfig: {
         id: 'SSOU',
         name: 'South Station',
         zones: {
-          n: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: false, off: true,
-            },
-          },
-          s: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: false, off: true,
-            },
-          },
           e: {
-            value: true,
             modes: {
               auto: false, custom: true, headway: false, off: true,
-            },
-          },
-          w: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: false, off: true,
-            },
-          },
-          c: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: false, off: true,
-            },
-          },
-          m: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: false, off: true,
             },
           },
         },
@@ -2913,38 +1340,17 @@ const stationConfig: {
         id: 'SCOU',
         name: 'Courthouse',
         zones: {
-          n: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: false, off: true,
-            },
-          },
-          s: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: false, off: true,
-            },
-          },
           e: {
-            value: true,
             modes: {
               auto: false, custom: true, headway: false, off: true,
             },
           },
           w: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: false, off: true,
-            },
-          },
-          c: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: false, off: true,
             },
           },
           m: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: false, off: true,
             },
@@ -2955,38 +1361,17 @@ const stationConfig: {
         id: 'SWTC',
         name: 'World Trade Center',
         zones: {
-          n: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: false, off: true,
-            },
-          },
-          s: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: false, off: true,
-            },
-          },
           e: {
-            value: true,
             modes: {
               auto: false, custom: true, headway: false, off: true,
             },
           },
           w: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: false, off: true,
-            },
-          },
-          c: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: false, off: true,
             },
           },
           m: {
-            value: true,
             modes: {
               auto: false, custom: true, headway: false, off: true,
             },
@@ -2997,38 +1382,14 @@ const stationConfig: {
         id: 'SEAV',
         name: 'Eastern Ave',
         zones: {
-          n: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: false, off: true,
-            },
-          },
-          s: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: false, off: true,
-            },
-          },
           e: {
-            value: 'Outbound',
+            label: 'Outbound',
             modes: {
               auto: true, custom: true, headway: false, off: true,
             },
           },
           w: {
-            value: 'Inbound',
-            modes: {
-              auto: true, custom: true, headway: false, off: true,
-            },
-          },
-          c: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: false, off: true,
-            },
-          },
-          m: {
-            value: false,
+            label: 'Inbound',
             modes: {
               auto: true, custom: true, headway: false, off: true,
             },
@@ -3039,38 +1400,14 @@ const stationConfig: {
         id: 'SBOX',
         name: 'Box District',
         zones: {
-          n: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: false, off: true,
-            },
-          },
-          s: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: false, off: true,
-            },
-          },
           e: {
-            value: 'Outbound',
+            label: 'Outbound',
             modes: {
               auto: true, custom: true, headway: false, off: true,
             },
           },
           w: {
-            value: 'Inbound',
-            modes: {
-              auto: true, custom: true, headway: false, off: true,
-            },
-          },
-          c: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: false, off: true,
-            },
-          },
-          m: {
-            value: false,
+            label: 'Inbound',
             modes: {
               auto: true, custom: true, headway: false, off: true,
             },
@@ -3081,38 +1418,14 @@ const stationConfig: {
         id: 'SBSQ',
         name: 'Bellingham Sq',
         zones: {
-          n: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: false, off: true,
-            },
-          },
-          s: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: false, off: true,
-            },
-          },
           e: {
-            value: 'Outbound',
+            label: 'Outbound',
             modes: {
               auto: true, custom: true, headway: false, off: true,
             },
           },
           w: {
-            value: 'Inbound',
-            modes: {
-              auto: true, custom: true, headway: false, off: true,
-            },
-          },
-          c: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: false, off: true,
-            },
-          },
-          m: {
-            value: false,
+            label: 'Inbound',
             modes: {
               auto: true, custom: true, headway: false, off: true,
             },
@@ -3123,38 +1436,8 @@ const stationConfig: {
         id: 'SCHS',
         name: 'Chelsea',
         zones: {
-          n: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: false, off: true,
-            },
-          },
-          s: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: false, off: true,
-            },
-          },
-          e: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: false, off: true,
-            },
-          },
           w: {
-            value: 'Inbound',
-            modes: {
-              auto: true, custom: true, headway: false, off: true,
-            },
-          },
-          c: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: false, off: true,
-            },
-          },
-          m: {
-            value: false,
+            label: 'Inbound',
             modes: {
               auto: true, custom: true, headway: false, off: true,
             },
@@ -3170,38 +1453,8 @@ const stationConfig: {
         id: 'GLEC',
         name: 'Lechmere',
         zones: {
-          n: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          s: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          e: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
           w: {
-            value: 'Green Line',
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          m: {
-            value: false,
+            label: 'Green Line',
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -3212,38 +1465,17 @@ const stationConfig: {
         id: 'GSCI',
         name: 'Science Park',
         zones: {
-          n: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          s: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
           e: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           w: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           m: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -3254,38 +1486,18 @@ const stationConfig: {
         id: 'GNST',
         name: 'North Station',
         zones: {
-          n: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          s: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
           e: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           w: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           m: {
-            value: 'CR Exit',
+            label: 'CR Exit',
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -3296,38 +1508,12 @@ const stationConfig: {
         id: 'GHAY',
         name: 'Haymarket',
         zones: {
-          n: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          s: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
           e: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           w: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          m: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -3338,38 +1524,17 @@ const stationConfig: {
         id: 'GGOV',
         name: 'Government Center',
         zones: {
-          n: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          s: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
           e: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           w: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           m: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -3380,38 +1545,13 @@ const stationConfig: {
         id: 'GPRKE',
         name: 'Park St. Eastbound',
         zones: {
-          n: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          s: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
           e: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          w: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           m: {
-            value: 'Winter St Concourse',
+            label: 'Winter St Concourse',
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -3423,37 +1563,13 @@ const stationConfig: {
         name: 'Park St. Westbound',
         zones: {
           n: {
-            value: 'Fence Track',
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          s: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          e: {
-            value: false,
+            label: 'Fence Track',
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           w: {
-            value: 'Wall Track',
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          m: {
-            value: false,
+            label: 'Wall Track',
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -3464,38 +1580,12 @@ const stationConfig: {
         id: 'GBOY',
         name: 'Boylston',
         zones: {
-          n: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          s: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
           e: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           w: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          m: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -3506,38 +1596,17 @@ const stationConfig: {
         id: 'GARL',
         name: 'Arlington',
         zones: {
-          n: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          s: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
           e: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           w: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           m: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -3548,38 +1617,12 @@ const stationConfig: {
         id: 'GCOP',
         name: 'Copley',
         zones: {
-          n: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          s: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
           e: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           w: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          m: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -3590,38 +1633,17 @@ const stationConfig: {
         id: 'GPRU',
         name: 'Prudential',
         zones: {
-          n: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          s: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
           e: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           w: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           m: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -3632,38 +1654,12 @@ const stationConfig: {
         id: 'GSYM',
         name: 'Symphony',
         zones: {
-          n: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          s: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
           e: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           w: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          m: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -3674,38 +1670,17 @@ const stationConfig: {
         id: 'GAUD',
         name: 'Hynes',
         zones: {
-          n: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          s: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
           e: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           w: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           m: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -3717,37 +1692,30 @@ const stationConfig: {
         name: 'Kenmore',
         zones: {
           n: {
-            value: 'C/D East',
+            label: 'C/D East',
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           s: {
-            value: 'C/D West',
+            label: 'C/D West',
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           e: {
-            value: 'B East',
+            label: 'B East',
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           w: {
-            value: 'B West',
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
+            label: 'B West',
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           m: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -3758,38 +1726,12 @@ const stationConfig: {
         id: 'GFEN',
         name: 'Fenway',
         zones: {
-          n: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          s: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
           e: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           w: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          m: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -3800,38 +1742,12 @@ const stationConfig: {
         id: 'GLON',
         name: 'Longwood',
         zones: {
-          n: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          s: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
           e: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           w: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          m: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -3842,38 +1758,12 @@ const stationConfig: {
         id: 'GBRV',
         name: 'Brookline Village',
         zones: {
-          n: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          s: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
           e: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           w: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          m: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -3884,38 +1774,12 @@ const stationConfig: {
         id: 'GBRH',
         name: 'Brookline Hills',
         zones: {
-          n: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          s: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
           e: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           w: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          m: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -3926,38 +1790,12 @@ const stationConfig: {
         id: 'GBEA',
         name: 'Beaconsfield',
         zones: {
-          n: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          s: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
           e: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           w: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          m: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -3968,38 +1806,12 @@ const stationConfig: {
         id: 'GRES',
         name: 'Reservoir',
         zones: {
-          n: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          s: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
           e: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           w: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          m: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -4010,38 +1822,12 @@ const stationConfig: {
         id: 'GCHE',
         name: 'Chestnut Hill',
         zones: {
-          n: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          s: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
           e: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           w: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          m: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -4052,38 +1838,12 @@ const stationConfig: {
         id: 'GNEC',
         name: 'Newton Centre',
         zones: {
-          n: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          s: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
           e: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           w: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          m: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -4094,38 +1854,12 @@ const stationConfig: {
         id: 'GNEH',
         name: 'Newton Highlands',
         zones: {
-          n: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          s: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
           e: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           w: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          m: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -4136,38 +1870,12 @@ const stationConfig: {
         id: 'GELI',
         name: 'Eliot',
         zones: {
-          n: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          s: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
           e: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           w: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          m: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -4178,38 +1886,12 @@ const stationConfig: {
         id: 'GWAB',
         name: 'Waban',
         zones: {
-          n: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          s: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
           e: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           w: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          m: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -4220,38 +1902,12 @@ const stationConfig: {
         id: 'GWOO',
         name: 'Woodland',
         zones: {
-          n: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          s: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
           e: {
-            value: true,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
           },
           w: {
-            value: true,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          m: {
-            value: false,
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -4262,38 +1918,8 @@ const stationConfig: {
         id: 'GRIV',
         name: 'Riverside',
         zones: {
-          n: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          s: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          e: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
           w: {
-            value: 'Entire Station',
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          c: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: true, off: true,
-            },
-          },
-          m: {
-            value: false,
+            label: 'Entire Station',
             modes: {
               auto: true, custom: true, headway: true, off: true,
             },
@@ -4315,37 +1941,37 @@ const stationConfig: {
         },
         zones: {
           n: {
-            value: 'Platform F',
+            label: 'Platform F',
             modes: {
               auto: true, custom: true, headway: false, off: true,
             },
           },
           s: {
-            value: 'Platform C',
+            label: 'Platform C',
             modes: {
               auto: true, custom: true, headway: false, off: true,
             },
           },
           e: {
-            value: 'Platform D',
+            label: 'Platform D',
             modes: {
               auto: true, custom: true, headway: false, off: true,
             },
           },
           w: {
-            value: 'Platform A',
+            label: 'Platform A',
             modes: {
               auto: true, custom: true, headway: false, off: true,
             },
           },
           c: {
-            value: 'Platform E (East)',
+            label: 'Platform E (East)',
             modes: {
               auto: true, custom: true, headway: false, off: true,
             },
           },
           m: {
-            value: 'Platform E (West)',
+            label: 'Platform E (West)',
             modes: {
               auto: true, custom: true, headway: false, off: true,
             },
@@ -4362,37 +1988,13 @@ const stationConfig: {
         },
         zones: {
           n: {
-            value: 'North',
-            modes: {
-              auto: true, custom: true, headway: false, off: true,
-            },
-          },
-          s: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: false, off: true,
-            },
-          },
-          e: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: false, off: true,
-            },
-          },
-          w: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: false, off: true,
-            },
-          },
-          c: {
-            value: false,
+            label: 'North',
             modes: {
               auto: true, custom: true, headway: false, off: true,
             },
           },
           m: {
-            value: 'South',
+            label: 'South',
             modes: {
               auto: true, custom: true, headway: false, off: true,
             },
@@ -4409,37 +2011,13 @@ const stationConfig: {
         },
         zones: {
           n: {
-            value: 'Upper',
-            modes: {
-              auto: true, custom: true, headway: false, off: true,
-            },
-          },
-          s: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: false, off: true,
-            },
-          },
-          e: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: false, off: true,
-            },
-          },
-          w: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: false, off: true,
-            },
-          },
-          c: {
-            value: false,
+            label: 'Upper',
             modes: {
               auto: true, custom: true, headway: false, off: true,
             },
           },
           m: {
-            value: 'Lower',
+            label: 'Lower',
             modes: {
               auto: true, custom: true, headway: false, off: true,
             },
@@ -4451,37 +2029,13 @@ const stationConfig: {
         name: 'Mattapan',
         zones: {
           n: {
-            value: 'South',
+            label: 'South',
             modes: {
               auto: true, custom: true, headway: false, off: true,
             },
           },
           s: {
-            value: 'North',
-            modes: {
-              auto: true, custom: true, headway: false, off: true,
-            },
-          },
-          e: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: false, off: true,
-            },
-          },
-          w: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: false, off: true,
-            },
-          },
-          c: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: false, off: true,
-            },
-          },
-          m: {
-            value: false,
+            label: 'North',
             modes: {
               auto: true, custom: true, headway: false, off: true,
             },
@@ -4492,38 +2046,8 @@ const stationConfig: {
         id: 'SDAV',
         name: 'Davis',
         zones: {
-          n: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: false, off: true,
-            },
-          },
-          s: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: false, off: true,
-            },
-          },
-          e: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: false, off: true,
-            },
-          },
-          w: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: false, off: true,
-            },
-          },
-          c: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: false, off: true,
-            },
-          },
           m: {
-            value: 'Busway',
+            label: 'Busway',
             modes: {
               auto: true, custom: true, headway: false, off: true,
             },
@@ -4540,37 +2064,13 @@ const stationConfig: {
         },
         zones: {
           n: {
-            value: 'Upper (Fence)',
+            label: 'Upper (Fence)',
             modes: {
               auto: true, custom: true, headway: false, off: true,
             },
           },
           s: {
-            value: 'Upper (Island)',
-            modes: {
-              auto: true, custom: true, headway: false, off: true,
-            },
-          },
-          e: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: false, off: true,
-            },
-          },
-          w: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: false, off: true,
-            },
-          },
-          c: {
-            value: false,
-            modes: {
-              auto: true, custom: true, headway: false, off: true,
-            },
-          },
-          m: {
-            value: false,
+            label: 'Upper (Island)',
             modes: {
               auto: true, custom: true, headway: false, off: true,
             },
