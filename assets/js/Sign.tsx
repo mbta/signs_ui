@@ -236,8 +236,15 @@ class Sign extends React.Component<
                   className="viewer--mode-select"
                   value={signConfig.mode}
                   onChange={(event) => {
+                    const newConfig = makeConfig(event.target.value as 'auto' | 'headway' | 'off' | 'static_text');
+                    this.setState({
+                      tipText: false,
+                      staticLine1: newConfig.line1 || '',
+                      staticLine2: newConfig.line2 || '',
+                      customChanges: false,
+                    });
                     setConfigs({
-                      [realtimeId]: makeConfig(event.target.value as 'auto' | 'headway' | 'off' | 'static_text'),
+                      [realtimeId]: newConfig,
                     });
                   }}
                 >
@@ -279,6 +286,7 @@ class Sign extends React.Component<
             )}
             <div>
               <input
+                id={`${realtimeId}-line1-input`}
                 className="viewer--line-input"
                 type="text"
                 maxLength={18}
@@ -289,6 +297,7 @@ class Sign extends React.Component<
             </div>
             <div>
               <input
+                id={`${realtimeId}-line2-input`}
                 className="viewer--line-input"
                 type="text"
                 maxLength={24}

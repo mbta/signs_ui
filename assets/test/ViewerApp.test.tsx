@@ -100,6 +100,43 @@ test('Can enable/disable a sign', () => {
   expect(wrapper.find('#davis_southbound').props().value).toBe('off');
 });
 
+test('Disabling a sign clears any static text', () => {
+  const now = Date.now();
+  const signs = someSignContent(now);
+  const initialSignConfigs: SignConfigs = {
+    davis_southbound: { mode: 'static_text', line1: 'foo', line2: 'bar' },
+  };
+  const readOnly = false;
+  const configuredHeadways = {};
+  const signOutPath = '/path';
+
+  const wrapper = mount(
+    React.createElement(
+      ViewerApp,
+      {
+        initialSigns: signs,
+        initialConfiguredHeadways: configuredHeadways,
+        initialChelseaBridgeAnnouncements: false,
+        initialSignConfigs,
+        readOnly,
+        signOutPath,
+      },
+      null,
+    ),
+  );
+
+  wrapper.find('#red-button').simulate('click');
+  wrapper
+    .find('#davis_southbound')
+    .simulate('change', { target: { value: 'off' } });
+  expect(wrapper.find('#davis_southbound').props().value).toBe('off');
+  wrapper
+    .find('#davis_southbound')
+    .simulate('change', { target: { value: 'static_text' } });
+  expect(wrapper.find('#davis_southbound-line1-input').props().value).toBe('');
+  expect(wrapper.find('#davis_southbound-line2-input').props().value).toBe('');
+});
+
 test('Shows sign out link', () => {
   const now = Date.now();
   const signs = someSignContent(now);
