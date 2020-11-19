@@ -87,7 +87,7 @@ function line1DisplayText(
 
     return `${text.padEnd(19)}${timeString(currentTime)}`;
   }
-  return '';
+  return `${' '.repeat(19)}${timeString(currentTime)}`;
 }
 
 function line2DisplayText(

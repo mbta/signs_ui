@@ -331,3 +331,42 @@ test('does not show the return to auto time field if sign can be set to auto', (
 
   expect(wrapper.html()).not.toMatch('Schedule return to "Auto"');
 });
+
+test('shows clock even when no other content is present', () => {
+  const now = new Date('2019-01-15T20:15:00Z').valueOf();
+  const expired = new Date(now).toLocaleString();
+  const currentTime = now + 2000;
+  const signId = 'RDAV-n';
+  const line = 'Red';
+  const signConfig: SignConfig = { mode: 'auto' };
+  const signContent = signContentWithExpirations(expired, expired);
+  const setConfigs = () => true;
+  const realtimeId = 'id';
+  const readOnly = false;
+  const modes = {
+    auto: true,
+    custom: true,
+    headway: true,
+    off: true,
+  };
+
+  const wrapper = mount(
+    React.createElement(
+      Sign,
+      {
+        signId,
+        signContent,
+        currentTime,
+        line,
+        signConfig,
+        setConfigs,
+        realtimeId,
+        readOnly,
+        modes,
+      },
+      null,
+    ),
+  );
+
+  expect(wrapper.text()).toMatch('3:15');
+});
