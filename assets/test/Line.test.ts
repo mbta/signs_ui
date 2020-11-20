@@ -479,3 +479,27 @@ test('does not show chelsea bridge announcements toggle on non-Silver Line pages
   const chelseaInput = wrapper.find('input[name="chelsea_bridge"]');
   expect(chelseaInput.exists()).toEqual(false);
 });
+
+test('does not show chelsea bridge toggle if in read-only mode', () => {
+  const wrapper = mount(
+    React.createElement(
+      Line,
+      {
+        signs: {},
+        currentTime: Date.now() + 2000,
+        line: 'Silver',
+        signConfigs: {},
+        setConfigs: () => {},
+        readOnly: true,
+        configuredHeadways: {},
+        setConfiguredHeadways: () => {},
+        chelseaBridgeAnnouncements: 'auto',
+        setChelseaBridgeAnnouncements: () => {},
+      }
+    )
+  )
+
+  expect(wrapper.text()).toMatch('Chelsea Drawbridge Announcements:Auto');
+  const chelseaInput = wrapper.find('input[name="chelsea_bridge"]');
+  expect(chelseaInput.exists()).toEqual(false);
+})
