@@ -124,7 +124,9 @@ function Line({
 
       {line === 'Silver' && (
       <label className="mt-1 mb-4">
-        Chelsea Drawbridge Announcements
+        Chelsea Drawbridge Announcements:
+        {readOnly && <em><span className="ml-3">{chelseaBridgeAnnouncements === 'auto' ? 'Auto' : 'Off'}</span></em>}
+        {!readOnly && (
         <div className="switch">
           <input
             name="chelsea_bridge"
@@ -137,6 +139,7 @@ function Line({
           />
           <span className="switch-label">Switch</span>
         </div>
+        )}
       </label>
       )}
       {!readOnly && (
