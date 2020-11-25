@@ -36,6 +36,10 @@ defmodule SignsUiWeb.Router do
     plug(SignsUiWeb.EnsureSignsUiGroup)
   end
 
+  pipeline :basic_auth do
+    plug(BasicAuth)
+  end
+
   scope "/auth", SignsUiWeb do
     pipe_through([:redirect_prod_http, :browser])
 
@@ -55,11 +59,12 @@ defmodule SignsUiWeb.Router do
     pipe_through([
       :redirect_prod_http,
       :browser,
-      :auth,
-      :ensure_auth,
-      :ensure_signs_ui_group,
-      :put_user_token,
-      :put_read_only_view
+      :basic_auth,
+      # :auth,
+      # :ensure_auth,
+      # :ensure_signs_ui_group,
+      :put_user_token
+      # :put_read_only_view
     ])
 
     get("/viewer", MessagesController, :index)
@@ -84,13 +89,13 @@ defmodule SignsUiWeb.Router do
     assign(conn, :user_token, token)
   end
 
-  defp put_read_only_view(conn, _) do
-    if conn
-       |> Guardian.Plug.current_claims()
-       |> SignsUiWeb.AuthManager.claims_access_level() == :read_only do
-      assign(conn, :read_only_view, true)
-    else
-      conn
-    end
-  end
+  # defp put_read_only_view(conn, _) do
+  #   if conn
+  #      |> Guardian.Plug.current_claims()
+  #      |> SignsUiWeb.AuthManager.claims_access_level() == :read_only do
+  #     assign(conn, :read_only_view, true)
+  #   else
+  #     conn
+  #   end
+  # end
 end
