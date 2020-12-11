@@ -41,7 +41,7 @@
     "copy-webpack-plugin": "6.2.1",
     "css-loader": "^4.3.0",
     "dateformat": "^3.0.3",
-    "formik": "2.2.1",
+    "formik": "2.2.6",
     "lodash": "4.17.20",
     "mini-css-extract-plugin": "1.2.0",
     "phoenix": "1.5.6",
