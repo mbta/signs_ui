@@ -1,5 +1,10 @@
-function choosePage(pages: {content: string; duration: number}[], elapsedSeconds: number): string {
-  if (pages.length === 1) { return pages[0].content; }
+function choosePage(
+  pages: { content: string; duration: number }[],
+  elapsedSeconds: number,
+): string {
+  if (pages.length === 1) {
+    return pages[0].content;
+  }
 
   const repeatTime = pages.reduce((acc, pg) => acc + pg.duration, 0);
   let excessTime = elapsedSeconds % repeatTime;

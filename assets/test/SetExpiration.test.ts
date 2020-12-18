@@ -54,7 +54,7 @@ test('Can clear the expiration time', () => {
         mode: 'static_text',
         line1: 'line1',
         line2: 'line2',
-        expires: (new Date()).toISOString(),
+        expires: new Date().toISOString(),
       },
       setConfigs,
       readOnly,
@@ -113,7 +113,7 @@ test('Suppresses widget when no expiration set if in read-only mode', () => {
   expect(wrapper.text()).toBe('');
 });
 
-test('Shows \'Scheduled\' when expiration is set if in read-only mode', () => {
+test("Shows 'Scheduled' when expiration is set if in read-only mode", () => {
   const setConfigs = () => true;
 
   const readOnly = true;
@@ -126,7 +126,7 @@ test('Shows \'Scheduled\' when expiration is set if in read-only mode', () => {
         mode: 'static_text',
         line1: 'line1',
         line2: 'line2',
-        expires: (new Date()).toISOString(),
+        expires: new Date().toISOString(),
       },
       setConfigs,
       readOnly,

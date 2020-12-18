@@ -11,19 +11,21 @@ function isNotExpired(expiration: string, currentTime: number) {
 
 function fontSize(signId: string | boolean | undefined) {
   if (
-    signId === 'NB'
-    || signId === 'SB'
-    || signId === 'EB'
-    || signId === 'WB'
-    || signId === 'MZ'
-    || signId === 'CP'
+    signId === 'NB' ||
+    signId === 'SB' ||
+    signId === 'EB' ||
+    signId === 'WB' ||
+    signId === 'MZ' ||
+    signId === 'CP'
   ) {
     return { fontSize: '1.5em' };
   }
   return {};
 }
 
-function makeConfig(mode: 'auto' | 'headway' | 'off' | 'static_text'): SignConfig {
+function makeConfig(
+  mode: 'auto' | 'headway' | 'off' | 'static_text',
+): SignConfig {
   if (mode === 'auto') {
     return { mode: 'auto' };
   }
@@ -66,19 +68,21 @@ function timeString(currentTime: number) {
 }
 
 function line1DisplayText(
-  lineContent: {
-    text: {
-      content: string;
-      duration: number
-    }[];
-    expiration: string;
-  } | undefined,
+  lineContent:
+    | {
+        text: {
+          content: string;
+          duration: number;
+        }[];
+        expiration: string;
+      }
+    | undefined,
   currentTime: number,
   initialTime: number,
 ) {
   if (
-    lineContent !== undefined
-    && isNotExpired(lineContent.expiration, currentTime)
+    lineContent !== undefined &&
+    isNotExpired(lineContent.expiration, currentTime)
   ) {
     const text = choosePage(
       lineContent.text,
@@ -91,19 +95,21 @@ function line1DisplayText(
 }
 
 function line2DisplayText(
-  lineContent: {
-    text: {
-      content: string;
-      duration: number
-    }[];
-    expiration: string;
-  } | undefined,
+  lineContent:
+    | {
+        text: {
+          content: string;
+          duration: number;
+        }[];
+        expiration: string;
+      }
+    | undefined,
   currentTime: number,
   initialTime: number,
 ) {
   if (
-    lineContent !== undefined
-    && isNotExpired(lineContent.expiration, currentTime)
+    lineContent !== undefined &&
+    isNotExpired(lineContent.expiration, currentTime)
   ) {
     return choosePage(lineContent.text, (currentTime - initialTime) / 1000);
   }
@@ -236,7 +242,13 @@ class Sign extends React.Component<
                   className="viewer--mode-select"
                   value={signConfig.mode}
                   onChange={(event) => {
-                    const newConfig = makeConfig(event.target.value as 'auto' | 'headway' | 'off' | 'static_text');
+                    const newConfig = makeConfig(
+                      event.target.value as
+                        | 'auto'
+                        | 'headway'
+                        | 'off'
+                        | 'static_text',
+                    );
                     this.setState({
                       tipText: false,
                       staticLine1: newConfig.line1 || '',

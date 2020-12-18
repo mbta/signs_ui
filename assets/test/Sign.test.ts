@@ -4,7 +4,10 @@ import { mount } from 'enzyme';
 import Sign from '../js/Sign';
 import { SignConfig, SingleSignContent } from '../js/types';
 
-function signContentWithExpirations(time1: string, time2: string): SingleSignContent {
+function signContentWithExpirations(
+  time1: string,
+  time2: string,
+): SingleSignContent {
   return {
     sign_id: 'RDAV-n',
     lines: {
@@ -80,7 +83,10 @@ test('does not show select in read-only mode', () => {
   const signId = 'RDAV-n';
   const line = 'Red';
   const signConfig: SignConfig = { mode: 'auto' };
-  const signContent: SingleSignContent = signContentWithExpirations(fresh, fresh);
+  const signContent: SingleSignContent = signContentWithExpirations(
+    fresh,
+    fresh,
+  );
   const setConfigs = () => true;
   const realtimeId = 'id';
   const readOnly = true;
@@ -119,12 +125,18 @@ test('shows the mode the sign is in in read-only mode', () => {
   const signId = 'RDAV-n';
   const line = 'Red';
   const signConfig: SignConfig = { mode: 'auto' };
-  const signContent: SingleSignContent = signContentWithExpirations(fresh, fresh);
+  const signContent: SingleSignContent = signContentWithExpirations(
+    fresh,
+    fresh,
+  );
   const setConfigs = () => true;
   const realtimeId = 'id';
   const readOnly = true;
   const modes = {
-    auto: true, off: true, headway: true, custom: true,
+    auto: true,
+    off: true,
+    headway: true,
+    custom: true,
   };
 
   const wrapper = mount(
@@ -191,25 +203,37 @@ test.each([
   [
     { auto: true },
     {
-      auto: true, static_text: false, headway: false, off: false,
+      auto: true,
+      static_text: false,
+      headway: false,
+      off: false,
     },
   ],
   [
     { auto: true, headway: true },
     {
-      auto: true, static_text: false, headway: true, off: false,
+      auto: true,
+      static_text: false,
+      headway: true,
+      off: false,
     },
   ],
   [
     { custom: true },
     {
-      auto: false, static_text: true, headway: false, off: false,
+      auto: false,
+      static_text: true,
+      headway: false,
+      off: false,
     },
   ],
   [
     { off: true },
     {
-      auto: false, static_text: false, headway: false, off: true,
+      auto: false,
+      static_text: false,
+      headway: false,
+      off: true,
     },
   ],
 ])('shows configured mode select options', (modesOverride, expected) => {

@@ -32,21 +32,21 @@
 }
 
 .toggle-btn {
-  border: 2px solid #386BB2;
+  border: 2px solid #386bb2;
 }
 
-input[type="checkbox"].ios8-switch {
+input[type='checkbox'].ios8-switch {
   position: absolute;
   margin: 8px 0 0 16px;
   visibility: hidden;
 }
-input[type="checkbox"].ios8-switch + label {
+input[type='checkbox'].ios8-switch + label {
   position: relative;
   padding: 0 0 0 50px;
-  line-height: 2.0em;
+  line-height: 2em;
 }
-input[type="checkbox"].ios8-switch + label:before {
-  content: "";
+input[type='checkbox'].ios8-switch + label:before {
+  content: '';
   position: absolute;
   display: block;
   left: 0;
@@ -59,8 +59,8 @@ input[type="checkbox"].ios8-switch + label:before {
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
 }
-input[type="checkbox"].ios8-switch + label:after {
-  content: "";
+input[type='checkbox'].ios8-switch + label:after {
+  content: '';
   position: absolute;
   display: block;
   left: 0px;
@@ -73,14 +73,14 @@ input[type="checkbox"].ios8-switch + label:after {
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
 }
-input[type="checkbox"].ios8-switch + label:hover:after {
-  box-shadow: 0 0 5px rgba(0,0,0,0.3);
+input[type='checkbox'].ios8-switch + label:hover:after {
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
-input[type="checkbox"].ios8-switch:checked + label:after {
+input[type='checkbox'].ios8-switch:checked + label:after {
   margin-left: 16px;
 }
-input[type="checkbox"].ios8-switch:checked + label:before {
-  background: #386BB2;
+input[type='checkbox'].ios8-switch:checked + label:before {
+  background: #386bb2;
 }
 
 .switch {
@@ -103,7 +103,7 @@ input[type="checkbox"].ios8-switch:checked + label:before {
 }
 .switch-label::before,
 .switch-label::after {
-  content: "";
+  content: '';
   display: block;
   position: absolute;
   cursor: pointer;
@@ -128,7 +128,7 @@ input[type="checkbox"].ios8-switch:checked + label:before {
   transition: left 0.25s ease;
 }
 .switch-input:checked + .switch-label::before {
-  background-color: #3F87F6;
+  background-color: #3f87f6;
 }
 .switch-input:checked + .switch-label::after {
   left: 24px;

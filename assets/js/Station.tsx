@@ -2,12 +2,20 @@ import * as React from 'react';
 import Sign from './Sign';
 import { arincToRealtimeId } from './mbta';
 import {
-  SignConfig, SignConfigs, SignContent, SingleSignContent, StationConfig, Zone,
+  SignConfig,
+  SignConfigs,
+  SignContent,
+  SingleSignContent,
+  StationConfig,
+  Zone,
 } from './types';
 
 /* eslint-disable camelcase */
 
-function zoneDescription(stationConfig: StationConfig, zone: Zone): boolean | string | undefined {
+function zoneDescription(
+  stationConfig: StationConfig,
+  zone: Zone,
+): boolean | string | undefined {
   const zoneConfig = stationConfig.zones[zone];
 
   if (zoneConfig === undefined) {
@@ -33,19 +41,20 @@ function makeSign(
   config: StationConfig,
   zone: Zone,
   signs: {
-    [x: string]: SingleSignContent
-    |
-    {
-      sign_id: string; lines: {
-        [key: string]: {
-          text: {
-            content: string
-            duration: number
-          }[]
-          expiration: string
-        }
-      };
-    };
+    [x: string]:
+      | SingleSignContent
+      | {
+          sign_id: string;
+          lines: {
+            [key: string]: {
+              text: {
+                content: string;
+                duration: number;
+              }[];
+              expiration: string;
+            };
+          };
+        };
   },
   currentTime: number,
   line: string,
@@ -107,13 +116,7 @@ function Station({
   return (
     <div key={config.id}>
       <h3>
-        {config.name}
-        {' '}
-        <small>
-          (
-          {config.id}
-          )
-        </small>
+        {config.name} <small>({config.id})</small>
       </h3>
       <div className="row">
         <div className="col">

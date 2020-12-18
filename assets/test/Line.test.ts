@@ -3,7 +3,10 @@ import { mount, shallow } from 'enzyme';
 import Line from '../js/Line';
 import ConfiguredHeadwaysForm from '../js/ConfiguredHeadwaysForm';
 import {
-  ConfiguredHeadways, SignConfigs, SignContent, StationConfig,
+  ConfiguredHeadways,
+  SignConfigs,
+  SignContent,
+  StationConfig,
 } from '../js/types';
 
 test('Shows all signs for a line', () => {
@@ -326,54 +329,73 @@ test('Sign config is not affected by batch updates if sign does not support mode
   const setConfiguredHeadways = () => true;
   const readOnly = false;
   const configuredHeadways = {};
-  const stationConfigs: StationConfig[] = [{
-    id: 'RDAV',
-    name: 'Alewife',
-    zonePositions: {
-      left: ['n'],
-      center: [],
-      right: ['m'],
+  const stationConfigs: StationConfig[] = [
+    {
+      id: 'RDAV',
+      name: 'Alewife',
+      zonePositions: {
+        left: ['n'],
+        center: [],
+        right: ['m'],
+      },
+      zones: {
+        n: {
+          value: false,
+          modes: {
+            auto: true,
+            custom: true,
+            headway: false,
+            off: false,
+          },
+        },
+        s: {
+          value: false,
+          modes: {
+            auto: false,
+            custom: true,
+            headway: true,
+            off: false,
+          },
+        },
+        m: {
+          value: true,
+          modes: {
+            auto: false,
+            custom: true,
+            headway: false,
+            off: true,
+          },
+        },
+        e: {
+          value: false,
+          modes: {
+            auto: false,
+            custom: true,
+            headway: false,
+            off: true,
+          },
+        },
+        w: {
+          value: false,
+          modes: {
+            auto: false,
+            custom: true,
+            headway: false,
+            off: false,
+          },
+        },
+        c: {
+          value: true,
+          modes: {
+            auto: false,
+            custom: true,
+            headway: false,
+            off: false,
+          },
+        },
+      },
     },
-    zones: {
-      n: {
-        value: false,
-        modes: {
-          auto: true, custom: true, headway: false, off: false,
-        },
-      },
-      s: {
-        value: false,
-        modes: {
-          auto: false, custom: true, headway: true, off: false,
-        },
-      },
-      m: {
-        value: true,
-        modes: {
-          auto: false, custom: true, headway: false, off: true,
-        },
-      },
-      e: {
-        value: false,
-        modes: {
-          auto: false, custom: true, headway: false, off: true,
-        },
-      },
-      w: {
-        value: false,
-        modes: {
-          auto: false, custom: true, headway: false, off: false,
-        },
-      },
-      c: {
-        value: true,
-        modes: {
-          auto: false, custom: true, headway: false, off: false,
-        },
-      },
-
-    },
-  }];
+  ];
 
   const wrapper = mount(
     React.createElement(
@@ -422,7 +444,6 @@ test('Sign config is not affected by batch updates if sign does not support mode
     },
   });
 });
-
 
 test('can toggle chelsea bridge announcements on and off on Silver Line page', () => {
   const setChelseaBridgeAnnouncements = jest.fn(() => true);
@@ -482,24 +503,21 @@ test('does not show chelsea bridge announcements toggle on non-Silver Line pages
 
 test('does not show chelsea bridge toggle if in read-only mode', () => {
   const wrapper = mount(
-    React.createElement(
-      Line,
-      {
-        signs: {},
-        currentTime: Date.now() + 2000,
-        line: 'Silver',
-        signConfigs: {},
-        setConfigs: () => {},
-        readOnly: true,
-        configuredHeadways: {},
-        setConfiguredHeadways: () => {},
-        chelseaBridgeAnnouncements: 'auto',
-        setChelseaBridgeAnnouncements: () => {},
-      }
-    )
-  )
+    React.createElement(Line, {
+      signs: {},
+      currentTime: Date.now() + 2000,
+      line: 'Silver',
+      signConfigs: {},
+      setConfigs: () => {},
+      readOnly: true,
+      configuredHeadways: {},
+      setConfiguredHeadways: () => {},
+      chelseaBridgeAnnouncements: 'auto',
+      setChelseaBridgeAnnouncements: () => {},
+    }),
+  );
 
   expect(wrapper.text()).toMatch('Chelsea Drawbridge Announcements:Auto');
   const chelseaInput = wrapper.find('input[name="chelsea_bridge"]');
   expect(chelseaInput.exists()).toEqual(false);
-})
+});
