@@ -11,8 +11,8 @@ interface ViewerProps {
   setConfigs: (x: SignConfigs) => void;
   setConfiguredHeadways: (x: ConfiguredHeadways) => void;
   readOnly: boolean;
-  chelseaBridgeAnnouncements: 'auto' | 'off'
-  setChelseaBridgeAnnouncements: (x: 'auto' | 'off') => void
+  chelseaBridgeAnnouncements: 'auto' | 'off';
+  setChelseaBridgeAnnouncements: (x: 'auto' | 'off') => void;
 }
 
 function Viewer({

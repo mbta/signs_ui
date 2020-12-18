@@ -10,7 +10,7 @@ type ZoneConfig = {
     headway: boolean;
     custom: boolean;
   };
-}
+};
 
 type ConfigByZone = {
   [key: string]: ZoneConfig;
@@ -20,49 +20,61 @@ type ConfigByZone = {
   w: ZoneConfig;
   c: ZoneConfig;
   m: ZoneConfig;
-}
+};
 
 type StationConfig = {
-    id: string;
-    name: string;
-    zonePositions?: {
-      left: Zone[];
-      right: Zone[];
-      center: Zone[];
-    };
-    zones: Partial<ConfigByZone>;
-  }
+  id: string;
+  name: string;
+  zonePositions?: {
+    left: Zone[];
+    right: Zone[];
+    center: Zone[];
+  };
+  zones: Partial<ConfigByZone>;
+};
 
-type SignConfig = { id?: string, mode: 'auto' | 'headway' | 'off' | 'static_text', expires?: string | null, line1?: string; line2?: string}
+type SignConfig = {
+  id?: string;
+  mode: 'auto' | 'headway' | 'off' | 'static_text';
+  expires?: string | null;
+  line1?: string;
+  line2?: string;
+};
 
-type SignConfigs = {[id: string]: SignConfig}
+type SignConfigs = { [id: string]: SignConfig };
 
 type SingleSignContent = {
-  sign_id: string
+  sign_id: string;
   lines: {
     [key: string]: {
       text: {
-        content: string
-        duration: number
-      }[]
-      expiration: string
-    }
-  }
-}
+        content: string;
+        duration: number;
+      }[];
+      expiration: string;
+    };
+  };
+};
 
 type SignContent = {
-  [id: string]: SingleSignContent
-}
+  [id: string]: SingleSignContent;
+};
 
 type ConfiguredHeadways = {
   [id: string]: {
     [timePeriod: string]: {
-      range_low: number,
-      range_high: number
-    }
-  }
-}
+      range_low: number;
+      range_high: number;
+    };
+  };
+};
 
 export {
-  StationConfig, SignConfig, SignConfigs, SingleSignContent, SignContent, ConfiguredHeadways, Zone,
+  StationConfig,
+  SignConfig,
+  SignConfigs,
+  SingleSignContent,
+  SignContent,
+  ConfiguredHeadways,
+  Zone,
 };

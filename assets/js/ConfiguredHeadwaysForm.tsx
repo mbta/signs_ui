@@ -1,10 +1,6 @@
 import * as React from 'react';
-import {
-  Formik, Form, Field, FieldArray,
-} from 'formik';
-import {
-  object, string, array, number, ref,
-} from 'yup';
+import { Formik, Form, Field, FieldArray } from 'formik';
+import { object, string, array, number, ref } from 'yup';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { timePeriodConfig } from './mbta';
@@ -17,11 +13,11 @@ interface ConfiguredHeadwaysFormProps {
     id: string;
     name: string;
     [timePeriodId: string]:
-        | {
-            range_high: number;
-            range_low: number;
-          }
-        | string;
+      | {
+          range_high: number;
+          range_low: number;
+        }
+      | string;
   }[];
   timePeriods?: {
     id: string;
@@ -41,25 +37,26 @@ const ConfiguredHeadwaysForm = ({
   timePeriods = timePeriodConfig,
 }: ConfiguredHeadwaysFormProps) => {
   const formSchema = React.useMemo(
-    () => object().shape({
-      branches: array().of(
-        object().shape(
-          timePeriods.reduce(
-            (acc, curr) => ({
-              ...acc,
-              [curr.id]: object().shape({
-                range_low: number().required().positive(),
-                range_high: number()
-                  .required()
-                  .positive()
-                  .moreThan(ref('range_low')),
+    () =>
+      object().shape({
+        branches: array().of(
+          object().shape(
+            timePeriods.reduce(
+              (acc, curr) => ({
+                ...acc,
+                [curr.id]: object().shape({
+                  range_low: number().required().positive(),
+                  range_high: number()
+                    .required()
+                    .positive()
+                    .moreThan(ref('range_low')),
+                }),
               }),
-            }),
-            { id: string().required() },
+              { id: string().required() },
+            ),
           ),
         ),
-      ),
-    }),
+      }),
     [timePeriods],
   );
 
@@ -92,16 +89,16 @@ const ConfiguredHeadwaysForm = ({
 
   const handleSubmit = React.useCallback(
     (values: {
-        branches: {
-          id: string;
-          [timePeriodId: string]:
-            | {
-                range_high: number;
-                range_low: number;
-              }
-            | string;
-        }[];
-      }) => {
+      branches: {
+        id: string;
+        [timePeriodId: string]:
+          | {
+              range_high: number;
+              range_low: number;
+            }
+          | string;
+      }[];
+    }) => {
       const newConfig = values.branches.reduce(
         (branchAcc, branchCurr, index) => ({
           ...branchAcc,

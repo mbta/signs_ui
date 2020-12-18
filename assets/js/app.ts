@@ -12,11 +12,11 @@ import { ConfiguredHeadways, SignConfigs, SignContent } from './types';
 declare global {
   interface Window {
     signOutPath: string;
-    initialSignsData: SignContent
-    initialSignConfigs: SignConfigs
-    readOnly: boolean
-    initialChelseaBridgeAnnouncements: 'auto' | 'off'
-    initialConfiguredHeadways: ConfiguredHeadways
+    initialSignsData: SignContent;
+    initialSignConfigs: SignConfigs;
+    readOnly: boolean;
+    initialChelseaBridgeAnnouncements: 'auto' | 'off';
+    initialConfiguredHeadways: ConfiguredHeadways;
   }
 }
 
@@ -30,13 +30,17 @@ if (realtimeRoot) {
     initialConfiguredHeadways,
     signOutPath,
   } = window;
-  const viewerApp = React.createElement(ViewerApp, {
-    initialSigns,
-    initialSignConfigs,
-    readOnly,
-    initialConfiguredHeadways,
-    signOutPath,
-    initialChelseaBridgeAnnouncements,
-  }, null);
+  const viewerApp = React.createElement(
+    ViewerApp,
+    {
+      initialSigns,
+      initialSignConfigs,
+      readOnly,
+      initialConfiguredHeadways,
+      signOutPath,
+      initialChelseaBridgeAnnouncements,
+    },
+    null,
+  );
   ReactDOM.render(viewerApp, realtimeRoot);
 }

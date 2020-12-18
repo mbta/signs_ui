@@ -6,7 +6,10 @@ import { StationConfig } from '../js/types';
 
 test('shows the custom configuration information for a station', () => {
   const modes = {
-    auto: true, custom: true, off: true, headway: true,
+    auto: true,
+    custom: true,
+    off: true,
+    headway: true,
   };
   const config: StationConfig = {
     id: 'OMAL',
@@ -44,7 +47,10 @@ test('shows the custom configuration information for a station', () => {
 
 test('allows custom reordering of sign positions', () => {
   const modes = {
-    auto: true, custom: true, off: true, headway: true,
+    auto: true,
+    custom: true,
+    off: true,
+    headway: true,
   };
   const config: StationConfig = {
     id: 'OGRE',

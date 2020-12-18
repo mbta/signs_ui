@@ -30,7 +30,7 @@ class ViewerApp extends React.Component<
     readOnly: boolean;
     signOutPath: string;
     line?: string;
-    chelseaBridgeAnnouncements: 'auto' | 'off'
+    chelseaBridgeAnnouncements: 'auto' | 'off';
   }
 > {
   private timerID?: ReturnType<typeof setTimeout>;
@@ -40,7 +40,9 @@ class ViewerApp extends React.Component<
 
     this.setConfigs = this.setConfigs.bind(this);
     this.setConfiguredHeadways = this.setConfiguredHeadways.bind(this);
-    this.setChelseaBridgeAnnouncements = this.setChelseaBridgeAnnouncements.bind(this);
+    this.setChelseaBridgeAnnouncements = this.setChelseaBridgeAnnouncements.bind(
+      this,
+    );
     this.changeLine = this.changeLine.bind(this);
     this.updateTime = this.updateTime.bind(this);
     this.state = {
@@ -51,7 +53,8 @@ class ViewerApp extends React.Component<
       channel: null,
       readOnly: props.readOnly,
       signOutPath: props.signOutPath,
-      chelseaBridgeAnnouncements: props.initialChelseaBridgeAnnouncements || 'off',
+      chelseaBridgeAnnouncements:
+        props.initialChelseaBridgeAnnouncements || 'off',
     };
   }
 
