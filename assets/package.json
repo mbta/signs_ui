@@ -31,7 +31,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "1.2.32",
     "@fortawesome/free-solid-svg-icons": "5.15.1",
-    "@fortawesome/react-fontawesome": "^0.1.10",
+    "@fortawesome/react-fontawesome": "^0.1.14",
     "@types/dateformat": "^3.0.1",
     "@types/enzyme": "^3.10.8",
     "@types/jest": "^26.0.15",
