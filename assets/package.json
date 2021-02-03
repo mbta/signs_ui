@@ -1,7 +1,7 @@
 {
   "private": true,
   "devDependencies": {
-    "@testing-library/react": "11.0.4",
+    "@testing-library/react": "11.2.5",
     "babel-jest": "^26.1.0",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
