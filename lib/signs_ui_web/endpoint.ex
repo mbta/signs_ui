@@ -33,6 +33,8 @@ defmodule SignsUiWeb.Endpoint do
     json_decoder: Jason
   )
 
+  plug(Sentry.PlugContext)
+
   plug(Plug.MethodOverride)
   plug(Plug.Head)
 

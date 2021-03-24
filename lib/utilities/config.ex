@@ -4,4 +4,10 @@ defmodule SignsUi.Utilities.Config do
       Application.put_env(:signs_ui, key, val)
     end
   end
+
+  def update_env(app, key, val) do
+    if is_nil(Application.get_env(app, key)) do
+      Application.put_env(app, key, val)
+    end
+  end
 end

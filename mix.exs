@@ -48,8 +48,8 @@ defmodule SignsUi.Mixfile do
       {:phoenix_html, "~> 2.10"},
       {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:gettext, "~> 0.11"},
-      {:cowboy, "~> 1.0"},
-      {:plug_cowboy, "~> 1.0"},
+      {:cowboy, "~> 2.7"},
+      {:plug_cowboy, "~> 2.3"},
       {:jason, "~> 1.2.0"},
       {:httpoison, "~> 1.0"},
       {:ex_aws, "~> 2.0"},
@@ -60,7 +60,8 @@ defmodule SignsUi.Mixfile do
       {:ueberauth, "~> 0.1"},
       {:ueberauth_cognito, "~> 0.1"},
       {:nimble_parsec, "~> 1.0"},
-      {:sobelow, "~> 0.8", only: :dev}
+      {:sobelow, "~> 0.8", only: :dev},
+      {:sentry, "~> 8.0"}
     ]
   end
 end
