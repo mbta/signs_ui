@@ -48,7 +48,6 @@ defmodule SignsUi.Mixfile do
       {:phoenix_html, "~> 2.10"},
       {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:gettext, "~> 0.11"},
-      {:cowboy, "~> 2.7"},
       {:plug_cowboy, "~> 2.3"},
       {:jason, "~> 1.2.0"},
       {:httpoison, "~> 1.0"},
