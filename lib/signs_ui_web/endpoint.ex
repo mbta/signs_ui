@@ -1,4 +1,5 @@
 defmodule SignsUiWeb.Endpoint do
+  use Sentry.PlugCapture
   use Phoenix.Endpoint, otp_app: :signs_ui
 
   socket("/socket", SignsUiWeb.UserSocket, websocket: true)
