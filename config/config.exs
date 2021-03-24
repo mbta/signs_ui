@@ -28,12 +28,21 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:messages_api_user, :user_id]
 
+config :logger,
+  backends: [:console, Sentry.LoggerBackend]
+
 config :ueberauth, Ueberauth,
   providers: [
     cognito: {SignsUi.Ueberauth.Strategy.Fake, []}
   ]
 
 config :phoenix, :json_library, Jason
+
+config :sentry,
+  enable_source_code_context: true,
+  root_source_code_paths: [File.cwd!()],
+  included_environments: ~w(dev prod),
+  in_app_module_allow_list: [SignsUi, SignsUiWeb]
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
