@@ -41,7 +41,8 @@ config :phoenix, :json_library, Jason
 config :sentry,
   enable_source_code_context: true,
   root_source_code_path: File.cwd!(),
-  included_environments: ~w(dev prod)
+  included_environments: ~w(dev prod),
+  in_app_module_allow_list: [SignsUi, SignsUiWeb]
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
