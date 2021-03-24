@@ -74,6 +74,11 @@ defmodule SignsUiWeb.Router do
     post("/messages", MessagesController, :create)
   end
 
+  scope "/", SignsUiWeb do
+    get("/_five_hundred", ErrorController, :five_hundred)
+    get("/_raise", ErrorController, :raise)
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", SignsUiWeb do
   #   pipe_through :api
