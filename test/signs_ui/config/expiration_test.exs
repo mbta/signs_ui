@@ -51,7 +51,7 @@ defmodule SignsUi.Config.ExpirationTest do
       }
 
       assert SignsUi.Config.Expiration.expire_signs(state, fn ->
-               Timex.to_datetime(~N[2019-01-15 08:00:00], "America/New_York")
+               DateTime.new!(~D[2019-01-15], ~T[08:00:00], "America/New_York")
              end) == expected_updates
     end
   end
@@ -66,7 +66,7 @@ defmodule SignsUi.Config.ExpirationTest do
 
       state = %{
         time_fetcher: fn ->
-          Timex.to_datetime(~N[2019-01-15 08:00:00], "America/New_York")
+          DateTime.new!(~D[2019-01-15], ~T[08:00:00], "America/New_York")
         end,
         loop_ms: 5_000,
         sign_state_server: :sign_state_test
