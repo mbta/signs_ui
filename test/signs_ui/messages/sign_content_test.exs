@@ -4,13 +4,13 @@ defmodule SignsUi.Messages.SignContentTest do
 
   describe "new/3" do
     test "parses a full message with all its parts" do
-      now = Timex.now()
+      now = DateTime.now!("Etc/UTC")
       command = ~s(e145~w1-"Riverside    4 min")
 
       assert SignContent.new("OSTA", command, now) ==
                {:ok,
                 %SignContent{
-                  expiration: Timex.shift(now, seconds: 145),
+                  expiration: DateTime.add(now, 145),
                   line_number: 1,
                   pages: ["Riverside    4 min"],
                   station: "OSTA",
@@ -35,10 +35,10 @@ defmodule SignsUi.Messages.SignContentTest do
     end
 
     test "parses the expiration" do
-      now = Timex.now()
-      in_1_sec = Timex.shift(now, seconds: 1)
-      in_15_sec = Timex.shift(now, seconds: 15)
-      in_157_sec = Timex.shift(now, seconds: 157)
+      now = DateTime.now!("Etc/UTC")
+      in_1_sec = DateTime.add(now, 1)
+      in_15_sec = DateTime.add(now, 15)
+      in_157_sec = DateTime.add(now, 157)
 
       assert {:ok, %SignContent{expiration: ^in_1_sec}} =
                SignContent.new("XYZ", ~s(e1~e1-"xyz"), now)

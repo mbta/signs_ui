@@ -58,7 +58,7 @@ defmodule SignsUi.Mixfile do
       {:plug_cowboy, "~> 2.3"},
       {:sentry, "~> 8.0"},
       {:sobelow, "~> 0.8", only: :dev},
-      {:timex, "~> 3.1"},
+      {:tzdata, "~> 1.1"},
       {:ueberauth_cognito, "~> 0.1"},
       {:ueberauth, "~> 0.1"}
     ]

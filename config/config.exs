@@ -44,6 +44,8 @@ config :sentry,
   included_environments: ~w(dev prod),
   in_app_module_allow_list: [SignsUi, SignsUiWeb]
 
+config :elixir, :time_zone_database, Tzdata.TimeZoneDatabase
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"
