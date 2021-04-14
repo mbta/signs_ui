@@ -40,27 +40,27 @@ defmodule SignsUi.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:excoveralls, "~> 0.13.0", only: :test},
       {:dialyxir, "~> 1.0.0-rc.4", only: [:dev, :test], runtime: false},
       {:distillery, "~> 2.1.1", runtime: false},
-      {:phoenix, "~> 1.4.17"},
-      {:phoenix_pubsub, "~> 1.0"},
+      {:ex_aws_s3, "~> 2.0"},
+      {:ex_aws, "~> 2.0"},
+      {:excoveralls, "~> 0.13.0", only: :test},
+      {:gettext, "~> 0.11"},
+      {:guardian_phoenix, "~> 2.0"},
+      {:guardian, "~> 2.0"},
+      {:httpoison, "~> 1.0"},
+      {:jason, "~> 1.2.0"},
+      {:nimble_parsec, "~> 1.0"},
       {:phoenix_html, "~> 2.10"},
       {:phoenix_live_reload, "~> 1.0", only: :dev},
-      {:gettext, "~> 0.11"},
+      {:phoenix_pubsub, "~> 1.0"},
+      {:phoenix, "~> 1.4.17"},
       {:plug_cowboy, "~> 2.3"},
-      {:jason, "~> 1.2.0"},
-      {:httpoison, "~> 1.0"},
-      {:ex_aws, "~> 2.0"},
-      {:ex_aws_s3, "~> 2.0"},
-      {:timex, "~> 3.1"},
-      {:guardian, "~> 2.0"},
-      {:guardian_phoenix, "~> 2.0"},
-      {:ueberauth, "~> 0.1"},
-      {:ueberauth_cognito, "~> 0.1"},
-      {:nimble_parsec, "~> 1.0"},
+      {:sentry, "~> 8.0"},
       {:sobelow, "~> 0.8", only: :dev},
-      {:sentry, "~> 8.0"}
+      {:timex, "~> 3.1"},
+      {:ueberauth_cognito, "~> 0.1"},
+      {:ueberauth, "~> 0.1"}
     ]
   end
 end
