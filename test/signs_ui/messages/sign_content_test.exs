@@ -4,7 +4,7 @@ defmodule SignsUi.Messages.SignContentTest do
 
   describe "new/3" do
     test "parses a full message with all its parts" do
-      now = DateTime.now!("Etc/UTC")
+      now = DateTime.utc_now()
       command = ~s(e145~w1-"Riverside    4 min")
 
       assert SignContent.new("OSTA", command, now) ==
@@ -35,7 +35,7 @@ defmodule SignsUi.Messages.SignContentTest do
     end
 
     test "parses the expiration" do
-      now = DateTime.now!("Etc/UTC")
+      now = DateTime.utc_now()
       in_1_sec = DateTime.add(now, 1)
       in_15_sec = DateTime.add(now, 15)
       in_157_sec = DateTime.add(now, 157)

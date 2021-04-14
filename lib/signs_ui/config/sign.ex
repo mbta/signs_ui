@@ -14,19 +14,22 @@ defmodule SignsUi.Config.Sign do
 
   @type headway :: %{
           mode: :headway,
-          expires: expires_on() | nil
+          expires: expires_on() | nil,
+          alert_id: String.t() | nil
         }
 
   @type off :: %{
           mode: :off,
-          expires: expires_on() | nil
+          expires: expires_on() | nil,
+          alert_id: String.t() | nil
         }
 
   @type static_text :: %{
           mode: :static_text,
           line1: String.t(),
           line2: String.t(),
-          expires: expires_on() | nil
+          expires: expires_on() | nil,
+          alert_id: String.t() | nil
         }
 
   @type t :: %__MODULE__{
@@ -47,7 +50,7 @@ defmodule SignsUi.Config.Sign do
   end
 
   def new(id, false) do
-    %__MODULE__{id: id, config: %{mode: :off, expires: nil}}
+    %__MODULE__{id: id, config: %{mode: :off, expires: nil, alert_id: nil}}
   end
 
   @spec expiration_from_string(String.t() | nil) :: expires_on()
@@ -75,7 +78,8 @@ defmodule SignsUi.Config.Sign do
       id: sign_id,
       config: %{
         mode: :headway,
-        expires: expiration_from_string(config["expires"])
+        expires: expiration_from_string(config["expires"]),
+        alert_id: config["alert_id"]
       }
     }
   end
@@ -85,7 +89,8 @@ defmodule SignsUi.Config.Sign do
       id: sign_id,
       config: %{
         mode: :off,
-        expires: expiration_from_string(config["expires"])
+        expires: expiration_from_string(config["expires"]),
+        alert_id: config["alert_id"]
       }
     }
   end
@@ -97,49 +102,8 @@ defmodule SignsUi.Config.Sign do
         mode: :static_text,
         line1: config["line1"],
         line2: config["line2"],
-        expires: expiration_from_string(config["expires"])
-      }
-    }
-  end
-
-  @spec from_config(String.t(), map()) :: t()
-  def from_config(sign_id, %{"mode" => "auto"}) do
-    %__MODULE__{id: sign_id, config: %{mode: :auto}}
-  end
-
-  def from_config(sign_id, %{"mode" => "off", "expires" => expires}) do
-    %__MODULE__{
-      id: sign_id,
-      config: %{
-        mode: :off,
-        expires: expiration_from_string(expires)
-      }
-    }
-  end
-
-  def from_config(sign_id, %{"mode" => "headway", "expires" => expires}) do
-    %__MODULE__{
-      id: sign_id,
-      config: %{
-        mode: :headway,
-        expires: expiration_from_string(expires)
-      }
-    }
-  end
-
-  def from_config(sign_id, %{
-        "mode" => "static_text",
-        "expires" => expires,
-        "line1" => line1,
-        "line2" => line2
-      }) do
-    %__MODULE__{
-      id: sign_id,
-      config: %{
-        mode: :static_text,
-        expires: expiration_from_string(expires),
-        line1: line1,
-        line2: line2
+        expires: expiration_from_string(config["expires"]),
+        alert_id: config["alert_id"]
       }
     }
   end
@@ -160,7 +124,8 @@ defmodule SignsUi.Config.Sign do
     %{
       "id" => sign.id,
       "mode" => "off",
-      "expires" => expiration_to_iso8601(sign.config.expires)
+      "expires" => expiration_to_iso8601(sign.config.expires),
+      "alert_id" => sign.config.alert_id
     }
   end
 
@@ -168,7 +133,8 @@ defmodule SignsUi.Config.Sign do
     %{
       "id" => sign.id,
       "mode" => "headway",
-      "expires" => expiration_to_iso8601(sign.config.expires)
+      "expires" => expiration_to_iso8601(sign.config.expires),
+      "alert_id" => sign.config.alert_id
     }
   end
 
@@ -178,7 +144,8 @@ defmodule SignsUi.Config.Sign do
       "mode" => "static_text",
       "line1" => sign.config.line1,
       "line2" => sign.config.line2,
-      "expires" => expiration_to_iso8601(sign.config.expires)
+      "expires" => expiration_to_iso8601(sign.config.expires),
+      "alert_id" => sign.config.alert_id
     }
   end
 end

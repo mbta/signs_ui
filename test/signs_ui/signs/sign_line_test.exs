@@ -4,7 +4,7 @@ defmodule SignsUi.Signs.SignLineTest do
   alias SignsUi.Signs.SignLine
   alias SignsUi.Messages.SignContent
 
-  @now DateTime.now!("Etc/UTC")
+  @now DateTime.utc_now()
 
   @message %SignContent{
     station: "STA",

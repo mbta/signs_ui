@@ -20,7 +20,7 @@ defmodule SignsUi.Config.SignTest do
 
       expected = %Sign{
         id: "Sign",
-        config: %{mode: :off, expires: expires_dt}
+        config: %{mode: :off, expires: expires_dt, alert_id: nil}
       }
 
       assert from_json("Sign", values) == expected
@@ -29,7 +29,7 @@ defmodule SignsUi.Config.SignTest do
     test "builds a Sign struct in 'headway' mode from json" do
       values = %{"mode" => "headway", "expires" => @expires}
       {:ok, expires_dt, 0} = DateTime.from_iso8601(@expires)
-      expected = %Sign{id: "Sign", config: %{mode: :headway, expires: expires_dt}}
+      expected = %Sign{id: "Sign", config: %{mode: :headway, expires: expires_dt, alert_id: nil}}
       assert from_json("Sign", values) == expected
     end
 
@@ -49,7 +49,8 @@ defmodule SignsUi.Config.SignTest do
           mode: :static_text,
           expires: expires_dt,
           line1: "line1 text",
-          line2: "line2 text"
+          line2: "line2 text",
+          alert_id: nil
         }
       }
 
@@ -61,7 +62,7 @@ defmodule SignsUi.Config.SignTest do
 
       expected = %Sign{
         id: "Sign",
-        config: %{mode: :off, expires: nil}
+        config: %{mode: :off, expires: nil, alert_id: nil}
       }
 
       log =
@@ -84,24 +85,26 @@ defmodule SignsUi.Config.SignTest do
 
       sign = %Sign{
         id: "sign",
-        config: %{mode: :headway, expires: expires_dt}
+        config: %{mode: :headway, expires: expires_dt, alert_id: nil}
       }
 
       assert to_json(sign) == %{
                "id" => "sign",
                "mode" => "headway",
-               "expires" => @expires
+               "expires" => @expires,
+               "alert_id" => nil
              }
     end
 
     test "serializes an Off sign" do
       {:ok, expires_dt, 0} = DateTime.from_iso8601(@expires)
-      sign = %Sign{id: "sign", config: %{mode: :off, expires: expires_dt}}
+      sign = %Sign{id: "sign", config: %{mode: :off, expires: expires_dt, alert_id: nil}}
 
       assert to_json(sign) == %{
                "id" => "sign",
                "mode" => "off",
-               "expires" => @expires
+               "expires" => @expires,
+               "alert_id" => nil
              }
     end
 
@@ -110,7 +113,13 @@ defmodule SignsUi.Config.SignTest do
 
       sign = %Sign{
         id: "sign",
-        config: %{mode: :static_text, expires: expires_dt, line1: "l1", line2: "l2"}
+        config: %{
+          mode: :static_text,
+          expires: expires_dt,
+          line1: "l1",
+          line2: "l2",
+          alert_id: nil
+        }
       }
 
       assert to_json(sign) == %{
@@ -118,7 +127,8 @@ defmodule SignsUi.Config.SignTest do
                "mode" => "static_text",
                "expires" => @expires,
                "line1" => "l1",
-               "line2" => "l2"
+               "line2" => "l2",
+               "alert_id" => nil
              }
     end
   end
