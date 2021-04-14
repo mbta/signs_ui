@@ -1,6 +1,5 @@
 defmodule SignsUiWeb.AuthManager.ErrorHandlerTest do
   use SignsUiWeb.ConnCase
-  use Plug.Test
   import Test.Support.Helpers
 
   setup do

@@ -10,7 +10,7 @@ config :signs_ui, SignsUiWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "local_secret_key_base_at_least_64_bytes_________________________________",
   render_errors: [view: SignsUiWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: SignsUi.PubSub, adapter: Phoenix.PubSub.PG2]
+  pubsub_server: SignsUi.PubSub
 
 # Internal configuration
 config :signs_ui,

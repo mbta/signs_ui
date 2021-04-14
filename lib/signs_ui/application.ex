@@ -7,6 +7,8 @@ defmodule SignsUi.Application do
     set_runtime_config()
 
     children = [
+      # Start the PubSub system
+      {Phoenix.PubSub, name: SignsUi.PubSub},
       SignsUiWeb.Endpoint,
       SignsUi.Config.State,
       {SignsUi.Signs.State, [name: SignsUi.Signs.State]},
