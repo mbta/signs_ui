@@ -37,6 +37,7 @@ type SignConfig = {
   id?: string;
   mode: 'auto' | 'headway' | 'off' | 'static_text';
   expires?: string | null;
+  alert_id?: string | null;
   line1?: string;
   line2?: string;
 };
@@ -69,7 +70,18 @@ type ConfiguredHeadways = {
   };
 };
 
+type Alerts = {
+  [routeId: string]: {
+    [id: string]: {
+      id: string;
+      created_at: string;
+      service_effect: string;
+    };
+  };
+};
+
 export {
+  Alerts,
   StationConfig,
   SignConfig,
   SignConfigs,

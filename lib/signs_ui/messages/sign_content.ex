@@ -52,7 +52,7 @@ defmodule SignsUi.Messages.SignContent do
   defparsec(:parse_command, command)
 
   @spec new(String.t(), String.t(), DateTime.t()) :: {:ok, t()} | {:error, any()}
-  def new(station, command, now \\ DateTime.now!("Etc/UTC")) when is_binary(station) do
+  def new(station, command, now \\ DateTime.utc_now()) when is_binary(station) do
     case parse_command(command) do
       {:ok, [exp_sec, zone, line_number | pages], _rest, _ctx, _line, _col} ->
         {:ok,

@@ -10,7 +10,7 @@ defmodule SignsUiWeb.SignsChannel do
   @spec handle_in(String.t(), %{Sign.id() => map()}, any()) :: {:noreply, Phoenix.Socket.t()}
   def handle_in("changeSigns", changes, socket) do
     with_admin_access(socket, fn ->
-      new_signs = Map.new(changes, fn {id, config} -> {id, Sign.from_config(id, config)} end)
+      new_signs = Map.new(changes, fn {id, config} -> {id, Sign.from_json(id, config)} end)
 
       {:ok, _new_state} = SignsUi.Config.State.update_sign_configs(new_signs)
 

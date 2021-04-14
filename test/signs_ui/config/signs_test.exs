@@ -13,7 +13,7 @@ defmodule SignsUi.Config.SignsTest do
     test "puts all signs in json format" do
       expected = %{
         "sign1" => %{"id" => "sign1", "mode" => "auto"},
-        "sign2" => %{"id" => "sign2", "mode" => "off", "expires" => nil},
+        "sign2" => %{"id" => "sign2", "mode" => "off", "expires" => nil, "alert_id" => nil},
         "sign3" => %{"id" => "sign3", "mode" => "auto"}
       }
 

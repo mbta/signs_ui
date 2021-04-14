@@ -8,7 +8,7 @@ defmodule SignsUi.Signs.StateTest do
 
   test "receives a message and stores the sign in the state" do
     {:ok, pid} = State.start_link()
-    now = DateTime.now!("Etc/UTC")
+    now = DateTime.utc_now()
     later = now |> DateTime.add(150)
 
     msg = %SignContent{
@@ -42,7 +42,7 @@ defmodule SignsUi.Signs.StateTest do
         lines: %{
           1 => %SignLine{
             text: [{"Alewife 1 min", 5}],
-            expiration: DateTime.now!("Etc/UTC")
+            expiration: DateTime.utc_now()
           }
         }
       }
@@ -52,7 +52,7 @@ defmodule SignsUi.Signs.StateTest do
       station: "ABCD",
       zone: "w",
       line_number: 2,
-      expiration: DateTime.now!("Etc/UTC"),
+      expiration: DateTime.utc_now(),
       pages: ["Alewife 8 min"]
     }
 
@@ -77,7 +77,7 @@ defmodule SignsUi.Signs.StateTest do
         lines: %{
           1 => %SignLine{
             text: "Alewife 1 min",
-            expiration: DateTime.now!("Etc/UTC")
+            expiration: DateTime.utc_now()
           }
         }
       }
@@ -87,7 +87,7 @@ defmodule SignsUi.Signs.StateTest do
       station: "ABCD",
       zone: "w",
       line_number: 1,
-      expiration: DateTime.now!("Etc/UTC"),
+      expiration: DateTime.utc_now(),
       pages: [{"2 stops", 2}, {"away", 2}, {"Stopped", 5}]
     }
 

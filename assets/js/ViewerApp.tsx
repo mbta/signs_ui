@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Channel, Socket } from 'phoenix';
 import Viewer from './Viewer';
 import lineToColor from './colors';
-import { SignConfigs, SignContent, ConfiguredHeadways } from './types';
+import { SignConfigs, SignContent, ConfiguredHeadways, Alerts } from './types';
 
 declare global {
   interface Window {
@@ -22,6 +22,7 @@ interface ViewerAppProps {
 class ViewerApp extends React.Component<
   ViewerAppProps,
   {
+    alerts: Alerts;
     signs: SignContent;
     signConfigs: SignConfigs;
     configuredHeadways: ConfiguredHeadways;
@@ -46,6 +47,7 @@ class ViewerApp extends React.Component<
     this.changeLine = this.changeLine.bind(this);
     this.updateTime = this.updateTime.bind(this);
     this.state = {
+      alerts: {},
       signs: props.initialSigns,
       signConfigs: props.initialSignConfigs,
       configuredHeadways: props.initialConfiguredHeadways,
@@ -82,6 +84,11 @@ class ViewerApp extends React.Component<
 
     channel.on('new_configured_headways_state', (state) => {
       this.setState({ configuredHeadways: state });
+    });
+
+    channel.on('new_alert_state', (state) => {
+      console.log(state); // eslint-disable-line no-console
+      this.setState({ alerts: state });
     });
 
     channel.on('auth_expired', () => {
