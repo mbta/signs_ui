@@ -1,6 +1,6 @@
 defmodule SignsUiWeb.RealtimeSignsBodyReaderTest do
   use ExUnit.Case, async: true
-  use Phoenix.ConnTest
+  import Phoenix.ConnTest
 
   describe "read_body/2" do
     test "changes c params to c[]" do

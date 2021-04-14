@@ -3,7 +3,6 @@ defmodule SignsUiWeb.AuthControllerTest do
   import Test.Support.Helpers
   require Logger
   import ExUnit.CaptureLog
-  use Plug.Test
 
   describe "callback" do
     test "redirects on success and saves refresh token", %{conn: conn} do
