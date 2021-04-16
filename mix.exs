@@ -44,7 +44,7 @@ defmodule SignsUi.Mixfile do
       {:distillery, "~> 2.1.1", runtime: false},
       {:ex_aws_s3, "~> 2.0"},
       {:ex_aws, "~> 2.0"},
-      {:excoveralls, "~> 0.13.0", only: :test},
+      {:excoveralls, "~> 0.14.0", only: :test},
       {:gettext, "~> 0.11"},
       {:guardian_phoenix, "~> 2.0"},
       {:guardian, "~> 2.0"},
