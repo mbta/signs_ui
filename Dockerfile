@@ -22,11 +22,10 @@ WORKDIR /root/assets/
 RUN apt-get update && apt-get install -y --no-install-recommends curl
 RUN curl -sL https://deb.nodesource.com/setup_13.x | bash - && \
     apt-get install -y nodejs npm && \
-    npm install -g npm@latest && \
-    npm install -g yarn
+    npm install -g npm@latest &&
 
-RUN yarn install
-RUN yarn deploy
+RUN npm install
+RUN npm run deploy
 
 WORKDIR /root
 RUN mix phx.digest

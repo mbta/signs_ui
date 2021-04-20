@@ -2,9 +2,9 @@
 
 To start your Phoenix server:
 
-  * Install dependencies with `mix deps.get`
-  * Install `yarn` with `npm install -g yarn`
-  * Install JS dependencies with `pushd assets && yarn install && popd`
+  * Install languages with `asdf install`
+  * Install Elixir dependencies with `mix deps.get`
+  * Install JS dependencies with `pushd assets && npm install && popd`
   * Start Phoenix endpoint with `NODE_ENV=development mix run --no-halt` (substituting whatever username/password you want)
 
 Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
