@@ -5,7 +5,7 @@ defmodule SignsUi.Config.ExpirationTest do
   alias SignsUi.Signs.Sign
   alias SignsUi.Config.Sign
 
-  describe "expire_signs/2" do
+  describe "expire_signs_via_time/2" do
     test "produces correct updates" do
       {:ok, time1, 0} = DateTime.from_iso8601("2019-01-15T12:00:00Z")
       {:ok, time2, 0} = DateTime.from_iso8601("2019-01-15T14:00:00Z")
@@ -50,7 +50,7 @@ defmodule SignsUi.Config.ExpirationTest do
         }
       }
 
-      assert SignsUi.Config.Expiration.expire_signs(state, fn ->
+      assert SignsUi.Config.Expiration.expire_signs_via_time(state, fn ->
                DateTime.new!(~D[2019-01-15], ~T[08:00:00], "America/New_York")
              end) == expected_updates
     end

@@ -33,7 +33,7 @@ defmodule SignsUi.Config.Expiration do
     updates =
       state.sign_state_server
       |> SignsUi.Config.State.get_all()
-      |> expire_signs(state.time_fetcher)
+      |> expire_signs_via_time(state.time_fetcher)
 
     if updates != %{} do
       Logger.info("Cleaning expired settings for sign IDs: #{inspect(Map.keys(updates))}")
@@ -47,16 +47,19 @@ defmodule SignsUi.Config.Expiration do
     {:noreply, state}
   end
 
-  @spec expire_signs(SignsUi.Config.State.t(), (() -> DateTime.t())) :: %{
+  @spec expire_signs_via_time(SignsUi.Config.State.t(), (() -> DateTime.t())) :: %{
           Sign.id() => Sign.t()
         }
-  def expire_signs(state, time_fetcher) do
+  def expire_signs_via_time(state, time_fetcher) do
     current_dt = time_fetcher.()
 
     state
     |> Map.get(:signs)
     |> Enum.flat_map(&expire_single_sign(&1, current_dt))
     |> Enum.into(%{})
+  end
+
+  def expire_signs_via_alert(state, alert) do
   end
 
   @spec expire_single_sign({Sign.id(), Sign.t()}, DateTime.t()) :: [{Sign.id(), Sign.t()}]
