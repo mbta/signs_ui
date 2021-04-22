@@ -16,7 +16,7 @@ ADD . .
 RUN mix do local.hex --force, local.rebar --force, deps.get --only prod
 
 # next, build the frontend assets within a node.js container
-FROM node:13 as assets-builder
+FROM node:14 as assets-builder
 
 WORKDIR /root
 ADD . .
