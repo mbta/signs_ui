@@ -58,10 +58,24 @@ defmodule SignsUi.Config.ExpirationTest do
 
   describe "expire_signs_via_alert/2" do
     test "produces correct updates" do
-      alert_status = nil
+      #alert_status = nil
 
-      assert SignsUi.Config.Expiration.expire_signs_via_alert(state, alert_status)
-             end) == expected_updates
+      #assert SignsUi.Config.Expiration.expire_signs_via_alert(state, alert_status)
+      #       end) == expected_updates
+      alert_state = %SignsUi.Alerts.State{
+        alerts: %{
+          "Red" => %{
+            "1234" => %{},
+            "5678" => %{}
+          },
+          "Blue" => %{
+            "abc" => %{}
+          }
+        }
+      }
+
+      active_alert_ids = SignsUi.Config.Expiration.get_active_alert_ids(alert_state)
+      assert Enum.sort(active_alert_ids) == ["1234", "5678", "abc"]
     end
   end
 

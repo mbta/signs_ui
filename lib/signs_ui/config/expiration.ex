@@ -63,7 +63,7 @@ defmodule SignsUi.Config.Expiration do
   end
 
   def get_active_alert_ids(alert_state) do
-    alerts = alert_state[:alerts]
+    alerts = alert_state.alerts
     routes = Map.keys(alerts)
     alert_ids = for route <- routes, do: Map.keys(alerts[route])
 
