@@ -59,7 +59,7 @@ defmodule SignsUi.Config.Expiration do
     |> Enum.into(%{})
   end
 
-  def expire_signs_via_alert(state, alert) do
+  def expire_signs_via_alert(state, alerts) do
   end
 
   @spec expire_single_sign({Sign.id(), Sign.t()}, DateTime.t()) :: [{Sign.id(), Sign.t()}]
