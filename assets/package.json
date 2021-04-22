@@ -43,7 +43,7 @@
     "@typescript-eslint/eslint-plugin": "^4.6.1",
     "@typescript-eslint/parser": "^4.6.1",
     "copy-webpack-plugin": "6.2.1",
-    "css-loader": "^4.3.0",
+    "css-loader": "^5.2.2",
     "dateformat": "^3.0.3",
     "formik": "2.2.1",
     "lodash": "4.17.20",
