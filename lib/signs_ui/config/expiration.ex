@@ -62,6 +62,14 @@ defmodule SignsUi.Config.Expiration do
   def expire_signs_via_alert(state, alerts) do
   end
 
+  def get_active_alert_ids(alert_state) do
+    alerts = alert_state[:alerts]
+    routes = Map.keys(alerts)
+    alert_ids = for route <- routes, do: Map.keys(alerts[route])
+
+    List.flatten(alert_ids)
+  end
+
   @spec expire_single_sign({Sign.id(), Sign.t()}, DateTime.t()) :: [{Sign.id(), Sign.t()}]
   defp expire_single_sign(
          {id, %Sign{config: %{expires: expiration}} = sign},
