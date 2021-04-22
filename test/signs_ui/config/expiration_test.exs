@@ -56,6 +56,15 @@ defmodule SignsUi.Config.ExpirationTest do
     end
   end
 
+  describe "expire_signs_via_alert/2" do
+    test "produces correct updates" do
+      alert_status = nil
+
+      assert SignsUi.Config.Expiration.expire_signs_via_alert(state, alert_status)
+             end) == expected_updates
+    end
+  end
+
   describe "process_expired callback" do
     test "expires expired sign, but not signs that haven't expired" do
       old_level = Logger.level()
