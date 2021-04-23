@@ -75,7 +75,7 @@ defmodule SignsUi.Config.ExpirationTest do
       }
 
       active_alert_ids = SignsUi.Config.Expiration.get_active_alert_ids(alert_state)
-      assert Enum.sort(active_alert_ids) == ["1234", "5678", "abc"]
+      assert active_alert_ids == MapSet.new(["1234", "5678", "abc"])
     end
   end
 

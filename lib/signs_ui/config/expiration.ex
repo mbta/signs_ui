@@ -59,6 +59,7 @@ defmodule SignsUi.Config.Expiration do
     |> Enum.into(%{})
   end
 
+  @spec expire_signs_via_alert(any, any) :: nil
   def expire_signs_via_alert(state, alerts) do
   end
 
@@ -67,7 +68,7 @@ defmodule SignsUi.Config.Expiration do
     routes = Map.keys(alerts)
     alert_ids = for route <- routes, do: Map.keys(alerts[route])
 
-    List.flatten(alert_ids)
+    MapSet.new(List.flatten(alert_ids))
   end
 
   @spec expire_single_sign({Sign.id(), Sign.t()}, DateTime.t()) :: [{Sign.id(), Sign.t()}]
