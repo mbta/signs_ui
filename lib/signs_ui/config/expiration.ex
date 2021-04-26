@@ -74,15 +74,18 @@ defmodule SignsUi.Config.Expiration do
         expired_sign_states
       else
         [sign_state | tail] = remaining_sign_states
+
         cond do
           sign_state.config.mode == :auto ->
             get_expired_sign_states(tail, alert_ids, expired_sign_states)
           Enum.member?(alert_ids, sign_state.config.alert_id) ->
             get_expired_sign_states(tail, alert_ids, expired_sign_states)
           true ->
-            expired_sign_states = [%SignsUi.Config.Sign{
+            new_sign_state = %SignsUi.Config.Sign{
               id: sign_state.config.alert_id,
-              config: %{mode: :auto}} | expired_sign_states]
+              config: %{mode: :auto}
+            }
+            expired_sign_states = [new_sign_state | expired_sign_states]
             get_expired_sign_states(tail, alert_ids, expired_sign_states)
         end
       end

@@ -142,6 +142,9 @@ defmodule SignsUi.Config.ExpirationTest do
         expired_signs = SignsUi.Config.Expiration.expire_signs_via_alert(sign_state, active_alert_ids)
         expected_signs = [
           %SignsUi.Config.Sign{
+            id: nil,
+            config: %{mode: :auto}},
+          %SignsUi.Config.Sign{
             id: "326",
             config: %{mode: :auto}},
           %SignsUi.Config.Sign{
