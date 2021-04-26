@@ -59,10 +59,11 @@ defmodule SignsUi.Config.Expiration do
     |> Enum.into(%{})
   end
 
-  @spec expire_signs_via_alert(any, any) :: nil
-  def expire_signs_via_alert(state, alerts) do
+  @spec expire_signs_via_alert(list(SignsUi.Config.State.t()), MapSet.t()) :: list(SignsUi.Config.State.t())
+  def expire_signs_via_alert(signs_states, alert_ids) do
   end
 
+  @spec get_active_alert_ids(SignsUi.Alerts.State.t()) :: MapSet.t()
   def get_active_alert_ids(alert_state) do
     alerts = alert_state.alerts
     routes = Map.keys(alerts)

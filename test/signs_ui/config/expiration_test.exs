@@ -58,10 +58,6 @@ defmodule SignsUi.Config.ExpirationTest do
 
   describe "expire_signs_via_alert/2" do
     test "produces correct updates" do
-      #alert_status = nil
-
-      #assert SignsUi.Config.Expiration.expire_signs_via_alert(state, alert_status)
-      #       end) == expected_updates
       alert_state = %SignsUi.Alerts.State{
         alerts: %{
           "Red" => %{
@@ -76,6 +72,87 @@ defmodule SignsUi.Config.ExpirationTest do
 
       active_alert_ids = SignsUi.Config.Expiration.get_active_alert_ids(alert_state)
       assert active_alert_ids == MapSet.new(["1234", "5678", "abc"])
+
+      sign_state = [
+        %SignsUi.Config.Sign{
+          id: "250",
+          config: %{mode: :auto}}
+        %SignsUi.Config.Sign{
+          id: "460",
+          config: %{
+            mode: :headway,
+            expires: nil,
+            alert_id: nil}}
+        %SignsUi.Config.Sign{
+          id: "898",
+          config: %{
+            mode: :headway,
+            expires: nil,
+            alert_id: "1234"}}
+        %SignsUi.Config.Sign{
+           id: "925",
+           config: %{
+             mode: :headway,
+             expires: nil,
+             alert_id: "326"}}
+        %SignsUi.Config.Sign{
+          id: "793",
+          config: %{
+            mode: :off,
+            expires: nil,
+            alert_id: nil}}
+        %SignsUi.Config.Sign{
+          id: "367",
+          config: %{
+            mode: :off,
+            expires: nil,
+            alert_id: "5678"}}
+        %SignsUi.Config.Sign{
+           id: "471",
+           config: %{
+             mode: :off,
+             expires: nil,
+             alert_id: "437"}}
+        %SignsUi.Config.Sign{
+          id: "714",
+          config: %{
+            mode: :static_text,
+            line1: "test",
+            line2: "test",
+            expires: nil,
+            alert_id: nil}}
+        %SignsUi.Config.Sign{
+          id: "474",
+          config: %{
+            mode: :static_text,
+            line1: "test",
+            line2: "test",
+            expires: nil,
+            alert_id: "abc"}}
+        %SignsUi.Config.Sign{
+           id: "273",
+           config: %{
+             mode: :static_text,
+             line1: "test",
+             line2: "test",
+             expires: nil,
+             alert_id: "593"}}
+        ]
+
+        expired_signs = expire_signs_via_alert(sign_state, active_alert_ids)
+        expected_sigs = [
+          %SignsUi.Config.Sign{
+            id: "326",
+            config: %{mode: :auto}},
+          %SignsUi.Config.Sign{
+            id: "437",
+            config: %{mode: :auto}},
+          %SignsUi.Config.Sign{
+            id: "593",
+            config: %{mode: :auto}}
+        ]
+
+        assert MapSet.new(expired_signs) == MapSet.new(expected_signs)
     end
   end
 
