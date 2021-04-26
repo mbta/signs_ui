@@ -102,7 +102,7 @@ defmodule SignsUi.Config.Expiration do
     end
   end
 
-  @spec get_active_alert_ids(SignsUi.Alerts.State.t()) :: MapSet.t()
+  @spec get_active_alert_ids(atom | %{:alerts => map, optional(any) => any}) :: MapSet.t(String.t())
   def get_active_alert_ids(alert_state) do
     alerts = alert_state.alerts
     routes = Map.keys(alerts)
