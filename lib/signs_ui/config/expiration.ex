@@ -60,7 +60,32 @@ defmodule SignsUi.Config.Expiration do
   end
 
   @spec expire_signs_via_alert(list(SignsUi.Config.State.t()), MapSet.t()) :: list(SignsUi.Config.State.t())
-  def expire_signs_via_alert(signs_states, alert_ids) do
+  def expire_signs_via_alert(sign_states, alert_ids) do
+    IO.puts("---ENTERED expire_signs_via_alert---")
+    expired_sign_states = get_expired_sign_states(
+      sign_states, alert_ids, []
+    )
+
+    expired_sign_states
+  end
+
+  def get_expired_sign_states(remaining_sign_states, alert_ids, expired_sign_states) do
+      if remaining_sign_states == [] do
+        expired_sign_states
+      else
+        [sign_state | tail] = remaining_sign_states
+        cond do
+          sign_state.config.mode == :auto ->
+            get_expired_sign_states(tail, alert_ids, expired_sign_states)
+          Enum.member?(alert_ids, sign_state.config.alert_id) ->
+            get_expired_sign_states(tail, alert_ids, expired_sign_states)
+          true ->
+            expired_sign_states = [%SignsUi.Config.Sign{
+              id: sign_state.config.alert_id,
+              config: %{mode: :auto}} | expired_sign_states]
+            get_expired_sign_states(tail, alert_ids, expired_sign_states)
+        end
+      end
   end
 
   @spec get_active_alert_ids(SignsUi.Alerts.State.t()) :: MapSet.t()
