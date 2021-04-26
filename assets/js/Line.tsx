@@ -139,11 +139,11 @@ function Line({
             </em>
           )}
           {!readOnly && (
-            <div className="switch">
+            <div className="toggle_switch--container">
               <input
                 name="chelsea_bridge"
                 type="checkbox"
-                className="switch-input"
+                className="toggle_switch--input"
                 checked={chelseaBridgeAnnouncements === 'auto'}
                 onChange={(e) => {
                   setChelseaBridgeAnnouncements(
@@ -151,7 +151,7 @@ function Line({
                   );
                 }}
               />
-              <span className="switch-label">Switch</span>
+              <span className="toggle_switch--label">Switch</span>
             </div>
           )}
         </label>
