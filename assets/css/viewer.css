@@ -43,10 +43,10 @@
 .viewer--sign-line {
   color: rgb(251, 220, 75);
   font-family: monospace;
-  font-size: 1.2em;
   height: 40px;
   padding-top: 8px;
   white-space: pre;
+  width: 24ch;
 }
 
 .viewer--static-text-form {

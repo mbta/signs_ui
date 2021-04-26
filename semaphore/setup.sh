@@ -24,4 +24,4 @@ mix local.hex --force
 mix local.rebar --force
 mix deps.get
 
-yarn --cwd assets install
+npm install --prefix assets
