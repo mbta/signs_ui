@@ -77,7 +77,7 @@ defmodule SignsUi.Config.Expiration do
           MapSet.t(),
           list(SignsUi.Config.State.t())
         ) :: list(SignsUi.Config.State.t())
-  def get_expired_sign_states(remaining_sign_states, alert_ids, expired_sign_states) do
+  defp get_expired_sign_states(remaining_sign_states, alert_ids, expired_sign_states) do
     if remaining_sign_states == [] do
       expired_sign_states
     else
