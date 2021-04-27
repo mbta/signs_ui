@@ -62,33 +62,33 @@ defmodule SignsUi.Config.Expiration do
   @spec expire_signs_via_alert(list(SignsUi.Config.State.t()), MapSet.t()) ::
           list(SignsUi.Config.State.t())
   def expire_signs_via_alert(sign_states, alert_ids) do
-    expired_sign_states =
-      get_expired_sign_states(
+    expired_signs =
+      expired_sign_states(
         sign_states,
         alert_ids,
         []
       )
 
-    expired_sign_states
+      expired_signs
   end
 
-  @spec get_expired_sign_states(
+  @spec expired_sign_states(
           list(SignsUi.Config.State.t()),
           MapSet.t(),
           list(SignsUi.Config.State.t())
         ) :: list(SignsUi.Config.State.t())
-  defp get_expired_sign_states(remaining_sign_states, alert_ids, expired_sign_states) do
+  defp expired_sign_states(remaining_sign_states, alert_ids, expired_signs) do
     if remaining_sign_states == [] do
-      expired_sign_states
+      expired_signs
     else
       [sign_state | tail] = remaining_sign_states
 
       cond do
         sign_state.config.mode == :auto ->
-          get_expired_sign_states(tail, alert_ids, expired_sign_states)
+          expired_sign_states(tail, alert_ids, expired_signs)
 
         Enum.member?(alert_ids, sign_state.config.alert_id) ->
-          get_expired_sign_states(tail, alert_ids, expired_sign_states)
+          expired_sign_states(tail, alert_ids, expired_signs)
 
         true ->
           new_sign_state = %SignsUi.Config.Sign{
@@ -96,15 +96,15 @@ defmodule SignsUi.Config.Expiration do
             config: %{mode: :auto}
           }
 
-          expired_sign_states = [new_sign_state | expired_sign_states]
-          get_expired_sign_states(tail, alert_ids, expired_sign_states)
+          expired_signs = [new_sign_state | expired_signs]
+          expired_sign_states(tail, alert_ids, expired_signs)
       end
     end
   end
 
-  @spec get_active_alert_ids(SignsUi.Alerts.State.state()) ::
+  @spec active_alert_ids(SignsUi.Alerts.State.state()) ::
           MapSet.t(String.t())
-  def get_active_alert_ids(alert_state) do
+  def active_alert_ids(alert_state) do
     alerts = alert_state.alerts
     routes = Map.keys(alerts)
     alert_ids = for route <- routes, do: Map.keys(alerts[route])

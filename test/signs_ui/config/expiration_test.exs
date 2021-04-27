@@ -70,8 +70,8 @@ defmodule SignsUi.Config.ExpirationTest do
         }
       }
 
-      active_alert_ids = SignsUi.Config.Expiration.get_active_alert_ids(alert_state)
-      assert active_alert_ids == MapSet.new(["1234", "5678", "abc"])
+      alert_ids = SignsUi.Config.Expiration.active_alert_ids(alert_state)
+      assert alert_ids == MapSet.new(["1234", "5678", "abc"])
 
       sign_state = [
         %SignsUi.Config.Sign{
@@ -159,7 +159,7 @@ defmodule SignsUi.Config.ExpirationTest do
       ]
 
       expired_signs =
-        SignsUi.Config.Expiration.expire_signs_via_alert(sign_state, active_alert_ids)
+        SignsUi.Config.Expiration.expire_signs_via_alert(sign_state, alert_ids)
 
       expected_signs = [
         %SignsUi.Config.Sign{
