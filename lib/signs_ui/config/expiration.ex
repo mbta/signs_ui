@@ -91,7 +91,7 @@ defmodule SignsUi.Config.Expiration do
 
       true ->
         new_sign_state = %SignsUi.Config.Sign{
-          id: sign_state.config.alert_id,
+          id: sign_state.id,
           config: %{mode: :auto}
         }
 

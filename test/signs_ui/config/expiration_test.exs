@@ -162,19 +162,27 @@ defmodule SignsUi.Config.ExpirationTest do
 
       expected_signs = [
         %SignsUi.Config.Sign{
-          id: nil,
+          id: "460",
           config: %{mode: :auto}
         },
         %SignsUi.Config.Sign{
-          id: "326",
+          id: "925",
           config: %{mode: :auto}
         },
         %SignsUi.Config.Sign{
-          id: "437",
+          id: "793",
           config: %{mode: :auto}
         },
         %SignsUi.Config.Sign{
-          id: "593",
+          id: "471",
+          config: %{mode: :auto}
+        },
+        %SignsUi.Config.Sign{
+          id: "714",
+          config: %{mode: :auto}
+        },
+        %SignsUi.Config.Sign{
+          id: "273",
           config: %{mode: :auto}
         }
       ]
