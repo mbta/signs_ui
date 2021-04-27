@@ -158,8 +158,7 @@ defmodule SignsUi.Config.ExpirationTest do
         }
       ]
 
-      expired_signs =
-        SignsUi.Config.Expiration.expire_signs_via_alert(sign_state, alert_ids)
+      expired_signs = SignsUi.Config.Expiration.expire_signs_via_alert(sign_state, alert_ids)
 
       expected_signs = [
         %SignsUi.Config.Sign{

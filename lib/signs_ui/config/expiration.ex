@@ -60,7 +60,7 @@ defmodule SignsUi.Config.Expiration do
   end
 
   @spec expire_signs_via_alert(list(SignsUi.Config.State.t()), MapSet.t()) ::
-          list(SignsUi.Config.State.t())
+          list(SignsUi.Config.Sign.t())
   def expire_signs_via_alert(sign_states, alert_ids) do
     expired_signs =
       expired_sign_states(
@@ -69,7 +69,7 @@ defmodule SignsUi.Config.Expiration do
         []
       )
 
-      expired_signs
+    expired_signs
   end
 
   @spec expired_sign_states(
@@ -82,7 +82,6 @@ defmodule SignsUi.Config.Expiration do
   end
 
   defp expired_sign_states([sign_state | sign_states], alert_ids, expired_signs) do
-
     cond do
       sign_state.config.mode == :auto ->
         expired_sign_states(sign_states, alert_ids, expired_signs)
