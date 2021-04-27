@@ -76,29 +76,28 @@ defmodule SignsUi.Config.Expiration do
           list(SignsUi.Config.State.t()),
           MapSet.t(),
           list(SignsUi.Config.State.t())
-        ) :: list(SignsUi.Config.State.t())
-  defp expired_sign_states(remaining_sign_states, alert_ids, expired_signs) do
-    if remaining_sign_states == [] do
-      expired_signs
-    else
-      [sign_state | tail] = remaining_sign_states
+        ) :: list(SignsUi.Config.Sign.t())
+  defp expired_sign_states([], _, expired_signs) do
+    expired_signs
+  end
 
-      cond do
-        sign_state.config.mode == :auto ->
-          expired_sign_states(tail, alert_ids, expired_signs)
+  defp expired_sign_states([sign_state | sign_states], alert_ids, expired_signs) do
 
-        Enum.member?(alert_ids, sign_state.config.alert_id) ->
-          expired_sign_states(tail, alert_ids, expired_signs)
+    cond do
+      sign_state.config.mode == :auto ->
+        expired_sign_states(sign_states, alert_ids, expired_signs)
 
-        true ->
-          new_sign_state = %SignsUi.Config.Sign{
-            id: sign_state.config.alert_id,
-            config: %{mode: :auto}
-          }
+      Enum.member?(alert_ids, sign_state.config.alert_id) ->
+        expired_sign_states(sign_states, alert_ids, expired_signs)
 
-          expired_signs = [new_sign_state | expired_signs]
-          expired_sign_states(tail, alert_ids, expired_signs)
-      end
+      true ->
+        new_sign_state = %SignsUi.Config.Sign{
+          id: sign_state.config.alert_id,
+          config: %{mode: :auto}
+        }
+
+        expired_signs = [new_sign_state | expired_signs]
+        expired_sign_states(sign_states, alert_ids, expired_signs)
     end
   end
 
