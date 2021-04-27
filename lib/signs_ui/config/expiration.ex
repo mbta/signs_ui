@@ -59,8 +59,8 @@ defmodule SignsUi.Config.Expiration do
     |> Enum.into(%{})
   end
 
-  @spec expire_signs_via_alert(list(SignsUi.Config.State.t()), MapSet.t()) ::
-          list(SignsUi.Config.Sign.t())
+  @spec expire_signs_via_alert(list(SignsUi.Config.Sign.t()), MapSet.t()) ::
+          list(any())
   def expire_signs_via_alert(sign_states, alert_ids) do
     expired_signs =
       expired_sign_states(
@@ -73,10 +73,10 @@ defmodule SignsUi.Config.Expiration do
   end
 
   @spec expired_sign_states(
-          list(SignsUi.Config.State.t()),
+          list(SignsUi.Config.Sign.t()),
           MapSet.t(),
           list(SignsUi.Config.State.t())
-        ) :: list(SignsUi.Config.Sign.t())
+        ) :: list(any())
   defp expired_sign_states([], _, expired_signs) do
     expired_signs
   end
