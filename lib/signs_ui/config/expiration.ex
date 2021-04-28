@@ -9,7 +9,8 @@ defmodule SignsUi.Config.Expiration do
   @type state :: %{
           time_fetcher: (() -> DateTime.t()),
           loop_ms: integer(),
-          sign_state_server: GenServer.server()
+          sign_state_server: GenServer.server(),
+          alert_fetcher: (() -> MapSet.t(SignsUi.Alerts.Alert.id()))
         }
 
   @spec start_link(Keyword.t()) :: GenServer.on_start()
@@ -24,8 +25,16 @@ defmodule SignsUi.Config.Expiration do
     time_fetcher = Keyword.get(opts, :time_fetcher, fn -> DateTime.utc_now() end)
     loop_ms = Keyword.get(opts, :loop_ms, 5_000)
     sign_state_server = Keyword.get(opts, :sign_state_server, SignsUi.Config.State)
+    alert_fetcher = Keyword.get(opts, :alert_fetcher, &SignsUi.Alerts.State.active_alert_ids/0)
     schedule_loop(self(), loop_ms)
-    {:ok, %{time_fetcher: time_fetcher, loop_ms: loop_ms, sign_state_server: sign_state_server}}
+
+    {:ok,
+     %{
+       alert_fetcher: alert_fetcher,
+       time_fetcher: time_fetcher,
+       loop_ms: loop_ms,
+       sign_state_server: sign_state_server
+     }}
   end
 
   @spec handle_info(:process_expired, state()) :: {:noreply, state()}
