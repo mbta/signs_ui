@@ -28,13 +28,14 @@ defmodule SignsUi.Alerts.StateTest do
       }
 
       assert SignsUi.Alerts.State.handle_call(:active_alert_ids, self(), state) ==
-        {:reply, MapSet.new(["alert_id1", "alert_id2", "alert_id3"]), state}
+               {:reply, MapSet.new(["alert_id1", "alert_id2", "alert_id3"]), state}
     end
 
     test "safely returns an empty map set if there are no alerts" do
-      state = %SignsUi.Alerts.State{ alerts: %{} }
+      state = %SignsUi.Alerts.State{alerts: %{}}
+
       assert SignsUi.Alerts.State.handle_call(:active_alert_ids, self(), state) ==
-        {:reply, MapSet.new([]), state}
+               {:reply, MapSet.new([]), state}
     end
   end
 
