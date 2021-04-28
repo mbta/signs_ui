@@ -24,6 +24,20 @@ defmodule SignsUi.Alerts.State do
     {:ok, %__MODULE__{}}
   end
 
+  @spec active_alert_ids(GenServer.server()) :: [Alert.id()]
+  def active_alert_ids(pid \\ __MODULE__) do
+    GenServer.call(pid, :active_alert_ids)
+  end
+
+  def handle_call(:active_alert_ids, _from, state) do
+    alerts = state.alerts
+    routes = Map.keys(alerts)
+    alert_ids = for route <- routes, do: Map.keys(alerts[route])
+    flattened_alert_ids = MapSet.new(List.flatten(alert_ids))
+
+    {:reply, flattened_alert_ids, state}
+  end
+
   def handle_info(:twiddle_state, state) do
     new_alert_state =
       case :rand.uniform(5) do

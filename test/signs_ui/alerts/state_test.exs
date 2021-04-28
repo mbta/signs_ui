@@ -12,6 +12,32 @@ defmodule SignsUi.Alerts.StateTest do
     end
   end
 
+  describe "handle_call :active_alert_ids" do
+    test "returns the alert_ids out of the state" do
+      state = %SignsUi.Alerts.State{
+        alerts: %{
+          # fill in sample data here, but it's of this shape:
+          "Red" => %{
+            "alert_id1" => %{},
+            "alert_id2" => %{}
+          },
+          "Blue" => %{
+            "alert_id3" => %{}
+          }
+        }
+      }
+
+      assert SignsUi.Alerts.State.handle_call(:active_alert_ids, self(), state) ==
+        {:reply, MapSet.new(["alert_id1", "alert_id2", "alert_id3"]), state}
+    end
+
+    test "safely returns an empty map set if there are no alerts" do
+      state = %SignsUi.Alerts.State{ alerts: %{} }
+      assert SignsUi.Alerts.State.handle_call(:active_alert_ids, self(), state) ==
+        {:reply, MapSet.new([]), state}
+    end
+  end
+
   describe "handle_info" do
     test "handles unknown messages without crashing" do
       {:ok, pid} = SignsUi.Alerts.State.start_link()
