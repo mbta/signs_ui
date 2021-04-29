@@ -197,6 +197,8 @@ defmodule SignsUi.Config.Expiration do
        ) do
     cond do
       not is_nil(expiration) and DateTime.compare(expiration, current_dt) == :lt ->
+        IO.puts("---is_nil(expiration)---")
+        IO.puts("#{is_nil(expiration)}")
         [{id, %Sign{sign | config: %{mode: :auto}}}]
 
       # [%SignsUi.Config.Sign{
@@ -204,18 +206,25 @@ defmodule SignsUi.Config.Expiration do
       #  config: %{mode: :auto}
       # }]
       is_nil(alert_id) ->
+        IO.puts("---is_nil(expiration)---")
+        IO.puts("#{is_nil(expiration)}")
         []
 
       not MapSet.member?(alert_ids, alert_id) ->
         # expire_signs_via_alert(sign, alert_ids)
+        IO.puts("---is_nil(expiration)---")
+        IO.puts("#{is_nil(expiration)}")
         [{id, %Sign{sign | config: %{mode: :auto}}}]
 
       true ->
+        IO.puts("---is_nil(expiration)---")
+        IO.puts("#{is_nil(expiration)}")
         []
     end
   end
 
   defp expire_single_sign(_, _, _) do
+    IO.puts("---expire_single_sign(_, _, _)---")
     []
   end
 
