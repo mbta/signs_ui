@@ -138,46 +138,46 @@ defmodule SignsUi.Config.Expiration do
     |> Enum.into(%{})
   end
 
-  @spec expire_signs_via_alert(list(SignsUi.Config.Sign.t()), MapSet.t()) ::
-          list(any())
-  def expire_signs_via_alert(sign_states, alert_ids) do
-    expired_signs =
-      expired_sign_states(
-        sign_states,
-        alert_ids,
-        []
-      )
+  # @spec expire_signs_via_alert(list(SignsUi.Config.Sign.t()), MapSet.t()) ::
+  #        list(any())
+  # def expire_signs_via_alert(sign_states, alert_ids) do
+  #  expired_signs =
+  #    expired_sign_states(
+  #      sign_states,
+  #      alert_ids,
+  #      []
+  #    )
 
-    expired_signs
-  end
+  #  expired_signs
+  # end
 
-  @spec expired_sign_states(
-          list(SignsUi.Config.Sign.t()),
-          MapSet.t(),
-          list(SignsUi.Config.State.t())
-        ) :: list(any())
-  defp expired_sign_states([], _, expired_signs) do
-    expired_signs
-  end
+  # @spec expired_sign_states(
+  #        list(SignsUi.Config.Sign.t()),
+  #        MapSet.t(),
+  #        list(SignsUi.Config.State.t())
+  #      ) :: list(any())
+  # defp expired_sign_states([], _, expired_signs) do
+  #  expired_signs
+  # end
 
-  defp expired_sign_states([sign_state | sign_states], alert_ids, expired_signs) do
-    cond do
-      sign_state.config.mode == :auto ->
-        expired_sign_states(sign_states, alert_ids, expired_signs)
+  # defp expired_sign_states([sign_state | sign_states], alert_ids, expired_signs) do
+  #  cond do
+  #    sign_state.config.mode == :auto ->
+  #      expired_sign_states(sign_states, alert_ids, expired_signs)
 
-      Enum.member?(alert_ids, sign_state.config.alert_id) ->
-        expired_sign_states(sign_states, alert_ids, expired_signs)
+  #    Enum.member?(alert_ids, sign_state.config.alert_id) ->
+  #      expired_sign_states(sign_states, alert_ids, expired_signs)
 
-      true ->
-        new_sign_state = %SignsUi.Config.Sign{
-          id: sign_state.id,
-          config: %{mode: :auto}
-        }
+  #    true ->
+  #      new_sign_state = %SignsUi.Config.Sign{
+  #        id: sign_state.id,
+  #        config: %{mode: :auto}
+  #      }
 
-        expired_signs = [new_sign_state | expired_signs]
-        expired_sign_states(sign_states, alert_ids, expired_signs)
-    end
-  end
+  #      expired_signs = [new_sign_state | expired_signs]
+  #      expired_sign_states(sign_states, alert_ids, expired_signs)
+  #  end
+  # end
 
   @spec active_alert_ids(SignsUi.Alerts.State.state()) ::
           MapSet.t(String.t())
