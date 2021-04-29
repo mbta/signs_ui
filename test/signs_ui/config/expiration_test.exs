@@ -6,7 +6,7 @@ defmodule SignsUi.Config.ExpirationTest do
   alias SignsUi.Config.Sign
 
   describe "expire_signs_via_time/2" do
-    test "produces correct updates" do
+    test "produces correct updates when times expire" do
       {:ok, time1, 0} = DateTime.from_iso8601("2019-01-15T12:00:00Z")
       {:ok, time2, 0} = DateTime.from_iso8601("2019-01-15T14:00:00Z")
 
@@ -57,7 +57,7 @@ defmodule SignsUi.Config.ExpirationTest do
   end
 
   describe "expire_signs_via_alert/2" do
-    test "produces correct updates" do
+    test "produces correct updates when alerts expire" do
       alert_state = %SignsUi.Alerts.State{
         alerts: %{
           "Red" => %{
@@ -73,36 +73,37 @@ defmodule SignsUi.Config.ExpirationTest do
       alert_ids = SignsUi.Config.Expiration.active_alert_ids(alert_state)
       assert alert_ids == MapSet.new(["1234", "5678", "abc"])
 
-      sign_state = [
-        %SignsUi.Config.Sign{
-          id: "250",
-          config: %{mode: :auto}
+      sign_state = %{
+        signs: %{
+      "250" => %SignsUi.Config.Sign{
+        config: %{mode: :auto},
+        id: "250"
+      },
+      "460" => %SignsUi.Config.Sign{
+        config: %{
+          alert_id: nil,
+          expires: nil,
+          mode: :headway
         },
-        %SignsUi.Config.Sign{
-          id: "460",
-          config: %{
-            mode: :headway,
-            expires: nil,
-            alert_id: nil
-          }
+        id: "460"
+      },
+      "898" => %SignsUi.Config.Sign{
+        config: %{
+          alert_id: "1234",
+          expires: nil,
+          mode: :headway
         },
-        %SignsUi.Config.Sign{
-          id: "898",
-          config: %{
-            mode: :headway,
-            expires: nil,
-            alert_id: "1234"
-          }
+        id: "898"
+      },
+      "925" => %SignsUi.Config.Sign{
+        config: %{
+          alert_id: "326",
+          expires: nil,
+          mode: :headway
         },
-        %SignsUi.Config.Sign{
-          id: "925",
-          config: %{
-            mode: :headway,
-            expires: nil,
-            alert_id: "326"
-          }
-        },
-        %SignsUi.Config.Sign{
+        id: "925"
+      },
+      "793" => %SignsUi.Config.Sign{
           id: "793",
           config: %{
             mode: :off,
@@ -110,7 +111,7 @@ defmodule SignsUi.Config.ExpirationTest do
             alert_id: nil
           }
         },
-        %SignsUi.Config.Sign{
+      "367" => %SignsUi.Config.Sign{
           id: "367",
           config: %{
             mode: :off,
@@ -118,7 +119,7 @@ defmodule SignsUi.Config.ExpirationTest do
             alert_id: "5678"
           }
         },
-        %SignsUi.Config.Sign{
+      "471" => %SignsUi.Config.Sign{
           id: "471",
           config: %{
             mode: :off,
@@ -126,7 +127,7 @@ defmodule SignsUi.Config.ExpirationTest do
             alert_id: "437"
           }
         },
-        %SignsUi.Config.Sign{
+       "714" => %SignsUi.Config.Sign{
           id: "714",
           config: %{
             mode: :static_text,
@@ -136,7 +137,7 @@ defmodule SignsUi.Config.ExpirationTest do
             alert_id: nil
           }
         },
-        %SignsUi.Config.Sign{
+       "474" => %SignsUi.Config.Sign{
           id: "474",
           config: %{
             mode: :static_text,
@@ -146,7 +147,7 @@ defmodule SignsUi.Config.ExpirationTest do
             alert_id: "abc"
           }
         },
-        %SignsUi.Config.Sign{
+       "273" => %SignsUi.Config.Sign{
           id: "273",
           config: %{
             mode: :static_text,
@@ -156,29 +157,20 @@ defmodule SignsUi.Config.ExpirationTest do
             alert_id: "593"
           }
         }
-      ]
+      }}
 
-      expired_signs = SignsUi.Config.Expiration.expire_signs_via_alert(sign_state, alert_ids)
+      expired_signs = SignsUi.Config.Expiration.expire_signs_via_time_and_alert(
+        sign_state,
+        (fn -> DateTime.new!(~D[2019-01-15], ~T[08:00:00], "America/New_York") end),
+        (fn -> MapSet.new(["1234", "5678", "abc"]) end))
 
       expected_signs = [
-        %SignsUi.Config.Sign{
-          id: "460",
-          config: %{mode: :auto}
-        },
         %SignsUi.Config.Sign{
           id: "925",
           config: %{mode: :auto}
         },
         %SignsUi.Config.Sign{
-          id: "793",
-          config: %{mode: :auto}
-        },
-        %SignsUi.Config.Sign{
           id: "471",
-          config: %{mode: :auto}
-        },
-        %SignsUi.Config.Sign{
-          id: "714",
           config: %{mode: :auto}
         },
         %SignsUi.Config.Sign{
