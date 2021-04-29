@@ -39,10 +39,17 @@ defmodule SignsUi.Config.Expiration do
 
   @spec handle_info(:process_expired, state()) :: {:noreply, state()}
   def handle_info(:process_expired, state) do
+    #|> expire_signs_via_time(state.time_fetcher)
+    #|> expire_signs(state.time_fetcher, state.alert_fetcher)
+    #updates =
+    #  state.sign_state_server
+    #  |> SignsUi.Config.State.get_all()
+    #  |> expire_signs(state.time_fetcher)
+
     updates =
       state.sign_state_server
       |> SignsUi.Config.State.get_all()
-      |> expire_signs_via_time(state.time_fetcher)
+      |> expire_signs_via_time_and_alert(state.time_fetcher, state.alert_fetcher)
 
     if updates != %{} do
       Logger.info("Cleaning expired settings for sign IDs: #{inspect(Map.keys(updates))}")
@@ -54,6 +61,68 @@ defmodule SignsUi.Config.Expiration do
     schedule_loop(self(), state.loop_ms)
 
     {:noreply, state}
+  end
+
+  def expire_signs(state, time_fetcher) do
+    current_dt = time_fetcher.()
+    #alert_ids = alert_fetcher.()
+
+    IO.puts("---state---")
+    IO.inspect(state)
+
+    converted = state
+    |> Map.get(:signs)
+    |> Enum.flat_map(fn sign -> expire_single_sign(sign, current_dt) end)
+
+    IO.puts("---converted---")
+    IO.inspect(converted)
+
+    #|> Enum.flat_map(&expire_single_sign(&1, current_dt, alert_ids))
+    state
+    |> Map.get(:signs)
+    |> Enum.flat_map(fn sign -> expire_single_sign(sign, current_dt) end)
+    |> Enum.into(%{})
+  end
+
+  #@spec expire_single_sign({Sign.id(), Sign.t()}, DateTime.t()) :: [{Sign.id(), Sign.t()}]
+  defp expire_single_sign(
+         {id, %Sign{config: %{expires: expiration}} = sign},
+         current_dt
+       )
+       when not is_nil(expiration) do
+    if DateTime.compare(expiration, current_dt) == :lt do
+      [{id, %Sign{sign | config: %{mode: :auto}}}]
+    else
+      []
+    end
+  end
+
+  defp expire_single_sign(_, _) do
+    []
+  end
+
+  def expire_signs_via_time_and_alert(state, time_fetcher, alert_fetcher) do
+    current_dt = time_fetcher.()
+    alert_ids = alert_fetcher.()
+    IO.puts("---expire_signs_via_time_and_alert---")
+    IO.puts("---state---")
+    IO.inspect(state)
+    IO.puts("---current_dt---")
+    IO.inspect(current_dt)
+    IO.puts("---alert_ids---")
+    IO.inspect(alert_ids)
+
+    #converted = state
+    #|> Map.get(:signs)
+    #|> Enum.flat_map(expire_single_sign(state, current_dt, alert_ids))
+
+    #IO.puts("---converted---")
+    #IO.inspect(converted)
+
+    state
+    |> Map.get(:signs)
+    |> Enum.flat_map(fn sign -> expire_single_sign(sign, current_dt, alert_ids) end)
+    |> Enum.into(%{})
   end
 
   @spec expire_signs_via_time(SignsUi.Config.State.t(), (() -> DateTime.t())) :: %{
@@ -119,20 +188,28 @@ defmodule SignsUi.Config.Expiration do
     MapSet.new(List.flatten(alert_ids))
   end
 
-  @spec expire_single_sign({Sign.id(), Sign.t()}, DateTime.t()) :: [{Sign.id(), Sign.t()}]
-  defp expire_single_sign(
-         {id, %Sign{config: %{expires: expiration}} = sign},
-         current_dt
-       )
-       when not is_nil(expiration) do
-    if DateTime.compare(expiration, current_dt) == :lt do
-      [{id, %Sign{sign | config: %{mode: :auto}}}]
-    else
-      []
-    end
+  #@spec expire_single_sign({Sign.id(), Sign.t()}, DateTime.t(), MapSet.t(String.t())) :: [{Sign.id(), Sign.t()}]
+  defp expire_single_sign({id, %Sign{config: %{expires: expiration, alert_id: alert_id}} = sign},
+    current_dt,
+    alert_ids) do
+    cond do
+      ((not is_nil(expiration)) and DateTime.compare(expiration, current_dt) == :lt) ->
+        [{id, %Sign{sign | config: %{mode: :auto}}}]
+        #[%SignsUi.Config.Sign{
+        #  id: sign.id,
+        #  config: %{mode: :auto}
+        #}]
+      is_nil(alert_id) ->
+        []
+      not MapSet.member?(alert_ids, alert_id) ->
+        #expire_signs_via_alert(sign, alert_ids)
+        [{id, %Sign{sign | config: %{mode: :auto}}}]
+      true ->
+        []
+      end
   end
 
-  defp expire_single_sign(_, _) do
+  defp expire_single_sign(_, _, _) do
     []
   end
 

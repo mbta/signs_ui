@@ -204,7 +204,8 @@ defmodule SignsUi.Config.ExpirationTest do
           DateTime.new!(~D[2019-01-15], ~T[08:00:00], "America/New_York")
         end,
         loop_ms: 5_000,
-        sign_state_server: :sign_state_test
+        sign_state_server: :sign_state_test,
+        alert_fetcher: (fn -> MapSet.new([]) end)
       }
 
       log =
