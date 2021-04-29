@@ -164,20 +164,21 @@ defmodule SignsUi.Config.ExpirationTest do
         (fn -> DateTime.new!(~D[2019-01-15], ~T[08:00:00], "America/New_York") end),
         (fn -> MapSet.new(["1234", "5678", "abc"]) end))
 
-      expected_signs = [
-        %SignsUi.Config.Sign{
+      expected_signs =
+        %{
+        "925" => %SignsUi.Config.Sign{
           id: "925",
           config: %{mode: :auto}
         },
-        %SignsUi.Config.Sign{
+        "471" => %SignsUi.Config.Sign{
           id: "471",
           config: %{mode: :auto}
         },
-        %SignsUi.Config.Sign{
+        "273" => %SignsUi.Config.Sign{
           id: "273",
           config: %{mode: :auto}
-        }
-      ]
+        }}
+
 
       assert MapSet.new(expired_signs) == MapSet.new(expected_signs)
     end
