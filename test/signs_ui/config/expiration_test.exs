@@ -75,97 +75,99 @@ defmodule SignsUi.Config.ExpirationTest do
 
       sign_state = %{
         signs: %{
-      "250" => %SignsUi.Config.Sign{
-        config: %{mode: :auto},
-        id: "250"
-      },
-      "460" => %SignsUi.Config.Sign{
-        config: %{
-          alert_id: nil,
-          expires: nil,
-          mode: :headway
-        },
-        id: "460"
-      },
-      "898" => %SignsUi.Config.Sign{
-        config: %{
-          alert_id: "1234",
-          expires: nil,
-          mode: :headway
-        },
-        id: "898"
-      },
-      "925" => %SignsUi.Config.Sign{
-        config: %{
-          alert_id: "326",
-          expires: nil,
-          mode: :headway
-        },
-        id: "925"
-      },
-      "793" => %SignsUi.Config.Sign{
-          id: "793",
-          config: %{
-            mode: :off,
-            expires: nil,
-            alert_id: nil
-          }
-        },
-      "367" => %SignsUi.Config.Sign{
-          id: "367",
-          config: %{
-            mode: :off,
-            expires: nil,
-            alert_id: "5678"
-          }
-        },
-      "471" => %SignsUi.Config.Sign{
-          id: "471",
-          config: %{
-            mode: :off,
-            expires: nil,
-            alert_id: "437"
-          }
-        },
-       "714" => %SignsUi.Config.Sign{
-          id: "714",
-          config: %{
-            mode: :static_text,
-            line1: "test",
-            line2: "test",
-            expires: nil,
-            alert_id: nil
-          }
-        },
-       "474" => %SignsUi.Config.Sign{
-          id: "474",
-          config: %{
-            mode: :static_text,
-            line1: "test",
-            line2: "test",
-            expires: nil,
-            alert_id: "abc"
-          }
-        },
-       "273" => %SignsUi.Config.Sign{
-          id: "273",
-          config: %{
-            mode: :static_text,
-            line1: "test",
-            line2: "test",
-            expires: nil,
-            alert_id: "593"
+          "250" => %SignsUi.Config.Sign{
+            config: %{mode: :auto},
+            id: "250"
+          },
+          "460" => %SignsUi.Config.Sign{
+            config: %{
+              alert_id: nil,
+              expires: nil,
+              mode: :headway
+            },
+            id: "460"
+          },
+          "898" => %SignsUi.Config.Sign{
+            config: %{
+              alert_id: "1234",
+              expires: nil,
+              mode: :headway
+            },
+            id: "898"
+          },
+          "925" => %SignsUi.Config.Sign{
+            config: %{
+              alert_id: "326",
+              expires: nil,
+              mode: :headway
+            },
+            id: "925"
+          },
+          "793" => %SignsUi.Config.Sign{
+            id: "793",
+            config: %{
+              mode: :off,
+              expires: nil,
+              alert_id: nil
+            }
+          },
+          "367" => %SignsUi.Config.Sign{
+            id: "367",
+            config: %{
+              mode: :off,
+              expires: nil,
+              alert_id: "5678"
+            }
+          },
+          "471" => %SignsUi.Config.Sign{
+            id: "471",
+            config: %{
+              mode: :off,
+              expires: nil,
+              alert_id: "437"
+            }
+          },
+          "714" => %SignsUi.Config.Sign{
+            id: "714",
+            config: %{
+              mode: :static_text,
+              line1: "test",
+              line2: "test",
+              expires: nil,
+              alert_id: nil
+            }
+          },
+          "474" => %SignsUi.Config.Sign{
+            id: "474",
+            config: %{
+              mode: :static_text,
+              line1: "test",
+              line2: "test",
+              expires: nil,
+              alert_id: "abc"
+            }
+          },
+          "273" => %SignsUi.Config.Sign{
+            id: "273",
+            config: %{
+              mode: :static_text,
+              line1: "test",
+              line2: "test",
+              expires: nil,
+              alert_id: "593"
+            }
           }
         }
-      }}
+      }
 
-      expired_signs = SignsUi.Config.Expiration.expire_signs_via_time_and_alert(
-        sign_state,
-        (fn -> DateTime.new!(~D[2019-01-15], ~T[08:00:00], "America/New_York") end),
-        (fn -> MapSet.new(["1234", "5678", "abc"]) end))
+      expired_signs =
+        SignsUi.Config.Expiration.expire_signs_via_time_and_alert(
+          sign_state,
+          fn -> DateTime.new!(~D[2019-01-15], ~T[08:00:00], "America/New_York") end,
+          fn -> MapSet.new(["1234", "5678", "abc"]) end
+        )
 
-      expected_signs =
-        %{
+      expected_signs = %{
         "925" => %SignsUi.Config.Sign{
           id: "925",
           config: %{mode: :auto}
@@ -177,8 +179,8 @@ defmodule SignsUi.Config.ExpirationTest do
         "273" => %SignsUi.Config.Sign{
           id: "273",
           config: %{mode: :auto}
-        }}
-
+        }
+      }
 
       assert MapSet.new(expired_signs) == MapSet.new(expected_signs)
     end
@@ -198,7 +200,7 @@ defmodule SignsUi.Config.ExpirationTest do
         end,
         loop_ms: 5_000,
         sign_state_server: :sign_state_test,
-        alert_fetcher: (fn -> MapSet.new([]) end)
+        alert_fetcher: fn -> MapSet.new([]) end
       }
 
       log =
