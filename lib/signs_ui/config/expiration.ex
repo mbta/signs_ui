@@ -76,52 +76,15 @@ defmodule SignsUi.Config.Expiration do
     MapSet.new(List.flatten(alert_ids))
   end
 
-  # @spec expire_single_sign({Sign.id(), Sign.t()}, DateTime.t(), MapSet.t(String.t())) :: [{Sign.id(), Sign.t()}]
-  # defp expire_single_sign(
-  #       {id, %Sign{config: %{expires: expiration, alert_id: alert_id}} = sign},
-  #       current_dt,
-  #       alert_ids
-  #     ) do
-  #  cond do
-  #    not is_nil(expiration) and DateTime.compare(expiration, current_dt) == :lt ->
-  #      [{id, %Sign{sign | config: %{mode: :auto}}}]
-
-  #    is_nil(alert_id) ->
-  #      []
-
-  #    not MapSet.member?(alert_ids, alert_id) ->
-  #      [{id, %Sign{sign | config: %{mode: :auto}}}]
-
-  #    true ->
-  #      []
-  #  end
-  # end
-
-  # @spec expire_single_sign({Sign.id(), Sign.t()}, DateTime.t(), MapSet.t(String.t())) :: [{Sign.id(), Sign.t()}]
-  #defp expire_single_sign(
-  #       {id, %Sign{config: %{expires: expiration, alert_id: alert_id}} = sign},
-  #       current_dt,
-  #       alert_ids
-  #     ) do
-  #  if not is_nil(expiration) and DateTime.compare(expiration, current_dt) == :lt do
-  #    [{id, %Sign{sign | config: %{mode: :auto}}}]
-  #  else
-  #    cond do
-  #      is_nil(alert_id) or MapSet.member?(alert_ids, alert_id) ->
-  #        []
-
-  #      true ->
-  #        [{id, %Sign{sign | config: %{mode: :auto}}}]
-  #    end
-  #  end
-  #end
-
-  # @spec expire_single_sign({Sign.id(), Sign.t()}, DateTime.t(), MapSet.t(String.t())) :: [{Sign.id(), Sign.t()}]
+  @spec expire_single_sign({Sign.id(), Sign.t()}, DateTime.t(), MapSet.t(String.t())) :: [
+          {Sign.id(), Sign.t()}
+        ]
   defp expire_single_sign(
          {id, %Sign{config: %{expires: expiration}} = sign},
          current_dt,
          _alert_ids
-       ) when not is_nil(expiration) do
+       )
+       when not is_nil(expiration) do
     if DateTime.compare(expiration, current_dt) == :lt do
       [{id, %Sign{sign | config: %{mode: :auto}}}]
     else
