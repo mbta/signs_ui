@@ -42,7 +42,7 @@ defmodule SignsUi.Config.Expiration do
     updates =
       state.sign_state_server
       |> SignsUi.Config.State.get_all()
-      |> expire_signs_via_time_and_alert(state.time_fetcher, state.alert_fetcher)
+      |> expire_signs(state.time_fetcher, state.alert_fetcher)
 
     if updates != %{} do
       Logger.info("Cleaning expired settings for sign IDs: #{inspect(Map.keys(updates))}")
@@ -56,7 +56,7 @@ defmodule SignsUi.Config.Expiration do
     {:noreply, state}
   end
 
-  def expire_signs_via_time_and_alert(state, time_fetcher, alert_fetcher) do
+  def expire_signs(state, time_fetcher, alert_fetcher) do
     current_dt = time_fetcher.()
     alert_ids = alert_fetcher.()
 

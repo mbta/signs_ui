@@ -51,7 +51,7 @@ defmodule SignsUi.Config.ExpirationTest do
         }
       }
 
-      assert SignsUi.Config.Expiration.expire_signs_via_time_and_alert(
+      assert SignsUi.Config.Expiration.expire_signs(
                state,
                fn -> DateTime.new!(~D[2019-01-15], ~T[08:00:00], "America/New_York") end,
                fn -> MapSet.new([]) end
@@ -164,7 +164,7 @@ defmodule SignsUi.Config.ExpirationTest do
       }
 
       expired_signs =
-        SignsUi.Config.Expiration.expire_signs_via_time_and_alert(
+        SignsUi.Config.Expiration.expire_signs(
           sign_state,
           fn -> DateTime.new!(~D[2019-01-15], ~T[08:00:00], "America/New_York") end,
           fn -> MapSet.new(["1234", "5678", "abc"]) end
