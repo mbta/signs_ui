@@ -156,7 +156,7 @@ defmodule SignsUi.Config.ExpirationTest do
               mode: :static_text,
               line1: "test",
               line2: "test",
-              expires: DateTime.new!(~D[2019-01-15], ~T[08:00:00], "America/New_York"),
+              expires: nil,
               alert_id: "593"
             }
           }
