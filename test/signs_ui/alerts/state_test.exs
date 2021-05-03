@@ -16,7 +16,6 @@ defmodule SignsUi.Alerts.StateTest do
     test "returns the alert_ids out of the state" do
       state = %SignsUi.Alerts.State{
         alerts: %{
-          # fill in sample data here, but it's of this shape:
           "Red" => %{
             "alert_id1" => %{},
             "alert_id2" => %{}

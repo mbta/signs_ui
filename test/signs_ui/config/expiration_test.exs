@@ -5,7 +5,7 @@ defmodule SignsUi.Config.ExpirationTest do
   alias SignsUi.Signs.Sign
   alias SignsUi.Config.Sign
 
-  describe "expire_signs_via_time/2" do
+  describe "expire_signs/2" do
     test "produces correct updates when times expire" do
       {:ok, time1, 0} = DateTime.from_iso8601("2019-01-15T12:00:00Z")
       {:ok, time2, 0} = DateTime.from_iso8601("2019-01-15T14:00:00Z")
