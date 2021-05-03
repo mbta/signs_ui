@@ -24,7 +24,7 @@ defmodule SignsUi.Alerts.State do
     {:ok, %__MODULE__{}}
   end
 
-  @spec active_alert_ids(GenServer.server()) :: [Alert.id()]
+  @spec active_alert_ids(GenServer.server()) :: MapSet.t(Alert.id())
   def active_alert_ids(pid \\ __MODULE__) do
     GenServer.call(pid, :active_alert_ids)
   end
