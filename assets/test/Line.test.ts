@@ -33,6 +33,8 @@ test('Shows all signs for a line', () => {
         readOnly,
         configuredHeadways,
         setConfiguredHeadways,
+        chelseaBridgeAnnouncements: 'off',
+        setChelseaBridgeAnnouncements: () => {},
       },
       null,
     ),
@@ -66,6 +68,8 @@ test('Shows batch mode buttons when not read-only', () => {
         readOnly,
         configuredHeadways,
         setConfiguredHeadways,
+        chelseaBridgeAnnouncements: 'off',
+        setChelseaBridgeAnnouncements: () => {},
       },
       null,
     ),
@@ -101,6 +105,8 @@ test.each([['Silver'], ['Busway']])(
           readOnly,
           configuredHeadways,
           setConfiguredHeadways,
+          chelseaBridgeAnnouncements: 'off',
+          setChelseaBridgeAnnouncements: () => {},
         },
         null,
       ),
@@ -139,6 +145,8 @@ test('Shows "Mixed" batch mode buttons when multiple modes are chosen', () => {
         readOnly,
         configuredHeadways,
         setConfiguredHeadways,
+        chelseaBridgeAnnouncements: 'off',
+        setChelseaBridgeAnnouncements: () => {},
       },
       null,
     ),
@@ -177,6 +185,8 @@ test('Does not show "Mixed" batch mode buttons when one mode is chosen', () => {
         readOnly,
         configuredHeadways,
         setConfiguredHeadways,
+        chelseaBridgeAnnouncements: 'off',
+        setChelseaBridgeAnnouncements: () => {},
       },
       null,
     ),
@@ -212,6 +222,8 @@ test("Doesn't show batch mode buttons when read-only", () => {
         readOnly,
         configuredHeadways,
         setConfiguredHeadways,
+        chelseaBridgeAnnouncements: 'off',
+        setChelseaBridgeAnnouncements: () => {},
       },
       null,
     ),
@@ -246,6 +258,8 @@ test('Shows ConfiguredHeadwaysForm if current line has branches configured', () 
         readOnly,
         configuredHeadways,
         setConfiguredHeadways,
+        chelseaBridgeAnnouncements: 'off',
+        setChelseaBridgeAnnouncements: () => {},
       },
       null,
     ),
@@ -278,6 +292,8 @@ test('Doesn\t show ConfiguredHeadwaysForm if current line has no branches config
         readOnly,
         configuredHeadways,
         setConfiguredHeadways,
+        chelseaBridgeAnnouncements: 'off',
+        setChelseaBridgeAnnouncements: () => {},
       },
       null,
     ),
@@ -310,6 +326,8 @@ test('Shows ConfiguredHeadwaysForm if current line has branches configured', () 
         readOnly,
         configuredHeadways,
         setConfiguredHeadways,
+        chelseaBridgeAnnouncements: 'off',
+        setChelseaBridgeAnnouncements: () => {},
       },
       null,
     ),
@@ -340,7 +358,6 @@ test('Sign config is not affected by batch updates if sign does not support mode
       },
       zones: {
         n: {
-          value: false,
           modes: {
             auto: true,
             custom: true,
@@ -349,7 +366,6 @@ test('Sign config is not affected by batch updates if sign does not support mode
           },
         },
         s: {
-          value: false,
           modes: {
             auto: false,
             custom: true,
@@ -358,7 +374,6 @@ test('Sign config is not affected by batch updates if sign does not support mode
           },
         },
         m: {
-          value: true,
           modes: {
             auto: false,
             custom: true,
@@ -367,7 +382,6 @@ test('Sign config is not affected by batch updates if sign does not support mode
           },
         },
         e: {
-          value: false,
           modes: {
             auto: false,
             custom: true,
@@ -376,7 +390,6 @@ test('Sign config is not affected by batch updates if sign does not support mode
           },
         },
         w: {
-          value: false,
           modes: {
             auto: false,
             custom: true,
@@ -385,7 +398,6 @@ test('Sign config is not affected by batch updates if sign does not support mode
           },
         },
         c: {
-          value: true,
           modes: {
             auto: false,
             custom: true,
@@ -410,6 +422,8 @@ test('Sign config is not affected by batch updates if sign does not support mode
         configuredHeadways,
         setConfiguredHeadways,
         stationConfigs,
+        chelseaBridgeAnnouncements: 'off',
+        setChelseaBridgeAnnouncements: () => {},
       },
       null,
     ),

@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { mount } from 'enzyme';
 
-import Sign from '../js/Sign';
-import { SignConfig, SingleSignContent } from '../js/types';
+import Sign, { SignModeOptions } from '../js/Sign';
+import { ZoneConfig, SignConfig, SingleSignContent } from '../js/types';
 
 function signContentWithExpirations(
   time1: string,
@@ -236,47 +236,60 @@ test.each([
       off: true,
     },
   ],
-])('shows configured mode select options', (modesOverride, expected) => {
-  const now = new Date('2019-01-15T20:15:00Z').valueOf();
-  const fresh = new Date(now + 5000).toLocaleString();
-  const currentTime = now + 2000;
-  const signId = 'RDAV-n';
-  const line = 'Red';
-  const signConfig: SignConfig = { mode: 'auto' };
-  const signContent = signContentWithExpirations(fresh, fresh);
-  const setConfigs = () => true;
-  const realtimeId = 'id';
-  const readOnly = false;
-  const modes = {
-    auto: false,
-    headway: false,
-    custom: false,
-    off: false,
-    ...modesOverride,
-  };
+])(
+  'shows configured mode select options',
+  (
+    modesOverride,
+    expected: {
+      auto: boolean;
+      static_text: boolean;
+      headway: boolean;
+      off: boolean;
+    },
+  ) => {
+    const now = new Date('2019-01-15T20:15:00Z').valueOf();
+    const fresh = new Date(now + 5000).toLocaleString();
+    const currentTime = now + 2000;
+    const signId = 'RDAV-n';
+    const line = 'Red';
+    const signConfig: SignConfig = { mode: 'auto' };
+    const signContent = signContentWithExpirations(fresh, fresh);
+    const setConfigs = () => true;
+    const realtimeId = 'id';
+    const readOnly = false;
+    const modes: ZoneConfig['modes'] = {
+      auto: false,
+      headway: false,
+      custom: false,
+      off: false,
+      ...modesOverride,
+    };
 
-  const wrapper = mount(
-    React.createElement(
-      Sign,
-      {
-        signId,
-        signContent,
-        currentTime,
-        line,
-        signConfig,
-        setConfigs,
-        realtimeId,
-        readOnly,
-        modes,
-      },
-      null,
-    ),
-  );
-  expect(wrapper.html()).toMatch('select');
-  Object.keys(expected).forEach((x) => {
-    expect(wrapper.find(`option[value="${x}"]`).exists()).toEqual(expected[x]);
-  });
-});
+    const wrapper = mount(
+      React.createElement(
+        Sign,
+        {
+          signId,
+          signContent,
+          currentTime,
+          line,
+          signConfig,
+          setConfigs,
+          realtimeId,
+          readOnly,
+          modes,
+        },
+        null,
+      ),
+    );
+    expect(wrapper.html()).toMatch('select');
+    (Object.keys(expected) as Array<SignModeOptions>).forEach((x) => {
+      expect(wrapper.find(`option[value="${x}"]`).exists()).toEqual(
+        expected[x],
+      );
+    });
+  },
+);
 
 test('shows the return to auto time field if sign can be set to auto', () => {
   const now = new Date('2019-01-15T20:15:00Z').valueOf();

@@ -89,4 +89,5 @@ export {
   SignContent,
   ConfiguredHeadways,
   Zone,
+  ZoneConfig,
 };
