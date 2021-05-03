@@ -66,16 +66,6 @@ defmodule SignsUi.Config.Expiration do
     |> Enum.into(%{})
   end
 
-  @spec active_alert_ids(SignsUi.Alerts.State.state()) ::
-          MapSet.t(String.t())
-  def active_alert_ids(alert_state) do
-    alerts = alert_state.alerts
-    routes = Map.keys(alerts)
-    alert_ids = for route <- routes, do: Map.keys(alerts[route])
-
-    MapSet.new(List.flatten(alert_ids))
-  end
-
   @spec expire_single_sign({Sign.id(), Sign.t()}, DateTime.t(), MapSet.t(String.t())) :: [
           {Sign.id(), Sign.t()}
         ]

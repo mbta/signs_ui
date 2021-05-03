@@ -61,21 +61,6 @@ defmodule SignsUi.Config.ExpirationTest do
 
   describe "expire_signs_via_alert/2" do
     test "produces correct updates when alerts expire" do
-      alert_state = %SignsUi.Alerts.State{
-        alerts: %{
-          "Red" => %{
-            "1234" => %{},
-            "5678" => %{}
-          },
-          "Blue" => %{
-            "abc" => %{}
-          }
-        }
-      }
-
-      alert_ids = SignsUi.Config.Expiration.active_alert_ids(alert_state)
-      assert alert_ids == MapSet.new(["1234", "5678", "abc"])
-
       sign_state = %{
         signs: %{
           "250" => %Sign{
