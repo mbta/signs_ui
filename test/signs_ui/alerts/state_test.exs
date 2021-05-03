@@ -60,4 +60,11 @@ defmodule SignsUi.Alerts.StateTest do
       assert %{alerts: %{}} = state
     end
   end
+
+  describe "active_alert_ids/0" do
+    test "returns a result without crashing" do
+      {:ok, pid} = SignsUi.Alerts.State.start_link(name: :alerts_state_ids_test)
+      assert SignsUi.Alerts.State.active_alert_ids(pid) == MapSet.new([])
+    end
+  end
 end
