@@ -1,16 +1,18 @@
 import * as React from 'react';
 import { mount } from 'enzyme';
 import { render, waitFor, fireEvent } from '@testing-library/react';
-import ConfiguredHeadwaysForm from '../js/ConfiguredHeadwaysForm';
+import ConfiguredHeadwaysForm, {
+  ConfiguredHeadwaysFormProps,
+} from '../js/ConfiguredHeadwaysForm';
 
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable camelcase */
 
-let branches;
-let timePeriods;
-let readOnly;
-let configuredHeadways;
-let setConfiguredHeadways;
+let branches: ConfiguredHeadwaysFormProps['branches'];
+let timePeriods: ConfiguredHeadwaysFormProps['timePeriods'];
+let readOnly: ConfiguredHeadwaysFormProps['readOnly'];
+let configuredHeadways: ConfiguredHeadwaysFormProps['configuredHeadways'];
+let setConfiguredHeadways: ConfiguredHeadwaysFormProps['setConfiguredHeadways'];
 window.confirm = jest.fn(() => true);
 
 beforeEach(() => {
@@ -19,8 +21,8 @@ beforeEach(() => {
     { id: 'branch_2', name: 'Branch' },
   ];
   timePeriods = [
-    { id: 'morning', name: 'Morning' },
-    { id: 'evening', name: 'Evening' },
+    { id: 'morning', name: 'Morning', description: 'morning' },
+    { id: 'evening', name: 'Evening', description: 'evening' },
   ];
   setConfiguredHeadways = jest.fn(() => true);
   readOnly = false;

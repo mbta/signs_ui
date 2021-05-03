@@ -5,6 +5,8 @@ import { SignConfig, SignConfigs, SingleSignContent } from './types';
 import { choosePage } from './helpers';
 import SetExpiration from './SetExpiration';
 
+type SignModeOptions = 'auto' | 'headway' | 'off' | 'static_text';
+
 function isNotExpired(expiration: string, currentTime: number) {
   return Date.parse(expiration) - currentTime > 0;
 }
@@ -23,9 +25,7 @@ function fontSize(signId: string | boolean | undefined) {
   return {};
 }
 
-function makeConfig(
-  mode: 'auto' | 'headway' | 'off' | 'static_text',
-): SignConfig {
+function makeConfig(mode: SignModeOptions): SignConfig {
   if (mode === 'auto') {
     return { mode: 'auto' };
   }
@@ -49,7 +49,7 @@ function makeConfig(
   return { mode: 'off', expires: null };
 }
 
-function displayName(mode: 'auto' | 'headway' | 'off' | 'static_text') {
+function displayName(mode: SignModeOptions) {
   switch (mode) {
     case 'static_text':
       return 'Custom';
@@ -346,3 +346,4 @@ class Sign extends React.Component<
 }
 
 export default Sign;
+export { SignModeOptions };

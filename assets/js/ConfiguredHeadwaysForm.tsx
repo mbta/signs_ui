@@ -249,3 +249,4 @@ ConfiguredHeadwaysForm.defaultProps = {
 };
 
 export default React.memo(ConfiguredHeadwaysForm);
+export { ConfiguredHeadwaysFormProps };

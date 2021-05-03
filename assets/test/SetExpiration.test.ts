@@ -8,11 +8,6 @@ import { SignConfigs } from '../js/types';
 
 test('Can set the expiration time', () => {
   const requests: SignConfigs[] = [];
-
-  const setConfigs = (arg) => {
-    requests.push(arg);
-  };
-
   const readOnly = false;
 
   const wrapper = mount(
@@ -25,7 +20,9 @@ test('Can set the expiration time', () => {
         line2: 'line2',
         expires: null,
       },
-      setConfigs,
+      setConfigs: (arg) => {
+        requests.push(arg);
+      },
       readOnly,
     }),
   );
@@ -39,11 +36,6 @@ test('Can set the expiration time', () => {
 
 test('Can clear the expiration time', () => {
   const requests: SignConfigs[] = [];
-
-  const setConfigs = (arg) => {
-    requests.push(arg);
-  };
-
   const readOnly = false;
 
   const wrapper = mount(
@@ -56,7 +48,9 @@ test('Can clear the expiration time', () => {
         line2: 'line2',
         expires: new Date().toISOString(),
       },
-      setConfigs,
+      setConfigs: (arg) => {
+        requests.push(arg);
+      },
       readOnly,
     }),
   );

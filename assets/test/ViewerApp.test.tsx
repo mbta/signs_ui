@@ -49,7 +49,7 @@ test('Shows all signs for a line', () => {
       {
         initialSigns: signs,
         initialConfiguredHeadways: configuredHeadways,
-        initialChelseaBridgeAnnouncements: false,
+        initialChelseaBridgeAnnouncements: 'off',
         initialSignConfigs,
         readOnly,
         signOutPath,
@@ -83,7 +83,7 @@ test('Can enable/disable a sign', () => {
       {
         initialSigns: signs,
         initialConfiguredHeadways: configuredHeadways,
-        initialChelseaBridgeAnnouncements: false,
+        initialChelseaBridgeAnnouncements: 'off',
         initialSignConfigs,
         readOnly,
         signOutPath,
@@ -116,7 +116,7 @@ test('Disabling a sign clears any static text', () => {
       {
         initialSigns: signs,
         initialConfiguredHeadways: configuredHeadways,
-        initialChelseaBridgeAnnouncements: false,
+        initialChelseaBridgeAnnouncements: 'off',
         initialSignConfigs,
         readOnly,
         signOutPath,
@@ -153,7 +153,7 @@ test('Shows sign out link', () => {
       {
         initialSigns: signs,
         initialConfiguredHeadways: configuredHeadways,
-        initialChelseaBridgeAnnouncements: false,
+        initialChelseaBridgeAnnouncements: 'off',
         initialSignConfigs,
         readOnly,
         signOutPath,
