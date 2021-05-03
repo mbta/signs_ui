@@ -56,7 +56,11 @@ defmodule SignsUi.Config.Expiration do
     {:noreply, state}
   end
 
-  @spec expire_signs(SignsUi.Config.State.t(), (() -> DateTime.t()), (() -> String.t())) :: %{
+  @spec expire_signs(
+          SignsUi.Config.State.t(),
+          (() -> DateTime.t()),
+          (() -> MapSet.t(SignsUi.Alerts.Alert.id()))
+        ) :: %{
           Sign.id() => Sign.t()
         }
   def expire_signs(state, time_fetcher, alert_fetcher) do
