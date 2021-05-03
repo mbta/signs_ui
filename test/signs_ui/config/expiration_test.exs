@@ -170,7 +170,7 @@ defmodule SignsUi.Config.ExpirationTest do
         }
       }
 
-      assert MapSet.new(expired_signs) == MapSet.new(expected_signs)
+      assert expired_signs == expected_signs
     end
   end
 
