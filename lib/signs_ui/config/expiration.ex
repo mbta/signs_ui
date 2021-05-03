@@ -56,6 +56,9 @@ defmodule SignsUi.Config.Expiration do
     {:noreply, state}
   end
 
+  @spec expire_signs(SignsUi.Config.State.t(), (() -> DateTime.t()), (() -> String.t())) :: %{
+          Sign.id() => Sign.t()
+        }
   def expire_signs(state, time_fetcher, alert_fetcher) do
     current_dt = time_fetcher.()
     alert_ids = alert_fetcher.()
@@ -86,8 +89,9 @@ defmodule SignsUi.Config.Expiration do
          {id, %Sign{config: %{alert_id: alert_id}} = sign},
          _current_dt,
          alert_ids
-       ) do
-    if is_nil(alert_id) or MapSet.member?(alert_ids, alert_id) do
+       )
+       when not is_nil(alert_id) do
+    if MapSet.member?(alert_ids, alert_id) do
       []
     else
       [{id, %Sign{sign | config: %{mode: :auto}}}]
