@@ -30,22 +30,12 @@ defmodule SignsUi.Alerts.State do
   end
 
   def handle_call(:active_alert_ids, _from, state) do
-    alerts = state.alerts
-    routes = Map.keys(alerts)
-    #alert_ids = for route <- routes, do: Map.keys(alerts[route])
-    #flattened_alert_ids = MapSet.new(List.flatten(alert_ids))
-    #IO.puts("---flattened_alert_ids---")
-    #IO.inspect(flattened_alert_ids)
-    alert_ids2 =
-      for {route_id, route_alerts} <- state.alerts,
+    alert_ids =
+      for {_route_id, route_alerts} <- state.alerts,
           {alert_id, _alert_data} <- route_alerts,
           do: alert_id
 
-    IO.puts("---alert_ids2---")
-    IO.inspect(MapSet.new(alert_ids2))
-
-    #{:reply, flattened_alert_ids, state}
-    {:reply, MapSet.new(alert_ids2), state}
+    {:reply, MapSet.new(alert_ids), state}
   end
 
   def handle_info(:twiddle_state, state) do
