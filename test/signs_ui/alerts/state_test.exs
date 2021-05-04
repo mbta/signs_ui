@@ -6,7 +6,7 @@ defmodule SignsUi.Alerts.StateTest do
     test "GenServer runs without crashing" do
       @endpoint.subscribe("signs:all")
 
-      {:ok, _pid} = SignsUi.Alerts.State.start_link(interval_ms: 50)
+      {:ok, _pid} = SignsUi.Alerts.State.start_link(name: :no_crashing, interval_ms: 50)
 
       assert_broadcast("new_alert_state", %{})
     end
@@ -40,7 +40,7 @@ defmodule SignsUi.Alerts.StateTest do
 
   describe "handle_info" do
     test "handles unknown messages without crashing" do
-      {:ok, pid} = SignsUi.Alerts.State.start_link()
+      {:ok, pid} = SignsUi.Alerts.State.start_link(name: :unknown_messages)
       Process.monitor(pid)
       send(pid, :unknown!)
       refute_receive {:DOWN, _, _, ^pid, _}
