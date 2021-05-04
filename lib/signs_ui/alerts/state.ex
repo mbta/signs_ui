@@ -20,14 +20,19 @@ defmodule SignsUi.Alerts.State do
     GenStage.start_link(__MODULE__, init_opts, start_opts)
   end
 
-  @impl GenStage
-  def init(opts) do
-    {:consumer, %{}, opts}
-  end
-
   @spec active_alert_ids(GenStage.stage()) :: MapSet.t(Alert.id())
   def active_alert_ids(pid \\ __MODULE__) do
     GenStage.call(pid, :active_alert_ids)
+  end
+
+  @spec all(GenStage.stage()) :: Display.t()
+  def all(pid \\ __MODULE__) do
+    GenStage.call(pid, :all)
+  end
+
+  @impl GenStage
+  def init(opts) do
+    {:consumer, %{}, opts}
   end
 
   @impl GenStage
@@ -35,6 +40,11 @@ defmodule SignsUi.Alerts.State do
     alert_ids = state |> Map.keys() |> MapSet.new()
 
     {:reply, alert_ids, [], state}
+  end
+
+  @impl GenStage
+  def handle_call(:all, _from, state) do
+    {:reply, Display.format_state(state), [], state}
   end
 
   @impl GenStage

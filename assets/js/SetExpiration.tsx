@@ -1,6 +1,6 @@
 import * as React from 'react';
 import ReactDatePicker from 'react-datepicker';
-import { SignConfig, SignConfigs } from './types';
+import { RouteAlerts, SignConfig, SignConfigs } from './types';
 
 function stringify(expires: Date | null) {
   if (expires) {
@@ -44,6 +44,7 @@ function parseDate(str: string | null | undefined) {
 }
 
 interface SetExpirationProps {
+  alerts: RouteAlerts;
   realtimeId: string;
   signConfig: SignConfig;
   setConfigs: (x: SignConfigs) => void;

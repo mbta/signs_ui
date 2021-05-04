@@ -25,6 +25,7 @@ test('Shows all signs for a line', () => {
     React.createElement(
       Line,
       {
+        alerts: {},
         signs,
         currentTime,
         line,
@@ -60,6 +61,7 @@ test('Shows batch mode buttons when not read-only', () => {
     React.createElement(
       Line,
       {
+        alerts: {},
         signs,
         currentTime,
         line,
@@ -97,6 +99,7 @@ test.each([['Silver'], ['Busway']])(
       React.createElement(
         Line,
         {
+          alerts: {},
           signs,
           currentTime,
           line,
@@ -137,6 +140,7 @@ test('Shows "Mixed" batch mode buttons when multiple modes are chosen', () => {
     React.createElement(
       Line,
       {
+        alerts: {},
         signs,
         currentTime,
         line,
@@ -177,6 +181,7 @@ test('Does not show "Mixed" batch mode buttons when one mode is chosen', () => {
     React.createElement(
       Line,
       {
+        alerts: {},
         signs,
         currentTime,
         line,
@@ -214,6 +219,7 @@ test("Doesn't show batch mode buttons when read-only", () => {
     React.createElement(
       Line,
       {
+        alerts: {},
         signs,
         currentTime,
         line,
@@ -250,6 +256,7 @@ test('Shows ConfiguredHeadwaysForm if current line has branches configured', () 
     React.createElement(
       Line,
       {
+        alerts: {},
         signs,
         currentTime,
         line,
@@ -284,6 +291,7 @@ test('Doesn\t show ConfiguredHeadwaysForm if current line has no branches config
     React.createElement(
       Line,
       {
+        alerts: {},
         signs,
         currentTime,
         line,
@@ -318,6 +326,7 @@ test('Shows ConfiguredHeadwaysForm if current line has branches configured', () 
     React.createElement(
       Line,
       {
+        alerts: {},
         signs,
         currentTime,
         line,
@@ -413,6 +422,7 @@ test('Sign config is not affected by batch updates if sign does not support mode
     React.createElement(
       Line,
       {
+        alerts: {},
         signs,
         currentTime,
         line,
@@ -465,6 +475,7 @@ test('can toggle chelsea bridge announcements on and off on Silver Line page', (
     React.createElement(
       Line,
       {
+        alerts: {},
         signs: {},
         currentTime: Date.now() + 2000,
         line: 'Silver',
@@ -496,6 +507,7 @@ test('does not show chelsea bridge announcements toggle on non-Silver Line pages
     React.createElement(
       Line,
       {
+        alerts: {},
         signs: {},
         currentTime: Date.now() + 2000,
         line: 'Red',
@@ -518,6 +530,7 @@ test('does not show chelsea bridge announcements toggle on non-Silver Line pages
 test('does not show chelsea bridge toggle if in read-only mode', () => {
   const wrapper = mount(
     React.createElement(Line, {
+      alerts: {},
       signs: {},
       currentTime: Date.now() + 2000,
       line: 'Silver',

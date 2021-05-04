@@ -1,7 +1,12 @@
 import * as React from 'react';
 import dateFormat from 'dateformat';
 import lineToColor from './colors';
-import { SignConfig, SignConfigs, SingleSignContent } from './types';
+import {
+  RouteAlerts,
+  SignConfig,
+  SignConfigs,
+  SingleSignContent,
+} from './types';
 import { choosePage } from './helpers';
 import SetExpiration from './SetExpiration';
 
@@ -117,6 +122,7 @@ function line2DisplayText(
 }
 
 interface SignProps {
+  alerts: RouteAlerts;
   signId: string | boolean | undefined;
   modes: {
     auto: boolean;
@@ -199,6 +205,7 @@ class Sign extends React.Component<
 
   render(): JSX.Element {
     const {
+      alerts,
       signId,
       signContent,
       currentTime,
@@ -333,6 +340,7 @@ class Sign extends React.Component<
         {signConfig.mode !== 'auto' && modes.auto && (
           <div className="viewer--schedule-expires">
             <SetExpiration
+              alerts={alerts}
               realtimeId={realtimeId}
               signConfig={signConfig}
               setConfigs={setConfigs}
