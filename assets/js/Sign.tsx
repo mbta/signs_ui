@@ -63,6 +63,16 @@ function displayName(mode: SignModeOptions) {
   }
 }
 
+function shouldShowAlertSelector(line: string): boolean {
+  return (
+    line === 'Red' ||
+    line === 'Blue' ||
+    line === 'Orange' ||
+    line === 'Green' ||
+    line === 'Mattapan'
+  );
+}
+
 function isValidText(text: string) {
   return !/[^a-zA-Z0-9,/!@' +]/.test(text);
 }
@@ -345,6 +355,7 @@ class Sign extends React.Component<
               signConfig={signConfig}
               setConfigs={setConfigs}
               readOnly={readOnly}
+              showAlertSelector={shouldShowAlertSelector(line)}
             />
           </div>
         )}

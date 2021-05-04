@@ -25,6 +25,7 @@ test('Can set the expiration time', () => {
         requests.push(arg);
       },
       readOnly,
+      showAlertSelector: true,
     }),
   );
 
@@ -54,10 +55,11 @@ test('Can clear the expiration time', () => {
         requests.push(arg);
       },
       readOnly,
+      showAlertSelector: true,
     }),
   );
 
-  wrapper.find('.viewer--cancel-expiration-button').simulate('click');
+  wrapper.find('.set_expiration--cancel').simulate('click');
   expect(requests.length).toBe(1);
   const newConf = requests[0].rtID;
   expect(newConf.expires).toBe(null);
@@ -81,6 +83,7 @@ test('Shows widget when no expiration set if not in read-only mode', () => {
       },
       setConfigs,
       readOnly,
+      showAlertSelector: true,
     }),
   );
 
@@ -105,6 +108,7 @@ test('Suppresses widget when no expiration set if in read-only mode', () => {
       },
       setConfigs,
       readOnly,
+      showAlertSelector: true,
     }),
   );
 
@@ -129,6 +133,7 @@ test("Shows 'Scheduled' when expiration is set if in read-only mode", () => {
       },
       setConfigs,
       readOnly,
+      showAlertSelector: true,
     }),
   );
 
