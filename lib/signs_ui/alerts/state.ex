@@ -24,9 +24,9 @@ defmodule SignsUi.Alerts.State do
   An alert that affects multiple routes.
   """
   @type multi_route_alert :: %{
-          created_at: DateTime.t(),
-          service_effect: String.t(),
-          affected_routes: MapSet.t(route_id())
+          created_at: DateTime.t() | nil,
+          service_effect: String.t() | nil,
+          affected_routes: MapSet.t(route_id()) | nil
         }
 
   @type single_route_alert :: %{
