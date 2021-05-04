@@ -15,6 +15,7 @@ defmodule SignsUi.Alerts.State do
 
   def start_link(opts \\ []) do
     {start_opts, init_opts} = Keyword.split(opts, [:name])
+    start_opts = Keyword.put_new(start_opts, :name, __MODULE__)
     GenServer.start_link(__MODULE__, init_opts, start_opts)
   end
 
