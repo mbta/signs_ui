@@ -3,6 +3,7 @@ import ConfiguredHeadwaysForm from './ConfiguredHeadwaysForm';
 import Station from './Station';
 import { stationConfig, arincToRealtimeId, branchConfig } from './mbta';
 import {
+  RouteAlerts,
   SignContent,
   ConfiguredHeadways,
   SignConfigs,
@@ -66,6 +67,7 @@ function setAllStationsMode(
 }
 
 interface LineProps {
+  alerts: RouteAlerts;
   signs: SignContent;
   currentTime: number;
   line: string;
@@ -80,6 +82,7 @@ interface LineProps {
 }
 
 function Line({
+  alerts,
   signs,
   currentTime,
   line,
@@ -233,6 +236,7 @@ function Line({
       {stations.map((station: StationConfig) => (
         <Station
           key={station.id}
+          alerts={alerts}
           config={station}
           signs={signs}
           currentTime={currentTime}

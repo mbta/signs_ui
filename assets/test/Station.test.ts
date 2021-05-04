@@ -32,6 +32,7 @@ test('shows the custom configuration information for a station', () => {
 
   const wrapper = mount(
     React.createElement(Station, {
+      alerts: {},
       config,
       signs,
       currentTime,
@@ -74,6 +75,7 @@ test('allows custom reordering of sign positions', () => {
 
   const wrapper = mount(
     React.createElement(Station, {
+      alerts: {},
       config,
       signs,
       currentTime,

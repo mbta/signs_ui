@@ -1,10 +1,12 @@
 <div id="viewer-root"></div>
 
+<% alerts_data = Base.encode64(Jason.encode!(@alerts)) %>
 <% signs_data = Base.encode64(Jason.encode!(@signs)) %>
 <% sign_configs = Base.encode64(Jason.encode!(@sign_configs)) %>
 <% configured_headways = Base.encode64(Jason.encode!(@configured_headways)) %>
 <% chelsea_bridge_announcements = Base.encode64(Jason.encode!(@chelsea_bridge_announcements)) %>
 
+<script>window.initialAlertsData = JSON.parse(atob("<%= alerts_data %>"))</script>
 <script>window.initialSignsData = JSON.parse(atob("<%= signs_data %>"))</script>
 <script>window.initialSignConfigs = JSON.parse(atob("<%= sign_configs %>"))</script>
 <script>window.initialConfiguredHeadways = JSON.parse(atob("<%= configured_headways %>"))</script>

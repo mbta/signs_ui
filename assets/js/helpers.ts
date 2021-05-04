@@ -1,3 +1,5 @@
+import { RouteAlerts, Alerts } from './types';
+
 function choosePage(
   pages: { content: string; duration: number }[],
   elapsedSeconds: number,
@@ -19,5 +21,20 @@ function choosePage(
   return '';
 }
 
+function alertsForLine(alerts: Alerts, line: string): RouteAlerts {
+  if (['Red', 'Orange', 'Blue', 'Mattapan'].includes(line)) {
+    return alerts[line] || {};
+  }
+  if (line === 'Green') {
+    return {
+      ...(alerts['Green-B'] || {}),
+      ...(alerts['Green-C'] || {}),
+      ...(alerts['Green-D'] || {}),
+      ...(alerts['Green-E'] || {}),
+    };
+  }
+  return {};
+}
+
 /* eslint-disable import/prefer-default-export */
-export { choosePage };
+export { choosePage, alertsForLine };

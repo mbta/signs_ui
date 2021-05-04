@@ -1,8 +1,10 @@
 import * as React from 'react';
 import Line from './Line';
-import { SignContent, ConfiguredHeadways, SignConfigs } from './types';
+import { Alerts, SignContent, ConfiguredHeadways, SignConfigs } from './types';
+import { alertsForLine } from './helpers';
 
 interface ViewerProps {
+  alerts: Alerts;
   signs: SignContent;
   currentTime: number;
   line: string;
@@ -16,6 +18,7 @@ interface ViewerProps {
 }
 
 function Viewer({
+  alerts,
   signs,
   currentTime,
   line,
@@ -30,6 +33,7 @@ function Viewer({
   return (
     <div>
       <Line
+        alerts={alertsForLine(alerts, line)}
         signs={signs}
         currentTime={currentTime}
         line={line}

@@ -70,17 +70,23 @@ type ConfiguredHeadways = {
   };
 };
 
+type Alert = {
+  id: string;
+  created_at: string | null;
+  service_effect: string;
+};
+
+type RouteAlerts = {
+  [id: string]: Alert;
+};
+
 type Alerts = {
-  [routeId: string]: {
-    [id: string]: {
-      id: string;
-      created_at: string;
-      service_effect: string;
-    };
-  };
+  [routeId: string]: RouteAlerts;
 };
 
 export {
+  Alert,
+  RouteAlerts,
   Alerts,
   StationConfig,
   SignConfig,

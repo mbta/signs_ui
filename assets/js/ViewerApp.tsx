@@ -11,6 +11,7 @@ declare global {
 }
 
 interface ViewerAppProps {
+  initialAlerts: Alerts;
   initialSigns: SignContent;
   initialSignConfigs: SignConfigs;
   initialConfiguredHeadways: ConfiguredHeadways;
@@ -47,7 +48,7 @@ class ViewerApp extends React.Component<
     this.changeLine = this.changeLine.bind(this);
     this.updateTime = this.updateTime.bind(this);
     this.state = {
-      alerts: {},
+      alerts: props.initialAlerts,
       signs: props.initialSigns,
       signConfigs: props.initialSignConfigs,
       configuredHeadways: props.initialConfiguredHeadways,
@@ -86,9 +87,8 @@ class ViewerApp extends React.Component<
       this.setState({ configuredHeadways: state });
     });
 
-    channel.on('new_alert_state', (state) => {
-      console.log(state); // eslint-disable-line no-console
-      this.setState({ alerts: state });
+    channel.on('new_alert_state', (alertState) => {
+      this.setState({ alerts: alertState });
     });
 
     channel.on('auth_expired', () => {
@@ -155,6 +155,7 @@ class ViewerApp extends React.Component<
 
   render(): JSX.Element {
     const {
+      alerts,
       signs,
       currentTime,
       line,
@@ -226,6 +227,7 @@ class ViewerApp extends React.Component<
         </div>
         {line && (
           <Viewer
+            alerts={alerts}
             signs={signs}
             signConfigs={signConfigs}
             configuredHeadways={configuredHeadways}

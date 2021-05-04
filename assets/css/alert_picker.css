@@ -1,0 +1,55 @@
+.alert_picker--container {
+  border: 1px solid #6f6f6f;
+  border-radius: 6px;
+  display: flex;
+  background-color: white;
+  min-height: 10rem;
+  position: absolute;
+  width: 20rem;
+  z-index: 10;
+}
+
+.alert_picker--sidebar {
+  background-color: rgb(109, 107, 107);
+  color: white;
+  flex: none;
+  width: 6rem;
+}
+
+.alert_picker--alert_id {
+  background-color: rgb(109, 107, 107);
+  border: none;
+  color: white;
+  padding-left: 1rem;
+  width: 100%;
+}
+
+.alert_picker--alert_id-active {
+  background-color: white;
+  color: rgb(15, 114, 193);
+}
+
+.alert_picker--content {
+  padding: 0.5rem;
+}
+
+.alert_picker--created_at {
+  font-size: 0.8rem;
+  font-style: italic;
+}
+
+.alert_picker--no_alerts {
+  color: black;
+  line-height: 1.1;
+  margin-left: 1rem;
+  font-size: 0.8rem;
+}
+
+.alert_picker--input {
+  width: 8rem;
+}
+
+.alert_picker--form {
+  display: flex;
+  align-items: center;
+}

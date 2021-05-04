@@ -2,6 +2,7 @@ import * as React from 'react';
 import Sign from './Sign';
 import { arincToRealtimeId } from './mbta';
 import {
+  RouteAlerts,
   SignConfig,
   SignConfigs,
   SignContent,
@@ -38,6 +39,7 @@ function zoneDescription(
 }
 
 function makeSign(
+  alerts: RouteAlerts,
   config: StationConfig,
   zone: Zone,
   signs: {
@@ -71,6 +73,7 @@ function makeSign(
 
     return (
       <Sign
+        alerts={alerts}
         key={key}
         modes={zoneConfig.modes}
         signId={zoneDescription(config, zone)}
@@ -89,6 +92,7 @@ function makeSign(
 }
 
 interface StationProps {
+  alerts: RouteAlerts;
   config: StationConfig;
   signs: SignContent;
   currentTime: number;
@@ -99,6 +103,7 @@ interface StationProps {
 }
 
 function Station({
+  alerts,
   config,
   signs,
   currentTime,
@@ -121,6 +126,7 @@ function Station({
       <div className="row">
         <div className="col">
           {makeSign(
+            alerts,
             config,
             zonePositions.left[0],
             signs,
@@ -131,6 +137,7 @@ function Station({
             readOnly,
           )}
           {makeSign(
+            alerts,
             config,
             zonePositions.left[1],
             signs,
@@ -143,6 +150,7 @@ function Station({
         </div>
         <div className="col">
           {makeSign(
+            alerts,
             config,
             zonePositions.center[0],
             signs,
@@ -153,6 +161,7 @@ function Station({
             readOnly,
           )}
           {makeSign(
+            alerts,
             config,
             zonePositions.center[1],
             signs,
@@ -165,6 +174,7 @@ function Station({
         </div>
         <div className="col">
           {makeSign(
+            alerts,
             config,
             zonePositions.right[0],
             signs,
@@ -175,6 +185,7 @@ function Station({
             readOnly,
           )}
           {makeSign(
+            alerts,
             config,
             zonePositions.right[1],
             signs,

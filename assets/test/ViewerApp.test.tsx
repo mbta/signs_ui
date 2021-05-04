@@ -47,6 +47,7 @@ test('Shows all signs for a line', () => {
     React.createElement(
       ViewerApp,
       {
+        initialAlerts: {},
         initialSigns: signs,
         initialConfiguredHeadways: configuredHeadways,
         initialChelseaBridgeAnnouncements: 'off',
@@ -81,6 +82,7 @@ test('Can enable/disable a sign', () => {
     React.createElement(
       ViewerApp,
       {
+        initialAlerts: {},
         initialSigns: signs,
         initialConfiguredHeadways: configuredHeadways,
         initialChelseaBridgeAnnouncements: 'off',
@@ -114,6 +116,7 @@ test('Disabling a sign clears any static text', () => {
     React.createElement(
       ViewerApp,
       {
+        initialAlerts: {},
         initialSigns: signs,
         initialConfiguredHeadways: configuredHeadways,
         initialChelseaBridgeAnnouncements: 'off',
@@ -151,6 +154,7 @@ test('Shows sign out link', () => {
     React.createElement(
       ViewerApp,
       {
+        initialAlerts: {},
         initialSigns: signs,
         initialConfiguredHeadways: configuredHeadways,
         initialChelseaBridgeAnnouncements: 'off',

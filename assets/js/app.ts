@@ -7,11 +7,12 @@ import './toggle-all';
 import 'phoenix_html';
 
 import ViewerApp from './ViewerApp';
-import { ConfiguredHeadways, SignConfigs, SignContent } from './types';
+import { Alerts, ConfiguredHeadways, SignConfigs, SignContent } from './types';
 
 declare global {
   interface Window {
     signOutPath: string;
+    initialAlertsData: Alerts;
     initialSignsData: SignContent;
     initialSignConfigs: SignConfigs;
     readOnly: boolean;
@@ -23,6 +24,7 @@ declare global {
 const realtimeRoot = document.getElementById('viewer-root');
 if (realtimeRoot) {
   const {
+    initialAlertsData: initialAlerts,
     initialSignsData: initialSigns,
     initialSignConfigs,
     initialChelseaBridgeAnnouncements,
@@ -33,6 +35,7 @@ if (realtimeRoot) {
   const viewerApp = React.createElement(
     ViewerApp,
     {
+      initialAlerts,
       initialSigns,
       initialSignConfigs,
       readOnly,

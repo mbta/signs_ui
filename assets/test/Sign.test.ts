@@ -56,6 +56,7 @@ test('does not show messages that have expired', () => {
     React.createElement(
       Sign,
       {
+        alerts: {},
         signId,
         signContent,
         currentTime,
@@ -101,6 +102,7 @@ test('does not show select in read-only mode', () => {
     React.createElement(
       Sign,
       {
+        alerts: {},
         modes,
         signId,
         signContent,
@@ -143,6 +145,7 @@ test('shows the mode the sign is in in read-only mode', () => {
     React.createElement(
       Sign,
       {
+        alerts: {},
         modes,
         signId,
         signContent,
@@ -182,6 +185,7 @@ test('does show select when not in read-only mode', () => {
     React.createElement(
       Sign,
       {
+        alerts: {},
         signId,
         signContent,
         currentTime,
@@ -269,6 +273,7 @@ test.each([
       React.createElement(
         Sign,
         {
+          alerts: {},
           signId,
           signContent,
           currentTime,
@@ -313,6 +318,7 @@ test('shows the return to auto time field if sign can be set to auto', () => {
     React.createElement(
       Sign,
       {
+        alerts: {},
         signId,
         signContent,
         currentTime,
@@ -352,6 +358,7 @@ test('does not show the return to auto time field if sign can be set to auto', (
     React.createElement(
       Sign,
       {
+        alerts: {},
         signId,
         signContent,
         currentTime,
@@ -391,6 +398,7 @@ test('shows clock even when no other content is present', () => {
     React.createElement(
       Sign,
       {
+        alerts: {},
         signId,
         signContent,
         currentTime,

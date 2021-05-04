@@ -8,6 +8,7 @@ defmodule SignsUiWeb.MessagesController do
   @spec index(Plug.Conn.t(), map()) :: Plug.Conn.t()
   def index(conn, _params) do
     signs = State.list_signs()
+    alerts = SignsUi.Alerts.State.all()
 
     config = SignsUi.Config.State.get_all()
 
@@ -31,6 +32,7 @@ defmodule SignsUiWeb.MessagesController do
     sign_out_path = SignsUiWeb.Router.Helpers.auth_path(conn, :logout, "cognito")
 
     render(conn, "index.html",
+      alerts: alerts,
       signs: signs,
       sign_configs: sign_configs,
       configured_headways: configured_headways,

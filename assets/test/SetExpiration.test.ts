@@ -12,6 +12,7 @@ test('Can set the expiration time', () => {
 
   const wrapper = mount(
     React.createElement(SetExpiration, {
+      alerts: {},
       realtimeId: 'rtID',
       signConfig: {
         id: '1',
@@ -40,6 +41,7 @@ test('Can clear the expiration time', () => {
 
   const wrapper = mount(
     React.createElement(SetExpiration, {
+      alerts: {},
       realtimeId: 'rtID',
       signConfig: {
         id: '1',
@@ -68,6 +70,7 @@ test('Shows widget when no expiration set if not in read-only mode', () => {
 
   const wrapper = mount(
     React.createElement(SetExpiration, {
+      alerts: {},
       realtimeId: 'rtID',
       signConfig: {
         id: '1',
@@ -91,6 +94,7 @@ test('Suppresses widget when no expiration set if in read-only mode', () => {
 
   const wrapper = mount(
     React.createElement(SetExpiration, {
+      alerts: {},
       realtimeId: 'rtID',
       signConfig: {
         id: '1',
@@ -114,6 +118,7 @@ test("Shows 'Scheduled' when expiration is set if in read-only mode", () => {
 
   const wrapper = mount(
     React.createElement(SetExpiration, {
+      alerts: {},
       realtimeId: 'rtID',
       signConfig: {
         id: '1',
