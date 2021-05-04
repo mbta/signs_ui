@@ -1,4 +1,4 @@
-import { choosePage, alertsForLine } from '../js/helpers';
+import { choosePage, alertsForLine, formatTime } from '../js/helpers';
 
 test('choosePage returns the first page when there is only one', () => {
   const pages = [{ content: 'the page', duration: 5 }];
@@ -55,4 +55,25 @@ test('alertsForLine combines alerts across Green branches', () => {
 test('alertsForLine returns empty object for unknown line', () => {
   const alerts = {};
   expect(alertsForLine(alerts, 'Unknown')).toEqual({});
+});
+
+test('formatTime returns empty string if null', () => {
+  expect(formatTime(null)).toEqual('');
+});
+
+test('formatTime says "Today" if today', () => {
+  const dt = new Date().toISOString();
+  expect(formatTime(dt).startsWith('today')).toBe(true);
+});
+
+test('formatTime formats the minutes with two digits', () => {
+  expect(formatTime('2021-05-01T12:05:00Z')).toEqual('May 1 @ 8:05 AM');
+  expect(formatTime('2021-05-01T12:15:00Z')).toEqual('May 1 @ 8:15 AM');
+});
+
+test('formatTime converts 24 hours to AM/PM correctly', () => {
+  expect(formatTime('2021-05-01T04:30:00Z')).toEqual('May 1 @ 12:30 AM');
+  expect(formatTime('2021-05-01T10:30:00Z')).toEqual('May 1 @ 6:30 AM');
+  expect(formatTime('2021-05-01T16:30:00Z')).toEqual('May 1 @ 12:30 PM');
+  expect(formatTime('2021-05-01T19:30:00Z')).toEqual('May 1 @ 3:30 PM');
 });
