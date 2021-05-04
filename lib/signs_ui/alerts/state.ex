@@ -15,6 +15,7 @@ defmodule SignsUi.Alerts.State do
 
   def start_link(opts \\ []) do
     {start_opts, init_opts} = Keyword.split(opts, [:name])
+    start_opts = Keyword.put_new(start_opts, :name, __MODULE__)
     GenServer.start_link(__MODULE__, init_opts, start_opts)
   end
 
@@ -22,6 +23,20 @@ defmodule SignsUi.Alerts.State do
     interval_ms = Keyword.get(opts, :interval_ms, 15_000)
     :timer.send_interval(interval_ms, :twiddle_state)
     {:ok, %__MODULE__{}}
+  end
+
+  @spec active_alert_ids(GenServer.server()) :: MapSet.t(Alert.id())
+  def active_alert_ids(pid \\ __MODULE__) do
+    GenServer.call(pid, :active_alert_ids)
+  end
+
+  def handle_call(:active_alert_ids, _from, state) do
+    alert_ids =
+      for {_route_id, route_alerts} <- state.alerts,
+          {alert_id, _alert_data} <- route_alerts,
+          do: alert_id
+
+    {:reply, MapSet.new(alert_ids), state}
   end
 
   def handle_info(:twiddle_state, state) do

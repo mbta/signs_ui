@@ -6,7 +6,7 @@ defmodule SignsUi.Config.ExpirationTest do
   alias SignsUi.Config.Sign
 
   describe "expire_signs/2" do
-    test "produces correct updates" do
+    test "produces correct updates when times expire" do
       {:ok, time1, 0} = DateTime.from_iso8601("2019-01-15T12:00:00Z")
       {:ok, time2, 0} = DateTime.from_iso8601("2019-01-15T14:00:00Z")
 
@@ -23,7 +23,8 @@ defmodule SignsUi.Config.ExpirationTest do
             id: "past_expiration",
             config: %{
               mode: :off,
-              expires: time1
+              expires: time1,
+              alert_id: nil
             }
           },
           "future_expiration" => %Sign{
@@ -50,9 +51,126 @@ defmodule SignsUi.Config.ExpirationTest do
         }
       }
 
-      assert SignsUi.Config.Expiration.expire_signs(state, fn ->
-               DateTime.new!(~D[2019-01-15], ~T[08:00:00], "America/New_York")
-             end) == expected_updates
+      assert SignsUi.Config.Expiration.expire_signs(
+               state,
+               fn -> DateTime.new!(~D[2019-01-15], ~T[08:00:00], "America/New_York") end,
+               fn -> MapSet.new([]) end
+             ) == expected_updates
+    end
+  end
+
+  describe "expire_signs_via_alert/2" do
+    test "produces correct updates when alerts expire" do
+      sign_state = %{
+        signs: %{
+          "250" => %Sign{
+            config: %{mode: :auto},
+            id: "250"
+          },
+          "460" => %Sign{
+            config: %{
+              alert_id: nil,
+              expires: nil,
+              mode: :headway
+            },
+            id: "460"
+          },
+          "898" => %Sign{
+            config: %{
+              alert_id: "1234",
+              expires: nil,
+              mode: :headway
+            },
+            id: "898"
+          },
+          "925" => %Sign{
+            config: %{
+              alert_id: "326",
+              expires: nil,
+              mode: :headway
+            },
+            id: "925"
+          },
+          "793" => %Sign{
+            id: "793",
+            config: %{
+              mode: :off,
+              expires: nil,
+              alert_id: nil
+            }
+          },
+          "367" => %Sign{
+            id: "367",
+            config: %{
+              mode: :off,
+              expires: nil,
+              alert_id: "5678"
+            }
+          },
+          "471" => %Sign{
+            id: "471",
+            config: %{
+              mode: :off,
+              expires: nil,
+              alert_id: "437"
+            }
+          },
+          "714" => %Sign{
+            id: "714",
+            config: %{
+              mode: :static_text,
+              line1: "test",
+              line2: "test",
+              expires: nil,
+              alert_id: nil
+            }
+          },
+          "474" => %Sign{
+            id: "474",
+            config: %{
+              mode: :static_text,
+              line1: "test",
+              line2: "test",
+              expires: nil,
+              alert_id: "abc"
+            }
+          },
+          "273" => %Sign{
+            id: "273",
+            config: %{
+              mode: :static_text,
+              line1: "test",
+              line2: "test",
+              expires: nil,
+              alert_id: "593"
+            }
+          }
+        }
+      }
+
+      expired_signs =
+        SignsUi.Config.Expiration.expire_signs(
+          sign_state,
+          fn -> DateTime.new!(~D[2019-01-15], ~T[08:00:00], "America/New_York") end,
+          fn -> MapSet.new(["1234", "5678", "abc"]) end
+        )
+
+      expected_signs = %{
+        "925" => %Sign{
+          id: "925",
+          config: %{mode: :auto}
+        },
+        "471" => %Sign{
+          id: "471",
+          config: %{mode: :auto}
+        },
+        "273" => %Sign{
+          id: "273",
+          config: %{mode: :auto}
+        }
+      }
+
+      assert expired_signs == expected_signs
     end
   end
 
@@ -69,7 +187,8 @@ defmodule SignsUi.Config.ExpirationTest do
           DateTime.new!(~D[2019-01-15], ~T[08:00:00], "America/New_York")
         end,
         loop_ms: 5_000,
-        sign_state_server: :sign_state_test
+        sign_state_server: :sign_state_test,
+        alert_fetcher: fn -> MapSet.new([]) end
       }
 
       log =
