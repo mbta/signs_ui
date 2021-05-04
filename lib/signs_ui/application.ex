@@ -16,7 +16,13 @@ defmodule SignsUi.Application do
       {SignsUi.Signs.State, [name: SignsUi.Signs.State]},
       SignsUi.Config.Expiration,
       SignsUi.RefreshTokenStore,
-      SignsUi.Alerts.State
+      {ServerSentEventStage,
+       name: AlertStage,
+       url: "#{System.get_env("API_V3_HOST")}/alerts?filter[datetime]=NOW&filter[route_type]=0,1",
+       headers: [
+         {"x-api-key", System.get_env("API_V3_KEY")}
+       ]},
+      {SignsUi.Alerts.State, name: SignsUi.Alerts.State, subscribe_to: [AlertStage]}
     ]
 
     opts = [strategy: :one_for_one, name: SignsUi.Supervisor]
