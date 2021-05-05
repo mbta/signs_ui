@@ -48,9 +48,9 @@ defmodule SignsUi.Alerts.State do
   end
 
   @impl GenStage
-  @spec init(keyword) :: {:consumer, state(), [{:subscribe_to, [atom()]}]}
   def init(opts) do
-    {:consumer, %{}, subscribe_to: Keyword.fetch!(opts, :subscribe_to)}
+    {:consumer, %{}, opts}
+  end
   end
 
   @spec active_alert_ids(GenServer.server()) :: [Alert.id()]

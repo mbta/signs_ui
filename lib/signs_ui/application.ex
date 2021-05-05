@@ -16,13 +16,13 @@ defmodule SignsUi.Application do
       {SignsUi.Signs.State, [name: SignsUi.Signs.State]},
       SignsUi.Config.Expiration,
       SignsUi.RefreshTokenStore,
-      {ServerSentEventStage,
-       name: AlertStage,
+      {Application.get_env(:signs_ui, :alert_producer),
+       name: AlertProducer,
        url: "#{System.get_env("API_V3_HOST")}/alerts?filter[datetime]=NOW&filter[route_type]=0,1",
        headers: [
          {"x-api-key", System.get_env("API_V3_KEY")}
        ]},
-      {SignsUi.Alerts.State, name: SignsUi.Alerts.State, subscribe_to: [AlertStage]}
+      {SignsUi.Alerts.State, Application.get_env(:signs_ui, :alert_consumer_opts)}
     ]
 
     opts = [strategy: :one_for_one, name: SignsUi.Supervisor]

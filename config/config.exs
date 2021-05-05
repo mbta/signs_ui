@@ -16,7 +16,12 @@ config :signs_ui, SignsUiWeb.Endpoint,
 config :signs_ui,
   signs_external_post_mod: SignsUi.Config.S3,
   aws_requestor: ExAws,
-  refresh_token_store: SignsUi.RefreshTokenStore
+  refresh_token_store: SignsUi.RefreshTokenStore,
+  alert_producer: ServerSentEventStage,
+  alert_consumer_opts: [
+    name: SignsUi.Alerts.State,
+    subscribe_to: [AlertProducer]
+  ]
 
 # HTTP config
 config :signs_ui, :redirect_http?, false
