@@ -76,10 +76,11 @@ defmodule SignsUi.Alerts.State do
     # Works in two primary phases. First, we generate fresh state using the
     # provided events:
     new_state = update_state(events, state)
+    Logger.info(["new_state ", inspect(new_state, pretty: true)])
 
     # Next, we convert our internal state model to the specified format:
     display_state = display_state(new_state)
-    Logger.info(["new_state ", inspect(display_state, pretty: true)])
+    Logger.info(["display_state ", inspect(display_state, pretty: true)])
     SignsUiWeb.Endpoint.broadcast!("signs:all", "new_alert_state", display_state.alerts)
     {:noreply, [], new_state}
   end
