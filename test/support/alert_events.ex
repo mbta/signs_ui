@@ -45,42 +45,4 @@ defmodule Test.Support.AlertEvents do
       event: "remove"
     }
   end
-
-  %SignsUi.Alerts.State{
-    alerts: %{
-      "Blue" => %{
-        "126976" => %SignsUi.Alerts.Alert{
-          created_at: ~U[2021-05-05 00:41:37Z],
-          id: "126976",
-          service_effect: "Blue Line delay"
-        }
-      }
-    }
-  }
-
-  %SignsUi.Alerts.State{
-    alerts: %{
-      "Blue" => %{
-        "126976" => %SignsUi.Alerts.Alert{
-          created_at: ~U[2021-05-05 00:41:37Z],
-          id: "126976",
-          service_effect: "Blue Line delay"
-        }
-      },
-      "Orange" => %{
-        "126977" => %SignsUi.Alerts.Alert{
-          created_at: ~U[2021-05-05 00:43:09Z],
-          id: "126977",
-          service_effect: "Orange Line and Red Line delay"
-        }
-      },
-      "Red" => %{
-        "126977" => %SignsUi.Alerts.Alert{
-          created_at: ~U[2021-05-05 00:43:09Z],
-          id: "126977",
-          service_effect: "Orange Line and Red Line delay"
-        }
-      }
-    }
-  }
 end
