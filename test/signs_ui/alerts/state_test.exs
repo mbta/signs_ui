@@ -2,7 +2,8 @@ defmodule SignsUi.Alerts.StateTest do
   use ExUnit.Case, async: true
   use SignsUiWeb.ChannelCase
   alias ServerSentEventStage.Event
-  alias Test.Support.AlertEvents
+  import Test.Support.AlertEvents
+  alias SignsUi.Alerts.State
 
   defp clear_state(), do: %Event{data: "[]", event: "reset"}
 
@@ -16,7 +17,9 @@ defmodule SignsUi.Alerts.StateTest do
 
       GenStage.sync_subscribe(pid, to: producer)
 
-      assert_broadcast("new_alert_state", %{}, 300)
+      assert_broadcast("new_alert_state", %State{
+        alerts: %{}
+      }, 300)
     end
   end
 
@@ -57,6 +60,156 @@ defmodule SignsUi.Alerts.StateTest do
 
   describe "handle_events" do
     test "handles a reset" do
+      expected = %SignsUi.Alerts.State{
+        alerts: %{
+          "Blue" => %{
+            "126976" => %SignsUi.Alerts.Alert{
+              created_at: ~U[2021-05-05 00:41:37Z],
+              id: "126976",
+              service_effect: "Blue Line delay"
+            }
+          }
+        }
+      }
+
+      @endpoint.subscribe("signs:all")
+
+      {:ok, pid} = SignsUi.Alerts.State.start_link()
+
+      {:ok, producer} = GenStage.from_enumerable([initial_state()])
+
+      GenStage.sync_subscribe(pid, to: producer)
+
+      assert_broadcast("new_alert_state", expected, 500)
+    end
+
+    test "handles an add" do
+      expected = %SignsUi.Alerts.State{
+        alerts: %{
+          "Blue" => %{
+            "126976" => %SignsUi.Alerts.Alert{
+              created_at: ~U[2021-05-05 00:41:37Z],
+              id: "126976",
+              service_effect: "Blue Line delay"
+            }
+          },
+          "Orange" => %{
+            "126977" => %SignsUi.Alerts.Alert{
+              created_at: ~U[2021-05-05 00:43:09Z],
+              id: "126977",
+              service_effect: "Orange Line and Red Line delay"
+            }
+          },
+          "Red" => %{
+            "126977" => %SignsUi.Alerts.Alert{
+              created_at: ~U[2021-05-05 00:43:09Z],
+              id: "126977",
+              service_effect: "Orange Line and Red Line delay"
+            }
+          }
+        }
+      }
+
+      @endpoint.subscribe("signs:all")
+
+      {:ok, pid} = SignsUi.Alerts.State.start_link()
+
+      {:ok, producer} = GenStage.from_enumerable([initial_state(), add_red_orange()])
+
+      GenStage.sync_subscribe(pid, to: producer)
+
+      assert_broadcast("new_alert_state", expected, 500)
+    end
+
+    test "handles an update" do
+      expected = %SignsUi.Alerts.State{
+        alerts: %{
+          "Blue" => %{
+            "126976" => %SignsUi.Alerts.Alert{
+              created_at: ~U[2021-05-05 00:41:37Z],
+              id: "126976",
+              service_effect: "Blue Line delay"
+            }
+          },
+          "Red" => %{
+            "126977" => %SignsUi.Alerts.Alert{
+              created_at: ~U[2021-05-05 00:43:09Z],
+              id: "126977",
+              service_effect: "Orange Line and Red Line delay"
+            }
+          }
+        }
+      }
+
+      @endpoint.subscribe("signs:all")
+
+      {:ok, pid} = SignsUi.Alerts.State.start_link()
+
+      {:ok, producer} =
+        GenStage.from_enumerable([
+          initial_state(),
+          add_red_orange(),
+          update_red_orange()
+        ])
+
+      GenStage.sync_subscribe(pid, to: producer)
+
+      assert_broadcast("new_alert_state", expected, 500)
+    end
+
+    test "handles a removal" do
+      expected = %SignsUi.Alerts.State{
+        alerts: %{
+          "Blue" => %{
+            "126976" => %SignsUi.Alerts.Alert{
+              created_at: ~U[2021-05-05 00:41:37Z],
+              id: "126976",
+              service_effect: "Blue Line delay"
+            }
+          }
+        }
+      }
+
+      @endpoint.subscribe("signs:all")
+
+      {:ok, pid} = SignsUi.Alerts.State.start_link()
+
+      {:ok, producer} =
+        GenStage.from_enumerable([
+          initial_state(),
+          add_red_orange(),
+          update_red_orange(),
+          remove_red()
+        ])
+
+      GenStage.sync_subscribe(pid, to: producer)
+
+      assert_broadcast("new_alert_state", expected, 500)
+    end
+
+    test "handles two removals" do
+      expected = %SignsUi.Alerts.State{
+        alerts: %{}
+      }
+
+      @endpoint.subscribe("signs:all")
+
+      {:ok, pid} = SignsUi.Alerts.State.start_link()
+
+      {:ok, producer} =
+        GenStage.from_enumerable([
+          initial_state(),
+          add_red_orange(),
+          update_red_orange(),
+          remove_red(),
+          remove_blue()
+        ])
+
+      GenStage.sync_subscribe(pid, to: producer)
+
+      assert_broadcast("new_alert_state", %State{
+        alerts: %{}
+      }, 500)
     end
   end
 
