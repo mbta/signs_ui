@@ -76,11 +76,9 @@ defmodule SignsUi.Alerts.State do
     # Works in two primary phases. First, we generate fresh state using the
     # provided events:
     new_state = update_state(events, state)
-    Logger.info(["new_state ", inspect(new_state, pretty: true)])
 
     # Next, we convert our internal state model to the specified format:
     display_state = display_state(new_state)
-    Logger.info(["display_state ", inspect(display_state, pretty: true)])
     SignsUiWeb.Endpoint.broadcast!("signs:all", "new_alert_state", display_state.alerts)
     {:noreply, [], new_state}
   end
@@ -94,30 +92,32 @@ defmodule SignsUi.Alerts.State do
 
   def update_state(%Event{event: "reset", data: data}, _) do
     new_state = convert_payload(data)
-    Logger.info(["reset ", inspect(new_state, pretty: true)])
     Map.new(new_state)
   end
 
   def update_state(%Event{event: "update", data: data}, state) do
     {id, alert} = convert_payload(data)
-    Logger.info(["update ", id, " ", inspect(alert, pretty: true)])
     Map.put(state, id, alert)
   end
 
   def update_state(%Event{event: "add", data: data}, state) do
     {id, alert} = convert_payload(data)
-    Logger.info(["add ", id, " ", inspect(alert, pretty: true)])
     Map.put(state, id, alert)
   end
 
   def update_state(%Event{event: "remove", data: data}, state) do
     {id, _} = convert_payload(data)
-    Logger.info(["remove ", id])
     Map.delete(state, id)
   end
 
   @spec display_state(state()) :: display()
-  defp display_state(state) do
+  def display_state(state) when state == %{} do
+    %__MODULE__{
+      alerts: %{}
+    }
+  end
+
+  def display_state(state) do
     %__MODULE__{
       # Take every alert in the current state,
       alerts:
