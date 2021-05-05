@@ -1,14 +1,22 @@
 defmodule SignsUi.Alerts.StateTest do
   use ExUnit.Case, async: true
   use SignsUiWeb.ChannelCase
+  alias ServerSentEventStage.Event
+  alias Test.Support.AlertEvents
+
+  defp clear_state(), do: %Event{data: "[]", event: "reset"}
 
   describe "start_link" do
     test "GenServer runs without crashing" do
       @endpoint.subscribe("signs:all")
 
-      {:ok, _pid} = SignsUi.Alerts.State.start_link(name: :no_crashing, interval_ms: 50)
+      {:ok, pid} = SignsUi.Alerts.State.start_link()
 
-      assert_broadcast("new_alert_state", %{})
+      {:ok, producer} = GenStage.from_enumerable([clear_state()])
+
+      GenStage.sync_subscribe(pid, to: producer)
+
+      assert_broadcast("new_alert_state", %{}, 300)
     end
   end
 
@@ -47,16 +55,8 @@ defmodule SignsUi.Alerts.StateTest do
     end
   end
 
-  # to be removed, once the real implementation is in:
-  describe "handle_info(:twiddle_state)" do
-    test "rolls randomly both code paths, and works without crashing" do
-      state =
-        Enum.reduce(0..20, %SignsUi.Alerts.State{}, fn _, state ->
-          {:noreply, new_state} = SignsUi.Alerts.State.handle_info(:twiddle_state, state)
-          new_state
-        end)
-
-      assert %{alerts: %{}} = state
+  describe "handle_events" do
+    test "handles a reset" do
     end
   end
 
