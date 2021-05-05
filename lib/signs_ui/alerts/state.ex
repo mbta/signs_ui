@@ -75,20 +75,22 @@ defmodule SignsUi.Alerts.State do
   def handle_events(events, _from, state) do
     # Works in two primary phases. First, we generate fresh state using the
     # provided events:
-    new_state = update_state(events, state)
+    new_state =
+      Enum.reduce(events, state, fn event, state ->
+        Logger.info(["event: ", event.event, "\n", "data: ", event.data])
+        update_state(event, state)
+      end)
+
+    Logger.info(["new_state ", inspect(new_state, pretty: true)])
 
     # Next, we convert our internal state model to the specified format:
     display_state = display_state(new_state)
-    Logger.info(["new_state ", inspect(display_state, pretty: true)])
+
+    Logger.info(["display_state ", inspect(display_state, pretty: true)])
+
+    # Finally, we broadcast the new state to the client and return it to the runtime:
     SignsUiWeb.Endpoint.broadcast!("signs:all", "new_alert_state", display_state.alerts)
     {:noreply, [], new_state}
-  end
-
-  @spec update_state(Event.t() | [Event.t()], state()) :: state()
-  def update_state(events, state) when is_list(events) do
-    # This reduce combines the effects of a  set of operations into a single new
-    # state.
-    Enum.reduce(events, state, &update_state(&1, &2))
   end
 
   def update_state(%Event{event: "reset", data: data}, _) do
