@@ -17,9 +17,7 @@ defmodule SignsUi.Alerts.StateTest do
 
       GenStage.sync_subscribe(pid, to: producer)
 
-      assert_broadcast("new_alert_state", %State{
-        alerts: %{}
-      }, 300)
+      assert_broadcast("new_alert_state", %{}, 300)
     end
   end
 
@@ -207,9 +205,7 @@ defmodule SignsUi.Alerts.StateTest do
 
       GenStage.sync_subscribe(pid, to: producer)
 
-      assert_broadcast("new_alert_state", %State{
-        alerts: %{}
-      }, 500)
+      assert_broadcast("new_alert_state", %{}, 500)
     end
   end
 
