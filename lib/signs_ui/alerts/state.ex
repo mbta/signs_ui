@@ -68,18 +68,21 @@ defmodule SignsUi.Alerts.State do
   @impl GenStage
   @spec handle_events([Event.t()], GenStage.from(), state()) :: {:noreply, [], state()}
   def handle_events(events, _from, state) do
+    # Works in two primary phases. First, we generate fresh state using the
+    # provided events:
     new_state = update_state(events, state)
+
+    # Next, we convert our internal state model to the specified format:
     display_state = display_state(new_state)
     Logger.info(["new_state ", inspect(display_state, pretty: true)])
     SignsUiWeb.Endpoint.broadcast!("signs:all", "new_alert_state", display_state.alerts)
     {:noreply, [], new_state}
   end
 
-  @doc """
-  Uses events to update the current state.
-  """
   @spec update_state(Event.t() | [Event.t()], state()) :: state()
   def update_state(events, state) when is_list(events) do
+    # This reduce combines the effects of a  set of operations into a single new
+    # state.
     Enum.reduce(events, state, &update_state(&1, &2))
   end
 
@@ -107,30 +110,27 @@ defmodule SignsUi.Alerts.State do
     Map.delete(state, id)
   end
 
-  @doc """
-  Takes every alert in the current state, produces a list of
-  single_route_alert()s for each alert, groups them by the route they affect,
-  builds an alert_map() for every route_id(), and finally converts them into a
-  route_alerts_map().
-  """
   @spec display_state(state()) :: display()
-  def display_state(state) do
+  defp display_state(state) do
     %__MODULE__{
+      # Take every alert in the current state,
       alerts:
         state
+        # generate a list of single_route_alerts from it, and flatten,
         |> Enum.flat_map(&expand_routes/1)
+        # group them by route,
         |> Enum.group_by(fn alert -> alert.route end)
+        # convert each group's list of alert tuples into a map,
         |> Enum.map(&alert_map_for_route/1)
+        # and convert the list of route groups into a map.
         |> Map.new()
     }
   end
 
-  @doc """
-  Takes a multi_route_alert(), maps over its affected_routes, and creates a
-  single_route_alert() for every affected route.
-  """
   @spec expand_routes({Alert.id(), multi_route_alert()}) :: [single_route_alert()]
-  def expand_routes({id, alert}) do
+  defp expand_routes({id, alert}) do
+    # Take a multi_route_alert(), maps over its affected_routes, and create a
+    # single_route_alert() for every affected route.
     alert.affected_routes
     |> Enum.map(fn route ->
       %{
@@ -142,13 +142,11 @@ defmodule SignsUi.Alerts.State do
     end)
   end
 
-  @doc """
-  Takes a route_id() and a list of single_route_alert()s affecting it, converts
-  each single_route_alert into an Alert.t(), and produces an alert_map() for the
-  route_id().
-  """
   @spec alert_map_for_route({route_id(), [single_route_alert()]}) :: {route_id(), alert_map()}
-  def alert_map_for_route({route, alerts}) do
+  defp alert_map_for_route({route, alerts}) do
+    # Take a route_id() and a list of single_route_alert()s affecting it,
+    # convert each single_route_alert() into an Alert.t(), and produce an
+    # alert_map() for the route_id().
     {route,
      alerts
      |> Enum.map(fn alert ->
@@ -162,21 +160,18 @@ defmodule SignsUi.Alerts.State do
      |> Map.new()}
   end
 
-  @doc """
-  Converts a raw JSON payload into a state_row() or a list of state_row()s.
-  """
   @spec convert_payload(String.t() | list() | map()) :: [state_row()] | state_row()
-  def convert_payload(payload) when is_binary(payload) do
+  defp convert_payload(payload) when is_binary(payload) do
     {:ok, decoded} = Jason.decode(payload)
 
     convert_payload(decoded)
   end
 
-  def convert_payload(payload) when is_list(payload) do
+  defp convert_payload(payload) when is_list(payload) do
     Enum.map(payload, &convert_payload/1)
   end
 
-  def convert_payload(payload) when is_map(payload) do
+  defp convert_payload(payload) when is_map(payload) do
     id = payload["id"]
 
     {created_at, service_effect, routes} = parse_attributes(payload["attributes"])
@@ -195,6 +190,7 @@ defmodule SignsUi.Alerts.State do
 
   defp parse_attributes(attributes) do
     {:ok, created_at_local, _} = DateTime.from_iso8601(attributes["created_at"])
+    # Convert the created date into UTC
     {:ok, created_at_utc} = DateTime.shift_zone(created_at_local, "Etc/UTC")
     routes = parse_routes(attributes)
     {created_at_utc, attributes["service_effect"], routes}
@@ -202,6 +198,7 @@ defmodule SignsUi.Alerts.State do
 
   @spec parse_routes(map()) :: MapSet.t(route_id())
   defp parse_routes(attributes) do
+    # Collect the route names from the informed_entity list
     attributes
     |> get_in([Access.key("informed_entity", []), Access.all(), "route"])
     |> MapSet.new()
