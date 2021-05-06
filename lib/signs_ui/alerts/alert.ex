@@ -23,7 +23,7 @@ defmodule SignsUi.Alerts.Alert do
         }
 
   @type single_route :: %{
-          id: Alert.id(),
+          id: id(),
           created_at: DateTime.t(),
           service_effect: String.t(),
           route: route_id()

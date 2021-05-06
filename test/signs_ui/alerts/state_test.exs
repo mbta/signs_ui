@@ -52,7 +52,7 @@ defmodule SignsUi.Alerts.StateTest do
 
   describe "handle_events" do
     test "handles a reset" do
-      expected = %SignsUi.Alerts.State{
+      expected = %SignsUi.Alerts.Display{
         alerts: %{
           "Blue" => %{
             "126976" => %SignsUi.Alerts.Alert{
@@ -76,7 +76,7 @@ defmodule SignsUi.Alerts.StateTest do
     end
 
     test "handles an add" do
-      expected = %SignsUi.Alerts.State{
+      expected = %SignsUi.Alerts.Display{
         alerts: %{
           "Blue" => %{
             "126976" => %SignsUi.Alerts.Alert{
@@ -114,7 +114,7 @@ defmodule SignsUi.Alerts.StateTest do
     end
 
     test "handles an update" do
-      expected = %SignsUi.Alerts.State{
+      expected = %SignsUi.Alerts.Display{
         alerts: %{
           "Blue" => %{
             "126976" => %SignsUi.Alerts.Alert{
@@ -150,7 +150,7 @@ defmodule SignsUi.Alerts.StateTest do
     end
 
     test "handles a removal" do
-      expected = %SignsUi.Alerts.State{
+      expected = %SignsUi.Alerts.Display{
         alerts: %{
           "Blue" => %{
             "126976" => %SignsUi.Alerts.Alert{
@@ -180,7 +180,7 @@ defmodule SignsUi.Alerts.StateTest do
     end
 
     test "handles two removals" do
-      expected = %SignsUi.Alerts.State{
+      expected = %SignsUi.Alerts.Display{
         alerts: %{}
       }
 
