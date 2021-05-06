@@ -110,12 +110,6 @@ defmodule SignsUi.Alerts.State do
   end
 
   @spec display_state(state()) :: display()
-  def display_state(state) when state == %{} do
-    %__MODULE__{
-      alerts: %{}
-    }
-  end
-
   def display_state(state) do
     %__MODULE__{
       # Take every alert in the current state,
