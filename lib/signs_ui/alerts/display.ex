@@ -2,12 +2,12 @@ defmodule SignsUi.Alerts.Display do
   alias SignsUi.Alerts.Alert
   alias SignsUi.Alerts.State
 
-  @type alert_map :: %{Alert.id() => Alert.t()}
-  @type route_alerts_map :: %{Alert.route_id() => alert_map()}
+  @typep alert_map :: %{Alert.id() => Alert.t()}
+  @typep route_alerts_map :: %{Alert.route_id() => alert_map()}
 
   defstruct alerts: %{}
 
-  @type t :: %__MODULE__{
+  @typep t :: %__MODULE__{
           alerts: route_alerts_map()
         }
 
