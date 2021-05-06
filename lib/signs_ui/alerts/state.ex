@@ -9,6 +9,7 @@ defmodule SignsUi.Alerts.State do
   require Logger
   alias ServerSentEventStage.Event
   alias SignsUi.Alerts.Alert
+  alias SignsUi.Alerts.Events
 
   defstruct alerts: %{}
 
@@ -19,9 +20,9 @@ defmodule SignsUi.Alerts.State do
           alerts: route_alerts_map()
         }
 
-  @type state_row :: {Alert.id(), Alert.multi_route()}
+  @type row :: {Alert.id(), Alert.multi_route()}
 
-  @type state :: %{Alert.id() => Alert.multi_route()}
+  @type t :: %{Alert.id() => Alert.multi_route()}
 
   @spec start_link(keyword) :: :ignore | {:error, any} | {:ok, pid}
   def start_link(opts \\ []) do
@@ -35,9 +36,9 @@ defmodule SignsUi.Alerts.State do
   end
 
   @impl GenStage
-  def handle_info(msg, state) do
+  def handle_info(msg, t) do
     Logger.warn("#{__MODULE__} unknown_message #{inspect(msg)}")
-    {:noreply, [], state}
+    {:noreply, [], t}
   end
 
   @spec active_alert_ids(GenStage.stage()) :: MapSet.t(Alert.id())
@@ -46,58 +47,58 @@ defmodule SignsUi.Alerts.State do
   end
 
   @impl GenStage
-  def handle_call(:active_alert_ids, _from, state) do
-    alert_ids = state |> Map.keys() |> MapSet.new()
+  def handle_call(:active_alert_ids, _from, t) do
+    alert_ids = t |> Map.keys() |> MapSet.new()
 
-    {:reply, alert_ids, [], state}
+    {:reply, alert_ids, [], t}
   end
 
   @impl GenStage
-  @spec handle_events([Event.t()], GenStage.from(), state()) :: {:noreply, [], state()}
-  def handle_events(events, _from, state) do
-    # Works in two primary phases. First, we generate fresh state using the
+  @spec handle_events([Event.t()], GenStage.from(), t()) :: {:noreply, [], t()}
+  def handle_events(events, _from, t) do
+    # Works in two primary phases. First, we generate fresh t using the
     # provided events:
-    new_state = update_state(events, state)
+    new_state = update_state(events, t)
 
-    # Next, we convert our internal state model to the specified format:
+    # Next, we convert our internal t model to the specified format:
     display_state = display_state(new_state)
     SignsUiWeb.Endpoint.broadcast!("signs:all", "new_alert_state", display_state.alerts)
     {:noreply, [], new_state}
   end
 
-  @spec update_state(Event.t() | [Event.t()], state()) :: state()
-  defp update_state(events, state) when is_list(events) do
+  @spec update_state(Event.t() | [Event.t()], t()) :: t()
+  defp update_state(events, t) when is_list(events) do
     # This reduce combines the effects of a  set of operations into a single new
-    # state.
-    Enum.reduce(events, state, &update_state(&1, &2))
+    # t.
+    Enum.reduce(events, t, &update_state(&1, &2))
   end
 
   defp update_state(%Event{event: "reset", data: data}, _) do
-    new_state = convert_payload(data)
+    new_state = Events.parse(data)
     Map.new(new_state)
   end
 
-  defp update_state(%Event{event: "update", data: data}, state) do
-    {id, alert} = convert_payload(data)
-    Map.put(state, id, alert)
+  defp update_state(%Event{event: "update", data: data}, t) do
+    {id, alert} = Events.parse(data)
+    Map.put(t, id, alert)
   end
 
-  defp update_state(%Event{event: "add", data: data}, state) do
-    {id, alert} = convert_payload(data)
-    Map.put(state, id, alert)
+  defp update_state(%Event{event: "add", data: data}, t) do
+    {id, alert} = Events.parse(data)
+    Map.put(t, id, alert)
   end
 
-  defp update_state(%Event{event: "remove", data: data}, state) do
-    {id, _} = convert_payload(data)
-    Map.delete(state, id)
+  defp update_state(%Event{event: "remove", data: data}, t) do
+    {id, _} = Events.parse(data)
+    Map.delete(t, id)
   end
 
-  @spec display_state(state()) :: display()
-  defp display_state(state) do
+  @spec display_state(t()) :: display()
+  defp display_state(t) do
     %__MODULE__{
-      # Take every alert in the current state,
+      # Take every alert in the current t,
       alerts:
-        state
+        t
         # generate a list of single_route_alerts from it, and flatten,
         |> Stream.flat_map(&expand_routes/1)
         # group them by route,
@@ -141,49 +142,5 @@ defmodule SignsUi.Alerts.State do
         }}
      end)
      |> Map.new()}
-  end
-
-  @spec convert_payload(String.t() | list() | map()) :: [state_row()] | state_row()
-  defp convert_payload(payload) when is_binary(payload) do
-    {:ok, decoded} = Jason.decode(payload)
-
-    convert_payload(decoded)
-  end
-
-  defp convert_payload(payload) when is_list(payload) do
-    Enum.map(payload, &convert_payload/1)
-  end
-
-  defp convert_payload(payload) when is_map(payload) do
-    id = payload["id"]
-
-    {created_at, service_effect, routes} = parse_attributes(payload["attributes"])
-
-    {id,
-     %{
-       created_at: created_at,
-       service_effect: service_effect,
-       affected_routes: routes
-     }}
-  end
-
-  @spec parse_attributes(nil | map()) ::
-          {DateTime.t() | nil, String.t() | nil, MapSet.t(Alert.route_id()) | nil}
-  defp parse_attributes(nil), do: {nil, nil, nil}
-
-  defp parse_attributes(attributes) do
-    {:ok, created_at_local, _} = DateTime.from_iso8601(attributes["created_at"])
-    # Convert the created date into UTC
-    {:ok, created_at_utc} = DateTime.shift_zone(created_at_local, "Etc/UTC")
-    routes = parse_routes(attributes)
-    {created_at_utc, attributes["service_effect"], routes}
-  end
-
-  @spec parse_routes(map()) :: MapSet.t(Alert.route_id())
-  defp parse_routes(attributes) do
-    # Collect the route names from the informed_entity list
-    attributes
-    |> get_in([Access.key("informed_entity", []), Access.all(), "route"])
-    |> MapSet.new()
   end
 end
