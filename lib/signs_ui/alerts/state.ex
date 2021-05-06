@@ -116,12 +116,12 @@ defmodule SignsUi.Alerts.State do
       alerts:
         state
         # generate a list of single_route_alerts from it, and flatten,
-        |> Enum.flat_map(&expand_routes/1)
+        |> Stream.flat_map(&expand_routes/1)
         # group them by route,
         |> Enum.group_by(fn alert -> alert.route end)
-        # convert each group's list of alert tuples into a map,
-        |> Enum.map(&alert_map_for_route/1)
-        # and convert the list of route groups into a map.
+        # convert each group's list of alerts into a map,
+        |> Stream.map(&alert_map_for_route/1)
+        # and convert the list of alert groups into a map.
         |> Map.new()
     }
   end
