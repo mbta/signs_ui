@@ -24,10 +24,10 @@ defmodule SignsUi.Alerts.StateTest do
   describe "handle_call :active_alert_ids" do
     test "returns the alert_ids out of the state" do
       state = %{
-            "alert_id1" => %{affected_routes: MapSet.new(["Red"])},
-            "alert_id2" => %{affected_routes: MapSet.new(["Red"])},
-            "alert_id3" => %{affected_routes: MapSet.new(["Blue"])}
-          }
+        "alert_id1" => %{affected_routes: MapSet.new(["Red"])},
+        "alert_id2" => %{affected_routes: MapSet.new(["Red"])},
+        "alert_id3" => %{affected_routes: MapSet.new(["Blue"])}
+      }
 
       assert SignsUi.Alerts.State.handle_call(:active_alert_ids, self(), state) ==
                {:reply, MapSet.new(["alert_id1", "alert_id2", "alert_id3"]), [], state}
