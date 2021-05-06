@@ -148,7 +148,7 @@ defmodule SignsUi.Alerts.State do
     # alert_map() for the route_id().
     {route,
      alerts
-     |> Enum.map(fn alert ->
+     |> Stream.map(fn alert ->
        {alert.id,
         %Alert{
           id: alert.id,
