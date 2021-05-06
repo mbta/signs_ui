@@ -12,11 +12,11 @@ defmodule SignsUi.Alerts.Display do
         }
 
   @spec format_state(State.t()) :: t()
-  def format_state(t) do
+  def format_state(state) do
     %__MODULE__{
       # Take every alert in the current state,
       alerts:
-        t
+        state
         # generate a list of single_route_alerts from it, and flatten,
         |> Stream.flat_map(&expand_routes/1)
         # group them by route,

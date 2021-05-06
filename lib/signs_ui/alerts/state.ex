@@ -28,9 +28,9 @@ defmodule SignsUi.Alerts.State do
   end
 
   @impl GenStage
-  def handle_info(msg, t) do
+  def handle_info(msg, state) do
     Logger.warn("#{__MODULE__} unknown_message #{inspect(msg)}")
-    {:noreply, [], t}
+    {:noreply, [], state}
   end
 
   @spec active_alert_ids(GenStage.stage()) :: MapSet.t(Alert.id())
@@ -39,18 +39,18 @@ defmodule SignsUi.Alerts.State do
   end
 
   @impl GenStage
-  def handle_call(:active_alert_ids, _from, t) do
-    alert_ids = t |> Map.keys() |> MapSet.new()
+  def handle_call(:active_alert_ids, _from, state) do
+    alert_ids = state |> Map.keys() |> MapSet.new()
 
-    {:reply, alert_ids, [], t}
+    {:reply, alert_ids, [], state}
   end
 
   @impl GenStage
   @spec handle_events([Event.t()], GenStage.from(), t()) :: {:noreply, [], t()}
-  def handle_events(events, _from, t) do
+  def handle_events(events, _from, state) do
     # Works in two primary phases. First, we generate fresh t using the
     # provided events:
-    new_state = update_state(events, t)
+    new_state = update_state(events, state)
 
     # Next, we convert our internal model to the specified format:
     display_state = Display.format_state(new_state)
@@ -59,10 +59,10 @@ defmodule SignsUi.Alerts.State do
   end
 
   @spec update_state(Event.t() | [Event.t()], t()) :: t()
-  defp update_state(events, t) when is_list(events) do
+  defp update_state(events, state) when is_list(events) do
     # This reduce combines the effects of a  set of operations into a single new
-    # t.
-    Enum.reduce(events, t, &update_state(&1, &2))
+    # state.
+    Enum.reduce(events, state, &update_state(&1, &2))
   end
 
   defp update_state(%Event{event: "reset", data: data}, _) do
@@ -70,18 +70,18 @@ defmodule SignsUi.Alerts.State do
     Map.new(new_state)
   end
 
-  defp update_state(%Event{event: "update", data: data}, t) do
+  defp update_state(%Event{event: "update", data: data}, state) do
     {id, alert} = Events.parse(data)
-    Map.put(t, id, alert)
+    Map.put(state, id, alert)
   end
 
-  defp update_state(%Event{event: "add", data: data}, t) do
+  defp update_state(%Event{event: "add", data: data}, state) do
     {id, alert} = Events.parse(data)
-    Map.put(t, id, alert)
+    Map.put(state, id, alert)
   end
 
-  defp update_state(%Event{event: "remove", data: data}, t) do
+  defp update_state(%Event{event: "remove", data: data}, state) do
     {id, _} = Events.parse(data)
-    Map.delete(t, id)
+    Map.delete(state, id)
   end
 end
