@@ -57,14 +57,14 @@ defmodule SignsUi.Alerts.State do
     {:noreply, [], state}
   end
 
-  @spec active_alert_ids(GenServer.server()) :: [Alert.id()]
+  @spec active_alert_ids(GenStage.stage()) :: MapSet.t(Alert.id())
   def active_alert_ids(pid \\ __MODULE__) do
     GenServer.call(pid, :active_alert_ids)
   end
 
   @impl GenStage
   def handle_call(:active_alert_ids, _from, state) do
-    alert_ids = Map.keys(state)
+    alert_ids = state |> Map.keys() |> MapSet.new()
 
     {:reply, alert_ids, [], state}
   end

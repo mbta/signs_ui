@@ -30,14 +30,14 @@ defmodule SignsUi.Alerts.StateTest do
           }
 
       assert SignsUi.Alerts.State.handle_call(:active_alert_ids, self(), state) ==
-               {:reply, ["alert_id1", "alert_id2", "alert_id3"], [], state}
+               {:reply, MapSet.new(["alert_id1", "alert_id2", "alert_id3"]), [], state}
     end
 
     test "safely returns an empty map set if there are no alerts" do
       state = %{}
 
       assert SignsUi.Alerts.State.handle_call(:active_alert_ids, self(), state) ==
-               {:reply, [], [], state}
+               {:reply, MapSet.new(), [], state}
     end
   end
 
@@ -206,7 +206,7 @@ defmodule SignsUi.Alerts.StateTest do
   describe "active_alert_ids/0" do
     test "returns a result without crashing" do
       {:ok, pid} = SignsUi.Alerts.State.start_link(name: :alerts_state_ids_test)
-      assert SignsUi.Alerts.State.active_alert_ids(pid) == []
+      assert SignsUi.Alerts.State.active_alert_ids(pid) == MapSet.new()
     end
   end
 end
