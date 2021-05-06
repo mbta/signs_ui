@@ -83,34 +83,34 @@ defmodule SignsUi.Alerts.State do
   end
 
   @spec update_state(Event.t() | [Event.t()], state()) :: state()
-  def update_state(events, state) when is_list(events) do
+  defp update_state(events, state) when is_list(events) do
     # This reduce combines the effects of a  set of operations into a single new
     # state.
     Enum.reduce(events, state, &update_state(&1, &2))
   end
 
-  def update_state(%Event{event: "reset", data: data}, _) do
+  defp update_state(%Event{event: "reset", data: data}, _) do
     new_state = convert_payload(data)
     Map.new(new_state)
   end
 
-  def update_state(%Event{event: "update", data: data}, state) do
+  defp update_state(%Event{event: "update", data: data}, state) do
     {id, alert} = convert_payload(data)
     Map.put(state, id, alert)
   end
 
-  def update_state(%Event{event: "add", data: data}, state) do
+  defp update_state(%Event{event: "add", data: data}, state) do
     {id, alert} = convert_payload(data)
     Map.put(state, id, alert)
   end
 
-  def update_state(%Event{event: "remove", data: data}, state) do
+  defp update_state(%Event{event: "remove", data: data}, state) do
     {id, _} = convert_payload(data)
     Map.delete(state, id)
   end
 
   @spec display_state(state()) :: display()
-  def display_state(state) do
+  defp display_state(state) do
     %__MODULE__{
       # Take every alert in the current state,
       alerts:
