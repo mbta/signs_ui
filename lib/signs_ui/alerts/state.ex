@@ -12,33 +12,16 @@ defmodule SignsUi.Alerts.State do
 
   defstruct alerts: %{}
 
-  @type route_id :: String.t()
   @type alert_map :: %{Alert.id() => Alert.t()}
-  @type route_alerts_map :: %{route_id() => alert_map()}
+  @type route_alerts_map :: %{Alert.route_id() => alert_map()}
 
   @type display :: %__MODULE__{
           alerts: route_alerts_map()
         }
 
-  @doc """
-  An alert that affects multiple routes.
-  """
-  @type multi_route_alert :: %{
-          created_at: DateTime.t() | nil,
-          service_effect: String.t() | nil,
-          affected_routes: MapSet.t(route_id()) | nil
-        }
+  @type state_row :: {Alert.id(), Alert.multi_route()}
 
-  @type single_route_alert :: %{
-          id: Alert.id(),
-          created_at: DateTime.t(),
-          service_effect: String.t(),
-          route: route_id()
-        }
-
-  @type state_row :: {Alert.id(), multi_route_alert()}
-
-  @type state :: %{Alert.id() => multi_route_alert()}
+  @type state :: %{Alert.id() => Alert.multi_route()}
 
   @spec start_link(keyword) :: :ignore | {:error, any} | {:ok, pid}
   def start_link(opts \\ []) do
@@ -126,7 +109,7 @@ defmodule SignsUi.Alerts.State do
     }
   end
 
-  @spec expand_routes({Alert.id(), multi_route_alert()}) :: [single_route_alert()]
+  @spec expand_routes({Alert.id(), Alert.multi_route()}) :: [Alert.single_route()]
   defp expand_routes({id, alert}) do
     # Take a multi_route_alert(), maps over its affected_routes, and create a
     # single_route_alert() for every affected route.
@@ -141,7 +124,8 @@ defmodule SignsUi.Alerts.State do
     end)
   end
 
-  @spec alert_map_for_route({route_id(), [single_route_alert()]}) :: {route_id(), alert_map()}
+  @spec alert_map_for_route({Alert.route_id(), [Alert.single_route()]}) ::
+          {Alert.route_id(), alert_map()}
   defp alert_map_for_route({route, alerts}) do
     # Take a route_id() and a list of single_route_alert()s affecting it,
     # convert each single_route_alert() into an Alert.t(), and produce an
@@ -184,7 +168,7 @@ defmodule SignsUi.Alerts.State do
   end
 
   @spec parse_attributes(nil | map()) ::
-          {DateTime.t() | nil, String.t() | nil, MapSet.t(route_id()) | nil}
+          {DateTime.t() | nil, String.t() | nil, MapSet.t(Alert.route_id()) | nil}
   defp parse_attributes(nil), do: {nil, nil, nil}
 
   defp parse_attributes(attributes) do
@@ -195,7 +179,7 @@ defmodule SignsUi.Alerts.State do
     {created_at_utc, attributes["service_effect"], routes}
   end
 
-  @spec parse_routes(map()) :: MapSet.t(route_id())
+  @spec parse_routes(map()) :: MapSet.t(Alert.route_id())
   defp parse_routes(attributes) do
     # Collect the route names from the informed_entity list
     attributes

@@ -13,4 +13,19 @@ defmodule SignsUi.Alerts.Alert do
           created_at: DateTime.t() | nil,
           service_effect: String.t() | nil
         }
+
+  @type route_id :: String.t()
+
+  @type multi_route :: %{
+          created_at: DateTime.t() | nil,
+          service_effect: String.t() | nil,
+          affected_routes: MapSet.t(route_id()) | nil
+        }
+
+  @type single_route :: %{
+          id: Alert.id(),
+          created_at: DateTime.t(),
+          service_effect: String.t(),
+          route: route_id()
+        }
 end
