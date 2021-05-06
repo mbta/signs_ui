@@ -11,8 +11,8 @@ defmodule SignsUi.Alerts.Display do
           alerts: route_alerts_map()
         }
 
-  @spec display_state(State.t()) :: t()
-  def display_state(t) do
+  @spec format_state(State.t()) :: t()
+  def format_state(t) do
     %__MODULE__{
       # Take every alert in the current state,
       alerts:
