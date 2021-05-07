@@ -15,7 +15,7 @@ defmodule SignsUi.Alerts.Display do
   def format_state(state) do
     state
     |> Stream.flat_map(&expand_routes/1)
-    |> Enum.group_by(fn alert -> alert.route end)
+    |> Enum.group_by(& &1.route)
     |> Map.new(&alert_map_for_route/1)
   end
 
@@ -35,13 +35,14 @@ defmodule SignsUi.Alerts.Display do
           {Alert.route_id(), alert_map()}
   defp alert_map_for_route({route, alerts}) do
     {route,
-     Map.new(alerts, fn alert ->
-       {alert.id,
+     Map.new(
+       alerts,
+       &{&1.id,
         %Alert{
-          id: alert.id,
-          created_at: alert.created_at,
-          service_effect: alert.service_effect
+          id: &1.id,
+          created_at: &1.created_at,
+          service_effect: &1.service_effect
         }}
-     end)}
+     )}
   end
 end
