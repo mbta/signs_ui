@@ -8,8 +8,8 @@ defmodule SignsUi.Alerts.Display do
   defstruct alerts: %{}
 
   @typep t :: %__MODULE__{
-          alerts: route_alerts_map()
-        }
+           alerts: route_alerts_map()
+         }
 
   @spec format_state(State.t()) :: t()
   def format_state(state) do
@@ -30,10 +30,7 @@ defmodule SignsUi.Alerts.Display do
 
   @spec expand_routes({Alert.id(), Alert.multi_route()}) :: [Alert.single_route()]
   defp expand_routes({id, alert}) do
-    # Take a multi_route_alert(), maps over its affected_routes, and create a
-    # single_route_alert() for every affected route.
-    alert.affected_routes
-    |> Enum.map(fn route ->
+    Enum.map(alert.affected_routes, fn route ->
       %{
         id: id,
         created_at: alert.created_at,
