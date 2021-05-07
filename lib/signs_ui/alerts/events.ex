@@ -47,7 +47,6 @@ defmodule SignsUi.Alerts.Events do
 
   @spec parse_routes(map()) :: MapSet.t(Alert.route_id())
   defp parse_routes(attributes) do
-    # Collect the route names from the informed_entity list
     attributes
     |> get_in([Access.key("informed_entity", []), Access.all(), "route"])
     |> MapSet.new()

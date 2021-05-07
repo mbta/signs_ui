@@ -34,9 +34,6 @@ defmodule SignsUi.Alerts.Display do
   @spec alert_map_for_route({Alert.route_id(), [Alert.single_route()]}) ::
           {Alert.route_id(), alert_map()}
   defp alert_map_for_route({route, alerts}) do
-    # Take a route_id() and a list of single_route_alert()s affecting it,
-    # convert each single_route_alert() into an Alert.t(), and produce an
-    # alert_map() for the route_id().
     {route,
      Map.new(alerts, fn alert ->
        {alert.id,
