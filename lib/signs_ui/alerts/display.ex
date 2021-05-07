@@ -5,27 +5,15 @@ defmodule SignsUi.Alerts.Display do
   @typep alert_map :: %{Alert.id() => Alert.t()}
   @typep route_alerts_map :: %{Alert.route_id() => alert_map()}
 
-  defstruct alerts: %{}
-
-  @typep t :: %__MODULE__{
-           alerts: route_alerts_map()
-         }
+  @typep t :: route_alerts_map()
 
   @spec format_state(State.t()) :: t()
   def format_state(state) do
-    %__MODULE__{
-      # Take every alert in the current state,
-      alerts:
-        state
-        # generate a list of single_route_alerts from it, and flatten,
-        |> Stream.flat_map(&expand_routes/1)
-        # group them by route,
-        |> Enum.group_by(fn alert -> alert.route end)
-        # convert each group's list of alerts into a map,
-        |> Stream.map(&alert_map_for_route/1)
-        # and convert the list of alert groups into a map.
-        |> Map.new()
-    }
+    state
+    |> Stream.flat_map(&expand_routes/1)
+    |> Enum.group_by(fn alert -> alert.route end)
+    |> Stream.map(&alert_map_for_route/1)
+    |> Map.new()
   end
 
   @spec expand_routes({Alert.id(), Alert.multi_route()}) :: [Alert.single_route()]

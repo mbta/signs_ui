@@ -52,14 +52,12 @@ defmodule SignsUi.Alerts.StateTest do
 
   describe "handle_events" do
     test "handles a reset" do
-      expected = %SignsUi.Alerts.Display{
-        alerts: %{
-          "Blue" => %{
-            "126976" => %SignsUi.Alerts.Alert{
-              created_at: ~U[2021-05-05 00:41:37Z],
-              id: "126976",
-              service_effect: "Blue Line delay"
-            }
+      expected = %{
+        "Blue" => %{
+          "126976" => %SignsUi.Alerts.Alert{
+            created_at: ~U[2021-05-05 00:41:37Z],
+            id: "126976",
+            service_effect: "Blue Line delay"
           }
         }
       }
@@ -76,28 +74,26 @@ defmodule SignsUi.Alerts.StateTest do
     end
 
     test "handles an add" do
-      expected = %SignsUi.Alerts.Display{
-        alerts: %{
-          "Blue" => %{
-            "126976" => %SignsUi.Alerts.Alert{
-              created_at: ~U[2021-05-05 00:41:37Z],
-              id: "126976",
-              service_effect: "Blue Line delay"
-            }
-          },
-          "Orange" => %{
-            "126977" => %SignsUi.Alerts.Alert{
-              created_at: ~U[2021-05-05 00:43:09Z],
-              id: "126977",
-              service_effect: "Orange Line and Red Line delay"
-            }
-          },
-          "Red" => %{
-            "126977" => %SignsUi.Alerts.Alert{
-              created_at: ~U[2021-05-05 00:43:09Z],
-              id: "126977",
-              service_effect: "Orange Line and Red Line delay"
-            }
+      expected = %{
+        "Blue" => %{
+          "126976" => %SignsUi.Alerts.Alert{
+            created_at: ~U[2021-05-05 00:41:37Z],
+            id: "126976",
+            service_effect: "Blue Line delay"
+          }
+        },
+        "Orange" => %{
+          "126977" => %SignsUi.Alerts.Alert{
+            created_at: ~U[2021-05-05 00:43:09Z],
+            id: "126977",
+            service_effect: "Orange Line and Red Line delay"
+          }
+        },
+        "Red" => %{
+          "126977" => %SignsUi.Alerts.Alert{
+            created_at: ~U[2021-05-05 00:43:09Z],
+            id: "126977",
+            service_effect: "Orange Line and Red Line delay"
           }
         }
       }
@@ -114,21 +110,19 @@ defmodule SignsUi.Alerts.StateTest do
     end
 
     test "handles an update" do
-      expected = %SignsUi.Alerts.Display{
-        alerts: %{
-          "Blue" => %{
-            "126976" => %SignsUi.Alerts.Alert{
-              created_at: ~U[2021-05-05 00:41:37Z],
-              id: "126976",
-              service_effect: "Blue Line delay"
-            }
-          },
-          "Red" => %{
-            "126977" => %SignsUi.Alerts.Alert{
-              created_at: ~U[2021-05-05 00:43:09Z],
-              id: "126977",
-              service_effect: "Orange Line and Red Line delay"
-            }
+      expected = %{
+        "Blue" => %{
+          "126976" => %SignsUi.Alerts.Alert{
+            created_at: ~U[2021-05-05 00:41:37Z],
+            id: "126976",
+            service_effect: "Blue Line delay"
+          }
+        },
+        "Red" => %{
+          "126977" => %SignsUi.Alerts.Alert{
+            created_at: ~U[2021-05-05 00:43:09Z],
+            id: "126977",
+            service_effect: "Orange Line and Red Line delay"
           }
         }
       }
@@ -150,14 +144,12 @@ defmodule SignsUi.Alerts.StateTest do
     end
 
     test "handles a removal" do
-      expected = %SignsUi.Alerts.Display{
-        alerts: %{
-          "Blue" => %{
-            "126976" => %SignsUi.Alerts.Alert{
-              created_at: ~U[2021-05-05 00:41:37Z],
-              id: "126976",
-              service_effect: "Blue Line delay"
-            }
+      expected = %{
+        "Blue" => %{
+          "126976" => %SignsUi.Alerts.Alert{
+            created_at: ~U[2021-05-05 00:41:37Z],
+            id: "126976",
+            service_effect: "Blue Line delay"
           }
         }
       }
@@ -180,9 +172,7 @@ defmodule SignsUi.Alerts.StateTest do
     end
 
     test "handles two removals" do
-      expected = %SignsUi.Alerts.Display{
-        alerts: %{}
-      }
+      expected = %{}
 
       @endpoint.subscribe("signs:all")
 
