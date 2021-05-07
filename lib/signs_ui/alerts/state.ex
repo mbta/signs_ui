@@ -12,8 +12,6 @@ defmodule SignsUi.Alerts.State do
   alias SignsUi.Alerts.Display
   alias SignsUi.Alerts.Events
 
-  @type row :: {Alert.id(), Alert.multi_route()}
-
   @type t :: %{Alert.id() => Alert.multi_route()}
 
   @spec start_link(keyword) :: :ignore | {:error, any} | {:ok, pid}
@@ -66,22 +64,22 @@ defmodule SignsUi.Alerts.State do
   end
 
   defp update_state(%Event{event: "reset", data: data}, _) do
-    new_state = Events.parse(data)
-    Map.new(new_state)
+    alerts = Events.parse(data)
+    Map.new(alerts, &{&1.id, &1})
   end
 
   defp update_state(%Event{event: "update", data: data}, state) do
-    {id, alert} = Events.parse(data)
-    Map.put(state, id, alert)
+    alert = Events.parse(data)
+    Map.put(state, alert.id, alert)
   end
 
   defp update_state(%Event{event: "add", data: data}, state) do
-    {id, alert} = Events.parse(data)
-    Map.put(state, id, alert)
+    alert = Events.parse(data)
+    Map.put(state, alert.id, alert)
   end
 
   defp update_state(%Event{event: "remove", data: data}, state) do
-    {id, _} = Events.parse(data)
-    Map.delete(state, id)
+    alert = Events.parse(data)
+    Map.delete(state, alert.id)
   end
 end

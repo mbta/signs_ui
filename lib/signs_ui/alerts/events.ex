@@ -1,9 +1,8 @@
 defmodule SignsUi.Alerts.Events do
   require Logger
   alias SignsUi.Alerts.Alert
-  alias SignsUi.Alerts.State
 
-  @spec parse(String.t() | list() | map()) :: [State.row()] | State.row()
+  @spec parse(String.t() | list() | map()) :: [Alert.multi_route()] | Alert.multi_route()
   def parse(payload) when is_binary(payload) do
     payload |> Jason.decode!() |> parse()
   end
@@ -17,12 +16,12 @@ defmodule SignsUi.Alerts.Events do
 
     {created_at, service_effect, routes} = parse_attributes(payload["attributes"])
 
-    {id,
-     %{
-       created_at: created_at,
-       service_effect: service_effect,
-       affected_routes: routes
-     }}
+    %{
+      id: id,
+      created_at: created_at,
+      service_effect: service_effect,
+      affected_routes: routes
+    }
   end
 
   @spec parse_attributes(nil | map()) ::

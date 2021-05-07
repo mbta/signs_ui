@@ -17,6 +17,7 @@ defmodule SignsUi.Alerts.Alert do
   @type route_id :: String.t()
 
   @type multi_route :: %{
+          id: id(),
           created_at: DateTime.t() | nil,
           service_effect: String.t() | nil,
           affected_routes: MapSet.t(route_id()) | nil
@@ -24,8 +25,8 @@ defmodule SignsUi.Alerts.Alert do
 
   @type single_route :: %{
           id: id(),
-          created_at: DateTime.t(),
-          service_effect: String.t(),
-          route: route_id()
+          created_at: DateTime.t() | nil,
+          service_effect: String.t() | nil,
+          route: route_id() | nil
         }
 end
