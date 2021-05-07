@@ -1,4 +1,5 @@
 defmodule SignsUi.Alerts.Events do
+  require Logger
   alias SignsUi.Alerts.Alert
   alias SignsUi.Alerts.State
 
@@ -31,11 +32,20 @@ defmodule SignsUi.Alerts.Events do
   defp parse_attributes(nil), do: {nil, nil, nil}
 
   defp parse_attributes(attributes) do
-    {:ok, created_at_local, _} = DateTime.from_iso8601(attributes["created_at"])
-    # Convert the created date into UTC
-    {:ok, created_at_utc} = DateTime.shift_zone(created_at_local, "Etc/UTC")
-    routes = parse_routes(attributes)
-    {created_at_utc, attributes["service_effect"], routes}
+    case DateTime.from_iso8601(attributes["created_at"]) do
+      {:ok, created_at, _} ->
+        {created_at, attributes["service_effect"], parse_routes(attributes)}
+
+      {:error, reason} ->
+        Logger.error([
+          "Failed to parse created_at, reason=",
+          reason,
+          " attributes=",
+          inspect(attributes)
+        ])
+
+        {nil, attributes["service_effect"], parse_routes(attributes)}
+    end
   end
 
   @spec parse_routes(map()) :: MapSet.t(Alert.route_id())
