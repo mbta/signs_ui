@@ -5,9 +5,7 @@ defmodule SignsUi.Alerts.Events do
 
   @spec parse(String.t() | list() | map()) :: [State.row()] | State.row()
   def parse(payload) when is_binary(payload) do
-    {:ok, decoded} = Jason.decode(payload)
-
-    parse(decoded)
+    payload |> Jason.decode!() |> parse()
   end
 
   def parse(payload) when is_list(payload) do
