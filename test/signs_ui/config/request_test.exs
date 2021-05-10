@@ -37,7 +37,7 @@ defmodule SignsUi.Config.RequestTest do
                   }
                 },
                 configured_headways: %{}
-              }} = Request.get_signs({OldFormat, :get_object, []})
+              }} = Request.get_state({OldFormat, :get_object, []})
     end
 
     test "works with new format" do
@@ -50,7 +50,7 @@ defmodule SignsUi.Config.RequestTest do
                   }
                 },
                 configured_headways: %{}
-              }} = Request.get_signs({NewFormat, :get_object, []})
+              }} = Request.get_state({NewFormat, :get_object, []})
     end
   end
 end

@@ -11,7 +11,14 @@ defmodule SignsUi.Config.S3Test do
           "sign2" => %Sign{id: "sign2", config: %{mode: :auto}}
         },
         configured_headways: %{},
-        chelsea_bridge_announcements: "auto"
+        chelsea_bridge_announcements: "auto",
+        sign_groups: %{
+          "Red" => %{},
+          "Blue" => %{},
+          "Orange" => %{},
+          "Green" => %{},
+          "Mattapan" => %{}
+        }
       }
 
       {:ok, object} = update(config)

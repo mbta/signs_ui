@@ -14,7 +14,8 @@ defmodule SignsUi.Config.State do
           configured_headways: %{
             String.t() => %{String.t() => Config.ConfiguredHeadway.t()}
           },
-          chelsea_bridge_announcements: String.t()
+          chelsea_bridge_announcements: String.t(),
+          sign_groups: map()
         }
 
   def start_link(opts \\ []) do
@@ -50,16 +51,10 @@ defmodule SignsUi.Config.State do
 
   @spec init(any()) :: {:ok, t()} | {:stop, any()}
   def init(_) do
-    case Config.Request.get_signs() do
+    case Config.Request.get_state() do
       {:ok, config} ->
         # re-save state, since format was updated
-        save_sign_config_changes(%{}, config)
-        save_configured_headways_changes(config.configured_headways, config)
-
-        save_chelsea_bridge_announcements(
-          Map.get(config, :chelsea_bridge_announcements, "off"),
-          config
-        )
+        save_state(config)
 
         {:ok, config}
 
@@ -89,10 +84,8 @@ defmodule SignsUi.Config.State do
 
   @spec save_sign_config_changes(%{Config.Sign.id() => Config.Sign.t()}, t()) :: t()
   defp save_sign_config_changes(changes, %{signs: old_signs} = old_state) do
-    external_post_mod = Application.get_env(:signs_ui, :signs_external_post_mod)
-
     signs = Map.merge(old_signs, changes)
-    {:ok, _} = external_post_mod.update(%{old_state | signs: signs})
+    {:ok, _} = save_state(%{old_state | signs: signs})
 
     broadcast_data =
       signs
@@ -110,11 +103,9 @@ defmodule SignsUi.Config.State do
          new_configured_headways,
          old_state
        ) do
-    external_post_mod = Application.get_env(:signs_ui, :signs_external_post_mod)
-
     new_state = %{old_state | configured_headways: new_configured_headways}
 
-    {:ok, _} = external_post_mod.update(new_state)
+    {:ok, _} = save_state(new_state)
 
     SignsUiWeb.Endpoint.broadcast!(
       "signs:all",
@@ -127,9 +118,8 @@ defmodule SignsUi.Config.State do
 
   @spec save_chelsea_bridge_announcements(String.t(), t()) :: t()
   defp save_chelsea_bridge_announcements(value, old_state) do
-    external_post_mod = Application.get_env(:signs_ui, :signs_external_post_mod)
     new_state = Map.put(old_state, :chelsea_bridge_announcements, value)
-    {:ok, _} = external_post_mod.update(new_state)
+    {:ok, _} = save_state(new_state)
 
     SignsUiWeb.Endpoint.broadcast!(
       "signs:all",
@@ -138,5 +128,10 @@ defmodule SignsUi.Config.State do
     )
 
     new_state
+  end
+
+  defp save_state(new_state) do
+    external_post_mod = Application.get_env(:signs_ui, :signs_external_post_mod)
+    {:ok, _} = external_post_mod.update(new_state)
   end
 end

@@ -9,15 +9,16 @@ defmodule SignsUi.Config.Request do
   alias SignsUi.Config.S3
   alias SignsUi.Config.Sign
 
-  @spec get_signs({module(), atom(), []}) ::
+  @spec get_state({module(), atom(), []}) ::
           {:ok,
            %{
              signs: %{String.t() => Sign.t()},
              configured_headways: ConfiguredHeadways.t(),
-             chelsea_bridge_announcements: String.t()
+             chelsea_bridge_announcements: String.t(),
+             sign_groups: map()
            }}
           | {:error, any()}
-  def get_signs({mod, fun, args} \\ {S3, :get_object, []}) do
+  def get_state({mod, fun, args} \\ {S3, :get_object, []}) do
     case apply(mod, fun, args) do
       {:ok, %{body: json}} ->
         parse(json)
@@ -33,7 +34,8 @@ defmodule SignsUi.Config.Request do
            %{
              signs: %{String.t() => Sign.t()},
              configured_headways: ConfiguredHeadways.t(),
-             chelsea_bridge_announcements: String.t()
+             chelsea_bridge_announcements: String.t(),
+             sign_groups: map()
            }}
           | {:error, any()}
   defp parse(json) do
@@ -46,6 +48,15 @@ defmodule SignsUi.Config.Request do
         configured_headways = Map.get(response, "configured_headways", %{})
         chelsea_bridge_announcements = Map.get(response, "chelsea_bridge_announcements", "off")
 
+        sign_groups =
+          Map.get(response, "sign_groups", %{
+            "Red" => %{},
+            "Blue" => %{},
+            "Orange" => %{},
+            "Green" => %{},
+            "Mattapan" => %{}
+          })
+
         {:ok,
          %{
            signs:
@@ -54,7 +65,8 @@ defmodule SignsUi.Config.Request do
              end),
            configured_headways:
              ConfiguredHeadways.parse_configured_headways_json(configured_headways),
-           chelsea_bridge_announcements: chelsea_bridge_announcements
+           chelsea_bridge_announcements: chelsea_bridge_announcements,
+           sign_groups: sign_groups
          }}
 
       {:error, reason} ->

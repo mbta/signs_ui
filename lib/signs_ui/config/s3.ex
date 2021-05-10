@@ -9,7 +9,8 @@ defmodule SignsUi.Config.S3 do
   def update(%{
         signs: signs,
         configured_headways: configured_headways,
-        chelsea_bridge_announcements: chelsea_bridge_announcements
+        chelsea_bridge_announcements: chelsea_bridge_announcements,
+        sign_groups: sign_groups
       }) do
     json =
       Jason.encode(
@@ -17,7 +18,8 @@ defmodule SignsUi.Config.S3 do
           "signs" => Config.Signs.format_signs_for_json(signs),
           "configured_headways" =>
             Config.ConfiguredHeadways.format_configured_headways_for_json(configured_headways),
-          "chelsea_bridge_announcements" => chelsea_bridge_announcements
+          "chelsea_bridge_announcements" => chelsea_bridge_announcements,
+          "sign_groups" => sign_groups
         },
         pretty: true
       )
