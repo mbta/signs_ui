@@ -39,7 +39,7 @@ jobs:
           restore-keys: ${{ runner.os }}-mix-
       - name: Install dependencies
         run: |
-          mix local.rebar --foce
+          mix local.rebar --force
           mix local.hex --force
           mix deps.get
       - name: Compile (warnings as errors)
