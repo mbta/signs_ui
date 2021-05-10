@@ -9,7 +9,7 @@ defmodule SignsUi.Mixfile do
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
-      test_coverage: [tool: ExCoveralls],
+      test_coverage: [tool: LcovEx],
       dialyzer: [plt_add_apps: [:ex_unit]],
       deps: deps()
     ]
@@ -44,7 +44,7 @@ defmodule SignsUi.Mixfile do
       {:distillery, "~> 2.1.1", runtime: false},
       {:ex_aws_s3, "~> 2.0"},
       {:ex_aws, "~> 2.0"},
-      {:excoveralls, "~> 0.13.0", only: :test},
+      {:lcov_ex, "~> 0.2", only: [:dev, :test], runtime: false},
       {:gettext, "~> 0.11"},
       {:guardian_phoenix, "~> 2.0"},
       {:guardian, "~> 2.0"},
