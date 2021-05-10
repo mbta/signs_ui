@@ -3,6 +3,7 @@ defmodule SignsUi.Mock.Write do
 
   require Logger
 
+  # sobelow_skip ["Traversal.FileModule"]
   def update(%{signs: signs}) do
     file_path = Application.get_env(:signs_ui, :local_write_path)
 
