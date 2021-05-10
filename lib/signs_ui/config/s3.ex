@@ -1,4 +1,8 @@
 defmodule SignsUi.Config.S3 do
+  @moduledoc """
+  Serializes and uploads the SignsUi.Config.State to the S3 bucket.
+  """
+
   alias SignsUi.Config
 
   @spec update(SignsUi.Config.State.t()) :: ExAws.Operation.S3.t() | {:error, any}
@@ -27,15 +31,15 @@ defmodule SignsUi.Config.S3 do
 
   def do_update({:ok, json}) do
     {aws_requestor, bucket_name, path_name} = get_aws_vars()
-    ExAws.S3.put_object(bucket_name, path_name, json) |> aws_requestor.request()
+    bucket_name |> ExAws.S3.put_object(path_name, json) |> aws_requestor.request()
   end
 
-  def get_object() do
+  def get_object do
     {aws_requestor, bucket_name, path_name} = get_aws_vars()
-    ExAws.S3.get_object(bucket_name, path_name) |> aws_requestor.request()
+    bucket_name |> ExAws.S3.get_object(path_name) |> aws_requestor.request()
   end
 
-  defp get_aws_vars() do
+  defp get_aws_vars do
     bucket_name = Application.get_env(:signs_ui, :aws_signs_bucket)
     path_name = Application.get_env(:signs_ui, :aws_signs_path)
     aws_requestor = Application.get_env(:signs_ui, :aws_requestor)

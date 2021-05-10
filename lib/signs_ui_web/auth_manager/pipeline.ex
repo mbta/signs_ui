@@ -1,4 +1,6 @@
 defmodule SignsUiWeb.AuthManager.Pipeline do
+  @moduledoc false
+
   use Guardian.Plug.Pipeline,
     otp_app: :signs_ui,
     error_handler: SignsUiWeb.AuthManager.ErrorHandler,

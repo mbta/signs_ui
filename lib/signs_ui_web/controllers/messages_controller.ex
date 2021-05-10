@@ -2,8 +2,8 @@ defmodule SignsUiWeb.MessagesController do
   require Logger
   use SignsUiWeb, :controller
 
-  alias SignsUi.Signs.State
   alias SignsUi.Messages.SignContent
+  alias SignsUi.Signs.State
 
   @spec index(Plug.Conn.t(), map()) :: Plug.Conn.t()
   def index(conn, _params) do

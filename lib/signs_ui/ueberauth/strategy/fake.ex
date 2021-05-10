@@ -1,4 +1,9 @@
 defmodule SignsUi.Ueberauth.Strategy.Fake do
+  @moduledoc """
+  Fake Ueberauth strategy that allows the app to run locally without using
+  Cognito.
+  """
+
   use Ueberauth.Strategy
 
   @impl Ueberauth.Strategy

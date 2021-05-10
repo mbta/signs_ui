@@ -1,8 +1,13 @@
 defmodule SignsUi.Config.Request do
+  @moduledoc """
+  Loads, decodes, and parses the SignsUi.Config.State from the S3 bucket on
+  app start-up.
+  """
+
   require Logger
+  alias SignsUi.Config.ConfiguredHeadways
   alias SignsUi.Config.S3
   alias SignsUi.Config.Sign
-  alias SignsUi.Config.ConfiguredHeadways
 
   @spec get_signs({module(), atom(), []}) ::
           {:ok,

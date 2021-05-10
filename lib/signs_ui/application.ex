@@ -1,4 +1,6 @@
 defmodule SignsUi.Application do
+  @moduledoc false
+
   use Application
 
   alias SignsUi.Utilities.Config

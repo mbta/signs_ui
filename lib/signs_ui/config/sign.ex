@@ -1,4 +1,11 @@
 defmodule SignsUi.Config.Sign do
+  @moduledoc """
+  Represents how a given sign on the page can be configured. A sign can be
+  in auto mode (in which case it will show predictions, if available), or
+  headway mode, off, or in static text mode, which allows PIOs to set a
+  custom message.
+  """
+
   require Logger
 
   @enforce_keys [:id, :config]

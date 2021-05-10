@@ -1,4 +1,8 @@
 defmodule SignsUi.Config.ConfiguredHeadways do
+  @moduledoc """
+  Helpers for working with the ConfiguredHeadways data.
+  """
+
   alias SignsUi.Config.ConfiguredHeadway
   @type t :: %{String.t() => %{String.t() => ConfiguredHeadway.t()}}
 

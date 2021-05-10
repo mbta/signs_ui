@@ -1,4 +1,6 @@
 defmodule SignsUiWeb.AuthManager.ErrorHandler do
+  @moduledoc false
+
   @behaviour Guardian.Plug.ErrorHandler
 
   @impl Guardian.Plug.ErrorHandler

@@ -1,4 +1,9 @@
 defmodule SignsUi.Alerts.State do
+  @moduledoc """
+  Keeps track of currently active subway alerts, so that PIOs can associate
+  them with signs to auto-expire.
+  """
+
   use GenServer
   require Logger
   alias SignsUi.Alerts.Alert
@@ -47,7 +52,7 @@ defmodule SignsUi.Alerts.State do
 
         _ ->
           route_id = Enum.random(["Red", "Orange", "Blue", "Green-B"])
-          alert_id = :rand.uniform(10_000) |> to_string()
+          alert_id = 10_000 |> :rand.uniform() |> to_string()
           service_effect = "Alert #{alert_id} service text"
 
           Map.merge(
