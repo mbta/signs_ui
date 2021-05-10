@@ -1,7 +1,13 @@
 defmodule SignsUiWeb.SignsChannel do
+  @moduledoc """
+  Channel for all frontend communication: changing headways, configuring signs, setting the
+  chelsea bridge announcements.
+  """
+
   use Phoenix.Channel
   require Logger
-  alias SignsUi.Config.{Sign, ConfiguredHeadways}
+  alias SignsUi.Config.ConfiguredHeadways
+  alias SignsUi.Config.Sign
 
   def join("signs:all", _message, socket) do
     {:ok, socket}

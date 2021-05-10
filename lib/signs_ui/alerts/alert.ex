@@ -1,4 +1,8 @@
 defmodule SignsUi.Alerts.Alert do
+  @moduledoc """
+  Represents an alert.
+  """
+
   @derive Jason.Encoder
   defstruct [:id, :created_at, :service_effect]
 

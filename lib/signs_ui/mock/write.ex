@@ -1,4 +1,8 @@
 defmodule SignsUi.Mock.Write do
+  @moduledoc false
+
+  require Logger
+
   def update(%{signs: signs}) do
     file_path = Application.get_env(:signs_ui, :local_write_path)
 
@@ -13,5 +17,5 @@ defmodule SignsUi.Mock.Write do
     end
   end
 
-  def update(foo), do: IO.inspect(foo)
+  def update(foo), do: Logger.error("unknown update: #{inspect(foo)}")
 end

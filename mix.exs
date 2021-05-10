@@ -40,6 +40,7 @@ defmodule SignsUi.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:credo, "~> 1.4", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 1.0.0-rc.4", only: [:dev, :test], runtime: false},
       {:distillery, "~> 2.1.1", runtime: false},
       {:ex_aws_s3, "~> 2.0"},

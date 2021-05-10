@@ -19,7 +19,8 @@ defmodule SignsUiWeb.Plugs.ApiAuth do
   end
 
   defp keys do
-    Application.get_env(:signs_ui, :messages_api_keys)
+    :signs_ui
+    |> Application.get_env(:messages_api_keys)
     |> String.split(",")
     |> Stream.map(&String.split(&1, ":"))
     |> Stream.map(fn [user, key] -> {key, user} end)

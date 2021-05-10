@@ -6,8 +6,8 @@ defmodule SignsUi.Signs.Sign do
   @enforce_keys [:station, :zone]
   defstruct [:station, :zone, lines: %{}]
 
-  alias SignsUi.Signs.SignLine
   alias SignsUi.Messages.SignContent
+  alias SignsUi.Signs.SignLine
 
   @type t :: %__MODULE__{
           station: String.t(),
