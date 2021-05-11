@@ -25,12 +25,6 @@ defmodule SignsUi.Alerts.State do
     {:consumer, %{}, opts}
   end
 
-  @impl GenStage
-  def handle_info(msg, state) do
-    Logger.warn("#{__MODULE__} unknown_message #{inspect(msg)}")
-    {:noreply, [], state}
-  end
-
   @spec active_alert_ids(GenStage.stage()) :: MapSet.t(Alert.id())
   def active_alert_ids(pid \\ __MODULE__) do
     GenStage.call(pid, :active_alert_ids)

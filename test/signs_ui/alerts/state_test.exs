@@ -41,15 +41,6 @@ defmodule SignsUi.Alerts.StateTest do
     end
   end
 
-  describe "handle_info" do
-    test "handles unknown messages without crashing" do
-      {:ok, pid} = SignsUi.Alerts.State.start_link(name: :unknown_messages)
-      Process.monitor(pid)
-      send(pid, :unknown!)
-      refute_receive {:DOWN, _, _, ^pid, _}
-    end
-  end
-
   describe "handle_events" do
     test "handles a reset" do
       expected = %{
