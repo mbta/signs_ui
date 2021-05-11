@@ -1,4 +1,7 @@
 defmodule SignsUi.Mock.FakeAlertProducer do
+  @moduledoc """
+  A stub GenServer for testing SignsUi.Alerts.State.
+  """
   use GenServer
 
   def start_link(args) do

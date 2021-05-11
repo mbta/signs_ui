@@ -1,4 +1,7 @@
 defmodule SignsUi.Alerts.Display do
+  @moduledoc """
+  Converts alert state to the format expected by the front-end.
+  """
   alias SignsUi.Alerts.Alert
   alias SignsUi.Alerts.State
 
@@ -8,8 +11,8 @@ defmodule SignsUi.Alerts.Display do
   @type t :: route_alerts_map()
 
   @doc """
-  Converts a list of alerts from the format stored in the back end to the format
-  expected by the front end.
+  Converts a list of alerts from the format stored in the back-end to the format
+  expected by the front-end.
   """
   @spec format_state(State.t()) :: t()
   def format_state(state) do

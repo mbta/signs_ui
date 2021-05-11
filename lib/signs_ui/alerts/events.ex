@@ -1,4 +1,8 @@
 defmodule SignsUi.Alerts.Events do
+  @moduledoc """
+  Parses incoming alert data from the API into multi-route alerts for internal
+  storage.
+  """
   require Logger
   alias SignsUi.Alerts.Alert
 
