@@ -53,9 +53,10 @@ defmodule SignsUi.Alerts.StateTest do
     test "handles a reset" do
       expected = %{
         "Blue" => %{
-          "126976" => %SignsUi.Alerts.Alert{
+          "126976" => %{
             created_at: ~U[2021-05-05 00:41:37Z],
             id: "126976",
+            route: "Blue",
             service_effect: "Blue Line delay"
           }
         }
@@ -69,29 +70,32 @@ defmodule SignsUi.Alerts.StateTest do
 
       GenStage.sync_subscribe(pid, to: producer)
 
-      assert_broadcast("new_alert_state", expected, 500)
+      assert_broadcast("new_alert_state", ^expected, 500)
     end
 
     test "handles an add" do
       expected = %{
         "Blue" => %{
-          "126976" => %SignsUi.Alerts.Alert{
+          "126976" => %{
             created_at: ~U[2021-05-05 00:41:37Z],
             id: "126976",
+            route: "Blue",
             service_effect: "Blue Line delay"
           }
         },
         "Orange" => %{
-          "126977" => %SignsUi.Alerts.Alert{
+          "126977" => %{
             created_at: ~U[2021-05-05 00:43:09Z],
             id: "126977",
+            route: "Orange",
             service_effect: "Orange Line and Red Line delay"
           }
         },
         "Red" => %{
-          "126977" => %SignsUi.Alerts.Alert{
+          "126977" => %{
             created_at: ~U[2021-05-05 00:43:09Z],
             id: "126977",
+            route: "Red",
             service_effect: "Orange Line and Red Line delay"
           }
         }
@@ -105,23 +109,25 @@ defmodule SignsUi.Alerts.StateTest do
 
       GenStage.sync_subscribe(pid, to: producer)
 
-      assert_broadcast("new_alert_state", expected, 500)
+      assert_broadcast("new_alert_state", ^expected, 500)
     end
 
     test "handles an update" do
       expected = %{
         "Blue" => %{
-          "126976" => %SignsUi.Alerts.Alert{
+          "126976" => %{
             created_at: ~U[2021-05-05 00:41:37Z],
             id: "126976",
+            route: "Blue",
             service_effect: "Blue Line delay"
           }
         },
         "Red" => %{
-          "126977" => %SignsUi.Alerts.Alert{
+          "126977" => %{
             created_at: ~U[2021-05-05 00:43:09Z],
             id: "126977",
-            service_effect: "Orange Line and Red Line delay"
+            route: "Red",
+            service_effect: "Red Line delay"
           }
         }
       }
@@ -139,15 +145,16 @@ defmodule SignsUi.Alerts.StateTest do
 
       GenStage.sync_subscribe(pid, to: producer)
 
-      assert_broadcast("new_alert_state", expected, 500)
+      assert_broadcast("new_alert_state", ^expected, 500)
     end
 
     test "handles a removal" do
       expected = %{
         "Blue" => %{
-          "126976" => %SignsUi.Alerts.Alert{
+          "126976" => %{
             created_at: ~U[2021-05-05 00:41:37Z],
             id: "126976",
+            route: "Blue",
             service_effect: "Blue Line delay"
           }
         }
@@ -167,12 +174,10 @@ defmodule SignsUi.Alerts.StateTest do
 
       GenStage.sync_subscribe(pid, to: producer)
 
-      assert_broadcast("new_alert_state", expected, 500)
+      assert_broadcast("new_alert_state", ^expected, 500)
     end
 
     test "handles two removals" do
-      expected = %{}
-
       @endpoint.subscribe("signs:all")
 
       {:ok, pid} = SignsUi.Alerts.State.start_link()
