@@ -3,7 +3,6 @@ defmodule SignsUi.Alerts.StateTest do
   use SignsUiWeb.ChannelCase
   alias ServerSentEventStage.Event
   import Test.Support.AlertEvents
-  alias SignsUi.Alerts.State
 
   defp clear_state(), do: %Event{data: "[]", event: "reset"}
 
