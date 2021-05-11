@@ -26,7 +26,7 @@ defmodule SignsUi.Alerts.Display do
   @spec expand_routes(Alert.multi_route()) :: [Alert.t()]
   defp expand_routes(alert) do
     Enum.map(alert.affected_routes, fn route ->
-      %{
+      %Alert{
         id: alert.id,
         created_at: alert.created_at,
         service_effect: alert.service_effect,

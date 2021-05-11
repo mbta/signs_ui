@@ -2,6 +2,7 @@ defmodule SignsUi.Alerts.StateTest do
   use ExUnit.Case, async: true
   use SignsUiWeb.ChannelCase
   alias ServerSentEventStage.Event
+  alias SignsUi.Alerts.Alert
   import Test.Support.AlertEvents
 
   defp clear_state(), do: %Event{data: "[]", event: "reset"}
@@ -53,7 +54,7 @@ defmodule SignsUi.Alerts.StateTest do
     test "handles a reset" do
       expected = %{
         "Blue" => %{
-          "126976" => %{
+          "126976" => %Alert{
             created_at: ~U[2021-05-05 00:41:37Z],
             id: "126976",
             route: "Blue",
@@ -76,7 +77,7 @@ defmodule SignsUi.Alerts.StateTest do
     test "handles an add" do
       expected = %{
         "Blue" => %{
-          "126976" => %{
+          "126976" => %Alert{
             created_at: ~U[2021-05-05 00:41:37Z],
             id: "126976",
             route: "Blue",
@@ -84,7 +85,7 @@ defmodule SignsUi.Alerts.StateTest do
           }
         },
         "Orange" => %{
-          "126977" => %{
+          "126977" => %Alert{
             created_at: ~U[2021-05-05 00:43:09Z],
             id: "126977",
             route: "Orange",
@@ -92,7 +93,7 @@ defmodule SignsUi.Alerts.StateTest do
           }
         },
         "Red" => %{
-          "126977" => %{
+          "126977" => %Alert{
             created_at: ~U[2021-05-05 00:43:09Z],
             id: "126977",
             route: "Red",
@@ -115,7 +116,7 @@ defmodule SignsUi.Alerts.StateTest do
     test "handles an update" do
       expected = %{
         "Blue" => %{
-          "126976" => %{
+          "126976" => %Alert{
             created_at: ~U[2021-05-05 00:41:37Z],
             id: "126976",
             route: "Blue",
@@ -123,7 +124,7 @@ defmodule SignsUi.Alerts.StateTest do
           }
         },
         "Red" => %{
-          "126977" => %{
+          "126977" => %Alert{
             created_at: ~U[2021-05-05 00:43:09Z],
             id: "126977",
             route: "Red",
@@ -151,7 +152,7 @@ defmodule SignsUi.Alerts.StateTest do
     test "handles a removal" do
       expected = %{
         "Blue" => %{
-          "126976" => %{
+          "126976" => %Alert{
             created_at: ~U[2021-05-05 00:41:37Z],
             id: "126976",
             route: "Blue",

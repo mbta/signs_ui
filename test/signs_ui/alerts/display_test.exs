@@ -1,5 +1,6 @@
 defmodule SignsUi.Alerts.DisplayTest do
   use ExUnit.Case, async: true
+  alias SignsUi.Alerts.Alert
   alias SignsUi.Alerts.Display
 
   describe "format_state/1" do
@@ -23,7 +24,7 @@ defmodule SignsUi.Alerts.DisplayTest do
 
       assert Display.format_state(state) == %{
                "Blue" => %{
-                 "some_id" => %{
+                 "some_id" => %Alert{
                    created_at: ~U[2021-05-11 18:49:28Z],
                    id: "some_id",
                    route: "Blue",
@@ -31,7 +32,7 @@ defmodule SignsUi.Alerts.DisplayTest do
                  }
                },
                "Green-D" => %{
-                 "some_other_id" => %{
+                 "some_other_id" => %Alert{
                    created_at: ~U[2021-05-11 18:49:28Z],
                    id: "some_other_id",
                    route: "Green-D",
@@ -39,13 +40,13 @@ defmodule SignsUi.Alerts.DisplayTest do
                  }
                },
                "Orange" => %{
-                 "some_id" => %{
+                 "some_id" => %Alert{
                    created_at: ~U[2021-05-11 18:49:28Z],
                    id: "some_id",
                    route: "Orange",
                    service_effect: "delayed trains on the Red, Orange, and Blue lines"
                  },
-                 "some_other_id" => %{
+                 "some_other_id" => %Alert{
                    created_at: ~U[2021-05-11 18:49:28Z],
                    id: "some_other_id",
                    route: "Orange",
@@ -53,7 +54,7 @@ defmodule SignsUi.Alerts.DisplayTest do
                  }
                },
                "Red" => %{
-                 "some_id" => %{
+                 "some_id" => %Alert{
                    created_at: ~U[2021-05-11 18:49:28Z],
                    id: "some_id",
                    route: "Red",
