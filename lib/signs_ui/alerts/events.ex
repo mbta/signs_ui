@@ -40,7 +40,7 @@ defmodule SignsUi.Alerts.Events do
       {:error, reason} ->
         Logger.error([
           "Failed to parse created_at, reason=",
-          reason,
+          inspect(reason),
           " attributes=",
           inspect(attributes)
         ])
