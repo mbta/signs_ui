@@ -43,7 +43,7 @@ defmodule SignsUi.Alerts.State do
     # Works in two primary phases. First, we generate fresh t using the
     # provided events:
     new_state = update_state(events, state)
-    Logger.debug(["Alert state updated: ", inspect(new_state)])
+    Logger.info(["alert_state_updated ", inspect(new_state)])
 
     # Next, we convert our internal model to the specified format:
     display_state = Display.format_state(new_state)
