@@ -27,3 +27,6 @@ yarn-error.log
 # variables.
 /config/*.secret.exs
 test/mock_write.json
+
+# local direnv configuration
+/.envrc

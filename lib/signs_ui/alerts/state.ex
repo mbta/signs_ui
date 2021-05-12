@@ -4,79 +4,77 @@ defmodule SignsUi.Alerts.State do
   them with signs to auto-expire.
   """
 
-  use GenServer
+  use GenStage
+
   require Logger
+  alias ServerSentEventStage.Event
   alias SignsUi.Alerts.Alert
+  alias SignsUi.Alerts.Display
+  alias SignsUi.Alerts.Events
 
-  defstruct alerts: %{}
+  @type t :: %{Alert.id() => Alert.multi_route()}
 
-  @type route_id :: String.t()
-  @type alert_map :: %{Alert.id() => Alert.t()}
-  @type route_alerts_map :: %{route_id() => alert_map()}
-
-  @type state :: %__MODULE__{
-          alerts: route_alerts_map()
-        }
-
+  @spec start_link(keyword) :: :ignore | {:error, any} | {:ok, pid}
   def start_link(opts \\ []) do
     {start_opts, init_opts} = Keyword.split(opts, [:name])
-    start_opts = Keyword.put_new(start_opts, :name, __MODULE__)
-    GenServer.start_link(__MODULE__, init_opts, start_opts)
+    GenStage.start_link(__MODULE__, init_opts, start_opts)
   end
 
+  @impl GenStage
   def init(opts) do
-    interval_ms = Keyword.get(opts, :interval_ms, 15_000)
-    :timer.send_interval(interval_ms, :twiddle_state)
-    {:ok, %__MODULE__{}}
+    {:consumer, %{}, opts}
   end
 
-  @spec active_alert_ids(GenServer.server()) :: MapSet.t(Alert.id())
+  @spec active_alert_ids(GenStage.stage()) :: MapSet.t(Alert.id())
   def active_alert_ids(pid \\ __MODULE__) do
-    GenServer.call(pid, :active_alert_ids)
+    GenStage.call(pid, :active_alert_ids)
   end
 
+  @impl GenStage
   def handle_call(:active_alert_ids, _from, state) do
-    alert_ids =
-      for {_route_id, route_alerts} <- state.alerts,
-          {alert_id, _alert_data} <- route_alerts,
-          do: alert_id
+    alert_ids = state |> Map.keys() |> MapSet.new()
 
-    {:reply, MapSet.new(alert_ids), state}
+    {:reply, alert_ids, [], state}
   end
 
-  def handle_info(:twiddle_state, state) do
-    new_alert_state =
-      case :rand.uniform(5) do
-        1 ->
-          state.alerts |> Enum.to_list() |> Enum.shuffle() |> List.delete_at(0) |> Map.new()
+  @impl GenStage
+  @spec handle_events([Event.t()], GenStage.from(), t()) :: {:noreply, [], t()}
+  def handle_events(events, _from, state) do
+    # Works in two primary phases. First, we generate fresh t using the
+    # provided events:
+    new_state = update_state(events, state)
+    Logger.info(["alert_state_updated ", inspect(new_state)])
 
-        _ ->
-          route_id = Enum.random(["Red", "Orange", "Blue", "Green-B"])
-          alert_id = 10_000 |> :rand.uniform() |> to_string()
-          service_effect = "Alert #{alert_id} service text"
-
-          Map.merge(
-            state.alerts,
-            %{
-              route_id => %{
-                alert_id => %Alert{
-                  id: alert_id,
-                  service_effect: service_effect,
-                  created_at: DateTime.now!("America/New_York")
-                }
-              }
-            }
-          )
-      end
-
-    SignsUiWeb.Endpoint.broadcast!("signs:all", "new_alert_state", new_alert_state)
-    Logger.info("new_alert_state: #{inspect(new_alert_state)}")
-
-    {:noreply, put_in(state.alerts, new_alert_state)}
+    # Next, we convert our internal model to the specified format:
+    display_state = Display.format_state(new_state)
+    SignsUiWeb.Endpoint.broadcast!("signs:all", "new_alert_state", display_state)
+    {:noreply, [], new_state}
   end
 
-  def handle_info(msg, state) do
-    Logger.warn("#{__MODULE__} unknown_message #{inspect(msg)}")
-    {:noreply, state}
+  @spec update_state(Event.t() | [Event.t()], t()) :: t()
+  defp update_state(events, state) when is_list(events) do
+    # This reduce combines the effects of a  set of operations into a single new
+    # state.
+    Enum.reduce(events, state, &update_state(&1, &2))
+  end
+
+  defp update_state(%Event{event: "reset", data: data}, _) do
+    alerts = Events.parse(data)
+    Map.new(alerts, &{&1.id, &1})
+  end
+
+  defp update_state(%Event{event: "update", data: data}, state) do
+    alert = Events.parse(data)
+    Map.put(state, alert.id, alert)
+  end
+
+  defp update_state(%Event{event: "add", data: data}, state) do
+    alert = Events.parse(data)
+    Map.put(state, alert.id, alert)
+  end
+
+  defp update_state(%Event{event: "remove", data: data}, state) do
+    alert = Events.parse(data)
+    Map.delete(state, alert.id)
   end
 end

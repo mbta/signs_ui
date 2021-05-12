@@ -1,69 +1,198 @@
 defmodule SignsUi.Alerts.StateTest do
   use ExUnit.Case, async: true
   use SignsUiWeb.ChannelCase
+  alias ServerSentEventStage.Event
+  alias SignsUi.Alerts.Alert
+  import Test.Support.AlertEvents
+
+  defp clear_state(), do: %Event{data: "[]", event: "reset"}
 
   describe "start_link" do
     test "GenServer runs without crashing" do
       @endpoint.subscribe("signs:all")
 
-      {:ok, _pid} = SignsUi.Alerts.State.start_link(name: :no_crashing, interval_ms: 50)
+      {:ok, pid} = SignsUi.Alerts.State.start_link()
 
-      assert_broadcast("new_alert_state", %{})
+      {:ok, producer} = GenStage.from_enumerable([clear_state()])
+
+      GenStage.sync_subscribe(pid, to: producer)
+
+      assert_broadcast("new_alert_state", %{}, 300)
     end
   end
 
   describe "handle_call :active_alert_ids" do
     test "returns the alert_ids out of the state" do
-      state = %SignsUi.Alerts.State{
-        alerts: %{
-          "Red" => %{
-            "alert_id1" => %{},
-            "alert_id2" => %{}
-          },
-          "Blue" => %{
-            "alert_id3" => %{}
+      state = %{
+        "alert_id1" => %{affected_routes: MapSet.new(["Red"])},
+        "alert_id2" => %{affected_routes: MapSet.new(["Red"])},
+        "alert_id3" => %{affected_routes: MapSet.new(["Blue"])}
+      }
+
+      assert SignsUi.Alerts.State.handle_call(:active_alert_ids, self(), state) ==
+               {:reply, MapSet.new(["alert_id1", "alert_id2", "alert_id3"]), [], state}
+    end
+
+    test "safely returns an empty map set if there are no alerts" do
+      state = %{}
+
+      assert SignsUi.Alerts.State.handle_call(:active_alert_ids, self(), state) ==
+               {:reply, MapSet.new(), [], state}
+    end
+  end
+
+  describe "handle_events" do
+    test "handles a reset" do
+      expected = %{
+        "Blue" => %{
+          "126976" => %Alert{
+            created_at: ~U[2021-05-05 00:41:37Z],
+            id: "126976",
+            route: "Blue",
+            service_effect: "Blue Line delay"
           }
         }
       }
 
-      assert SignsUi.Alerts.State.handle_call(:active_alert_ids, self(), state) ==
-               {:reply, MapSet.new(["alert_id1", "alert_id2", "alert_id3"]), state}
+      @endpoint.subscribe("signs:all")
+
+      {:ok, pid} = SignsUi.Alerts.State.start_link()
+
+      {:ok, producer} = GenStage.from_enumerable([initial_state()])
+
+      GenStage.sync_subscribe(pid, to: producer)
+
+      assert_broadcast("new_alert_state", ^expected, 500)
     end
 
-    test "safely returns an empty map set if there are no alerts" do
-      state = %SignsUi.Alerts.State{alerts: %{}}
+    test "handles an add" do
+      expected = %{
+        "Blue" => %{
+          "126976" => %Alert{
+            created_at: ~U[2021-05-05 00:41:37Z],
+            id: "126976",
+            route: "Blue",
+            service_effect: "Blue Line delay"
+          }
+        },
+        "Orange" => %{
+          "126977" => %Alert{
+            created_at: ~U[2021-05-05 00:43:09Z],
+            id: "126977",
+            route: "Orange",
+            service_effect: "Orange Line and Red Line delay"
+          }
+        },
+        "Red" => %{
+          "126977" => %Alert{
+            created_at: ~U[2021-05-05 00:43:09Z],
+            id: "126977",
+            route: "Red",
+            service_effect: "Orange Line and Red Line delay"
+          }
+        }
+      }
 
-      assert SignsUi.Alerts.State.handle_call(:active_alert_ids, self(), state) ==
-               {:reply, MapSet.new([]), state}
+      @endpoint.subscribe("signs:all")
+
+      {:ok, pid} = SignsUi.Alerts.State.start_link()
+
+      {:ok, producer} = GenStage.from_enumerable([initial_state(), add_red_orange()])
+
+      GenStage.sync_subscribe(pid, to: producer)
+
+      assert_broadcast("new_alert_state", ^expected, 500)
     end
-  end
 
-  describe "handle_info" do
-    test "handles unknown messages without crashing" do
-      {:ok, pid} = SignsUi.Alerts.State.start_link(name: :unknown_messages)
-      Process.monitor(pid)
-      send(pid, :unknown!)
-      refute_receive {:DOWN, _, _, ^pid, _}
+    test "handles an update" do
+      expected = %{
+        "Blue" => %{
+          "126976" => %Alert{
+            created_at: ~U[2021-05-05 00:41:37Z],
+            id: "126976",
+            route: "Blue",
+            service_effect: "Blue Line delay"
+          }
+        },
+        "Red" => %{
+          "126977" => %Alert{
+            created_at: ~U[2021-05-05 00:43:09Z],
+            id: "126977",
+            route: "Red",
+            service_effect: "Red Line delay"
+          }
+        }
+      }
+
+      @endpoint.subscribe("signs:all")
+
+      {:ok, pid} = SignsUi.Alerts.State.start_link()
+
+      {:ok, producer} =
+        GenStage.from_enumerable([
+          initial_state(),
+          add_red_orange(),
+          update_red_orange()
+        ])
+
+      GenStage.sync_subscribe(pid, to: producer)
+
+      assert_broadcast("new_alert_state", ^expected, 500)
     end
-  end
 
-  # to be removed, once the real implementation is in:
-  describe "handle_info(:twiddle_state)" do
-    test "rolls randomly both code paths, and works without crashing" do
-      state =
-        Enum.reduce(0..20, %SignsUi.Alerts.State{}, fn _, state ->
-          {:noreply, new_state} = SignsUi.Alerts.State.handle_info(:twiddle_state, state)
-          new_state
-        end)
+    test "handles a removal" do
+      expected = %{
+        "Blue" => %{
+          "126976" => %Alert{
+            created_at: ~U[2021-05-05 00:41:37Z],
+            id: "126976",
+            route: "Blue",
+            service_effect: "Blue Line delay"
+          }
+        }
+      }
 
-      assert %{alerts: %{}} = state
+      @endpoint.subscribe("signs:all")
+
+      {:ok, pid} = SignsUi.Alerts.State.start_link()
+
+      {:ok, producer} =
+        GenStage.from_enumerable([
+          initial_state(),
+          add_red_orange(),
+          update_red_orange(),
+          remove_red()
+        ])
+
+      GenStage.sync_subscribe(pid, to: producer)
+
+      assert_broadcast("new_alert_state", ^expected, 500)
+    end
+
+    test "handles two removals" do
+      @endpoint.subscribe("signs:all")
+
+      {:ok, pid} = SignsUi.Alerts.State.start_link()
+
+      {:ok, producer} =
+        GenStage.from_enumerable([
+          initial_state(),
+          add_red_orange(),
+          update_red_orange(),
+          remove_red(),
+          remove_blue()
+        ])
+
+      GenStage.sync_subscribe(pid, to: producer)
+
+      assert_broadcast("new_alert_state", %{}, 500)
     end
   end
 
   describe "active_alert_ids/0" do
     test "returns a result without crashing" do
       {:ok, pid} = SignsUi.Alerts.State.start_link(name: :alerts_state_ids_test)
-      assert SignsUi.Alerts.State.active_alert_ids(pid) == MapSet.new([])
+      assert SignsUi.Alerts.State.active_alert_ids(pid) == MapSet.new()
     end
   end
 end
