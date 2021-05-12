@@ -1,2 +1,2 @@
-export API_V3_HOST=
+export API_V3_ORIGIN=
 export API_V3_KEY=
