@@ -2,7 +2,9 @@ defmodule SignsUiWeb.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  channel("signs:*", SignsUiWeb.SignsChannel)
+  channel("signs:all", SignsUiWeb.SignsChannel)
+  channel("headways:all", SignsUiWeb.HeadwaysChannel)
+  channel("chelseaBridgeAnnouncements:all", SignsUiWeb.ChelseaBridgeAnnouncementsChannel)
 
   # Socket params are passed from the client and can
   # be used to verify and authenticate a user. After

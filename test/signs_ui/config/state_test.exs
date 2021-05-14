@@ -6,21 +6,6 @@ defmodule SignsUi.Config.StateTest do
   alias SignsUi.Config.ConfiguredHeadway
   alias SignsUi.Config.ConfiguredHeadways
 
-  setup do
-    {:ok, claims} =
-      Guardian.Token.Jwt.build_claims(
-        SignsUiWeb.AuthManager,
-        "test_user",
-        "test_user"
-      )
-
-    {:ok, token} = Guardian.Token.Jwt.create_token(SignsUiWeb.AuthManager, claims)
-    {:ok, socket} = connect(SignsUiWeb.UserSocket, %{"token" => token})
-    {:ok, _, socket} = subscribe_and_join(socket, "signs:all", %{})
-
-    {:ok, socket: socket}
-  end
-
   describe "get_all/1" do
     test "Returns all signs" do
       {:ok, signs_server} = start_supervised({Config.State, [name: :sign_test]})
@@ -81,7 +66,7 @@ defmodule SignsUi.Config.StateTest do
     test "updates values properly" do
       {:ok, pid} = GenServer.start_link(SignsUi.Config.State, [], [])
 
-      @endpoint.subscribe("signs:all")
+      @endpoint.subscribe("headways:all")
 
       assert get_all(pid).configured_headways == %{
                "red_trunk" => %{
@@ -113,7 +98,7 @@ defmodule SignsUi.Config.StateTest do
     test "adds new values properly" do
       {:ok, pid} = GenServer.start_link(SignsUi.Config.State, [], [])
 
-      @endpoint.subscribe("signs:all")
+      @endpoint.subscribe("headways:all")
 
       {:ok, new_state} =
         update_configured_headways(pid, %{
@@ -138,7 +123,7 @@ defmodule SignsUi.Config.StateTest do
     test "removes values properly" do
       {:ok, pid} = GenServer.start_link(SignsUi.Config.State, [], [])
 
-      @endpoint.subscribe("signs:all")
+      @endpoint.subscribe("headways:all")
 
       {:ok, new_state} = update_configured_headways(pid, %{})
 
@@ -157,7 +142,7 @@ defmodule SignsUi.Config.StateTest do
     test "updates values properly" do
       {:ok, pid} = GenServer.start_link(SignsUi.Config.State, [], [])
 
-      @endpoint.subscribe("signs:all")
+      @endpoint.subscribe("chelseaBridgeAnnouncements:all")
 
       assert get_all(pid).chelsea_bridge_announcements == "auto"
 

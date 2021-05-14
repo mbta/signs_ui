@@ -108,7 +108,7 @@ defmodule SignsUi.Config.State do
     {:ok, _} = save_state(new_state)
 
     SignsUiWeb.Endpoint.broadcast!(
-      "signs:all",
+      "headways:all",
       "new_configured_headways_state",
       Config.ConfiguredHeadways.format_configured_headways_for_json(new_configured_headways)
     )
@@ -122,7 +122,7 @@ defmodule SignsUi.Config.State do
     {:ok, _} = save_state(new_state)
 
     SignsUiWeb.Endpoint.broadcast!(
-      "signs:all",
+      "chelseaBridgeAnnouncements:all",
       "new_chelsea_bridge_announcements_state",
       %{chelsea_bridge_announcements: value}
     )
