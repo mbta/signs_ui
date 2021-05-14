@@ -31,6 +31,7 @@ class ViewerApp extends React.Component<
     signsChannel: null | Channel;
     headwaysChannel: null | Channel;
     chelseaBridgeAnnouncementsChannel: null | Channel;
+    signGroupsChannel: null | Channel;
     readOnly: boolean;
     signOutPath: string;
     line?: string;
@@ -58,6 +59,7 @@ class ViewerApp extends React.Component<
       signsChannel: null,
       headwaysChannel: null,
       chelseaBridgeAnnouncementsChannel: null,
+      signGroupsChannel: null,
       readOnly: props.readOnly,
       signOutPath: props.signOutPath,
       chelseaBridgeAnnouncements:
@@ -82,6 +84,7 @@ class ViewerApp extends React.Component<
     signsChannel.join().receive('ok', () => true);
     headwaysChannel.join().receive('ok', () => true);
     chelseaBridgeAnnouncementsChannel.join().receive('ok', () => true);
+    signGroupsChannel.join().receive('ok', () => true);
 
     signsChannel.on('sign_update', (sign) => {
       this.setState((prevState) => ({
@@ -109,9 +112,10 @@ class ViewerApp extends React.Component<
     });
 
     this.setState({
-      signsChannel: signsChannel,
-      headwaysChannel: headwaysChannel,
-      chelseaBridgeAnnouncementsChannel: chelseaBridgeAnnouncementsChannel
+      signsChannel,
+      headwaysChannel,
+      chelseaBridgeAnnouncementsChannel,
+      signGroupsChannel,
     });
 
     this.timerID = setInterval(() => this.updateTime(), 1000);
