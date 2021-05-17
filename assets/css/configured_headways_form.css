@@ -1,0 +1,14 @@
+.configured-headways-form input[type='number'] {
+  width: 3rem;
+}
+
+.configured-headways-form--edit_button {
+  cursor: pointer;
+  position: absolute;
+  right: 1rem;
+}
+
+.configured-headways-form.disabled,
+.configured-headways-form.disabled input {
+  background-color: rgb(240, 240, 240);
+}
