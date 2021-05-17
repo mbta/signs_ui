@@ -1,7 +1,9 @@
 import * as React from 'react';
+import Tabs, { TabPane } from 'rc-tabs';
 import ConfiguredHeadwaysForm from './ConfiguredHeadwaysForm';
 import Station from './Station';
 import { stationConfig, arincToRealtimeId, branchConfig } from './mbta';
+import SignGroups from './SignGroups';
 import {
   RouteAlerts,
   SignContent,
@@ -122,14 +124,21 @@ function Line({
   return (
     <div>
       <h1>{name(line)}</h1>
-      {branches.length > 0 && (
-        <ConfiguredHeadwaysForm
-          branches={branches}
-          configuredHeadways={configuredHeadways}
-          setConfiguredHeadways={setConfiguredHeadways}
-          readOnly={readOnly}
-        />
-      )}
+      <Tabs defaultActiveKey="0" tabBarStyle={{}}>
+        <TabPane tab="Sign Groups">
+          <SignGroups />
+        </TabPane>
+        {branches.length > 0 && (
+          <TabPane tab="Headways" key="1">
+            <ConfiguredHeadwaysForm
+              branches={branches}
+              configuredHeadways={configuredHeadways}
+              setConfiguredHeadways={setConfiguredHeadways}
+              readOnly={readOnly}
+            />
+          </TabPane>
+        )}
+      </Tabs>
 
       {line === 'Silver' && (
         <label className="mt-1 mb-4">

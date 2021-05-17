@@ -1,0 +1,26 @@
+.rc-tabs {
+  margin-bottom: 1rem;
+}
+
+.rc-tabs-nav-list {
+  border: 1px solid #ddd;
+  display: flex;
+}
+
+.rc-tabs-tab {
+  padding: 1rem;
+  cursor: pointer;
+}
+
+.rc-tabs-tab-active {
+  border-bottom: 3px solid blue;
+}
+
+.rc-tabs-content {
+  background-color: #eee;
+  padding: 1rem;
+}
+
+.rc-tabs-nav-operations {
+  display: none;
+}
