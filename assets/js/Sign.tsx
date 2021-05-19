@@ -1,5 +1,4 @@
 import * as React from 'react';
-import dateFormat from 'dateformat';
 import lineToColor from './colors';
 import {
   RouteAlerts,
@@ -9,6 +8,7 @@ import {
 } from './types';
 import { choosePage } from './helpers';
 import SetExpiration from './SetExpiration';
+import VirtualSign from './VirtualSign';
 
 type SignModeOptions = 'auto' | 'headway' | 'off' | 'static_text';
 
@@ -77,12 +77,7 @@ function isValidText(text: string) {
   return !/[^a-zA-Z0-9,/!@' +]/.test(text);
 }
 
-function timeString(currentTime: number) {
-  const date = new Date(currentTime);
-  return dateFormat(date, 'h:MM').padStart(5);
-}
-
-function line1DisplayText(
+function lineDisplayText(
   lineContent:
     | {
         text: {
@@ -94,34 +89,7 @@ function line1DisplayText(
     | undefined,
   currentTime: number,
   initialTime: number,
-) {
-  if (
-    lineContent !== undefined &&
-    isNotExpired(lineContent.expiration, currentTime)
-  ) {
-    const text = choosePage(
-      lineContent.text,
-      (currentTime - initialTime) / 1000,
-    );
-
-    return `${text.padEnd(19)}${timeString(currentTime)}`;
-  }
-  return `${' '.repeat(19)}${timeString(currentTime)}`;
-}
-
-function line2DisplayText(
-  lineContent:
-    | {
-        text: {
-          content: string;
-          duration: number;
-        }[];
-        expiration: string;
-      }
-    | undefined,
-  currentTime: number,
-  initialTime: number,
-) {
+): string {
   if (
     lineContent !== undefined &&
     isNotExpired(lineContent.expiration, currentTime)
@@ -285,22 +253,19 @@ class Sign extends React.Component<
               </div>
             )}
           </div>
-          <div className="viewer--sign-lines">
-            <div className="viewer--sign-line">
-              {line1DisplayText(
-                signContent.lines['1'],
-                currentTime,
-                initialTime,
-              )}
-            </div>
-            <div className="viewer--sign-line">
-              {line2DisplayText(
-                signContent.lines['2'],
-                currentTime,
-                initialTime,
-              )}
-            </div>
-          </div>
+          <VirtualSign
+            line1={lineDisplayText(
+              signContent.lines['1'],
+              currentTime,
+              initialTime,
+            )}
+            line2={lineDisplayText(
+              signContent.lines['2'],
+              currentTime,
+              initialTime,
+            )}
+            time={currentTime}
+          />
         </div>
 
         {signConfig.mode === 'static_text' && !readOnly && (
