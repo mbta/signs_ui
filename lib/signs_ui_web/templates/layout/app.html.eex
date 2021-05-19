@@ -10,8 +10,8 @@
     <title>MBTA Realtime Signs</title>
     <link rel="stylesheet" href="<%= static_path(@conn, "/vendor/bootstrap.min.css") %>">
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
-    <%= if record_sentry?() do %>
-      <%= render "_sentry.html", assigns %>
+    <%= if Application.get_env(:sentry, :dsn) do %>
+      <%= render "_sentry.html" %>
     <% end %>
   </head>
 
