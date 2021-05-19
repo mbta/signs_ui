@@ -2,14 +2,24 @@
   margin-bottom: 1rem;
 }
 
+.rc-tabs-nav {
+  line-height: 1.2;
+}
+
 .rc-tabs-nav-list {
   border: 1px solid #ddd;
   display: flex;
 }
 
 .rc-tabs-tab {
-  padding: 1rem;
   cursor: pointer;
+  font-size: 1.25rem;
+  padding: 0.5rem 1rem 0.5rem 1rem;
+  margin-right: 1rem;
+}
+
+.rc-tabs-tab-btn[aria-selected='false'] {
+  color: rgb(151, 151, 151);
 }
 
 .rc-tabs-tab-active {

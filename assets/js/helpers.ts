@@ -1,4 +1,4 @@
-import { RouteAlerts, Alerts } from './types';
+import { RouteAlerts, Alerts, Zone } from './types';
 
 function choosePage(
   pages: { content: string; duration: number }[],
@@ -87,4 +87,22 @@ function formatTime(dtIso8601: string | null): string {
   return `${datePart} @ ${timePart}`;
 }
 
-export { choosePage, alertsForLine, formatTime };
+function defaultZoneLabel(z: Zone): string {
+  /* eslint consistent-return: "off", default-case: "off" -- typescript ensures exhaustive match */
+  switch (z) {
+    case 'c':
+      return 'CP';
+    case 'e':
+      return 'EB';
+    case 'm':
+      return 'MZ';
+    case 'n':
+      return 'NB';
+    case 's':
+      return 'SB';
+    case 'w':
+      return 'WB';
+  }
+}
+
+export { choosePage, alertsForLine, formatTime, defaultZoneLabel };

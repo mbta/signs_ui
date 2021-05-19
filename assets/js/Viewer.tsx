@@ -1,6 +1,13 @@
 import * as React from 'react';
 import Line from './Line';
-import { Alerts, SignContent, ConfiguredHeadways, SignConfigs } from './types';
+import {
+  Alerts,
+  SignContent,
+  ConfiguredHeadways,
+  SignConfigs,
+  SignGroupMap,
+  SignGroup,
+} from './types';
 import { alertsForLine } from './helpers';
 
 interface ViewerProps {
@@ -15,6 +22,8 @@ interface ViewerProps {
   readOnly: boolean;
   chelseaBridgeAnnouncements: 'auto' | 'off';
   setChelseaBridgeAnnouncements: (x: 'auto' | 'off') => void;
+  signGroups: SignGroupMap;
+  setSignGroup: (line: string, ts: number, signGroup: SignGroup) => void;
 }
 
 function Viewer({
@@ -29,6 +38,8 @@ function Viewer({
   setConfiguredHeadways,
   setChelseaBridgeAnnouncements,
   chelseaBridgeAnnouncements,
+  signGroups,
+  setSignGroup,
 }: ViewerProps): JSX.Element {
   return (
     <div>
@@ -43,6 +54,8 @@ function Viewer({
         setConfiguredHeadways={setConfiguredHeadways}
         chelseaBridgeAnnouncements={chelseaBridgeAnnouncements}
         setChelseaBridgeAnnouncements={setChelseaBridgeAnnouncements}
+        signGroups={signGroups}
+        setSignGroup={setSignGroup}
         readOnly={readOnly}
       />
     </div>

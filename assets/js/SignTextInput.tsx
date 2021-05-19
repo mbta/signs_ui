@@ -51,6 +51,7 @@ function SignTextInput({
           size={18}
           value={line1}
           onChange={(evt) => handleInput(evt, onValidLine1Change)}
+          alt="Line one custom text input"
         />
       </div>
       <div>
@@ -62,6 +63,7 @@ function SignTextInput({
           size={24}
           value={line2}
           onChange={(evt) => handleInput(evt, onValidLine2Change)}
+          alt="Line two custom text input"
         />
       </div>
     </div>
