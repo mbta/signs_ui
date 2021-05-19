@@ -1,5 +1,6 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import * as Sentry from '@sentry/react';
 
 import '../css/app.css';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -18,7 +19,16 @@ declare global {
     readOnly: boolean;
     initialChelseaBridgeAnnouncements: 'auto' | 'off';
     initialConfiguredHeadways: ConfiguredHeadways;
+    sentry?: {
+      dsn: string;
+    };
   }
+}
+
+if (window.sentry) {
+  Sentry.init({
+    dsn: window.sentry.dsn,
+  });
 }
 
 const realtimeRoot = document.getElementById('viewer-root');

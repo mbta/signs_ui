@@ -3,8 +3,6 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = function(env) {
-  const production = process.env.NODE_ENV === 'production';
-
   return {
     entry: './js/app.ts',
     output: {
@@ -18,7 +16,12 @@ module.exports = function(env) {
         {
           test: /\.css$/,
           use: [MiniCssExtractPlugin.loader, 'css-loader']
-        }
+        },
+        {
+          test: /\.js$/,
+          enforce: "pre",
+          use: ["source-map-loader"],
+        },
       ],
     },
     resolve: {
