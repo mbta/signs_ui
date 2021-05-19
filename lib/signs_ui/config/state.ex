@@ -6,16 +6,16 @@ defmodule SignsUi.Config.State do
   require Logger
 
   alias SignsUi.Config
+  alias SignsUi.Config.ConfiguredHeadways
+  alias SignsUi.Config.SignGroup
+
+  @type route_id() :: String.t()
 
   @type t :: %{
-          signs: %{
-            Config.Sign.id() => Config.Sign.t()
-          },
-          configured_headways: %{
-            String.t() => %{String.t() => Config.ConfiguredHeadway.t()}
-          },
+          signs: %{Config.Sign.id() => Config.Sign.t()},
+          configured_headways: ConfiguredHeadways.t(),
           chelsea_bridge_announcements: String.t(),
-          sign_groups: map()
+          sign_groups: %{route_id() => SignGroup.t()}
         }
 
   def start_link(opts \\ []) do

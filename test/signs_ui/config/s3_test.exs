@@ -2,6 +2,7 @@ defmodule SignsUi.Config.S3Test do
   use ExUnit.Case, async: true
   import SignsUi.Config.S3
   alias SignsUi.Config.Sign
+  alias SignsUi.Config.SignGroup
 
   describe "update/1" do
     test "sends_update" do
@@ -13,11 +14,11 @@ defmodule SignsUi.Config.S3Test do
         configured_headways: %{},
         chelsea_bridge_announcements: "auto",
         sign_groups: %{
-          "Red" => %{},
-          "Blue" => %{},
-          "Orange" => %{},
-          "Green" => %{},
-          "Mattapan" => %{}
+          "Red" => SignGroup.empty(),
+          "Blue" => SignGroup.empty(),
+          "Orange" => SignGroup.empty(),
+          "Green" => SignGroup.empty(),
+          "Mattapan" => SignGroup.empty()
         }
       }
 

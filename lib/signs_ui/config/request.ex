@@ -8,16 +8,10 @@ defmodule SignsUi.Config.Request do
   alias SignsUi.Config.ConfiguredHeadways
   alias SignsUi.Config.S3
   alias SignsUi.Config.Sign
+  alias SignsUi.Config.SignGroup
+  alias SignsUi.Config.State
 
-  @spec get_state({module(), atom(), []}) ::
-          {:ok,
-           %{
-             signs: %{String.t() => Sign.t()},
-             configured_headways: ConfiguredHeadways.t(),
-             chelsea_bridge_announcements: String.t(),
-             sign_groups: map()
-           }}
-          | {:error, any()}
+  @spec get_state({module(), atom(), []}) :: {:ok, State.t()} | {:error, any()}
   def get_state({mod, fun, args} \\ {S3, :get_object, []}) do
     case apply(mod, fun, args) do
       {:ok, %{body: json}} ->
@@ -29,15 +23,7 @@ defmodule SignsUi.Config.Request do
     end
   end
 
-  @spec parse(String.t()) ::
-          {:ok,
-           %{
-             signs: %{String.t() => Sign.t()},
-             configured_headways: ConfiguredHeadways.t(),
-             chelsea_bridge_announcements: String.t(),
-             sign_groups: map()
-           }}
-          | {:error, any()}
+  @spec parse(String.t()) :: {:ok, State.t()} | {:error, any()}
   defp parse(json) do
     case Jason.decode(json) do
       {:ok, response} ->
@@ -50,11 +36,11 @@ defmodule SignsUi.Config.Request do
 
         sign_groups =
           Map.get(response, "sign_groups", %{
-            "Red" => %{},
-            "Blue" => %{},
-            "Orange" => %{},
-            "Green" => %{},
-            "Mattapan" => %{}
+            "Red" => SignGroup.empty(),
+            "Blue" => SignGroup.empty(),
+            "Orange" => SignGroup.empty(),
+            "Green" => SignGroup.empty(),
+            "Mattapan" => SignGroup.empty()
           })
 
         {:ok,
