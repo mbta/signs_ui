@@ -11,7 +11,11 @@
     <link rel="stylesheet" href="<%= static_path(@conn, "/vendor/bootstrap.min.css") %>">
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
     <%= if Application.get_env(:sentry, :dsn) do %>
-      <%= render "_sentry.html" %>
+      <script>
+        window.sentry = {
+          dsn: "<%= Application.get_env(:sentry, :dsn) %>"
+        }
+      </script>
     <% end %>
   </head>
 

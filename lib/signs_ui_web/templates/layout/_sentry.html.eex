@@ -1,5 +1,0 @@
-<script>
-  window.sentry = {
-    dsn: "<%= Application.get_env(:sentry, :dsn) %>"
-  }
-</script>
