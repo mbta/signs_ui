@@ -113,5 +113,6 @@ export {
   Zone,
   ZoneConfig,
   SignGroupMap,
+  RouteSignGroups,
   SignGroup,
 };

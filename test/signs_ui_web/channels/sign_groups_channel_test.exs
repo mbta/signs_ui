@@ -9,7 +9,7 @@ defmodule SignsUiWeb.SignGroupsChannelTest do
 
   describe "handle_in/3" do
     test "logs changeSignGroups events to console", %{socket: socket} do
-      changes = %{change: "some_change"}
+      changes = %{"route" => "Red", "data" => %{}}
 
       log =
         capture_log([level: :info], fn ->
@@ -17,7 +17,9 @@ defmodule SignsUiWeb.SignGroupsChannelTest do
                    SignsUiWeb.SignGroupsChannel.handle_in("changeSignGroups", changes, socket)
         end)
 
-      assert log =~ "changeSignGroups: %{change: \"some_change\"}"
+      assert log =~ "changeSignGroups: %{"
+      assert log =~ ~s/"route" => "Red"/
+      assert log =~ ~s/"data" => %{}/
     end
   end
 end

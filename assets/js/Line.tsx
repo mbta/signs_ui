@@ -10,6 +10,8 @@ import {
   ConfiguredHeadways,
   SignConfigs,
   StationConfig,
+  SignGroupMap,
+  SignGroup,
 } from './types';
 
 function name(line: string) {
@@ -81,6 +83,8 @@ interface LineProps {
   stationConfigs?: StationConfig[];
   chelseaBridgeAnnouncements: 'auto' | 'off';
   setChelseaBridgeAnnouncements: (x: 'auto' | 'off') => void;
+  signGroups: SignGroupMap;
+  setSignGroup: (line: string, ts: number, signGroup: SignGroup) => void;
 }
 
 function Line({
@@ -96,6 +100,8 @@ function Line({
   chelseaBridgeAnnouncements,
   setChelseaBridgeAnnouncements,
   stationConfigs,
+  signGroups,
+  setSignGroup,
 }: LineProps): JSX.Element {
   const stations: StationConfig[] =
     stationConfigs ||
@@ -126,10 +132,17 @@ function Line({
       <h1>{name(line)}</h1>
       <Tabs defaultActiveKey="0" tabBarStyle={{}}>
         <TabPane tab="Sign Groups">
-          <SignGroups />
+          <SignGroups
+            line={line}
+            currentTime={currentTime}
+            alerts={alerts}
+            signGroups={signGroups[line] || {}}
+            setSignGroup={setSignGroup}
+            readOnly={readOnly}
+          />
         </TabPane>
         {branches.length > 0 && (
-          <TabPane tab="Headways" key="1">
+          <TabPane tab="Set Headways" key="1">
             <ConfiguredHeadwaysForm
               branches={branches}
               configuredHeadways={configuredHeadways}

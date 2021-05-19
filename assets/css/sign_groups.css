@@ -1,0 +1,121 @@
+.sign_groups--container {
+  display: flex;
+}
+
+.sign_groups--container-left {
+  flex: 0 0 auto;
+  min-width: 30rem;
+}
+
+.sign_groups--select_signs-container {
+  background-color: white;
+  max-height: 20rem;
+  overflow: scroll;
+}
+
+.sign_groups--select_signs-header {
+  color: rgb(109, 117, 125);
+  text-transform: uppercase;
+}
+
+.sign_groups--select_signs-row {
+  display: flex;
+  border-bottom: 1px solid #ddd;
+  padding-top: 0.5rem;
+}
+
+.sign_groups--select_signs-left_col {
+  flex: 0 0 auto;
+  padding-left: 1rem;
+  width: 12rem;
+}
+
+.sign_groups--select_signs-right_col {
+  flex: 1 1 auto;
+}
+
+.sign_groups--select_signs-station {
+  font-size: 0.9rem;
+}
+
+.sign_groups--select_signs-zones {
+  display: flex;
+  font-size: 0.8rem;
+  width: 100%;
+}
+
+.sign_groups--select_signs-zone_col-defaults {
+  display: flex;
+  width: 10rem;
+}
+
+.sign_groups--select_signs-zone_col-default {
+  flex: 1 1 33%;
+}
+
+.sign_groups--select_signs-zone_col-named {
+  padding-left: 1rem;
+}
+
+.sign_groups--zone_selector {
+  border: 1px solid rgb(213, 213, 213);
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.sign_groups--zone_selector-selected {
+  background-color: white;
+  border: 1px solid rgb(15, 114, 193);
+  color: rgb(15, 114, 193);
+  font-weight: 600;
+}
+
+.sign_groups--zone_selector:hover {
+  background-color: rgb(213, 213, 213);
+}
+
+.sign_groups--zone_selector input {
+  display: none;
+}
+
+.sign_groups--container-right {
+  flex: 1 1 auto;
+  padding-left: 1rem;
+  overflow-x: scroll;
+}
+
+.sign_groups--custom_message-container {
+  justify-content: space-around;
+  background-color: white;
+  display: flex;
+  margin-bottom: 1rem;
+  padding: 1rem;
+}
+
+.sign_groups--virtual_sign {
+  /* Offset component's own spacing */
+  margin-left: -5rem;
+}
+
+.sign_groups--schedule-container {
+  background-color: white;
+  display: flex;
+  margin-bottom: 1rem;
+  padding: 1rem;
+}
+
+.sign_groups--schedule-date {
+  flex: 0 0 50%;
+}
+
+.sign_groups--schedule-alert {
+  flex: 0 0 50%;
+  border-left: 1px solid #f0f0f0;
+  padding-left: 1rem;
+}
+
+.sign_groups--apply-container {
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 1rem;
+}

@@ -10,6 +10,7 @@ import {
   StationConfig,
   Zone,
 } from './types';
+import { defaultZoneLabel } from './helpers';
 
 /* eslint-disable camelcase */
 
@@ -27,15 +28,7 @@ function zoneDescription(
     return zoneConfig.label;
   }
 
-  const zones = {
-    n: 'NB',
-    s: 'SB',
-    e: 'EB',
-    w: 'WB',
-    m: 'MZ',
-    c: 'CP',
-  };
-  return zones[zone];
+  return defaultZoneLabel(zone);
 }
 
 function makeSign(

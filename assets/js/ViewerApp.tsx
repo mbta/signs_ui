@@ -58,6 +58,7 @@ class ViewerApp extends React.Component<
     this.setChelseaBridgeAnnouncements = this.setChelseaBridgeAnnouncements.bind(
       this,
     );
+    this.setSignGroup = this.setSignGroup.bind(this);
     this.changeLine = this.changeLine.bind(this);
     this.updateTime = this.updateTime.bind(this);
     this.state = {
@@ -123,6 +124,10 @@ class ViewerApp extends React.Component<
       this.setState({ alerts: alertState });
     });
 
+    signGroupsChannel.on('new_sign_groups_state', (signGroupState) => {
+      this.setState({ signGroups: signGroupState });
+    });
+
     signsChannel.on('auth_expired', () => {
       window.location.reload(true);
     });
@@ -180,14 +185,14 @@ class ViewerApp extends React.Component<
     }
   }
 
-  setSignGroup(ts: number, signGroup: SignGroup): void {
+  setSignGroup(line: string, ts: number, signGroup: SignGroup): void {
     const { signGroupsChannel: channel } = this.state;
 
     if (channel) {
-      channel.push('changeSignGroups', { [ts]: signGroup });
-      this.setState((oldState) => ({
-          ...oldState,
-        }));
+      channel.push('changeSignGroups', {
+        route: line,
+        data: { [ts]: signGroup },
+      });
     }
   }
 
@@ -211,6 +216,7 @@ class ViewerApp extends React.Component<
       signConfigs,
       readOnly,
       configuredHeadways,
+      signGroups,
       signOutPath,
       chelseaBridgeAnnouncements,
     } = this.state;
@@ -279,9 +285,11 @@ class ViewerApp extends React.Component<
             alerts={alerts}
             signs={signs}
             signConfigs={signConfigs}
+            setConfigs={this.setConfigs}
             configuredHeadways={configuredHeadways}
             setConfiguredHeadways={this.setConfiguredHeadways}
-            setConfigs={this.setConfigs}
+            signGroups={signGroups}
+            setSignGroup={this.setSignGroup}
             currentTime={currentTime}
             line={line}
             chelseaBridgeAnnouncements={chelseaBridgeAnnouncements}
