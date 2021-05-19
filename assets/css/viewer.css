@@ -34,21 +34,6 @@
   width: 5em;
 }
 
-.viewer--sign-lines {
-  background-color: rgb(45, 45, 45);
-  margin-left: 5em;
-  padding-left: 0.5em;
-}
-
-.viewer--sign-line {
-  color: rgb(251, 220, 75);
-  font-family: monospace;
-  height: 40px;
-  padding-top: 8px;
-  white-space: pre;
-  width: 24ch;
-}
-
 .viewer--static-text-form {
   background-color: rgb(206, 206, 206);
   margin-bottom: 1em;
