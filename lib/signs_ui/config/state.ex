@@ -23,6 +23,7 @@ defmodule SignsUi.Config.State do
     GenServer.start_link(__MODULE__, [], name: name)
   end
 
+  @spec get_all(GenServer.server()) :: t()
   def get_all(pid \\ __MODULE__) do
     GenServer.call(pid, :get_all)
   end

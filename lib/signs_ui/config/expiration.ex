@@ -4,6 +4,7 @@ defmodule SignsUi.Config.Expiration do
   """
   use GenServer
   require Logger
+  alias SignsUi.Config
   alias SignsUi.Config.Sign
 
   @type state :: %{
@@ -39,10 +40,8 @@ defmodule SignsUi.Config.Expiration do
 
   @spec handle_info(:process_expired, state()) :: {:noreply, state()}
   def handle_info(:process_expired, state) do
-    updates =
-      state.sign_state_server
-      |> SignsUi.Config.State.get_all()
-      |> expire_signs(state.time_fetcher, state.alert_fetcher)
+    sign_state = Config.State.get_all(state.sign_state_server)
+    updates = expire_signs(sign_state, state.time_fetcher, state.alert_fetcher)
 
     if updates != %{} do
       Logger.info("Cleaning expired settings for sign IDs: #{inspect(Map.keys(updates))}")
