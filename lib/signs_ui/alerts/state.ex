@@ -57,7 +57,7 @@ defmodule SignsUi.Alerts.State do
 
     # Next, we convert our internal model to the specified format:
     display_state = Display.format_state(new_state)
-    SignsUiWeb.Endpoint.broadcast!("signs:all", "new_alert_state", display_state)
+    SignsUiWeb.Endpoint.broadcast!("alerts:all", "new_alert_state", display_state)
     {:noreply, [], new_state}
   end
 

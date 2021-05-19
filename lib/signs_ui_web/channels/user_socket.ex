@@ -5,6 +5,7 @@ defmodule SignsUiWeb.UserSocket do
   channel("signs:all", SignsUiWeb.SignsChannel)
   channel("headways:all", SignsUiWeb.HeadwaysChannel)
   channel("chelseaBridgeAnnouncements:all", SignsUiWeb.ChelseaBridgeAnnouncementsChannel)
+  channel("alerts:all", SignsUiWeb.AlertsChannel)
 
   # Socket params are passed from the client and can
   # be used to verify and authenticate a user. After

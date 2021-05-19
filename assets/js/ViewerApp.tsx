@@ -32,6 +32,7 @@ class ViewerApp extends React.Component<
     headwaysChannel: null | Channel;
     chelseaBridgeAnnouncementsChannel: null | Channel;
     signGroupsChannel: null | Channel;
+    alertsChannel: null | Channel;
     readOnly: boolean;
     signOutPath: string;
     line?: string;
@@ -60,6 +61,7 @@ class ViewerApp extends React.Component<
       headwaysChannel: null,
       chelseaBridgeAnnouncementsChannel: null,
       signGroupsChannel: null,
+      alertsChannel: null,
       readOnly: props.readOnly,
       signOutPath: props.signOutPath,
       chelseaBridgeAnnouncements:
@@ -80,11 +82,13 @@ class ViewerApp extends React.Component<
       {},
     );
     const signGroupsChannel = socket.channel('signGroups:all', {});
+    const alertsChannel = socket.channel('alerts:all', {});
 
     signsChannel.join().receive('ok', () => true);
     headwaysChannel.join().receive('ok', () => true);
     chelseaBridgeAnnouncementsChannel.join().receive('ok', () => true);
     signGroupsChannel.join().receive('ok', () => true);
+    alertsChannel.join().receive('ok', () => true);
 
     signsChannel.on('sign_update', (sign) => {
       this.setState((prevState) => ({
@@ -103,7 +107,7 @@ class ViewerApp extends React.Component<
       this.setState({ configuredHeadways: state });
     });
 
-    signsChannel.on('new_alert_state', (alertState) => {
+    alertsChannel.on('new_alert_state', (alertState) => {
       this.setState({ alerts: alertState });
     });
 
@@ -116,6 +120,7 @@ class ViewerApp extends React.Component<
       headwaysChannel,
       chelseaBridgeAnnouncementsChannel,
       signGroupsChannel,
+      alertsChannel,
     });
 
     this.timerID = setInterval(() => this.updateTime(), 1000);
