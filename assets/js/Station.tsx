@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Sign from './Sign';
+import SignPanel from './SignPanel';
 import { arincToRealtimeId } from './mbta';
 import {
   RouteAlerts,
@@ -72,7 +72,7 @@ function makeSign(
     const signConfig = signConfigs[realtimeId] || { mode: 'off' };
 
     return (
-      <Sign
+      <SignPanel
         alerts={alerts}
         key={key}
         modes={zoneConfig.modes}

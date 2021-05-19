@@ -96,7 +96,7 @@ function lineDisplayText(
   return '';
 }
 
-interface SignProps {
+interface SignPanelProps {
   alerts: RouteAlerts;
   signId: string | boolean | undefined;
   modes: {
@@ -114,8 +114,8 @@ interface SignProps {
   readOnly: boolean;
 }
 
-class Sign extends React.Component<
-  SignProps,
+class SignPanel extends React.Component<
+  SignPanelProps,
   {
     staticLine1: string;
     staticLine2: string;
@@ -123,7 +123,7 @@ class Sign extends React.Component<
     initialTime: number;
   }
 > {
-  constructor(props: SignProps) {
+  constructor(props: SignPanelProps) {
     super(props);
 
     this.saveStaticText = this.saveStaticText.bind(this);
@@ -285,5 +285,5 @@ class Sign extends React.Component<
   }
 }
 
-export default Sign;
+export default SignPanel;
 export { SignModeOptions };
