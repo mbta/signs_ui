@@ -84,11 +84,13 @@ class ViewerApp extends React.Component<
     const signGroupsChannel = socket.channel('signGroups:all', {});
     const alertsChannel = socket.channel('alerts:all', {});
 
-    signsChannel.join().receive('ok', () => true);
-    headwaysChannel.join().receive('ok', () => true);
-    chelseaBridgeAnnouncementsChannel.join().receive('ok', () => true);
-    signGroupsChannel.join().receive('ok', () => true);
-    alertsChannel.join().receive('ok', () => true);
+    [
+      signsChannel,
+      headwaysChannel,
+      chelseaBridgeAnnouncementsChannel,
+      signGroupsChannel,
+      alertsChannel,
+    ].forEach((channel) => channel.join().receive('ok', () => true));
 
     signsChannel.on('sign_update', (sign) => {
       this.setState((prevState) => ({
