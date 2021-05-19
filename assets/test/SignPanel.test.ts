@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { mount } from 'enzyme';
 
-import Sign, { SignModeOptions } from '../js/Sign';
+import SignPanel, { SignModeOptions } from '../js/SignPanel';
 import { ZoneConfig, SignConfig, SingleSignContent } from '../js/types';
 
 function signContentWithExpirations(
@@ -54,7 +54,7 @@ test('does not show messages that have expired', () => {
 
   const wrapper = mount(
     React.createElement(
-      Sign,
+      SignPanel,
       {
         alerts: {},
         signId,
@@ -100,7 +100,7 @@ test('does not show select in read-only mode', () => {
 
   const wrapper = mount(
     React.createElement(
-      Sign,
+      SignPanel,
       {
         alerts: {},
         modes,
@@ -143,7 +143,7 @@ test('shows the mode the sign is in in read-only mode', () => {
 
   const wrapper = mount(
     React.createElement(
-      Sign,
+      SignPanel,
       {
         alerts: {},
         modes,
@@ -183,7 +183,7 @@ test('does show select when not in read-only mode', () => {
 
   const wrapper = mount(
     React.createElement(
-      Sign,
+      SignPanel,
       {
         alerts: {},
         signId,
@@ -271,7 +271,7 @@ test.each([
 
     const wrapper = mount(
       React.createElement(
-        Sign,
+        SignPanel,
         {
           alerts: {},
           signId,
@@ -316,7 +316,7 @@ test('shows the return to auto time field if sign can be set to auto', () => {
 
   const wrapper = mount(
     React.createElement(
-      Sign,
+      SignPanel,
       {
         alerts: {},
         signId,
@@ -356,7 +356,7 @@ test('does not show the return to auto time field if sign can be set to auto', (
 
   const wrapper = mount(
     React.createElement(
-      Sign,
+      SignPanel,
       {
         alerts: {},
         signId,
@@ -396,7 +396,7 @@ test('shows clock even when no other content is present', () => {
 
   const wrapper = mount(
     React.createElement(
-      Sign,
+      SignPanel,
       {
         alerts: {},
         signId,
