@@ -42,15 +42,6 @@
   width: 20em;
 }
 
-.viewer--line-input {
-  margin-bottom: 0.25em;
-  padding-left: 0.25em;
-}
-
-.viewer--error-text {
-  color: #ff0000;
-}
-
 .react-datepicker__time-list-item {
   font-size: smaller;
 }
