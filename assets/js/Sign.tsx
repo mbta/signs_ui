@@ -7,6 +7,7 @@ import {
   SingleSignContent,
 } from './types';
 import { choosePage } from './helpers';
+import SignTextInput from './SignTextInput';
 import SetExpiration from './SetExpiration';
 import VirtualSign from './VirtualSign';
 
@@ -73,10 +74,6 @@ function shouldShowAlertSelector(line: string): boolean {
   );
 }
 
-function isValidText(text: string) {
-  return !/[^a-zA-Z0-9,/!@' +]/.test(text);
-}
-
 function lineDisplayText(
   lineContent:
     | {
@@ -123,7 +120,6 @@ class Sign extends React.Component<
     staticLine1: string;
     staticLine2: string;
     customChanges: boolean;
-    tipText: boolean;
     initialTime: number;
   }
 > {
@@ -138,36 +134,23 @@ class Sign extends React.Component<
       staticLine1: props.signConfig.line1 || '',
       staticLine2: props.signConfig.line2 || '',
       customChanges: false,
-      tipText: false,
       initialTime: props.currentTime,
     };
   }
 
-  handleInputLine1(evt: React.FormEvent<HTMLInputElement>): void {
-    const text = evt.currentTarget.value;
-
-    if (isValidText(text)) {
-      this.setState({ staticLine1: text, customChanges: true });
-    } else {
-      this.setState({ tipText: true });
-    }
+  handleInputLine1(newText: string): void {
+    this.setState({ staticLine1: newText, customChanges: true });
   }
 
-  handleInputLine2(evt: React.FormEvent<HTMLInputElement>): void {
-    const text = evt.currentTarget.value;
-
-    if (isValidText(text)) {
-      this.setState({ staticLine2: text, customChanges: true });
-    } else {
-      this.setState({ tipText: true });
-    }
+  handleInputLine2(newText: string): void {
+    this.setState({ staticLine2: newText, customChanges: true });
   }
 
   saveStaticText(): void {
     const { signConfig, setConfigs, realtimeId } = this.props;
     const { staticLine1, staticLine2 } = this.state;
 
-    this.setState({ customChanges: false, tipText: false });
+    this.setState({ customChanges: false });
 
     const newConfig: SignConfig = {
       ...signConfig,
@@ -199,13 +182,7 @@ class Sign extends React.Component<
         off: true,
       },
     } = this.props;
-    const {
-      tipText,
-      staticLine1,
-      staticLine2,
-      customChanges,
-      initialTime,
-    } = this.state;
+    const { staticLine1, staticLine2, customChanges, initialTime } = this.state;
 
     return (
       <div>
@@ -235,7 +212,6 @@ class Sign extends React.Component<
                         | 'static_text',
                     );
                     this.setState({
-                      tipText: false,
                       staticLine1: newConfig.line1 || '',
                       staticLine2: newConfig.line2 || '',
                       customChanges: false,
@@ -273,33 +249,13 @@ class Sign extends React.Component<
             <div>
               <strong>Set custom message</strong>
             </div>
-            {tipText && (
-              <small className="viewer--error-text">
-                You may use letters, numbers, and: /,!@&quot;
-              </small>
-            )}
-            <div>
-              <input
-                id={`${realtimeId}-line1-input`}
-                className="viewer--line-input"
-                type="text"
-                maxLength={18}
-                size={18}
-                value={staticLine1}
-                onChange={this.handleInputLine1}
-              />
-            </div>
-            <div>
-              <input
-                id={`${realtimeId}-line2-input`}
-                className="viewer--line-input"
-                type="text"
-                maxLength={24}
-                size={24}
-                value={staticLine2}
-                onChange={this.handleInputLine2}
-              />
-            </div>
+            <SignTextInput
+              signID={realtimeId}
+              line1={staticLine1}
+              line2={staticLine2}
+              onValidLine1Change={this.handleInputLine1}
+              onValidLine2Change={this.handleInputLine2}
+            />
             <div>
               <input
                 className="viewer--apply-button"

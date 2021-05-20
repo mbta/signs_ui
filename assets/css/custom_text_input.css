@@ -1,0 +1,8 @@
+.custom_text_input--line-input {
+  margin-bottom: 0.25em;
+  padding-left: 0.25em;
+}
+
+.custom_text_input--error-text {
+  color: #ff0000;
+}
