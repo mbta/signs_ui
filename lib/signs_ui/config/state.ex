@@ -15,7 +15,7 @@ defmodule SignsUi.Config.State do
           signs: %{Config.Sign.id() => Config.Sign.t()},
           configured_headways: ConfiguredHeadways.t(),
           chelsea_bridge_announcements: String.t(),
-          sign_groups: %{route_id() => SignGroup.t()}
+          sign_groups: %{route_id() => %{String.t() => SignGroup.t()}}
         }
 
   def start_link(opts \\ []) do
