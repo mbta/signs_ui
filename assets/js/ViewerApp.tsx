@@ -2,7 +2,14 @@ import * as React from 'react';
 import { Channel, Socket } from 'phoenix';
 import Viewer from './Viewer';
 import lineToColor from './colors';
-import { SignConfigs, SignContent, ConfiguredHeadways, Alerts } from './types';
+import {
+  SignConfigs,
+  SignContent,
+  ConfiguredHeadways,
+  Alerts,
+  SignGroup,
+  SignGroupMap,
+} from './types';
 
 declare global {
   interface Window {
@@ -15,6 +22,7 @@ interface ViewerAppProps {
   initialSigns: SignContent;
   initialSignConfigs: SignConfigs;
   initialConfiguredHeadways: ConfiguredHeadways;
+  initialSignGroups: SignGroupMap;
   readOnly: boolean;
   signOutPath: string;
   initialChelseaBridgeAnnouncements?: 'auto' | 'off';
@@ -27,6 +35,7 @@ class ViewerApp extends React.Component<
     signs: SignContent;
     signConfigs: SignConfigs;
     configuredHeadways: ConfiguredHeadways;
+    signGroups: SignGroupMap;
     currentTime: number;
     signsChannel: null | Channel;
     headwaysChannel: null | Channel;
@@ -56,6 +65,7 @@ class ViewerApp extends React.Component<
       signs: props.initialSigns,
       signConfigs: props.initialSignConfigs,
       configuredHeadways: props.initialConfiguredHeadways,
+      signGroups: props.initialSignGroups,
       currentTime: Date.now(),
       signsChannel: null,
       headwaysChannel: null,
@@ -167,6 +177,17 @@ class ViewerApp extends React.Component<
       channel.push('changeChelseaBridgeAnnouncements', { mode: state });
 
       this.setState(() => ({ chelseaBridgeAnnouncements: state }));
+    }
+  }
+
+  setSignGroup(ts: number, signGroup: SignGroup): void {
+    const { signGroupsChannel: channel } = this.state;
+
+    if (channel) {
+      channel.push('changeSignGroups', { [ts]: signGroup });
+      this.setState((oldState) => ({
+          ...oldState,
+        }));
     }
   }
 

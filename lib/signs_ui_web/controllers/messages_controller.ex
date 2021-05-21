@@ -29,6 +29,7 @@ defmodule SignsUiWeb.MessagesController do
       end)
 
     chelsea_bridge_announcements = Map.get(config, :chelsea_bridge_announcements, "off")
+    sign_groups = Map.fetch!(config, :sign_groups)
     sign_out_path = SignsUiWeb.Router.Helpers.auth_path(conn, :logout, "cognito")
 
     render(conn, "index.html",
@@ -37,6 +38,7 @@ defmodule SignsUiWeb.MessagesController do
       sign_configs: sign_configs,
       configured_headways: configured_headways,
       chelsea_bridge_announcements: chelsea_bridge_announcements,
+      sign_groups: sign_groups,
       sign_out_path: sign_out_path
     )
   end
