@@ -8,7 +8,13 @@ import './toggle-all';
 import 'phoenix_html';
 
 import ViewerApp from './ViewerApp';
-import { Alerts, ConfiguredHeadways, SignConfigs, SignContent } from './types';
+import {
+  Alerts,
+  ConfiguredHeadways,
+  SignConfigs,
+  SignContent,
+  SignGroupMap,
+} from './types';
 
 declare global {
   interface Window {
@@ -19,6 +25,7 @@ declare global {
     readOnly: boolean;
     initialChelseaBridgeAnnouncements: 'auto' | 'off';
     initialConfiguredHeadways: ConfiguredHeadways;
+    initialSignGroups: SignGroupMap;
     sentry?: {
       dsn: string;
     };
@@ -40,6 +47,7 @@ if (realtimeRoot) {
     initialChelseaBridgeAnnouncements,
     readOnly,
     initialConfiguredHeadways,
+    initialSignGroups,
     signOutPath,
   } = window;
   const viewerApp = React.createElement(
@@ -50,6 +58,7 @@ if (realtimeRoot) {
       initialSignConfigs,
       readOnly,
       initialConfiguredHeadways,
+      initialSignGroups,
       signOutPath,
       initialChelseaBridgeAnnouncements,
     },

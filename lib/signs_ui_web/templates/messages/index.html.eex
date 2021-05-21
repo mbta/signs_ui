@@ -5,10 +5,12 @@
 <% sign_configs = Base.encode64(Jason.encode!(@sign_configs)) %>
 <% configured_headways = Base.encode64(Jason.encode!(@configured_headways)) %>
 <% chelsea_bridge_announcements = Base.encode64(Jason.encode!(@chelsea_bridge_announcements)) %>
+<% sign_groups = Base.encode64(Jason.encode!(@sign_groups)) %>
 
 <script>window.initialAlertsData = JSON.parse(atob("<%= alerts_data %>"))</script>
 <script>window.initialSignsData = JSON.parse(atob("<%= signs_data %>"))</script>
 <script>window.initialSignConfigs = JSON.parse(atob("<%= sign_configs %>"))</script>
 <script>window.initialConfiguredHeadways = JSON.parse(atob("<%= configured_headways %>"))</script>
 <script>window.initialChelseaBridgeAnnouncements = JSON.parse(atob("<%= chelsea_bridge_announcements %>"))</script>
+<script>window.initialSignGroups = JSON.parse(atob("<%= sign_groups %>"))</script>
 <script>window.signOutPath = "<%= @sign_out_path%>"</script>
