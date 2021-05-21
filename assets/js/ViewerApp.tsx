@@ -28,7 +28,11 @@ class ViewerApp extends React.Component<
     signConfigs: SignConfigs;
     configuredHeadways: ConfiguredHeadways;
     currentTime: number;
-    channel: null | Channel;
+    signsChannel: null | Channel;
+    headwaysChannel: null | Channel;
+    chelseaBridgeAnnouncementsChannel: null | Channel;
+    signGroupsChannel: null | Channel;
+    alertsChannel: null | Channel;
     readOnly: boolean;
     signOutPath: string;
     line?: string;
@@ -53,7 +57,11 @@ class ViewerApp extends React.Component<
       signConfigs: props.initialSignConfigs,
       configuredHeadways: props.initialConfiguredHeadways,
       currentTime: Date.now(),
-      channel: null,
+      signsChannel: null,
+      headwaysChannel: null,
+      chelseaBridgeAnnouncementsChannel: null,
+      signGroupsChannel: null,
+      alertsChannel: null,
       readOnly: props.readOnly,
       signOutPath: props.signOutPath,
       chelseaBridgeAnnouncements:
@@ -67,10 +75,24 @@ class ViewerApp extends React.Component<
     });
     socket.connect();
 
-    const channel = socket.channel('signs:all', {});
-    channel.join().receive('ok', () => true);
+    const signsChannel = socket.channel('signs:all', {});
+    const headwaysChannel = socket.channel('headways:all', {});
+    const chelseaBridgeAnnouncementsChannel = socket.channel(
+      'chelseaBridgeAnnouncements:all',
+      {},
+    );
+    const signGroupsChannel = socket.channel('signGroups:all', {});
+    const alertsChannel = socket.channel('alerts:all', {});
 
-    channel.on('sign_update', (sign) => {
+    [
+      signsChannel,
+      headwaysChannel,
+      chelseaBridgeAnnouncementsChannel,
+      signGroupsChannel,
+      alertsChannel,
+    ].forEach((channel) => channel.join().receive('ok', () => true));
+
+    signsChannel.on('sign_update', (sign) => {
       this.setState((prevState) => ({
         signs: {
           ...prevState.signs,
@@ -79,23 +101,29 @@ class ViewerApp extends React.Component<
       }));
     });
 
-    channel.on('new_sign_configs_state', (state) => {
+    signsChannel.on('new_sign_configs_state', (state) => {
       this.setState({ signConfigs: state });
     });
 
-    channel.on('new_configured_headways_state', (state) => {
+    headwaysChannel.on('new_configured_headways_state', (state) => {
       this.setState({ configuredHeadways: state });
     });
 
-    channel.on('new_alert_state', (alertState) => {
+    alertsChannel.on('new_alert_state', (alertState) => {
       this.setState({ alerts: alertState });
     });
 
-    channel.on('auth_expired', () => {
+    signsChannel.on('auth_expired', () => {
       window.location.reload(true);
     });
 
-    this.setState({ channel });
+    this.setState({
+      signsChannel,
+      headwaysChannel,
+      chelseaBridgeAnnouncementsChannel,
+      signGroupsChannel,
+      alertsChannel,
+    });
 
     this.timerID = setInterval(() => this.updateTime(), 1000);
   }
@@ -107,7 +135,7 @@ class ViewerApp extends React.Component<
   }
 
   setConfigs(signConfigs: SignConfigs): void {
-    const { channel } = this.state;
+    const { signsChannel: channel } = this.state;
 
     if (channel) {
       channel.push('changeSigns', signConfigs);
@@ -120,7 +148,7 @@ class ViewerApp extends React.Component<
   }
 
   setConfiguredHeadways(newConfigs: ConfiguredHeadways): void {
-    const { channel, configuredHeadways } = this.state;
+    const { headwaysChannel: channel, configuredHeadways } = this.state;
 
     if (channel) {
       const newConfigsState = { ...configuredHeadways, ...newConfigs };
@@ -133,7 +161,7 @@ class ViewerApp extends React.Component<
   }
 
   setChelseaBridgeAnnouncements(state: 'off' | 'auto'): void {
-    const { channel } = this.state;
+    const { chelseaBridgeAnnouncementsChannel: channel } = this.state;
 
     if (channel) {
       channel.push('changeChelseaBridgeAnnouncements', { mode: state });

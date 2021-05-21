@@ -9,7 +9,7 @@ defmodule SignsUi.Alerts.StateTest do
 
   describe "start_link" do
     test "GenServer runs without crashing" do
-      @endpoint.subscribe("signs:all")
+      @endpoint.subscribe("alerts:all")
 
       {:ok, pid} = SignsUi.Alerts.State.start_link()
 
@@ -54,7 +54,7 @@ defmodule SignsUi.Alerts.StateTest do
         }
       }
 
-      @endpoint.subscribe("signs:all")
+      @endpoint.subscribe("alerts:all")
 
       {:ok, pid} = SignsUi.Alerts.State.start_link()
 
@@ -93,7 +93,7 @@ defmodule SignsUi.Alerts.StateTest do
         }
       }
 
-      @endpoint.subscribe("signs:all")
+      @endpoint.subscribe("alerts:all")
 
       {:ok, pid} = SignsUi.Alerts.State.start_link()
 
@@ -124,7 +124,7 @@ defmodule SignsUi.Alerts.StateTest do
         }
       }
 
-      @endpoint.subscribe("signs:all")
+      @endpoint.subscribe("alerts:all")
 
       {:ok, pid} = SignsUi.Alerts.State.start_link()
 
@@ -152,7 +152,7 @@ defmodule SignsUi.Alerts.StateTest do
         }
       }
 
-      @endpoint.subscribe("signs:all")
+      @endpoint.subscribe("alerts:all")
 
       {:ok, pid} = SignsUi.Alerts.State.start_link()
 
@@ -170,7 +170,7 @@ defmodule SignsUi.Alerts.StateTest do
     end
 
     test "handles two removals" do
-      @endpoint.subscribe("signs:all")
+      @endpoint.subscribe("alerts:all")
 
       {:ok, pid} = SignsUi.Alerts.State.start_link()
 
