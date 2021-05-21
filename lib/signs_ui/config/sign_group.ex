@@ -17,13 +17,19 @@ defmodule SignsUi.Config.SignGroup do
           alert_id: Alert.id() | nil
         }
 
-  def empty do
-    %__MODULE__{
-      sign_ids: [],
-      line1: nil,
-      line2: nil,
-      expires: nil,
-      alert_id: nil
-    }
+  @spec expired?(t(), DateTime.t(), MapSet.t(Alert.id())) :: boolean()
+  def expired?(%{expires: expiration, alert_id: alert_id}, _current_time, _alerts)
+      when is_nil(expiration) and is_nil(alert_id) do
+    false
+  end
+
+  def expired?(%{expires: expiration}, current_time, _alerts)
+      when not is_nil(expiration) do
+    DateTime.compare(current_time, expiration) != :lt
+  end
+
+  def expired?(%{alert_id: alert_id}, _current_time, alerts)
+      when not is_nil(alert_id) do
+    not MapSet.member?(alerts, alert_id)
   end
 end

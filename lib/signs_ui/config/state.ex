@@ -7,15 +7,13 @@ defmodule SignsUi.Config.State do
 
   alias SignsUi.Config
   alias SignsUi.Config.ConfiguredHeadways
-  alias SignsUi.Config.SignGroup
-
-  @type route_id() :: String.t()
+  alias SignsUi.Config.SignGroups
 
   @type t :: %{
           signs: %{Config.Sign.id() => Config.Sign.t()},
           configured_headways: ConfiguredHeadways.t(),
           chelsea_bridge_announcements: String.t(),
-          sign_groups: %{route_id() => %{String.t() => SignGroup.t()}}
+          sign_groups: SignGroups.t()
         }
 
   def start_link(opts \\ []) do

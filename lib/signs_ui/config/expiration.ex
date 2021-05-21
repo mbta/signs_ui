@@ -6,6 +6,7 @@ defmodule SignsUi.Config.Expiration do
   require Logger
   alias SignsUi.Config
   alias SignsUi.Config.Sign
+  alias SignsUi.Config.SignGroups
 
   @type state :: %{
           time_fetcher: (() -> DateTime.t()),
@@ -40,14 +41,19 @@ defmodule SignsUi.Config.Expiration do
 
   @spec handle_info(:process_expired, state()) :: {:noreply, state()}
   def handle_info(:process_expired, state) do
-    sign_state = Config.State.get_all(state.sign_state_server)
-    updates = expire_signs(sign_state, state.time_fetcher, state.alert_fetcher)
+    config_state = Config.State.get_all(state.sign_state_server)
+    sign_updates = expire_signs(config_state, state.time_fetcher, state.alert_fetcher)
 
-    if updates != %{} do
-      Logger.info("Cleaning expired settings for sign IDs: #{inspect(Map.keys(updates))}")
+    active_sign_groups =
+      SignGroups.active(config_state.sign_groups, state.time_fetcher.(), state.alert_fetcher.())
+
+    Logger.info(["active_sign_groups: ", inspect(active_sign_groups)])
+
+    if sign_updates != %{} do
+      Logger.info("Cleaning expired settings for sign IDs: #{inspect(Map.keys(sign_updates))}")
 
       {:ok, _new_state} =
-        SignsUi.Config.State.update_sign_configs(state.sign_state_server, updates)
+        SignsUi.Config.State.update_sign_configs(state.sign_state_server, sign_updates)
     end
 
     schedule_loop(self(), state.loop_ms)
