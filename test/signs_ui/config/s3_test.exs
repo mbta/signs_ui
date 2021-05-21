@@ -14,11 +14,11 @@ defmodule SignsUi.Config.S3Test do
         configured_headways: %{},
         chelsea_bridge_announcements: "auto",
         sign_groups: %{
-          "Red" => SignGroup.empty(),
-          "Blue" => SignGroup.empty(),
-          "Orange" => SignGroup.empty(),
-          "Green" => SignGroup.empty(),
-          "Mattapan" => SignGroup.empty()
+          "Red" => %{},
+          "Blue" => %{},
+          "Orange" => %{},
+          "Green" => %{},
+          "Mattapan" => %{}
         }
       }
 

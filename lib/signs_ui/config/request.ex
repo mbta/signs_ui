@@ -36,11 +36,11 @@ defmodule SignsUi.Config.Request do
 
         sign_groups =
           Map.get(response, "sign_groups", %{
-            "Red" => SignGroup.empty(),
-            "Blue" => SignGroup.empty(),
-            "Orange" => SignGroup.empty(),
-            "Green" => SignGroup.empty(),
-            "Mattapan" => SignGroup.empty()
+            "Red" => %{},
+            "Blue" => %{},
+            "Orange" => %{},
+            "Green" => %{},
+            "Mattapan" => %{}
           })
 
         {:ok,
