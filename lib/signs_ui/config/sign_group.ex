@@ -6,9 +6,8 @@ defmodule SignsUi.Config.SignGroup do
   alias SignsUi.Alerts.Alert
   alias SignsUi.Config.Sign
 
-  @enforce_keys [:sign_ids, :line1, :line2, :expires, :alert_id]
   @derive Jason.Encoder
-  defstruct @enforce_keys
+  defstruct [:line1, :line2, :expires, :alert_id, sign_ids: []]
 
   @type t() :: %__MODULE__{
           sign_ids: [Sign.id()],
