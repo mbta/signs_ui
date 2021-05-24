@@ -19,7 +19,7 @@ defmodule SignsUi.Config.SignGroups do
         {created_at, group} <- groups,
         SignGroup.expired?(group, current_time, alerts),
         reduce: sign_groups do
-      acc -> Map.update(acc, route, nil, &Map.delete(&1, created_at))
+      acc -> acc[route][created_at] |> pop_in() |> elem(1)
     end
   end
 end
