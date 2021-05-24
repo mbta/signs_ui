@@ -1,4 +1,8 @@
 defmodule SignsUi.Config.SignGroups do
+  @moduledoc """
+  Represents the state of all current sign groups.
+  """
+
   alias SignsUi.Alerts.Alert
   alias SignsUi.Config.SignGroup
 
@@ -6,6 +10,9 @@ defmodule SignsUi.Config.SignGroups do
   @type unix_time() :: String.t()
   @type t() :: %{route_id() => %{unix_time() => SignGroup.t()}}
 
+  @doc """
+  Returns all the active (not expired) groups.
+  """
   @spec active(t(), DateTime.t(), MapSet.t(Alert.id())) :: t()
   def active(sign_groups, current_time, alerts) do
     for {route, groups} <- sign_groups,
