@@ -4,6 +4,7 @@ defmodule SignsUiWeb.SignGroupsChannel do
   """
   use Phoenix.Channel
   require Logger
+  import SignsUiWeb.SocketAuth
 
   @impl Phoenix.Channel
   def join("signGroups:all", _message, socket) do
@@ -12,8 +13,12 @@ defmodule SignsUiWeb.SignGroupsChannel do
 
   @impl Phoenix.Channel
   def handle_in("changeSignGroups", changes, socket) do
-    Logger.info(["changeSignGroups: ", inspect(changes), ", from: ", inspect(socket)])
 
-    {:noreply, socket}
+    with_admin_access(socket, fn -> 1
+    Logger.info(
+      ["changeSignGroups: ", inspect(changes), ", from: ", inspect(socket)]
+      )
+    end)
+
   end
 end
