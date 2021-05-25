@@ -82,6 +82,11 @@ defmodule SignsUi.Config.State do
     {:reply, {:ok, new_state}, new_state}
   end
 
+  def handle_call({:update_sign_groups, changes}, _from, old_state) do
+    new_state = save_sign_groups_changes(changes, old_state)
+    {:reply, {:ok, new_state}, new_state}
+  end
+
   @spec save_sign_config_changes(%{Config.Sign.id() => Config.Sign.t()}, t()) :: t()
   defp save_sign_config_changes(changes, %{signs: old_signs} = old_state) do
     signs = Map.merge(old_signs, changes)
@@ -126,6 +131,23 @@ defmodule SignsUi.Config.State do
       "new_chelsea_bridge_announcements_state",
       %{chelsea_bridge_announcements: value}
     )
+
+    new_state
+  end
+
+  defp save_sign_groups_changes(
+         new_sign_groups,
+         old_state
+       ) do
+    new_state = %{old_state | sign_groups: new_sign_groups}
+
+    {:ok, _} = save_state(new_state)
+
+    #SignsUiWeb.Endpoint.broadcast!(
+    #  "headways:all",
+    #  "new_configured_headways_state",
+    #  Config.ConfiguredHeadways.format_configured_headways_for_json(new_configured_headways)
+    #)
 
     new_state
   end
