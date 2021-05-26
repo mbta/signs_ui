@@ -57,7 +57,14 @@ defmodule SignsUi.Config.State do
     GenServer.call(pid, {:update_chelsea_bridge_announcements, changes})
   end
 
-  @spec update_sign_group_changes(GenServer.server(), any) :: any
+  @spec update_sign_group_changes(GenServer.server(),
+          %{
+            String.t() => route_id(),
+            String.t() => %{
+              String.t() => data
+            }
+          }) ::
+          {:ok, t()}
   def update_sign_group_changes(pid \\ __MODULE__, changes) do
     GenServer.call(pid, {:update_sign_group_changes, changes})
   end
