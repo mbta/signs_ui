@@ -13,7 +13,7 @@ defmodule SignsUiWeb.SignGroupsChannel do
 
   @impl Phoenix.Channel
   @spec handle_in(<<_::128>>, any, Phoenix.Socket.t()) ::
-          {:noreply, Phoenix.Socket.t()} | {:stop, :normal, Phoenix.Socket.t()}
+          {:noreply, Phoenix.Socket.t()}
   def handle_in("changeSignGroups", changes, socket) do
 
     with_admin_access(socket, fn ->
@@ -24,7 +24,7 @@ defmodule SignsUiWeb.SignGroupsChannel do
       username = Guardian.Phoenix.Socket.current_resource(socket)
 
       Logger.info(
-        ["changeSignGroups: ", inspect(changes), ", from: ", inspect(socket)]
+        ["sign_groups_changed: user=#{username} changes=#{inspect(changes)}"]
       )
     end)
 
