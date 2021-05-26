@@ -48,6 +48,11 @@ defmodule SignsUi.Config.State do
     GenServer.call(pid, {:update_chelsea_bridge_announcements, changes})
   end
 
+  @spec update_sign_groups(GenServer.server(), SignGroups.t()) :: {:ok, t()}
+  def update_sign_groups(pid \\ __MODULE__, changes) do
+    GenServer.call(pid, {:update_sign_groups, changes})
+  end
+
   @spec init(any()) :: {:ok, t()} | {:stop, any()}
   def init(_) do
     case Config.Request.get_state() do
@@ -78,6 +83,14 @@ defmodule SignsUi.Config.State do
 
   def handle_call({:update_chelsea_bridge_announcements, changes}, _from, old_state) do
     new_state = save_chelsea_bridge_announcements(changes, old_state)
+    {:reply, {:ok, new_state}, new_state}
+  end
+
+  def handle_call({:update_sign_groups, changes}, _from, old_state) do
+    new_state = Map.put(old_state, :sign_groups, changes)
+    {:ok, _} = save_state(new_state)
+
+    SignsUiWeb.Endpoint.broadcast!("sign_groups:all", "new_sign_groups_state", changes)
     {:reply, {:ok, new_state}, new_state}
   end
 

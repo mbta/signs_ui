@@ -44,10 +44,13 @@ defmodule SignsUi.Config.Expiration do
     config_state = Config.State.get_all(state.sign_state_server)
     sign_updates = expire_signs(config_state, state.time_fetcher, state.alert_fetcher)
 
-    active_sign_groups =
+    {active, expired} =
       SignGroups.active(config_state.sign_groups, state.time_fetcher.(), state.alert_fetcher.())
 
-    Logger.info(["active_sign_groups: ", inspect(active_sign_groups)])
+    if expired != [] do
+      Logger.info(["expired_sign_groups: ", inspect(expired)])
+      {:ok, _new_state} = Config.State.update_sign_groups(state.sign_state_server, active)
+    end
 
     if sign_updates != %{} do
       Logger.info("Cleaning expired settings for sign IDs: #{inspect(Map.keys(sign_updates))}")
