@@ -178,4 +178,28 @@ defmodule SignsUi.Config.StateTest do
       })
     end
   end
+
+  describe "update_sign_groups/2" do
+    test "broadcasts updated sign groups" do
+      {:ok, pid} = GenServer.start_link(SignsUi.Config.State, [], [])
+
+      @endpoint.subscribe("sign_groups:all")
+
+      changes = %{
+        "Red" => %{
+          "5555" => %SignsUi.Config.SignGroup{},
+          "1234" => %SignsUi.Config.SignGroup{alert_id: "active_alert"},
+          "55534" => %SignsUi.Config.SignGroup{
+            expires: DateTime.new!(~D[2021-05-21], ~T[17:35:00])
+          }
+        }
+      }
+
+      {:ok, new_state} = update_sign_groups(pid, changes)
+
+      assert new_state.sign_groups == changes
+
+      assert_broadcast("new_sign_groups_state", ^changes)
+    end
+  end
 end
