@@ -57,6 +57,11 @@ defmodule SignsUi.Config.State do
     GenServer.call(pid, {:update_chelsea_bridge_announcements, changes})
   end
 
+  @spec update_sign_group_changes(GenServer.server(), any) :: any
+  def update_sign_group_changes(pid \\ __MODULE__, changes) do
+    GenServer.call(pid, {:update_sign_group_changes, changes})
+  end
+
   @spec init(any()) :: {:ok, t()} | {:stop, any()}
   def init(_) do
     case Config.Request.get_state() do
