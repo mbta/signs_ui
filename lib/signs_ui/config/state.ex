@@ -18,12 +18,13 @@ defmodule SignsUi.Config.State do
           sign_groups: %{
             String.t() => route_id(),
             String.t() => %{
-              String.t() => map()
+              String.t() => data
             }
           }
         }
 
   @type route_id :: String.t()
+  @type data :: map()
 
   def start_link(opts \\ []) do
     name = opts[:name] || __MODULE__
