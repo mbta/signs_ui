@@ -8,7 +8,7 @@ defmodule SignsUi.Config.Request do
   alias SignsUi.Config.ConfiguredHeadways
   alias SignsUi.Config.S3
   alias SignsUi.Config.Sign
-  alias SignsUi.Config.SignGroup
+  alias SignsUi.Config.SignGroups
   alias SignsUi.Config.State
 
   @spec get_state({module(), atom(), []}) :: {:ok, State.t()} | {:error, any()}
@@ -52,7 +52,7 @@ defmodule SignsUi.Config.Request do
            configured_headways:
              ConfiguredHeadways.parse_configured_headways_json(configured_headways),
            chelsea_bridge_announcements: chelsea_bridge_announcements,
-           sign_groups: sign_groups
+           sign_groups: SignGroups.from_json(sign_groups)
          }}
 
       {:error, reason} ->

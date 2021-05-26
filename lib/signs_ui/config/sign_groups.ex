@@ -19,9 +19,16 @@ defmodule SignsUi.Config.SignGroups do
         {created_at, group} <- groups,
         SignGroup.expired?(group, current_time, alerts),
         reduce: {sign_groups, []} do
-      {active, expired} ->
-        {removed, updated} = pop_in(active[route][created_at])
+      {current, expired} ->
+        {removed, updated} = pop_in(current[route][created_at])
         {updated, [removed | expired]}
+    end
+  end
+
+  @spec from_json(%{route_id() => %{unix_time() => %{String.t() => any()}}}) :: t()
+  def from_json(map) do
+    for {route, groups} <- map, into: %{} do
+      {route, Map.new(groups, fn {time, group} -> {time, SignGroup.from_json(group)} end)}
     end
   end
 end

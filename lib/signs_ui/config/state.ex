@@ -87,7 +87,7 @@ defmodule SignsUi.Config.State do
   end
 
   def handle_call({:update_sign_groups, changes}, _from, old_state) do
-    new_state = Map.put(old_state, :sign_groups, changes)
+    new_state = %{old_state | sign_groups: changes}
     {:ok, _} = save_state(new_state)
 
     SignsUiWeb.Endpoint.broadcast!("sign_groups:all", "new_sign_groups_state", changes)

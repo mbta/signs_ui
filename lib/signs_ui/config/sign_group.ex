@@ -3,6 +3,7 @@ defmodule SignsUi.Config.SignGroup do
   Represents a sign group.
   """
 
+  require Logger
   alias SignsUi.Alerts.Alert
   alias SignsUi.Config.Sign
 
@@ -31,5 +32,30 @@ defmodule SignsUi.Config.SignGroup do
   def expired?(%{alert_id: alert_id}, _current_time, alerts)
       when not is_nil(alert_id) do
     not MapSet.member?(alerts, alert_id)
+  end
+
+  @spec from_json(%{String.t() => any()}) :: t()
+  def from_json(map) do
+    %__MODULE__{
+      sign_ids: map["sign_ids"],
+      line1: map["line1"],
+      line2: map["line2"],
+      expires: expiration_from_iso8601(map["expires"]),
+      alert_id: map["alert_id"]
+    }
+  end
+
+  @spec expiration_from_iso8601(String.t() | nil) :: DateTime.t() | nil
+  defp expiration_from_iso8601(nil), do: nil
+
+  defp expiration_from_iso8601(expiration) do
+    case DateTime.from_iso8601(expiration) do
+      {:ok, dt, 0} ->
+        dt
+
+      _ ->
+        Logger.warning("Invalid sign group expiration time #{inspect(expiration)} received.")
+        nil
+    end
   end
 end
