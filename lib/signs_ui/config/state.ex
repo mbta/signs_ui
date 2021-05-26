@@ -15,8 +15,15 @@ defmodule SignsUi.Config.State do
             String.t() => %{String.t() => Config.ConfiguredHeadway.t()}
           },
           chelsea_bridge_announcements: String.t(),
-          sign_groups: map()
+          sign_groups: %{
+            String.t() => route_id(),
+            String.t() => %{
+              String.t() => map()
+            }
+          }
         }
+
+  @type route_id :: String.t()
 
   def start_link(opts \\ []) do
     name = opts[:name] || __MODULE__
