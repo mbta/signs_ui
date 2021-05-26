@@ -43,4 +43,42 @@ defmodule SignsUi.Config.SignGroupTest do
              )
     end
   end
+
+  describe "from_json/1" do
+    test "converts a valid json map into a valid SignGroup struct" do
+      json = %{
+        "sign_ids" => ["a_sign_id", "another_sign_id"],
+        "expires" => "2021-05-15T14:00:00Z",
+        "line1" => "foo",
+        "line2" => "bar",
+        "alert_id" => "active_alert"
+      }
+
+      assert SignGroup.from_json(json) == %SignsUi.Config.SignGroup{
+               alert_id: "active_alert",
+               expires: ~U[2021-05-15 14:00:00Z],
+               line1: "foo",
+               line2: "bar",
+               sign_ids: ["a_sign_id", "another_sign_id"]
+             }
+    end
+
+    test "converts a garbled DateTime to nil and logs the error" do
+      json = %{
+        "sign_ids" => ["a_sign_id", "another_sign_id"],
+        "expires" => "2021-05-114:00:00Z",
+        "line1" => "foo",
+        "line2" => "bar",
+        "alert_id" => "active_alert"
+      }
+
+      assert SignGroup.from_json(json) == %SignsUi.Config.SignGroup{
+               alert_id: "active_alert",
+               expires: nil,
+               line1: "foo",
+               line2: "bar",
+               sign_ids: ["a_sign_id", "another_sign_id"]
+             }
+    end
+  end
 end

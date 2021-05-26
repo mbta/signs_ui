@@ -60,4 +60,26 @@ defmodule SignsUi.Config.SignGroupsTest do
       assert expired == [%SignGroup{expires: DateTime.new!(~D[2021-05-21], ~T[17:30:00])}]
     end
   end
+
+  describe "from_json/1" do
+    test "converts groups into structs" do
+      json = %{
+        "Red" => %{
+          "1234" => %{
+            "sign_ids" => [],
+            "expires" => nil,
+            "line1" => nil,
+            "line2" => nil,
+            "alert_id" => nil
+          }
+        }
+      }
+
+      assert SignGroups.from_json(json) == %{
+               "Red" => %{
+                 "1234" => %SignsUi.Config.SignGroup{}
+               }
+             }
+    end
+  end
 end
