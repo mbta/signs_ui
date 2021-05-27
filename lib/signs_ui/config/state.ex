@@ -87,10 +87,7 @@ defmodule SignsUi.Config.State do
   end
 
   def handle_call({:update_sign_groups, changes}, _from, old_state) do
-    new_state = %{old_state | sign_groups: changes}
-    {:ok, _} = save_state(new_state)
-
-    SignsUiWeb.Endpoint.broadcast!("sign_groups:all", "new_sign_groups_state", changes)
+    new_state = save_sign_group_changes(changes, old_state)
     {:reply, {:ok, new_state}, new_state}
   end
 
@@ -138,6 +135,16 @@ defmodule SignsUi.Config.State do
       "new_chelsea_bridge_announcements_state",
       %{chelsea_bridge_announcements: value}
     )
+
+    new_state
+  end
+
+  @spec save_sign_group_changes(SignGroups.t(), t()) :: t()
+  defp save_sign_group_changes(changes, old_state) do
+    new_state = %{old_state | sign_groups: changes}
+    {:ok, _} = save_state(new_state)
+
+    SignsUiWeb.Endpoint.broadcast!("sign_groups:all", "new_sign_groups_state", changes)
 
     new_state
   end
