@@ -180,36 +180,101 @@ defmodule SignsUi.Config.StateTest do
   end
 
   describe "update_sign_groups/2" do
-    test "broadcasts updated sign groups" do
+    test "broadcasts updated sign groups after expiration" do
       {:ok, pid} = GenServer.start_link(SignsUi.Config.State, [], [])
 
       @endpoint.subscribe("sign_groups:all")
 
-      expired = %{"1222" => %{}, "34334" => %{}}
+      initial_state = %{
+        "1111" => %SignsUi.Config.SignGroup{alert_id: "inactive_alert", route_id: "Red"},
+        "2222" => %SignsUi.Config.SignGroup{
+          route_id: "Red",
+          expires: DateTime.new!(~D[2021-05-21], ~T[17:30:00])
+        }
+      }
+
+      {:ok, _new_state} = update_sign_groups(pid, initial_state)
+
+      expired = %{"1111" => %{}}
 
       {:ok, new_state} = update_sign_groups(pid, expired)
 
       updated_state = %{
-        "5555" => %SignsUi.Config.SignGroup{route_id: "Red"},
-        "1234" => %SignsUi.Config.SignGroup{alert_id: "active_alert", route_id: "Red"},
-        "55534" => %SignsUi.Config.SignGroup{
+        "2222" => %SignsUi.Config.SignGroup{
           route_id: "Red",
-          expires: DateTime.new!(~D[2021-05-21], ~T[17:35:00])
+          expires: DateTime.new!(~D[2021-05-21], ~T[17:30:00])
         }
       }
 
       display_state = %{
         "Red" => %{
-          "5555" => %SignsUi.Config.SignGroup{route_id: "Red"},
-          "1234" => %SignsUi.Config.SignGroup{alert_id: "active_alert", route_id: "Red"},
-          "55534" => %SignsUi.Config.SignGroup{
+          "2222" => %SignsUi.Config.SignGroup{
             route_id: "Red",
-            expires: DateTime.new!(~D[2021-05-21], ~T[17:35:00])
+            expires: DateTime.new!(~D[2021-05-21], ~T[17:30:00])
           }
         }
       }
 
       assert new_state.sign_groups == updated_state
+
+      assert_broadcast("new_sign_groups_state", ^display_state)
+    end
+
+    test "handles sequential updates" do
+      {:ok, pid} = GenServer.start_link(SignsUi.Config.State, [], [])
+
+      @endpoint.subscribe("sign_groups:all")
+
+      initial_state = %{
+        "1111" => %SignsUi.Config.SignGroup{
+          route_id: "Red",
+          sign_ids: ["sign_one", "sign_two"]
+        },
+        "2222" => %SignsUi.Config.SignGroup{
+          route_id: "Green",
+          sign_ids: ["sign_three", "sign_four"]
+        }
+      }
+
+      {:ok, _new_state} = update_sign_groups(pid, initial_state)
+
+      updates = %{
+        "1111" => %{},
+        "3333" => %SignsUi.Config.SignGroup{
+          route_id: "Orange",
+          sign_ids: ["sign_two", "sign_three"]
+        }
+      }
+
+      {:ok, new_state} = update_sign_groups(pid, updates)
+
+      updated_state = %{
+        "2222" => %SignsUi.Config.SignGroup{
+          route_id: "Green",
+          sign_ids: ["sign_four"]
+        },
+        "3333" => %SignsUi.Config.SignGroup{
+          route_id: "Orange",
+          sign_ids: ["sign_two", "sign_three"]
+        }
+      }
+
+      assert new_state.sign_groups == updated_state
+
+      display_state = %{
+        "Green" => %{
+          "2222" => %SignsUi.Config.SignGroup{
+            route_id: "Green",
+            sign_ids: ["sign_four"]
+          }
+        },
+        "Orange" => %{
+          "3333" => %SignsUi.Config.SignGroup{
+            route_id: "Orange",
+            sign_ids: ["sign_two", "sign_three"]
+          }
+        }
+      }
 
       assert_broadcast("new_sign_groups_state", ^display_state)
     end
