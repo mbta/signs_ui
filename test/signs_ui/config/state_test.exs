@@ -185,22 +185,22 @@ defmodule SignsUi.Config.StateTest do
 
       @endpoint.subscribe("sign_groups:all")
 
-      changes = %{
-        "Red" => %{
-          "5555" => %SignsUi.Config.SignGroup{route_id: "Red"},
-          "1234" => %SignsUi.Config.SignGroup{alert_id: "active_alert", route_id: "Red"},
-          "55534" => %SignsUi.Config.SignGroup{
-            route_id: "Red",
-            expires: DateTime.new!(~D[2021-05-21], ~T[17:35:00])
-          }
+      expired = %{"1222" => %{}, "34334" => %{}}
+
+      {:ok, new_state} = update_sign_groups(pid, expired)
+
+      updated_state = %{
+        "5555" => %SignsUi.Config.SignGroup{route_id: "Red"},
+        "1234" => %SignsUi.Config.SignGroup{alert_id: "active_alert", route_id: "Red"},
+        "55534" => %SignsUi.Config.SignGroup{
+          route_id: "Red",
+          expires: DateTime.new!(~D[2021-05-21], ~T[17:35:00])
         }
       }
 
-      {:ok, new_state} = update_sign_groups(pid, changes)
+      assert new_state.sign_groups == updated_state
 
-      assert new_state.sign_groups == changes
-
-      assert_broadcast("new_sign_groups_state", ^changes)
+      assert_broadcast("new_sign_groups_state", ^updated_state)
     end
   end
 end

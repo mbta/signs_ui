@@ -12,16 +12,14 @@ defmodule SignsUi.Config.SignGroups do
   @type display() :: %{route_id() => t()}
 
   @doc """
-  Returns all the active (not expired) groups.
+  Returns a map of expired group timestamps to empty maps.
   """
-  @spec active(t(), DateTime.t(), MapSet.t(Alert.id())) :: {t(), [SignGroup.t()]}
-  def active(sign_groups, current_time, alerts) do
+  @spec expired(t(), DateTime.t(), MapSet.t(Alert.id())) :: t()
+  def expired(sign_groups, current_time, alerts) do
     for {created_at, group} <- sign_groups,
         SignGroup.expired?(group, current_time, alerts),
-        reduce: {sign_groups, []} do
-      {current, expired} ->
-        {removed, updated} = pop_in(current[created_at])
-        {updated, [removed | expired]}
+        into: %{} do
+      {created_at, %{}}
     end
   end
 

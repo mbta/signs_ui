@@ -15,23 +15,14 @@ defmodule SignsUi.Config.SignGroupsTest do
         }
       }
 
-      {active, expired} =
-        SignGroups.active(
+      expired =
+        SignGroups.expired(
           sign_groups,
           DateTime.new!(~D[2021-05-21], ~T[17:32:30]),
           MapSet.new(["active_alert"])
         )
 
-      assert active == %{
-               "5555" => %SignGroup{route_id: "Red"},
-               "1234" => %SignGroup{alert_id: "active_alert", route_id: "Red"},
-               "55534" => %SignGroup{
-                 route_id: "Red",
-                 expires: DateTime.new!(~D[2021-05-21], ~T[17:35:00])
-               }
-             }
-
-      assert expired == [%SignGroup{alert_id: "inactive_alert", route_id: "Red"}]
+      assert expired == %{"5678" => %{}}
     end
 
     test "removes sign groups that expired in the past" do
@@ -48,25 +39,14 @@ defmodule SignsUi.Config.SignGroupsTest do
         }
       }
 
-      {active, expired} =
-        SignGroups.active(
+      expired =
+        SignGroups.expired(
           sign_groups,
           DateTime.new!(~D[2021-05-21], ~T[17:32:30]),
           MapSet.new(["active_alert"])
         )
 
-      assert active == %{
-               "5555" => %SignGroup{route_id: "Red"},
-               "1234" => %SignGroup{alert_id: "active_alert", route_id: "Red"},
-               "55534" => %SignGroup{
-                 route_id: "Red",
-                 expires: DateTime.new!(~D[2021-05-21], ~T[17:35:00])
-               }
-             }
-
-      assert expired == [
-               %SignGroup{expires: DateTime.new!(~D[2021-05-21], ~T[17:30:00]), route_id: "Red"}
-             ]
+      assert expired == %{"34334" => %{}}
     end
   end
 

@@ -140,11 +140,17 @@ defmodule SignsUi.Config.State do
   end
 
   @spec save_sign_group_changes(SignGroups.t(), t()) :: t()
-  defp save_sign_group_changes(changes, old_state) do
-    new_state = %{old_state | sign_groups: changes}
+  defp save_sign_group_changes(removed, old_state) do
+    new_groups =
+      old_state.sign_groups
+      |> Enum.filter(fn {created_at, _group} -> created_at not in Map.keys(removed) end)
+      |> Enum.into(%{})
+
+    new_state = %{old_state | sign_groups: new_groups}
+
     {:ok, _} = save_state(new_state)
 
-    SignsUiWeb.Endpoint.broadcast!("sign_groups:all", "new_sign_groups_state", changes)
+    SignsUiWeb.Endpoint.broadcast!("sign_groups:all", "new_sign_groups_state", new_groups)
 
     new_state
   end
