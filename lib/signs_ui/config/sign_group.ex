@@ -9,10 +9,12 @@ defmodule SignsUi.Config.SignGroup do
 
   @derive Jason.Encoder
   @enforce_keys [:route_id]
-  defstruct [:line1, :line2, :expires, :alert_id, :route_id, sign_ids: []]
+  defstruct @enforce_keys ++ [:line1, :line2, :expires, :alert_id, sign_ids: []]
 
+  @type route_id() :: String.t()
   @type t() :: %__MODULE__{
           sign_ids: [Sign.id()],
+          route_id: route_id(),
           line1: String.t() | nil,
           line2: String.t() | nil,
           expires: DateTime.t() | nil,
@@ -38,7 +40,7 @@ defmodule SignsUi.Config.SignGroup do
   @spec from_json(%{String.t() => any()}) :: t()
   def from_json(map) do
     %__MODULE__{
-      sign_ids: map["sign_ids"],
+      sign_ids: Map.get(map, "sign_ids", []),
       route_id: map["route_id"],
       line1: map["line1"],
       line2: map["line2"],
@@ -52,7 +54,7 @@ defmodule SignsUi.Config.SignGroup do
 
   defp expiration_from_iso8601(expiration) do
     case DateTime.from_iso8601(expiration) do
-      {:ok, dt, 0} ->
+      {:ok, dt, _offset} ->
         dt
 
       _ ->

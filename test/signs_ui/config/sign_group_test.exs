@@ -4,7 +4,7 @@ defmodule SignsUi.Config.SignGroupTest do
 
   describe "expired/3" do
     test "does not expire a sign group without an alert or expiration time" do
-      assert not SignGroup.expired?(
+      refute SignGroup.expired?(
                %SignGroup{route_id: "Red"},
                DateTime.new!(~D[2021-05-21], ~T[17:31:00]),
                MapSet.new(["active_alert"])
@@ -12,7 +12,7 @@ defmodule SignsUi.Config.SignGroupTest do
     end
 
     test "does not expire a sign group with an active alert id" do
-      assert not SignGroup.expired?(
+      refute SignGroup.expired?(
                %SignGroup{alert_id: "active_alert", route_id: "Red"},
                DateTime.new!(~D[2021-05-21], ~T[17:31:00]),
                MapSet.new(["active_alert"])
@@ -20,7 +20,7 @@ defmodule SignsUi.Config.SignGroupTest do
     end
 
     test "does not expire a sign group with future expiration" do
-      assert not SignGroup.expired?(
+      refute SignGroup.expired?(
                %SignGroup{expires: DateTime.new!(~D[2021-05-21], ~T[17:35:00]), route_id: "Red"},
                DateTime.new!(~D[2021-05-21], ~T[17:31:00]),
                MapSet.new()

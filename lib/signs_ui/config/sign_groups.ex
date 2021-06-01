@@ -6,10 +6,9 @@ defmodule SignsUi.Config.SignGroups do
   alias SignsUi.Alerts.Alert
   alias SignsUi.Config.SignGroup
 
-  @type route_id() :: String.t()
   @type unix_time() :: String.t()
   @type t() :: %{unix_time() => SignGroup.t() | %{}}
-  @type by_route() :: %{route_id() => t()}
+  @type by_route() :: %{SignGroup.route_id() => t()}
 
   @doc """
   Returns a map of expired group timestamps to empty maps.
@@ -24,25 +23,26 @@ defmodule SignsUi.Config.SignGroups do
   end
 
   @spec from_json(t()) :: t()
-  def from_json(groups) do
-    Map.new(groups, fn {time, group} -> {time, SignGroup.from_json(group)} end)
+  def from_json(sign_groups) do
+    Map.new(sign_groups, fn {time, group} -> {time, SignGroup.from_json(group)} end)
   end
 
   @spec by_route(t()) :: by_route()
-  def by_route(groups) do
-    groups
-    |> Enum.group_by(fn {_created_at, %SignGroup{route_id: route_id}} -> route_id end)
-    |> Enum.map(fn {route_id, groups} -> {route_id, Map.new(groups)} end)
-    |> Enum.into(%{})
+  def by_route(sign_groups) do
+    Enum.reduce(sign_groups, %{}, fn {time, group}, acc ->
+      Map.update(acc, group.route_id, %{time => group}, &Map.put(&1, time, group))
+    end)
   end
 
   @spec update({unix_time(), SignGroup.t() | %{}}, t()) :: t()
-  def update({created_at, map}, groups) when map == %{}, do: Map.delete(groups, created_at)
+  def update({created_at, map}, sign_groups) when map == %{} do
+    Map.delete(sign_groups, created_at)
+  end
 
-  def update({created_at, %SignGroup{sign_ids: new_sign_ids} = group}, groups) do
-    groups
+  def update({created_at, %SignGroup{sign_ids: new_sign_ids} = group}, sign_groups) do
+    sign_groups
     |> Enum.map(fn {created_at, %SignGroup{sign_ids: sign_ids} = group} ->
-      {created_at, %{group | sign_ids: Enum.filter(sign_ids, &(&1 not in new_sign_ids))}}
+      {created_at, %{group | sign_ids: Enum.reject(sign_ids, &(&1 in new_sign_ids))}}
     end)
     |> Enum.into(%{})
     |> Map.put(created_at, group)
