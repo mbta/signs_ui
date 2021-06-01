@@ -35,4 +35,16 @@ defmodule SignsUi.Config.SignGroups do
     |> Enum.map(fn {route_id, groups} -> {route_id, Map.new(groups)} end)
     |> Enum.into(%{})
   end
+
+  @spec update(t(), {unix_time(), SignGroup.t() | %{}}) :: t()
+  def update(groups, {created_at, map}) when map == %{}, do: Map.delete(groups, created_at)
+
+  def update(groups, {created_at, %SignGroup{sign_ids: new_sign_ids} = group}) do
+    groups
+    |> Enum.map(fn {created_at, %SignGroup{sign_ids: sign_ids} = group} ->
+      {created_at, %{group | sign_ids: Enum.filter(sign_ids, &(&1 not in new_sign_ids))}}
+    end)
+    |> Enum.into(%{})
+    |> Map.put(created_at, group)
+  end
 end
