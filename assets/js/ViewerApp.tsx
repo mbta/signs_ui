@@ -185,13 +185,13 @@ class ViewerApp extends React.Component<
     }
   }
 
-  setSignGroup(line: string, ts: number, signGroup: SignGroup): void {
+  setSignGroup(line: string, timestamp: number, signGroup: SignGroup): void {
     const { signGroupsChannel: channel } = this.state;
 
     if (channel) {
       channel.push('changeSignGroups', {
         route: line,
-        data: { [ts]: signGroup },
+        data: { [timestamp]: signGroup },
       });
     }
   }
