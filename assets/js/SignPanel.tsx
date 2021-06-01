@@ -229,19 +229,21 @@ class SignPanel extends React.Component<
               </div>
             )}
           </div>
-          <VirtualSign
-            line1={lineDisplayText(
-              signContent.lines['1'],
-              currentTime,
-              initialTime,
-            )}
-            line2={lineDisplayText(
-              signContent.lines['2'],
-              currentTime,
-              initialTime,
-            )}
-            time={currentTime}
-          />
+          <div className="viewer--virtual_sign">
+            <VirtualSign
+              line1={lineDisplayText(
+                signContent.lines['1'],
+                currentTime,
+                initialTime,
+              )}
+              line2={lineDisplayText(
+                signContent.lines['2'],
+                currentTime,
+                initialTime,
+              )}
+              time={currentTime}
+            />
+          </div>
         </div>
 
         {signConfig.mode === 'static_text' && !readOnly && (

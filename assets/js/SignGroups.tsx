@@ -237,7 +237,7 @@ function SignGroupsForm({
                   onValidLine2Change={setLine2}
                 />
               </div>
-              <div className="sign_groups--virtual_sign">
+              <div>
                 <VirtualSign line1={line1} line2={line2} time={currentTime} />
               </div>
             </div>
