@@ -78,7 +78,7 @@ interface SignGroupsFormProps {
   line: string;
   currentTime: number;
   alerts: RouteAlerts;
-  setSignGroup: (line: string, ts: number, signGroup: SignGroup) => void;
+  setSignGroup: (line: string, timestamp: number, signGroup: SignGroup) => void;
   readOnly: boolean;
 }
 
@@ -315,7 +315,7 @@ interface SignGroupsProps {
   currentTime: number;
   alerts: RouteAlerts;
   signGroups: RouteSignGroups;
-  setSignGroup: (line: string, ts: number, signGroup: SignGroup) => void;
+  setSignGroup: (line: string, timestamp: number, signGroup: SignGroup) => void;
   readOnly: boolean;
 }
 
@@ -329,9 +329,9 @@ function SignGroups({
 }: SignGroupsProps): JSX.Element | null {
   const [isFormOpen, setIsFormOpen] = React.useState(false);
   const setSignGroupAndClose = React.useCallback(
-    (setLine: string, ts: number, signGroup: SignGroup) => {
+    (setLine: string, timestamp: number, signGroup: SignGroup) => {
       setIsFormOpen(false);
-      setSignGroup(setLine, ts, signGroup);
+      setSignGroup(setLine, timestamp, signGroup);
     },
     [setSignGroup, setIsFormOpen],
   );

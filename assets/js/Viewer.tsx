@@ -23,7 +23,7 @@ interface ViewerProps {
   chelseaBridgeAnnouncements: 'auto' | 'off';
   setChelseaBridgeAnnouncements: (x: 'auto' | 'off') => void;
   signGroups: SignGroupMap;
-  setSignGroup: (line: string, ts: number, signGroup: SignGroup) => void;
+  setSignGroup: (line: string, timestamp: number, signGroup: SignGroup) => void;
 }
 
 function Viewer({

@@ -29,7 +29,7 @@ function applyForm() {
 test('can create a sign group', () => {
   let signGroupSubmissions: Array<{
     line: string;
-    ts: number;
+    timestamp: number;
     signGroup: SignGroup;
   }> = [];
 
@@ -48,8 +48,8 @@ test('can create a sign group', () => {
         },
       },
       signGroups: {},
-      setSignGroup: (line: string, ts: number, signGroup: SignGroup) => {
-        signGroupSubmissions.push({ line, ts, signGroup });
+      setSignGroup: (line: string, timestamp: number, signGroup: SignGroup) => {
+        signGroupSubmissions.push({ line, timestamp, signGroup });
       },
       readOnly: false,
     }),
@@ -64,7 +64,7 @@ test('can create a sign group', () => {
   expect(signGroupSubmissions).toEqual([
     {
       line,
-      ts: currentTime,
+      timestamp: currentTime,
       signGroup: {
         sign_ids: [
           'south_station_silver_line_arrival_platform',
