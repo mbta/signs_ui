@@ -88,7 +88,6 @@ function formatTime(dtIso8601: string | null): string {
 }
 
 function defaultZoneLabel(z: Zone): string {
-  /* eslint consistent-return: "off", default-case: "off" -- typescript ensures exhaustive match */
   switch (z) {
     case 'c':
       return 'CP';

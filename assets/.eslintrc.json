@@ -53,6 +53,8 @@
            "ts": "never",
            "tsx": "never"
          }
-      ]
+      ],
+      "consistent-return": "off",
+      "default-case": "off"
    }
 }
