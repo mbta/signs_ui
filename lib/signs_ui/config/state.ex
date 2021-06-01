@@ -21,17 +21,26 @@ defmodule SignsUi.Config.State do
     GenServer.start_link(__MODULE__, [], name: name)
   end
 
+  @doc """
+  Gets all the current state.
+  """
   @spec get_all(GenServer.server()) :: t()
   def get_all(pid \\ __MODULE__) do
     GenServer.call(pid, :get_all)
   end
 
+  @doc """
+  Updates the state with new sign configurations by merging them in.
+  """
   @spec update_sign_configs(GenServer.server(), %{Config.Sign.id() => Config.Sign.t()}) ::
           {:ok, t()}
   def update_sign_configs(pid \\ __MODULE__, changes) do
     GenServer.call(pid, {:update_sign_configs, changes})
   end
 
+  @doc """
+  Sets configured headways to the provided value.
+  """
   @spec update_configured_headways(GenServer.server(), %{
           String.t() => Config.ConfiguredHeadway.t()
         }) ::
@@ -40,6 +49,9 @@ defmodule SignsUi.Config.State do
     GenServer.call(pid, {:update_configured_headways, changes})
   end
 
+  @doc """
+  Sets Chelsea Bridge announcements to the provided value.
+  """
   @spec update_chelsea_bridge_announcements(GenServer.server(), %{
           String.t() => String.t()
         }) ::
@@ -48,6 +60,9 @@ defmodule SignsUi.Config.State do
     GenServer.call(pid, {:update_chelsea_bridge_announcements, changes})
   end
 
+  @doc """
+  Applies the given SignGroups changes (inserts, updates, and deletes).
+  """
   @spec update_sign_groups(GenServer.server(), SignGroups.t()) :: {:ok, t()}
   def update_sign_groups(pid \\ __MODULE__, changes) do
     GenServer.call(pid, {:update_sign_groups, changes})
