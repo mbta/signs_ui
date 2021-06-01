@@ -68,4 +68,34 @@ defmodule SignsUi.Config.SignGroupsTest do
              }
     end
   end
+
+  describe "by_route/1" do
+    test "groups sign groups by route" do
+      state = %{
+        "1234" => %SignGroup{route_id: "Red"},
+        "5678" => %SignGroup{route_id: "Red"},
+        "4321" => %SignGroup{route_id: "Green"},
+        "8765" => %SignGroup{route_id: "Green"},
+        "9012" => %SignGroup{route_id: "Orange"},
+        "3456" => %SignGroup{route_id: "Orange"},
+        "7890" => %SignGroup{route_id: "Mattapan"}
+      }
+
+      assert SignGroups.by_route(state) == %{
+               "Red" => %{
+                 "1234" => %SignGroup{route_id: "Red"},
+                 "5678" => %SignGroup{route_id: "Red"}
+               },
+               "Green" => %{
+                 "4321" => %SignGroup{route_id: "Green"},
+                 "8765" => %SignGroup{route_id: "Green"}
+               },
+               "Orange" => %{
+                 "9012" => %SignGroup{route_id: "Orange"},
+                 "3456" => %SignGroup{route_id: "Orange"}
+               },
+               "Mattapan" => %{"7890" => %SignGroup{route_id: "Mattapan"}}
+             }
+    end
+  end
 end

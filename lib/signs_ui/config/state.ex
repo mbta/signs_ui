@@ -150,7 +150,11 @@ defmodule SignsUi.Config.State do
 
     {:ok, _} = save_state(new_state)
 
-    SignsUiWeb.Endpoint.broadcast!("sign_groups:all", "new_sign_groups_state", new_groups)
+    SignsUiWeb.Endpoint.broadcast!(
+      "sign_groups:all",
+      "new_sign_groups_state",
+      SignGroups.by_route(new_groups)
+    )
 
     new_state
   end

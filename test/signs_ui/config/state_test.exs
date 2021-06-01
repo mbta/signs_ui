@@ -198,9 +198,20 @@ defmodule SignsUi.Config.StateTest do
         }
       }
 
+      display_state = %{
+        "Red" => %{
+          "5555" => %SignsUi.Config.SignGroup{route_id: "Red"},
+          "1234" => %SignsUi.Config.SignGroup{alert_id: "active_alert", route_id: "Red"},
+          "55534" => %SignsUi.Config.SignGroup{
+            route_id: "Red",
+            expires: DateTime.new!(~D[2021-05-21], ~T[17:35:00])
+          }
+        }
+      }
+
       assert new_state.sign_groups == updated_state
 
-      assert_broadcast("new_sign_groups_state", ^updated_state)
+      assert_broadcast("new_sign_groups_state", ^display_state)
     end
   end
 end
