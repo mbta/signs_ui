@@ -92,11 +92,6 @@
   padding: 1rem;
 }
 
-.sign_groups--virtual_sign {
-  /* Offset component's own spacing */
-  margin-left: -5rem;
-}
-
 .sign_groups--schedule-container {
   background-color: white;
   display: flex;
