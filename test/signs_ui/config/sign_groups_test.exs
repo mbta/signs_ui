@@ -103,7 +103,7 @@ defmodule SignsUi.Config.SignGroupsTest do
     test "removes a deleted group" do
       groups = %{"1234" => %SignGroup{route_id: "Red"}, "5678" => %SignGroup{route_id: "Green"}}
 
-      assert SignGroups.update(groups, {"1234", %{}}) == %{
+      assert SignGroups.update({"1234", %{}}, groups) == %{
                "5678" => %SignGroup{route_id: "Green"}
              }
     end
@@ -115,8 +115,8 @@ defmodule SignsUi.Config.SignGroupsTest do
       }
 
       assert SignGroups.update(
-               groups,
-               {"9012", %SignGroup{sign_ids: ["sign_one", "sign_four"], route_id: "Green"}}
+               {"9012", %SignGroup{sign_ids: ["sign_one", "sign_four"], route_id: "Green"}},
+               groups
              ) == %{
                "1234" => %SignGroup{sign_ids: ["sign_two"], route_id: "Red"},
                "5678" => %SignGroup{sign_ids: ["sign_three"], route_id: "Green"},

@@ -140,11 +140,8 @@ defmodule SignsUi.Config.State do
   end
 
   @spec save_sign_group_changes(SignGroups.t(), t()) :: t()
-  defp save_sign_group_changes(removed, old_state) do
-    new_groups =
-      old_state.sign_groups
-      |> Enum.filter(fn {created_at, _group} -> created_at not in Map.keys(removed) end)
-      |> Enum.into(%{})
+  defp save_sign_group_changes(changes, old_state) do
+    new_groups = Enum.reduce(changes, old_state.sign_groups, &SignGroups.update/2)
 
     new_state = %{old_state | sign_groups: new_groups}
 
