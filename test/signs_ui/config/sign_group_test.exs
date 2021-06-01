@@ -5,7 +5,7 @@ defmodule SignsUi.Config.SignGroupTest do
   describe "expired/3" do
     test "does not expire a sign group without an alert or expiration time" do
       assert not SignGroup.expired?(
-               %SignGroup{},
+               %SignGroup{route_id: "Red"},
                DateTime.new!(~D[2021-05-21], ~T[17:31:00]),
                MapSet.new(["active_alert"])
              )
@@ -13,7 +13,7 @@ defmodule SignsUi.Config.SignGroupTest do
 
     test "does not expire a sign group with an active alert id" do
       assert not SignGroup.expired?(
-               %SignGroup{alert_id: "active_alert"},
+               %SignGroup{alert_id: "active_alert", route_id: "Red"},
                DateTime.new!(~D[2021-05-21], ~T[17:31:00]),
                MapSet.new(["active_alert"])
              )
@@ -21,7 +21,7 @@ defmodule SignsUi.Config.SignGroupTest do
 
     test "does not expire a sign group with future expiration" do
       assert not SignGroup.expired?(
-               %SignGroup{expires: DateTime.new!(~D[2021-05-21], ~T[17:35:00])},
+               %SignGroup{expires: DateTime.new!(~D[2021-05-21], ~T[17:35:00]), route_id: "Red"},
                DateTime.new!(~D[2021-05-21], ~T[17:31:00]),
                MapSet.new()
              )
@@ -29,7 +29,7 @@ defmodule SignsUi.Config.SignGroupTest do
 
     test "expires a sign group with an inactive alert id" do
       assert SignGroup.expired?(
-               %SignGroup{alert_id: "active_alert"},
+               %SignGroup{alert_id: "active_alert", route_id: "Red"},
                DateTime.new!(~D[2021-05-21], ~T[17:31:00]),
                MapSet.new()
              )
@@ -37,7 +37,7 @@ defmodule SignsUi.Config.SignGroupTest do
 
     test "expires a sign group with a past expiration" do
       assert SignGroup.expired?(
-               %SignGroup{expires: DateTime.new!(~D[2021-05-21], ~T[17:30:00])},
+               %SignGroup{expires: DateTime.new!(~D[2021-05-21], ~T[17:30:00]), route_id: "Red"},
                DateTime.new!(~D[2021-05-21], ~T[17:31:00]),
                MapSet.new()
              )
@@ -48,6 +48,7 @@ defmodule SignsUi.Config.SignGroupTest do
     test "converts a valid json map into a valid SignGroup struct" do
       json = %{
         "sign_ids" => ["a_sign_id", "another_sign_id"],
+        "route_id" => "Red",
         "expires" => "2021-05-15T14:00:00Z",
         "line1" => "foo",
         "line2" => "bar",
@@ -56,6 +57,7 @@ defmodule SignsUi.Config.SignGroupTest do
 
       assert SignGroup.from_json(json) == %SignsUi.Config.SignGroup{
                alert_id: "active_alert",
+               route_id: "Red",
                expires: ~U[2021-05-15 14:00:00Z],
                line1: "foo",
                line2: "bar",
@@ -66,6 +68,7 @@ defmodule SignsUi.Config.SignGroupTest do
     test "converts a garbled DateTime to nil and logs the error" do
       json = %{
         "sign_ids" => ["a_sign_id", "another_sign_id"],
+        "route_id" => "Red",
         "expires" => "2021-05-114:00:00Z",
         "line1" => "foo",
         "line2" => "bar",
@@ -74,6 +77,7 @@ defmodule SignsUi.Config.SignGroupTest do
 
       assert SignGroup.from_json(json) == %SignsUi.Config.SignGroup{
                alert_id: "active_alert",
+               route_id: "Red",
                expires: nil,
                line1: "foo",
                line2: "bar",

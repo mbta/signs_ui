@@ -50,13 +50,15 @@ defmodule SignsUi.Mock.AwsRequest do
       "chelsea_bridge_announcements" => "auto",
       "sign_groups" => %{
         "Red" => %{
-          "5555" => %SignsUi.Config.SignGroup{},
-          "1234" => %SignsUi.Config.SignGroup{alert_id: "active_alert"},
-          "1222" => %SignsUi.Config.SignGroup{alert_id: "inactive_alert"},
+          "5555" => %SignsUi.Config.SignGroup{route_id: "Red"},
+          "1234" => %SignsUi.Config.SignGroup{alert_id: "active_alert", route_id: "Red"},
+          "1222" => %SignsUi.Config.SignGroup{alert_id: "inactive_alert", route_id: "Red"},
           "55534" => %SignsUi.Config.SignGroup{
+            route_id: "Red",
             expires: DateTime.new!(~D[2021-05-21], ~T[17:35:00])
           },
           "34334" => %SignsUi.Config.SignGroup{
+            route_id: "Red",
             expires: DateTime.new!(~D[2021-05-21], ~T[17:30:00])
           }
         }

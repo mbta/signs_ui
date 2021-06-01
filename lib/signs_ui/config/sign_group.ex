@@ -8,7 +8,8 @@ defmodule SignsUi.Config.SignGroup do
   alias SignsUi.Config.Sign
 
   @derive Jason.Encoder
-  defstruct [:line1, :line2, :expires, :alert_id, sign_ids: []]
+  @enforce_keys [:route_id]
+  defstruct [:line1, :line2, :expires, :alert_id, :route_id, sign_ids: []]
 
   @type t() :: %__MODULE__{
           sign_ids: [Sign.id()],
@@ -38,6 +39,7 @@ defmodule SignsUi.Config.SignGroup do
   def from_json(map) do
     %__MODULE__{
       sign_ids: map["sign_ids"],
+      route_id: map["route_id"],
       line1: map["line1"],
       line2: map["line2"],
       expires: expiration_from_iso8601(map["expires"]),
