@@ -10,23 +10,19 @@ function padToClock(text: string, currentTime: number): string {
   return `${text.padEnd(19)}${timeString(currentTime)}`;
 }
 
-interface VirtualSignProps {
+interface SignTextProps {
   time: number;
   line1: string;
   line2: string;
 }
 
-function VirtualSign({
-  time,
-  line1,
-  line2,
-}: VirtualSignProps): JSX.Element | null {
+function SignText({ time, line1, line2 }: SignTextProps): JSX.Element | null {
   return (
-    <div className="virtual_sign--container">
-      <div className="virtual_sign--line">{padToClock(line1, time)}</div>
-      <div className="virtual_sign--line">{line2}</div>
+    <div className="sign_text--container">
+      <div className="sign_text--line">{padToClock(line1, time)}</div>
+      <div className="sign_text--line">{line2}</div>
     </div>
   );
 }
 
-export default VirtualSign;
+export default SignText;
