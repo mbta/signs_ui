@@ -5,7 +5,7 @@ defmodule SignsUi.Config.ExpirationTest do
   alias SignsUi.Signs.Sign
   alias SignsUi.Config.Sign
 
-  describe "expire_signs/2" do
+  describe "expire_signs/3" do
     test "produces correct updates when times expire" do
       {:ok, time1, 0} = DateTime.from_iso8601("2019-01-15T12:00:00Z")
       {:ok, time2, 0} = DateTime.from_iso8601("2019-01-15T14:00:00Z")
@@ -57,9 +57,7 @@ defmodule SignsUi.Config.ExpirationTest do
                fn -> MapSet.new([]) end
              ) == expected_updates
     end
-  end
 
-  describe "expire_signs_via_alert/2" do
     test "produces correct updates when alerts expire" do
       sign_state = %{
         signs: %{
@@ -203,6 +201,55 @@ defmodule SignsUi.Config.ExpirationTest do
       assert new_state.signs["harvard_northbound"].config.mode == :auto
       assert new_state.signs["harvard_southbound"].config.mode == :static_text
       assert new_state.signs["central_southbound"].config.mode == :static_text
+    end
+
+    test "only removes expired sign groups" do
+      {:ok, pid} = SignsUi.Config.State.start_link(name: :sign_state_test)
+
+      SignsUi.Config.State.update_sign_groups(pid, %{
+        "1111" => %SignsUi.Config.SignGroup{alert_id: "inactive_alert", route_id: "Red"},
+        "2222" => %SignsUi.Config.SignGroup{
+          route_id: "Red",
+          expires: DateTime.new!(~D[2021-05-21], ~T[17:30:00])
+        },
+        "3333" => %SignsUi.Config.SignGroup{
+          route_id: "Red",
+          expires: DateTime.new!(~D[2021-05-21], ~T[17:35:00])
+        },
+        "4444" => %SignsUi.Config.SignGroup{
+          route_id: "Red",
+          alert_id: "active_alert"
+        }
+      })
+
+      state = %{
+        time_fetcher: fn ->
+          DateTime.new!(~D[2021-05-21], ~T[17:32:00])
+        end,
+        loop_ms: 5_000,
+        sign_state_server: :sign_state_test,
+        alert_fetcher: fn -> MapSet.new(["active_alert"]) end
+      }
+
+      log =
+        capture_log([level: :info], fn ->
+          {:noreply, _state} = SignsUi.Config.Expiration.handle_info(:process_expired, state)
+        end)
+
+      assert log =~ "expired_sign_groups"
+
+      new_state = SignsUi.Config.State.get_all(:sign_state_test)
+
+      assert new_state.sign_groups == %{
+               "3333" => %SignsUi.Config.SignGroup{
+                 route_id: "Red",
+                 expires: DateTime.new!(~D[2021-05-21], ~T[17:35:00])
+               },
+               "4444" => %SignsUi.Config.SignGroup{
+                 route_id: "Red",
+                 alert_id: "active_alert"
+               }
+             }
     end
   end
 end

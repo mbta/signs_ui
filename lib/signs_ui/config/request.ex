@@ -8,16 +8,10 @@ defmodule SignsUi.Config.Request do
   alias SignsUi.Config.ConfiguredHeadways
   alias SignsUi.Config.S3
   alias SignsUi.Config.Sign
+  alias SignsUi.Config.SignGroups
+  alias SignsUi.Config.State
 
-  @spec get_state({module(), atom(), []}) ::
-          {:ok,
-           %{
-             signs: %{String.t() => Sign.t()},
-             configured_headways: ConfiguredHeadways.t(),
-             chelsea_bridge_announcements: String.t(),
-             sign_groups: map()
-           }}
-          | {:error, any()}
+  @spec get_state({module(), atom(), []}) :: {:ok, State.t()} | {:error, any()}
   def get_state({mod, fun, args} \\ {S3, :get_object, []}) do
     case apply(mod, fun, args) do
       {:ok, %{body: json}} ->
@@ -29,15 +23,7 @@ defmodule SignsUi.Config.Request do
     end
   end
 
-  @spec parse(String.t()) ::
-          {:ok,
-           %{
-             signs: %{String.t() => Sign.t()},
-             configured_headways: ConfiguredHeadways.t(),
-             chelsea_bridge_announcements: String.t(),
-             sign_groups: map()
-           }}
-          | {:error, any()}
+  @spec parse(String.t()) :: {:ok, State.t()} | {:error, any()}
   defp parse(json) do
     case Jason.decode(json) do
       {:ok, response} ->
@@ -66,7 +52,7 @@ defmodule SignsUi.Config.Request do
            configured_headways:
              ConfiguredHeadways.parse_configured_headways_json(configured_headways),
            chelsea_bridge_announcements: chelsea_bridge_announcements,
-           sign_groups: sign_groups
+           sign_groups: SignGroups.from_json(sign_groups)
          }}
 
       {:error, reason} ->
