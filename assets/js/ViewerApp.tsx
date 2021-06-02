@@ -1,4 +1,5 @@
 import * as React from 'react';
+import * as Sentry from '@sentry/browser';
 import { Channel, Socket } from 'phoenix';
 import Viewer from './Viewer';
 import lineToColor from './colors';
@@ -159,6 +160,8 @@ class ViewerApp extends React.Component<
         ...oldState,
         signConfigs: { ...oldState.signConfigs, ...signConfigs },
       }));
+    } else {
+      Sentry.captureMessage('signsChannel not present');
     }
   }
 
@@ -172,6 +175,8 @@ class ViewerApp extends React.Component<
         ...oldState,
         configuredHeadways: newConfigsState,
       }));
+    } else {
+      Sentry.captureMessage('headwaysChannel not present');
     }
   }
 
@@ -182,6 +187,8 @@ class ViewerApp extends React.Component<
       channel.push('changeChelseaBridgeAnnouncements', { mode: state });
 
       this.setState(() => ({ chelseaBridgeAnnouncements: state }));
+    } else {
+      Sentry.captureMessage('chelseaBridgeAnnouncementsChannel not present');
     }
   }
 
@@ -193,6 +200,8 @@ class ViewerApp extends React.Component<
         route: line,
         data: { [timestamp]: signGroup },
       });
+    } else {
+      Sentry.captureMessage('signGroupsChannel not present');
     }
   }
 
