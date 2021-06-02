@@ -1,8 +1,8 @@
 import * as React from 'react';
 import ReactDatePicker from 'react-datepicker';
 import { stationConfig, arincToRealtimeId } from './mbta';
-import VirtualSign from './VirtualSign';
-import CustomTextInput from './CustomTextInput';
+import SignText from './SignText';
+import SignTextInput from './SignTextInput';
 import AlertPicker from './AlertPicker';
 import {
   RouteAlerts,
@@ -238,7 +238,7 @@ function SignGroupsForm({
                 />
               </div>
               <div>
-                <VirtualSign line1={line1} line2={line2} time={currentTime} />
+                <SignText line1={line1} line2={line2} time={currentTime} />
               </div>
             </div>
           </div>

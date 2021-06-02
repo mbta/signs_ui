@@ -9,7 +9,7 @@ import {
 import { choosePage } from './helpers';
 import SignTextInput from './SignTextInput';
 import SetExpiration from './SetExpiration';
-import VirtualSign from './VirtualSign';
+import SignText from './SignText';
 
 type SignModeOptions = 'auto' | 'headway' | 'off' | 'static_text';
 
@@ -229,8 +229,8 @@ class SignPanel extends React.Component<
               </div>
             )}
           </div>
-          <div className="viewer--virtual_sign">
-            <VirtualSign
+          <div className="viewer--sign_text">
+            <SignText
               line1={lineDisplayText(
                 signContent.lines['1'],
                 currentTime,
