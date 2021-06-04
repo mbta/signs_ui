@@ -34,36 +34,12 @@
   width: 5em;
 }
 
-.viewer--sign-lines {
-  background-color: rgb(45, 45, 45);
-  margin-left: 5em;
-  padding-left: 0.5em;
-}
-
-.viewer--sign-line {
-  color: rgb(251, 220, 75);
-  font-family: monospace;
-  height: 40px;
-  padding-top: 8px;
-  white-space: pre;
-  width: 24ch;
-}
-
 .viewer--static-text-form {
   background-color: rgb(206, 206, 206);
   margin-bottom: 1em;
   margin-top: -1em;
   padding: 0.25em 0.5em 0.5em 0.5em;
   width: 20em;
-}
-
-.viewer--line-input {
-  margin-bottom: 0.25em;
-  padding-left: 0.25em;
-}
-
-.viewer--error-text {
-  color: #ff0000;
 }
 
 .react-datepicker__time-list-item {
@@ -92,35 +68,6 @@
   padding: 2rem;
 }
 
-/* .viewr--batch-mode-select- */
-
-.viewer--configured-headways-form {
-  border: 1px solid #6c757d;
-  border-radius: 0 0 0.25rem 0.25rem;
-  border-top: 0;
-  padding: 1rem;
-  position: relative;
-}
-
-.viewer--configured-headways-form input[type='number'] {
-  width: 3rem;
-}
-
-.viewer--configured-headways-form-edit-button {
-  cursor: pointer;
-  position: absolute;
-  right: 1rem;
-}
-
-.viewer--configured-headways-form.disabled,
-.viewer--configured-headways-form.disabled input {
-  background-color: rgb(240, 240, 240);
-}
-
-.viewer--configured-headways-form-header {
-  border: 1px solid #6c757d;
-  border-radius: 0.25rem 0.25rem 0 0;
-  margin-bottom: 0;
-  padding: 0.375rem 0.75rem;
-  width: 100%;
+.viewer--sign_text {
+  margin-left: 5rem;
 }

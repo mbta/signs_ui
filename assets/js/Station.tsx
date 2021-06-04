@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Sign from './Sign';
+import SignPanel from './SignPanel';
 import { arincToRealtimeId } from './mbta';
 import {
   RouteAlerts,
@@ -10,6 +10,7 @@ import {
   StationConfig,
   Zone,
 } from './types';
+import { defaultZoneLabel } from './helpers';
 
 /* eslint-disable camelcase */
 
@@ -27,15 +28,7 @@ function zoneDescription(
     return zoneConfig.label;
   }
 
-  const zones = {
-    n: 'NB',
-    s: 'SB',
-    e: 'EB',
-    w: 'WB',
-    m: 'MZ',
-    c: 'CP',
-  };
-  return zones[zone];
+  return defaultZoneLabel(zone);
 }
 
 function makeSign(
@@ -72,7 +65,7 @@ function makeSign(
     const signConfig = signConfigs[realtimeId] || { mode: 'off' };
 
     return (
-      <Sign
+      <SignPanel
         alerts={alerts}
         key={key}
         modes={zoneConfig.modes}

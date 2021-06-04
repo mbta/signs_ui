@@ -1,5 +1,4 @@
 import * as React from 'react';
-import dateFormat from 'dateformat';
 import lineToColor from './colors';
 import {
   RouteAlerts,
@@ -8,7 +7,9 @@ import {
   SingleSignContent,
 } from './types';
 import { choosePage } from './helpers';
+import SignTextInput from './SignTextInput';
 import SetExpiration from './SetExpiration';
+import SignText from './SignText';
 
 type SignModeOptions = 'auto' | 'headway' | 'off' | 'static_text';
 
@@ -73,16 +74,7 @@ function shouldShowAlertSelector(line: string): boolean {
   );
 }
 
-function isValidText(text: string) {
-  return !/[^a-zA-Z0-9,/!@' +]/.test(text);
-}
-
-function timeString(currentTime: number) {
-  const date = new Date(currentTime);
-  return dateFormat(date, 'h:MM').padStart(5);
-}
-
-function line1DisplayText(
+function lineDisplayText(
   lineContent:
     | {
         text: {
@@ -94,34 +86,7 @@ function line1DisplayText(
     | undefined,
   currentTime: number,
   initialTime: number,
-) {
-  if (
-    lineContent !== undefined &&
-    isNotExpired(lineContent.expiration, currentTime)
-  ) {
-    const text = choosePage(
-      lineContent.text,
-      (currentTime - initialTime) / 1000,
-    );
-
-    return `${text.padEnd(19)}${timeString(currentTime)}`;
-  }
-  return `${' '.repeat(19)}${timeString(currentTime)}`;
-}
-
-function line2DisplayText(
-  lineContent:
-    | {
-        text: {
-          content: string;
-          duration: number;
-        }[];
-        expiration: string;
-      }
-    | undefined,
-  currentTime: number,
-  initialTime: number,
-) {
+): string {
   if (
     lineContent !== undefined &&
     isNotExpired(lineContent.expiration, currentTime)
@@ -131,7 +96,7 @@ function line2DisplayText(
   return '';
 }
 
-interface SignProps {
+interface SignPanelProps {
   alerts: RouteAlerts;
   signId: string | boolean | undefined;
   modes: {
@@ -149,17 +114,16 @@ interface SignProps {
   readOnly: boolean;
 }
 
-class Sign extends React.Component<
-  SignProps,
+class SignPanel extends React.Component<
+  SignPanelProps,
   {
     staticLine1: string;
     staticLine2: string;
     customChanges: boolean;
-    tipText: boolean;
     initialTime: number;
   }
 > {
-  constructor(props: SignProps) {
+  constructor(props: SignPanelProps) {
     super(props);
 
     this.saveStaticText = this.saveStaticText.bind(this);
@@ -170,36 +134,23 @@ class Sign extends React.Component<
       staticLine1: props.signConfig.line1 || '',
       staticLine2: props.signConfig.line2 || '',
       customChanges: false,
-      tipText: false,
       initialTime: props.currentTime,
     };
   }
 
-  handleInputLine1(evt: React.FormEvent<HTMLInputElement>): void {
-    const text = evt.currentTarget.value;
-
-    if (isValidText(text)) {
-      this.setState({ staticLine1: text, customChanges: true });
-    } else {
-      this.setState({ tipText: true });
-    }
+  handleInputLine1(newText: string): void {
+    this.setState({ staticLine1: newText, customChanges: true });
   }
 
-  handleInputLine2(evt: React.FormEvent<HTMLInputElement>): void {
-    const text = evt.currentTarget.value;
-
-    if (isValidText(text)) {
-      this.setState({ staticLine2: text, customChanges: true });
-    } else {
-      this.setState({ tipText: true });
-    }
+  handleInputLine2(newText: string): void {
+    this.setState({ staticLine2: newText, customChanges: true });
   }
 
   saveStaticText(): void {
     const { signConfig, setConfigs, realtimeId } = this.props;
     const { staticLine1, staticLine2 } = this.state;
 
-    this.setState({ customChanges: false, tipText: false });
+    this.setState({ customChanges: false });
 
     const newConfig: SignConfig = {
       ...signConfig,
@@ -231,13 +182,7 @@ class Sign extends React.Component<
         off: true,
       },
     } = this.props;
-    const {
-      tipText,
-      staticLine1,
-      staticLine2,
-      customChanges,
-      initialTime,
-    } = this.state;
+    const { staticLine1, staticLine2, customChanges, initialTime } = this.state;
 
     return (
       <div>
@@ -267,7 +212,6 @@ class Sign extends React.Component<
                         | 'static_text',
                     );
                     this.setState({
-                      tipText: false,
                       staticLine1: newConfig.line1 || '',
                       staticLine2: newConfig.line2 || '',
                       customChanges: false,
@@ -285,21 +229,20 @@ class Sign extends React.Component<
               </div>
             )}
           </div>
-          <div className="viewer--sign-lines">
-            <div className="viewer--sign-line">
-              {line1DisplayText(
+          <div className="viewer--sign_text">
+            <SignText
+              line1={lineDisplayText(
                 signContent.lines['1'],
                 currentTime,
                 initialTime,
               )}
-            </div>
-            <div className="viewer--sign-line">
-              {line2DisplayText(
+              line2={lineDisplayText(
                 signContent.lines['2'],
                 currentTime,
                 initialTime,
               )}
-            </div>
+              time={currentTime}
+            />
           </div>
         </div>
 
@@ -308,33 +251,13 @@ class Sign extends React.Component<
             <div>
               <strong>Set custom message</strong>
             </div>
-            {tipText && (
-              <small className="viewer--error-text">
-                You may use letters, numbers, and: /,!@&quot;
-              </small>
-            )}
-            <div>
-              <input
-                id={`${realtimeId}-line1-input`}
-                className="viewer--line-input"
-                type="text"
-                maxLength={18}
-                size={18}
-                value={staticLine1}
-                onChange={this.handleInputLine1}
-              />
-            </div>
-            <div>
-              <input
-                id={`${realtimeId}-line2-input`}
-                className="viewer--line-input"
-                type="text"
-                maxLength={24}
-                size={24}
-                value={staticLine2}
-                onChange={this.handleInputLine2}
-              />
-            </div>
+            <SignTextInput
+              signID={realtimeId}
+              line1={staticLine1}
+              line2={staticLine2}
+              onValidLine1Change={this.handleInputLine1}
+              onValidLine2Change={this.handleInputLine2}
+            />
             <div>
               <input
                 className="viewer--apply-button"
@@ -364,5 +287,5 @@ class Sign extends React.Component<
   }
 }
 
-export default Sign;
+export default SignPanel;
 export { SignModeOptions };

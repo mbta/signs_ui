@@ -84,6 +84,22 @@ type Alerts = {
   [routeId: string]: RouteAlerts;
 };
 
+type SignGroup = {
+  sign_ids: string[];
+  line1: string;
+  line2: string;
+  expires: string | null;
+  alert_id: string | null;
+};
+
+type RouteSignGroups = {
+  [timestamp: string]: SignGroup;
+};
+
+type SignGroupMap = {
+  [routeId: string]: RouteSignGroups;
+};
+
 export {
   Alert,
   RouteAlerts,
@@ -96,4 +112,7 @@ export {
   ConfiguredHeadways,
   Zone,
   ZoneConfig,
+  SignGroupMap,
+  RouteSignGroups,
+  SignGroup,
 };

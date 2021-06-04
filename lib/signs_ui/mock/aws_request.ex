@@ -47,7 +47,8 @@ defmodule SignsUi.Mock.AwsRequest do
           }
         }
       },
-      "chelsea_bridge_announcements" => "auto"
+      "chelsea_bridge_announcements" => "auto",
+      "sign_groups" => %{}
     }
 
     {:ok, %{body: Jason.encode!(config)}}

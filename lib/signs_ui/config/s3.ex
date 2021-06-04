@@ -5,7 +5,7 @@ defmodule SignsUi.Config.S3 do
 
   alias SignsUi.Config
 
-  @spec update(SignsUi.Config.State.t()) :: ExAws.Operation.S3.t() | {:error, any}
+  @spec update(SignsUi.Config.State.t()) :: {:ok, any()} | {:error, any()}
   def update(%{
         signs: signs,
         configured_headways: configured_headways,
@@ -27,7 +27,8 @@ defmodule SignsUi.Config.S3 do
     do_update(json)
   end
 
-  def do_update({:error, reason, _}) do
+  @spec do_update({:ok, String.t()} | {:error, any()}) :: {:ok, any()} | {:error, any()}
+  def do_update({:error, reason}) do
     {:error, reason}
   end
 
@@ -36,11 +37,13 @@ defmodule SignsUi.Config.S3 do
     bucket_name |> ExAws.S3.put_object(path_name, json) |> aws_requestor.request()
   end
 
+  @spec get_object() :: {:ok, any()} | {:error, any()}
   def get_object do
     {aws_requestor, bucket_name, path_name} = get_aws_vars()
     bucket_name |> ExAws.S3.get_object(path_name) |> aws_requestor.request()
   end
 
+  @spec get_aws_vars() :: {module(), String.t(), String.t()}
   defp get_aws_vars do
     bucket_name = Application.get_env(:signs_ui, :aws_signs_bucket)
     path_name = Application.get_env(:signs_ui, :aws_signs_path)

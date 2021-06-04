@@ -1,8 +1,16 @@
 import * as React from 'react';
+import * as Sentry from '@sentry/browser';
 import { Channel, Socket } from 'phoenix';
 import Viewer from './Viewer';
 import lineToColor from './colors';
-import { SignConfigs, SignContent, ConfiguredHeadways, Alerts } from './types';
+import {
+  SignConfigs,
+  SignContent,
+  ConfiguredHeadways,
+  Alerts,
+  SignGroup,
+  SignGroupMap,
+} from './types';
 
 declare global {
   interface Window {
@@ -15,6 +23,7 @@ interface ViewerAppProps {
   initialSigns: SignContent;
   initialSignConfigs: SignConfigs;
   initialConfiguredHeadways: ConfiguredHeadways;
+  initialSignGroups: SignGroupMap;
   readOnly: boolean;
   signOutPath: string;
   initialChelseaBridgeAnnouncements?: 'auto' | 'off';
@@ -27,6 +36,7 @@ class ViewerApp extends React.Component<
     signs: SignContent;
     signConfigs: SignConfigs;
     configuredHeadways: ConfiguredHeadways;
+    signGroups: SignGroupMap;
     currentTime: number;
     signsChannel: null | Channel;
     headwaysChannel: null | Channel;
@@ -49,6 +59,7 @@ class ViewerApp extends React.Component<
     this.setChelseaBridgeAnnouncements = this.setChelseaBridgeAnnouncements.bind(
       this,
     );
+    this.setSignGroup = this.setSignGroup.bind(this);
     this.changeLine = this.changeLine.bind(this);
     this.updateTime = this.updateTime.bind(this);
     this.state = {
@@ -56,6 +67,7 @@ class ViewerApp extends React.Component<
       signs: props.initialSigns,
       signConfigs: props.initialSignConfigs,
       configuredHeadways: props.initialConfiguredHeadways,
+      signGroups: props.initialSignGroups,
       currentTime: Date.now(),
       signsChannel: null,
       headwaysChannel: null,
@@ -113,6 +125,10 @@ class ViewerApp extends React.Component<
       this.setState({ alerts: alertState });
     });
 
+    signGroupsChannel.on('new_sign_groups_state', (signGroupState) => {
+      this.setState({ signGroups: signGroupState });
+    });
+
     signsChannel.on('auth_expired', () => {
       window.location.reload(true);
     });
@@ -144,6 +160,8 @@ class ViewerApp extends React.Component<
         ...oldState,
         signConfigs: { ...oldState.signConfigs, ...signConfigs },
       }));
+    } else {
+      Sentry.captureMessage('signsChannel not present');
     }
   }
 
@@ -157,6 +175,8 @@ class ViewerApp extends React.Component<
         ...oldState,
         configuredHeadways: newConfigsState,
       }));
+    } else {
+      Sentry.captureMessage('headwaysChannel not present');
     }
   }
 
@@ -167,6 +187,21 @@ class ViewerApp extends React.Component<
       channel.push('changeChelseaBridgeAnnouncements', { mode: state });
 
       this.setState(() => ({ chelseaBridgeAnnouncements: state }));
+    } else {
+      Sentry.captureMessage('chelseaBridgeAnnouncementsChannel not present');
+    }
+  }
+
+  setSignGroup(line: string, timestamp: number, signGroup: SignGroup): void {
+    const { signGroupsChannel: channel } = this.state;
+
+    if (channel) {
+      channel.push('changeSignGroups', {
+        route: line,
+        data: { [timestamp]: signGroup },
+      });
+    } else {
+      Sentry.captureMessage('signGroupsChannel not present');
     }
   }
 
@@ -190,6 +225,7 @@ class ViewerApp extends React.Component<
       signConfigs,
       readOnly,
       configuredHeadways,
+      signGroups,
       signOutPath,
       chelseaBridgeAnnouncements,
     } = this.state;
@@ -258,9 +294,11 @@ class ViewerApp extends React.Component<
             alerts={alerts}
             signs={signs}
             signConfigs={signConfigs}
+            setConfigs={this.setConfigs}
             configuredHeadways={configuredHeadways}
             setConfiguredHeadways={this.setConfiguredHeadways}
-            setConfigs={this.setConfigs}
+            signGroups={signGroups}
+            setSignGroup={this.setSignGroup}
             currentTime={currentTime}
             line={line}
             chelseaBridgeAnnouncements={chelseaBridgeAnnouncements}

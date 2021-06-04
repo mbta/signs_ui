@@ -119,9 +119,6 @@ const ConfiguredHeadwaysForm = ({
 
   return (
     <div className="mb-5">
-      <div>
-        <h5 className="viewer--configured-headways-form-header">Headways</h5>
-      </div>
       <Formik<{
         branches: {
           id: string;
@@ -142,12 +139,12 @@ const ConfiguredHeadwaysForm = ({
       >
         {({ dirty, isValid, resetForm }) => (
           <Form
-            className={`viewer--configured-headways-form ${
+            className={`configured-headways-form ${
               !inEditMode ? 'disabled' : ''
             }`}
           >
             {!readOnly && isEnabled && (
-              <div className="viewer--configured-headways-form-edit-button">
+              <div className="configured-headways-form--edit_button">
                 {!inEditMode ? (
                   <button
                     type="button"
@@ -194,10 +191,7 @@ const ConfiguredHeadwaysForm = ({
                       </div>
                       <div className="row mb-3">
                         {branches.map((branch, index) => (
-                          <div
-                            key={branch.id}
-                            className="viewer--configured-headways-form-branch col-6 col-md-4"
-                          >
+                          <div key={branch.id} className="col-6 col-md-4">
                             <h5>{branch.name}</h5>
                             <div className="mb-3">
                               <Field

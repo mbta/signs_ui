@@ -24,16 +24,26 @@ defmodule SignsUi.Config.State do
     GenServer.start_link(__MODULE__, [], name: name)
   end
 
+  @doc """
+  Gets all the current state.
+  """
+  @spec get_all(GenServer.server()) :: t()
   def get_all(pid \\ __MODULE__) do
     GenServer.call(pid, :get_all)
   end
 
+  @doc """
+  Updates the state with new sign configurations by merging them in.
+  """
   @spec update_sign_configs(GenServer.server(), %{Config.Sign.id() => Config.Sign.t()}) ::
           {:ok, t()}
   def update_sign_configs(pid \\ __MODULE__, changes) do
     GenServer.call(pid, {:update_sign_configs, changes})
   end
 
+  @doc """
+  Sets configured headways to the provided value.
+  """
   @spec update_configured_headways(GenServer.server(), %{
           String.t() => Config.ConfiguredHeadway.t()
         }) ::
@@ -42,6 +52,9 @@ defmodule SignsUi.Config.State do
     GenServer.call(pid, {:update_configured_headways, changes})
   end
 
+  @doc """
+  Sets Chelsea Bridge announcements to the provided value.
+  """
   @spec update_chelsea_bridge_announcements(GenServer.server(), %{
           String.t() => String.t()
         }) ::
@@ -50,16 +63,13 @@ defmodule SignsUi.Config.State do
     GenServer.call(pid, {:update_chelsea_bridge_announcements, changes})
   end
 
-  @spec update_sign_group_changes(GenServer.server(),
-          %{
-            String.t() => route_id(),
-            String.t() => %{
-              String.t() => data
-            }
-          }) ::
-          {:ok, t()}
-  def update_sign_group_changes(pid \\ __MODULE__, changes) do
-    GenServer.call(pid, {:update_sign_group_changes, changes})
+
+  @doc """
+  Applies the given SignGroups changes (inserts, updates, and deletes).
+  """
+  @spec update_sign_groups(GenServer.server(), SignGroups.t()) :: {:ok, t()}
+  def update_sign_groups(pid \\ __MODULE__, changes) do
+    GenServer.call(pid, {:update_sign_groups, changes})
   end
 
   @spec init(any()) :: {:ok, t()} | {:stop, any()}
@@ -96,7 +106,9 @@ defmodule SignsUi.Config.State do
   end
 
   def handle_call({:update_sign_groups, changes}, _from, old_state) do
-    new_state = save_sign_groups_changes(changes, old_state)
+
+    new_state = save_sign_group_changes(changes, old_state)
+
     {:reply, {:ok, new_state}, new_state}
   end
 
@@ -148,18 +160,20 @@ defmodule SignsUi.Config.State do
     new_state
   end
 
-  defp save_sign_groups_changes(
-         new_sign_groups,
-         old_state
-       ) do
-    new_state = %{old_state | sign_groups: new_sign_groups}
+  @spec save_sign_group_changes(SignGroups.t(), t()) :: t()
+  defp save_sign_group_changes(changes, old_state) do
+    new_groups = Enum.reduce(changes, old_state.sign_groups, &SignGroups.update/2)
+
+    new_state = %{old_state | sign_groups: new_groups}
+
 
     {:ok, _} = save_state(new_state)
 
     SignsUiWeb.Endpoint.broadcast!(
-      "signGroups:all",
-      "new_sign_groups_state"
-      #Config.ConfiguredHeadways.format_configured_headways_for_json(new_configured_headways)
+
+      "sign_groups:all",
+      "new_sign_groups_state",
+      SignGroups.by_route(new_groups)
     )
 
     new_state
