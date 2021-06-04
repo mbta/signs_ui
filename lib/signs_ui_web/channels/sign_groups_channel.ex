@@ -15,8 +15,6 @@ defmodule SignsUiWeb.SignGroupsChannel do
   def handle_in("changeSignGroups", %{"route" => route, "data" => data} = changes, socket) do
     Logger.info(["changeSignGroups: ", inspect(changes), ", from: ", inspect(socket)])
 
-    SignsUiWeb.Endpoint.broadcast!("signGroups:all", "new_sign_groups_state", %{route => data})
-
     {:noreply, socket}
   end
 end
