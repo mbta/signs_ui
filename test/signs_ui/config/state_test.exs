@@ -168,7 +168,7 @@ defmodule SignsUi.Config.StateTest do
     test "broadcasts updated sign groups after expiration" do
       {:ok, pid} = GenServer.start_link(SignsUi.Config.State, [], [])
 
-      @endpoint.subscribe("sign_groups:all")
+      @endpoint.subscribe("signGroups:all")
 
       initial_state = %{
         "1111" => %SignsUi.Config.SignGroup{alert_id: "inactive_alert", route_id: "Red"},
@@ -208,7 +208,7 @@ defmodule SignsUi.Config.StateTest do
     test "handles sequential updates" do
       {:ok, pid} = GenServer.start_link(SignsUi.Config.State, [], [])
 
-      @endpoint.subscribe("sign_groups:all")
+      @endpoint.subscribe("signGroups:all")
 
       initial_state = %{
         "1111" => %SignsUi.Config.SignGroup{
