@@ -1,6 +1,7 @@
 defmodule SignsUiWeb.HeadwaysChannelTest do
   use SignsUiWeb.ChannelCase
   import ExUnit.CaptureLog
+  alias Test.Support.Helpers
 
   setup do
     socket = subscribe_and_join!(socket(), SignsUiWeb.HeadwaysChannel, "headways:all", %{})
@@ -9,16 +10,7 @@ defmodule SignsUiWeb.HeadwaysChannelTest do
 
   describe "handle_in/3" do
     test "allows changing multi-sign headways when socket is authenticated", %{socket: socket} do
-      current_time = System.system_time(:second)
-      expiration_time = current_time + 500
-
-      {:ok, token, claims} =
-        SignsUiWeb.AuthManager.encode_and_sign("foo@mbta.com", %{
-          "exp" => expiration_time,
-          "groups" => ["signs-ui-admin"]
-        })
-
-      socket = Guardian.Phoenix.Socket.assign_rtc(socket, "foo@mbta.com", token, claims)
+      socket = Helpers.sign_in_with_groups(socket, "foo@mbta.com", ["signs-ui-admin"])
 
       log =
         capture_log([level: :info], fn ->
@@ -33,16 +25,7 @@ defmodule SignsUiWeb.HeadwaysChannelTest do
          %{
            socket: socket
          } do
-      current_time = System.system_time(:second)
-      expiration_time = current_time + 500
-
-      {:ok, token, claims} =
-        SignsUiWeb.AuthManager.encode_and_sign("foo@mbta.com", %{
-          "exp" => expiration_time,
-          "groups" => ["signs-ui-read-only"]
-        })
-
-      socket = Guardian.Phoenix.Socket.assign_rtc(socket, "foo@mbta.com", token, claims)
+      socket = Helpers.sign_in_with_groups(socket, "foo@mbta.com", ["signs-ui-read-only"])
 
       log =
         capture_log([level: :info], fn ->
