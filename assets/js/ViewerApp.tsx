@@ -197,8 +197,7 @@ class ViewerApp extends React.Component<
 
     if (channel) {
       channel.push('changeSignGroups', {
-        route: line,
-        data: { [timestamp]: signGroup },
+        data: { [timestamp]: { ...signGroup, ...{ route_id: line } } },
       });
     } else {
       Sentry.captureMessage('signGroupsChannel not present');
