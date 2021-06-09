@@ -1,6 +1,7 @@
 defmodule SignsUiWeb.ChelseaBridgeAnnouncementsChannelTest do
   use SignsUiWeb.ChannelCase
   import ExUnit.CaptureLog
+  alias Test.Support.Helpers
 
   setup do
     socket =
@@ -18,16 +19,7 @@ defmodule SignsUiWeb.ChelseaBridgeAnnouncementsChannelTest do
     test "allows changing chelsea bridge announcements when socket is authenticated", %{
       socket: socket
     } do
-      current_time = System.system_time(:second)
-      expiration_time = current_time + 500
-
-      {:ok, token, claims} =
-        SignsUiWeb.AuthManager.encode_and_sign("foo@mbta.com", %{
-          "exp" => expiration_time,
-          "groups" => ["signs-ui-admin"]
-        })
-
-      socket = Guardian.Phoenix.Socket.assign_rtc(socket, "foo@mbta.com", token, claims)
+      socket = Helpers.sign_in_with_groups(socket, "foo@mbta.com", ["signs-ui-admin"])
 
       log =
         capture_log([level: :info], fn ->
@@ -46,16 +38,7 @@ defmodule SignsUiWeb.ChelseaBridgeAnnouncementsChannelTest do
          %{
            socket: socket
          } do
-      current_time = System.system_time(:second)
-      expiration_time = current_time + 500
-
-      {:ok, token, claims} =
-        SignsUiWeb.AuthManager.encode_and_sign("foo@mbta.com", %{
-          "exp" => expiration_time,
-          "groups" => ["signs-ui-read-only"]
-        })
-
-      socket = Guardian.Phoenix.Socket.assign_rtc(socket, "foo@mbta.com", token, claims)
+      socket = Helpers.sign_in_with_groups(socket, "foo@mbta.com", ["signs-ui-read-only"])
 
       log =
         capture_log([level: :info], fn ->
