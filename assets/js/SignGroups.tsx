@@ -12,6 +12,7 @@ import {
   SignGroup,
 } from './types';
 import { defaultZoneLabel } from './helpers';
+import featureIsEnabled from "../laboratoryFeatures"
 
 interface ZoneSelectorProps {
   config: StationConfig;
@@ -301,13 +302,14 @@ function SignGroupsList({
   }, [setIsFormOpen]);
 
   return (
+    {featureIsEnabled("sign_groups") &&
     <div>
       <div>Sign Groups: {JSON.stringify(signGroups)}</div>
       <button disabled={readOnly} onClick={handleClick} type="button">
         Create
       </button>
     </div>
-  );
+    });
 }
 
 interface SignGroupsProps {
