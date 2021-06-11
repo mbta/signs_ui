@@ -4,7 +4,7 @@ import ConfiguredHeadwaysForm from './ConfiguredHeadwaysForm';
 import Station from './Station';
 import { stationConfig, arincToRealtimeId, branchConfig } from './mbta';
 import SignGroups from './SignGroups';
-import featureIsEnabled from "../src/laboratoryFeatures";
+import featureIsEnabled from "./laboratoryFeatures";
 import {
   RouteAlerts,
   SignContent,
