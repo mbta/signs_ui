@@ -307,7 +307,7 @@ function SignGroupsList({
         Create
       </button>
     </div>
-    );
+  );
 }
 
 interface SignGroupsProps {
