@@ -8,6 +8,4 @@ const appData = (): DOMStringMap | undefined => {
     return dataEl.dataset
   }
   
-  export default appData
-
-  
+export default appData
