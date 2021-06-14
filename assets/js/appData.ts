@@ -9,4 +9,5 @@ const appData = (): DOMStringMap | undefined => {
   }
   
   export default appData
+
   
