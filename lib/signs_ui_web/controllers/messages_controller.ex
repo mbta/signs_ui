@@ -5,6 +5,8 @@ defmodule SignsUiWeb.MessagesController do
   alias SignsUi.Messages.SignContent
   alias SignsUi.Signs.State
 
+  plug(:laboratory_features)
+
   @spec index(Plug.Conn.t(), map()) :: Plug.Conn.t()
   def index(conn, _params) do
     signs = State.list_signs()
@@ -41,6 +43,15 @@ defmodule SignsUiWeb.MessagesController do
       sign_groups: sign_groups,
       sign_out_path: sign_out_path
     )
+  end
+
+  defp laboratory_features(conn, _) do
+    laboratory_features =
+      :laboratory
+      |> Application.get_env(:features)
+      |> Map.new(fn {key, _, _} -> {key, Laboratory.enabled?(conn, key)} end)
+
+    assign(conn, :laboratory_features, laboratory_features)
   end
 
   @spec create(Plug.Conn.t(), map()) :: Plug.Conn.t()
