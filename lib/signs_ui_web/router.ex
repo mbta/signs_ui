@@ -36,6 +36,10 @@ defmodule SignsUiWeb.Router do
     plug(SignsUiWeb.EnsureSignsUiGroup)
   end
 
+  pipeline :accepts_html do
+    plug :accepts, ["html"]
+  end
+
   scope "/auth", SignsUiWeb do
     pipe_through([:redirect_prod_http, :browser])
 
