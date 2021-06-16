@@ -1,11 +1,11 @@
 const appData = (): DOMStringMap | undefined => {
-    const dataEl = document.getElementById("app")
-  
-    if (!dataEl) {
-      return undefined
-    }
-  
-    return dataEl.dataset
+  const dataEl = document.getElementById('app');
+
+  if (!dataEl) {
+    return undefined;
   }
-  
-export default appData
+
+  return dataEl.dataset;
+};
+
+export default appData;

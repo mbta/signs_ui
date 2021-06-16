@@ -56,9 +56,8 @@ class ViewerApp extends React.Component<
 
     this.setConfigs = this.setConfigs.bind(this);
     this.setConfiguredHeadways = this.setConfiguredHeadways.bind(this);
-    this.setChelseaBridgeAnnouncements = this.setChelseaBridgeAnnouncements.bind(
-      this,
-    );
+    this.setChelseaBridgeAnnouncements =
+      this.setChelseaBridgeAnnouncements.bind(this);
     this.setSignGroup = this.setSignGroup.bind(this);
     this.changeLine = this.changeLine.bind(this);
     this.updateTime = this.updateTime.bind(this);

@@ -1,18 +1,18 @@
-import appData from "./appData"
+import appData from './appData';
 
 const featureIsEnabled = (key: string): boolean => {
-  const data = appData()
+  const data = appData();
 
   if (data === undefined || data.laboratoryFeatures === undefined) {
-    return false
+    return false;
   }
 
-  const features = JSON.parse(data.laboratoryFeatures)
+  const features = JSON.parse(data.laboratoryFeatures);
   if (features[key] === undefined) {
-    return false
+    return false;
   }
 
-  return features[key]
-}
+  return features[key];
+};
 
-export default featureIsEnabled
+export default featureIsEnabled;

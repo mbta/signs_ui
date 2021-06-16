@@ -4,7 +4,7 @@ import ConfiguredHeadwaysForm from './ConfiguredHeadwaysForm';
 import Station from './Station';
 import { stationConfig, arincToRealtimeId, branchConfig } from './mbta';
 import SignGroups from './SignGroups';
-import featureIsEnabled from "./laboratoryFeatures";
+import featureIsEnabled from './laboratoryFeatures';
 import {
   RouteAlerts,
   SignContent,
@@ -132,16 +132,18 @@ function Line({
     <div>
       <h1>{name(line)}</h1>
       <Tabs defaultActiveKey="0" tabBarStyle={{}}>
-        {featureIsEnabled("sign_groups") && (<TabPane tab="Sign Groups">
-          <SignGroups
-            line={line}
-            currentTime={currentTime}
-            alerts={alerts}
-            signGroups={signGroups[line] || {}}
-            setSignGroup={setSignGroup}
-            readOnly={readOnly}
-          />
-        </TabPane>)}
+        {featureIsEnabled('sign_groups') && (
+          <TabPane tab="Sign Groups">
+            <SignGroups
+              line={line}
+              currentTime={currentTime}
+              alerts={alerts}
+              signGroups={signGroups[line] || {}}
+              setSignGroup={setSignGroup}
+              readOnly={readOnly}
+            />
+          </TabPane>
+        )}
         {branches.length > 0 && (
           <TabPane tab="Set Headways" key="1">
             <ConfiguredHeadwaysForm
