@@ -233,9 +233,11 @@ describe('With Multi-sign Headway enabled', () => {
     fireEvent.click(container.querySelector('button#cancel')!);
     await waitFor(() => {
       expect(
-        (container.querySelector(
-          'input[name="branches.[0].morning.range_high"]',
-        ) as HTMLInputElement).value,
+        (
+          container.querySelector(
+            'input[name="branches.[0].morning.range_high"]',
+          ) as HTMLInputElement
+        ).value,
       ).toEqual('3');
       expect(container.querySelector('button#edit')).toBeDefined();
       expect(
