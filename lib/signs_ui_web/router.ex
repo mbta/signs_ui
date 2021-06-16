@@ -36,14 +36,6 @@ defmodule SignsUiWeb.Router do
     plug(SignsUiWeb.EnsureSignsUiGroup)
   end
 
-  pipeline :accepts_html do
-    plug(:put_secure_browser_headers, %{
-      "content-security-policy" =>
-        "default-src 'self'; connect-src 'self' https://*.ingest.sentry.io; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'"
-    })
-    plug(:accepts, ["html"])
-  end
-
   scope "/auth", SignsUiWeb do
     pipe_through([:redirect_prod_http, :browser])
 
@@ -90,7 +82,6 @@ defmodule SignsUiWeb.Router do
   scope "/_flags" do
     pipe_through([
       :redirect_prod_http,
-      :accepts_html,
       :browser,
       :auth,
       :ensure_auth,
