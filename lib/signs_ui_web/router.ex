@@ -37,7 +37,7 @@ defmodule SignsUiWeb.Router do
   end
 
   pipeline :accepts_html do
-    plug :accepts, ["html"]
+    plug(:accepts, ["html"])
   end
 
   scope "/auth", SignsUiWeb do
@@ -84,14 +84,14 @@ defmodule SignsUiWeb.Router do
   # end
 
   scope "/_flags" do
-    pipe_through [
+    pipe_through([
       :redirect_prod_http,
       :accepts_html,
       :browser,
       :auth,
       :ensure_auth,
       :put_user_token
-    ]
+    ])
 
     forward("/", Laboratory.Router)
   end
