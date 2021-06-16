@@ -13,6 +13,7 @@ RUN if test -z $SECRET_KEY_BASE; then (>&2 echo "No SECRET_KEY_BASE"); exit 1; f
 WORKDIR /root
 ADD . .
 
+RUN apt-get update && apt-get install -y --no-install-recommends git
 RUN mix do local.hex --force, local.rebar --force, deps.get --only prod
 
 # next, build the frontend assets within a node.js container
