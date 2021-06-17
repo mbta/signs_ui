@@ -14,7 +14,7 @@ WORKDIR /root
 ADD . .
 
 # Install git so we can install dependencies from GitHub
-RUN apt-get update && apt-get install -y --no-install-recommends git
+RUN apk add --no-cache --update git
 RUN mix do local.hex --force, local.rebar --force, deps.get --only prod
 
 # next, build the frontend assets within a node.js container
