@@ -1,6 +1,5 @@
 # first, get the elixir dependencies within an elixir container
-#FROM hexpm/elixir:1.11.4-erlang-23.3.1-debian-buster-20210326 as elixir-builder
-FROM elixir:1.10-alpine as elixir-builder
+FROM hexpm/elixir:1.11.4-erlang-23.3.1-debian-buster-20210326 as elixir-builder
 ENV LANG="C.UTF-8" MIX_ENV="prod"
 
 ARG ERL_COOKIE
@@ -15,7 +14,8 @@ WORKDIR /root
 ADD . .
 
 # Install git so we can install dependencies from GitHub
-RUN apk add --no-cache --update git
+RUN apt-get update && apt-get install -y --no-install-recommends \
+  git ca-certificates
 RUN mix do local.hex --force, local.rebar --force, deps.get --only prod
 
 # next, build the frontend assets within a node.js container
