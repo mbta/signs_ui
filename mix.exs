@@ -10,7 +10,7 @@ defmodule SignsUi.Mixfile do
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       test_coverage: [tool: LcovEx],
-      dialyzer: [plt_add_apps: [:ex_unit]],
+      dialyzer: [plt_add_apps: [:ex_unit, :laboratory]],
       deps: deps()
     ]
   end
@@ -21,6 +21,7 @@ defmodule SignsUi.Mixfile do
   def application do
     [
       mod: {SignsUi.Application, []},
+      included_applications: [:laboratory],
       extra_applications: [
         :logger,
         :parse_trans,
@@ -64,7 +65,8 @@ defmodule SignsUi.Mixfile do
       {:sobelow, "~> 0.8", only: :dev},
       {:tzdata, "~> 1.1"},
       {:ueberauth_cognito, "~> 0.1"},
-      {:ueberauth, "~> 0.1"}
+      {:ueberauth, "~> 0.1"},
+      {:laboratory, github: "paulswartz/laboratory", ref: "cookie_opts"}
     ]
   end
 end

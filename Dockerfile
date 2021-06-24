@@ -13,6 +13,9 @@ RUN if test -z $SECRET_KEY_BASE; then (>&2 echo "No SECRET_KEY_BASE"); exit 1; f
 WORKDIR /root
 ADD . .
 
+# Install git so we can install dependencies from GitHub
+RUN apt-get update && apt-get install -y --no-install-recommends \
+  git ca-certificates
 RUN mix do local.hex --force, local.rebar --force, deps.get --only prod
 
 # next, build the frontend assets within a node.js container
