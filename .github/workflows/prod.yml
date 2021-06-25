@@ -1,0 +1,17 @@
+name: Deploy to Prod
+
+on: workflow_dispatch
+
+jobs:
+  deploy:
+    name: Deploy to Prod
+    runs-on: ubuntu-latest
+    environment: prod
+    concurrency: prod
+    env:
+      AWS_REGION: us-east-1
+      ELASTICBEANSTALK_APPLICATION_NAME: signs-ui
+      ELASTICBEANSTALK_ENVIRONMENT_NAME: signs-ui-prod
+
+    steps:
+      - uses: actions/checkout@v2

@@ -1,0 +1,20 @@
+name: Deploy to Dev
+
+on:
+  workflow_dispatch:
+  push:
+    branches: master
+
+jobs:
+  deploy:
+    name: Deploy to Dev
+    runs-on: ubuntu-latest
+    environment: dev
+    concurrency: dev
+    env:
+      AWS_REGION: us-east-1
+      ELASTICBEANSTALK_APPLICATION_NAME: signs-ui
+      ELASTICBEANSTALK_ENVIRONMENT_NAME: signs-ui-dev
+
+    steps:
+      - uses: actions/checkout@v2
