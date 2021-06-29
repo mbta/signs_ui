@@ -1,3 +1,8 @@
+.configured-headways-form {
+  /* enables position: absolute for --edit_button */
+  position: relative;
+}
+
 .configured-headways-form input[type='number'] {
   width: 3rem;
 }
