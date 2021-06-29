@@ -109,8 +109,11 @@
   padding-left: 1rem;
 }
 
-.sign_groups--apply-container {
+.sign_groups--buttons-container {
   display: flex;
   justify-content: flex-end;
-  padding-right: 1rem;
+}
+
+.sign_groups--buttons-container * {
+  margin-left: 1rem;
 }
