@@ -17,9 +17,8 @@ interface ZoneSelectorProps {
   config: StationConfig;
   zone: Zone;
   line: string;
-  selectedSigns: { [sign: string]: boolean };
+  selectedSigns: Set<string>;
   onSignChange: (signId: string, selected: boolean) => void;
-  readOnly: boolean;
   kind: 'default' | 'named';
 }
 
@@ -29,16 +28,11 @@ function ZoneSelector({
   line,
   selectedSigns,
   onSignChange,
-  readOnly,
   kind,
 }: ZoneSelectorProps): JSX.Element | null {
   const handleChange = React.useCallback(
-    (evt) => {
-      if (!readOnly) {
-        onSignChange(evt.target.name, evt.target.checked);
-      }
-    },
-    [onSignChange, readOnly],
+    (evt) => onSignChange(evt.target.name, evt.target.checked),
+    [onSignChange],
   );
 
   const zoneConfig = config.zones[zone];
@@ -53,7 +47,7 @@ function ZoneSelector({
 
   const zoneLabel = zoneConfig.label || defaultZoneLabel(zone);
   const signId = arincToRealtimeId(`${config.id}-${zone}`, line);
-  const isSelected = selectedSigns[signId] || false;
+  const isSelected = selectedSigns.has(signId);
 
   return (
     <div>
@@ -65,6 +59,7 @@ function ZoneSelector({
         <input
           type="checkbox"
           name={signId}
+          data-testid={signId}
           checked={isSelected}
           onChange={handleChange}
         />
@@ -78,66 +73,64 @@ interface SignGroupsFormProps {
   line: string;
   currentTime: number;
   alerts: RouteAlerts;
-  setSignGroup: (line: string, timestamp: number, signGroup: SignGroup) => void;
-  readOnly: boolean;
+  signGroupKey: string | null;
+  initialSignGroup: SignGroup;
+  onApply: (key: string | null, signGroup: SignGroup) => void;
+  onCancel: () => void;
 }
 
 function SignGroupsForm({
   line,
   currentTime,
   alerts,
-  setSignGroup,
-  readOnly,
+  signGroupKey,
+  initialSignGroup,
+  onApply,
+  onCancel,
 }: SignGroupsFormProps): JSX.Element | null {
-  const [selectedSigns, setSelectedSigns] = React.useState<{
-    [sign: string]: boolean;
-  }>({});
-  const [line1, setLine1] = React.useState('');
-  const [line2, setLine2] = React.useState('');
-  const [expireAt, setExpireAt] = React.useState<Date | null>(null);
-  const [expireAlertID, setExpireAlertID] = React.useState('');
+  const [signGroup, setSignGroup] = React.useState(initialSignGroup);
+
+  const expires = React.useMemo(
+    () => (signGroup.expires ? new Date(signGroup.expires) : null),
+    [signGroup],
+  );
+  const signIds = React.useMemo(() => new Set(signGroup.sign_ids), [signGroup]);
 
   const onDatePickerChange = React.useCallback(
     (date: Date | null) => {
-      setExpireAt(date);
+      setSignGroup({ ...signGroup, expires: date ? date.toISOString() : null });
     },
-    [setExpireAt],
+    [signGroup, setSignGroup],
   );
 
   const onSignChange = React.useCallback(
     (signId: string, isChecked: boolean) => {
-      setSelectedSigns({ ...selectedSigns, ...{ [signId]: isChecked } });
+      const newSignIds = new Set(signIds);
+      if (isChecked) {
+        newSignIds.add(signId);
+      } else {
+        newSignIds.delete(signId);
+      }
+      setSignGroup({ ...signGroup, sign_ids: Array.from(newSignIds) });
     },
-    [selectedSigns, setSelectedSigns],
+    [signGroup, setSignGroup],
   );
 
-  const handleSubmit = React.useCallback(
+  const onSubmit = React.useCallback(
     (event) => {
       event.preventDefault();
-
-      const signIds = Object.entries(selectedSigns)
-        .filter(([, isChecked]) => isChecked)
-        .map(([id]) => id);
-
-      const expires = expireAt ? expireAt.toISOString() : null;
-
-      const signGroup: SignGroup = {
-        sign_ids: signIds,
-        line1,
-        line2,
-        expires,
-        alert_id: expireAlertID,
-      };
-
-      setSignGroup(line, currentTime, signGroup);
+      onApply(signGroupKey, signGroup);
     },
-    [line1, line2, expireAt, expireAlertID, selectedSigns],
+    [signGroup, signGroupKey],
   );
 
   const stations = stationConfig[line]?.stations ?? [];
+  const submitText = signGroupKey === null ? 'Create group' : 'Apply changes';
+  const canSubmit =
+    signGroup !== initialSignGroup && signGroup.sign_ids.length > 0;
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={onSubmit}>
       <div className="sign_groups--container">
         <div className="sign_groups--container-left">
           Select Signs
@@ -166,9 +159,8 @@ function SignGroupsForm({
                             config={station}
                             zone={zone}
                             line={line}
-                            selectedSigns={selectedSigns}
+                            selectedSigns={signIds}
                             onSignChange={onSignChange}
-                            readOnly={readOnly}
                             kind="default"
                           />
                         ))}
@@ -180,9 +172,8 @@ function SignGroupsForm({
                             config={station}
                             zone={zone}
                             line={line}
-                            selectedSigns={selectedSigns}
+                            selectedSigns={signIds}
                             onSignChange={onSignChange}
-                            readOnly={readOnly}
                             kind="default"
                           />
                         ))}
@@ -194,9 +185,8 @@ function SignGroupsForm({
                             config={station}
                             zone={zone}
                             line={line}
-                            selectedSigns={selectedSigns}
+                            selectedSigns={signIds}
                             onSignChange={onSignChange}
-                            readOnly={readOnly}
                             kind="default"
                           />
                         ))}
@@ -210,9 +200,8 @@ function SignGroupsForm({
                             config={station}
                             zone={zone}
                             line={line}
-                            selectedSigns={selectedSigns}
+                            selectedSigns={signIds}
                             onSignChange={onSignChange}
-                            readOnly={readOnly}
                             kind="named"
                           />
                         ),
@@ -231,14 +220,22 @@ function SignGroupsForm({
               <div>
                 <SignTextInput
                   signID="sign_group"
-                  line1={line1}
-                  line2={line2}
-                  onValidLine1Change={setLine1}
-                  onValidLine2Change={setLine2}
+                  line1={signGroup.line1}
+                  line2={signGroup.line2}
+                  onValidLine1Change={(line1) =>
+                    setSignGroup({ ...signGroup, line1 })
+                  }
+                  onValidLine2Change={(line2) =>
+                    setSignGroup({ ...signGroup, line2 })
+                  }
                 />
               </div>
               <div>
-                <SignText line1={line1} line2={line2} time={currentTime} />
+                <SignText
+                  line1={signGroup.line1}
+                  line2={signGroup.line2}
+                  time={currentTime}
+                />
               </div>
             </div>
           </div>
@@ -249,13 +246,13 @@ function SignGroupsForm({
                 Date and time
                 <div>
                   <ReactDatePicker
-                    selected={expireAt}
+                    selected={expires}
                     onChange={onDatePickerChange}
                     showTimeSelect
                     timeFormat="HH:mm"
                     timeIntervals={15}
                     dateFormat="MMM d @ h:mm aa"
-                    disabled={readOnly || expireAlertID !== ''}
+                    disabled={signGroup.alert_id !== null}
                   />
                 </div>
               </div>
@@ -263,21 +260,29 @@ function SignGroupsForm({
                 Upon alert closing
                 <div>
                   <AlertPicker
-                    alertId={expireAlertID}
-                    onChange={setExpireAlertID}
+                    alertId={signGroup.alert_id || ''}
+                    onChange={(id) =>
+                      setSignGroup({ ...signGroup, alert_id: id })
+                    }
                     alerts={alerts}
                     disabled={
-                      readOnly ||
-                      expireAt !== null ||
-                      Object.keys(alerts).length === 0
+                      expires !== null || Object.keys(alerts).length === 0
                     }
                   />
                 </div>
               </div>
             </div>
           </div>
-          <div className="sign_groups--apply-container">
-            <input type="submit" value="Apply" className="btn btn-primary" />
+          <div className="sign_groups--buttons-container">
+            <button type="button" className="btn" onClick={onCancel}>
+              Cancel
+            </button>
+            <input
+              type="submit"
+              disabled={!canSubmit}
+              value={submitText}
+              className="btn btn-primary"
+            />
           </div>
         </div>
       </div>
@@ -288,22 +293,31 @@ function SignGroupsForm({
 interface SignGroupsListProps {
   signGroups: RouteSignGroups;
   readOnly: boolean;
-  setIsFormOpen: (isOpen: boolean) => void;
+  onCreate: () => void;
+  onEdit: (timestamp: string) => void;
 }
 
 function SignGroupsList({
   signGroups,
   readOnly,
-  setIsFormOpen,
+  onCreate,
+  onEdit,
 }: SignGroupsListProps): JSX.Element | null {
-  const handleClick = React.useCallback(() => {
-    setIsFormOpen(true);
-  }, [setIsFormOpen]);
-
   return (
     <div>
-      <div>Sign Groups: {JSON.stringify(signGroups)}</div>
-      <button disabled={readOnly} onClick={handleClick} type="button">
+      {Object.keys(signGroups).map((timestamp) => (
+        <p key={timestamp}>
+          <button
+            disabled={readOnly}
+            onClick={() => onEdit(timestamp)}
+            type="button"
+          >
+            Edit
+          </button>
+          {timestamp}: {JSON.stringify(signGroups[timestamp])}
+        </p>
+      ))}
+      <button disabled={readOnly} onClick={onCreate} type="button">
         Create
       </button>
     </div>
@@ -327,13 +341,33 @@ function SignGroups({
   setSignGroup,
   readOnly,
 }: SignGroupsProps): JSX.Element | null {
+  const newSignGroup: SignGroup = {
+    sign_ids: [],
+    line1: '',
+    line2: '',
+    expires: null,
+    alert_id: null,
+  };
+  const [formKey, setFormKey] = React.useState<string | null>(null);
+  const [formSignGroup, setFormSignGroup] = React.useState(newSignGroup);
   const [isFormOpen, setIsFormOpen] = React.useState(false);
-  const setSignGroupAndClose = React.useCallback(
-    (setLine: string, timestamp: number, signGroup: SignGroup) => {
-      setIsFormOpen(false);
-      setSignGroup(setLine, timestamp, signGroup);
+
+  const openEditForm = React.useCallback(
+    (timestamp: string) => {
+      setFormKey(timestamp);
+      setFormSignGroup(signGroups[timestamp]);
+      setIsFormOpen(true);
     },
-    [setSignGroup, setIsFormOpen],
+    [signGroups],
+  );
+
+  const setSignGroupAndCloseForm = React.useCallback(
+    (key: string | null, signGroup: SignGroup) => {
+      setIsFormOpen(false);
+      const timestamp = key === null ? currentTime : parseInt(key, 10);
+      setSignGroup(line, timestamp, signGroup);
+    },
+    [line, currentTime, setSignGroup, setIsFormOpen],
   );
 
   if (isFormOpen) {
@@ -342,8 +376,10 @@ function SignGroups({
         line={line}
         currentTime={currentTime}
         alerts={alerts}
-        setSignGroup={setSignGroupAndClose}
-        readOnly={readOnly}
+        signGroupKey={formKey}
+        initialSignGroup={formSignGroup}
+        onApply={setSignGroupAndCloseForm}
+        onCancel={() => setIsFormOpen(false)}
       />
     );
   }
@@ -351,7 +387,8 @@ function SignGroups({
     <SignGroupsList
       signGroups={signGroups}
       readOnly={readOnly}
-      setIsFormOpen={setIsFormOpen}
+      onCreate={() => setIsFormOpen(true)}
+      onEdit={openEditForm}
     />
   );
 }

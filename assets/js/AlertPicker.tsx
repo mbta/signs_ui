@@ -111,7 +111,7 @@ function AlertPicker({
         aria-label="Alert ID picker"
         disabled={disabled}
         type="text"
-        value={alertId || ''}
+        value={alertId}
         onClick={() => {
           setIsOpen(true);
         }}
