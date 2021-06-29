@@ -4,9 +4,7 @@ defmodule SignsUiWeb.Plugs.ApiAuth do
   import Plug.Conn
   require Logger
 
-  # coveralls-ignore-start
   def init(opts), do: opts
-  # coveralls-ignore-end
 
   def call(conn, _opts) do
     with [key] <- get_req_header(conn, "x-api-key"),
