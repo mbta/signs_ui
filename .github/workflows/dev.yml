@@ -22,10 +22,14 @@ jobs:
         uses: mbta/actions/commit-metadata@v1
       - uses: mbta/actions/build-push-ecr@v1
         id: build-push
+        env:
+          ERL_COOKIE: ${{ secrets.ERL_COOKIE }}
+          SECRET_KEY_BASE: ${{ secrets.SECRET_KEY_BASE }}
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           docker-repo: ${{ secrets.DOCKER_REPO }}
+          docker-additional-args: '--build-arg ERL_COOKIE --build-arg SECRET_KEY_BASE'
       - id: deployment-package
         uses: mbta/actions/eb-ecr-dockerrun@v1
         with:
