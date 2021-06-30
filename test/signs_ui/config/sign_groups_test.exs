@@ -1,5 +1,6 @@
 defmodule SignsUi.Config.SignGroupsTest do
   use ExUnit.Case
+  doctest SignsUi.Config.SignGroups, import: true
   alias SignsUi.Config.SignGroup
   alias SignsUi.Config.SignGroups
 
