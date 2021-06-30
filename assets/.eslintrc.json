@@ -55,6 +55,7 @@
          }
       ],
       "consistent-return": "off",
-      "default-case": "off"
+      "default-case": "off",
+      "react/require-default-props": "off"
    }
 }
