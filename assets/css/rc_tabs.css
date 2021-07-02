@@ -1,13 +1,8 @@
-.rc-tabs {
-  margin-bottom: 1rem;
-}
-
 .rc-tabs-nav {
   line-height: 1.2;
 }
 
 .rc-tabs-nav-list {
-  border: 1px solid #ddd;
   display: flex;
 }
 
