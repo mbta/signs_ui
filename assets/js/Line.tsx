@@ -1,4 +1,5 @@
 import * as React from 'react';
+import Collapse, { Panel } from 'rc-collapse';
 import Tabs, { TabPane } from 'rc-tabs';
 import ConfiguredHeadwaysForm from './ConfiguredHeadwaysForm';
 import Station from './Station';
@@ -131,30 +132,34 @@ function Line({
   return (
     <div>
       <h1>{name(line)}</h1>
-      <Tabs defaultActiveKey="0" tabBarStyle={{}}>
-        {featureIsEnabled('sign_groups') && (
-          <TabPane tab="Sign Groups">
-            <SignGroups
-              line={line}
-              currentTime={currentTime}
-              alerts={alerts}
-              signGroups={signGroups[line] || {}}
-              setSignGroup={setSignGroup}
-              readOnly={readOnly}
-            />
-          </TabPane>
-        )}
-        {branches.length > 0 && (
-          <TabPane tab="Set Headways" key="1">
-            <ConfiguredHeadwaysForm
-              branches={branches}
-              configuredHeadways={configuredHeadways}
-              setConfiguredHeadways={setConfiguredHeadways}
-              readOnly={readOnly}
-            />
-          </TabPane>
-        )}
-      </Tabs>
+      <Collapse destroyInactivePanel={true}>
+        <Panel header="Bulk Editing">
+          <Tabs defaultActiveKey="0" tabBarStyle={{}}>
+            {featureIsEnabled('sign_groups') && (
+              <TabPane tab="Sign Groups">
+                <SignGroups
+                  line={line}
+                  currentTime={currentTime}
+                  alerts={alerts}
+                  signGroups={signGroups[line] || {}}
+                  setSignGroup={setSignGroup}
+                  readOnly={readOnly}
+                />
+              </TabPane>
+            )}
+            {branches.length > 0 && (
+              <TabPane tab="Set Headways" key="1">
+                <ConfiguredHeadwaysForm
+                  branches={branches}
+                  configuredHeadways={configuredHeadways}
+                  setConfiguredHeadways={setConfiguredHeadways}
+                  readOnly={readOnly}
+                />
+              </TabPane>
+            )}
+          </Tabs>
+        </Panel>
+      </Collapse>
 
       {line === 'Silver' && (
         <label className="mt-1 mb-4">
