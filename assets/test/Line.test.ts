@@ -1,5 +1,8 @@
 import * as React from 'react';
 import { mount, shallow } from 'enzyme';
+import { render, screen, within } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+
 import Line from '../js/Line';
 import ConfiguredHeadwaysForm from '../js/ConfiguredHeadwaysForm';
 import {
@@ -573,4 +576,55 @@ test('does not show chelsea bridge toggle if in read-only mode', () => {
   expect(wrapper.text()).toMatch('Chelsea Drawbridge Announcements:Auto');
   const chelseaInput = wrapper.find('input[name="chelsea_bridge"]');
   expect(chelseaInput.exists()).toEqual(false);
+});
+
+test('allows removing an individual sign from a group', () => {
+  const line = 'Red';
+  const setSignGroup = jest.fn();
+  const groupKey = '1625778000';
+
+  render(
+    React.createElement(
+      Line,
+      {
+        alerts: {},
+        signs: {},
+        currentTime: Date.now() + 2000,
+        line,
+        signConfigs: {},
+        setConfigs: jest.fn(),
+        readOnly: false,
+        configuredHeadways: {},
+        setConfiguredHeadways: jest.fn(),
+        chelseaBridgeAnnouncements: 'off',
+        setChelseaBridgeAnnouncements: jest.fn(),
+        signGroups: {
+          [groupKey]: {
+            sign_ids: ['central_northbound', 'central_southbound'],
+            line1: 'custom',
+            line2: 'text',
+            expires: null,
+            alert_id: null,
+          },
+        },
+        setSignGroup,
+      },
+      null,
+    ),
+  );
+
+  const central = within(screen.getByRole('region', { name: 'Central' }));
+  const centralNB = within(central.getByRole('region', { name: 'NB' }));
+  userEvent.click(centralNB.getByRole('button', { name: 'Ungroup' }));
+  userEvent.click(centralNB.getByRole('button', { name: /Yes/ }));
+
+  expect(centralNB.queryByRole('button', { name: /Yes/ })).toBeNull();
+  expect(setSignGroup).toHaveBeenCalledWith(line, groupKey, {
+    sign_ids: ['central_southbound'],
+    line1: 'custom',
+    line2: 'text',
+    expires: null,
+    alert_id: null,
+  });
+  // TODO: assert sign was returned to auto, once it does that
 });

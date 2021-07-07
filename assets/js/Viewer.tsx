@@ -41,6 +41,11 @@ function Viewer({
   signGroups,
   setSignGroup,
 }: ViewerProps): JSX.Element {
+  const routeSignGroups = React.useMemo(
+    () => signGroups[line] || {},
+    [line, signGroups],
+  );
+
   return (
     <div>
       <Line
@@ -54,7 +59,7 @@ function Viewer({
         setConfiguredHeadways={setConfiguredHeadways}
         chelseaBridgeAnnouncements={chelseaBridgeAnnouncements}
         setChelseaBridgeAnnouncements={setChelseaBridgeAnnouncements}
-        signGroups={signGroups}
+        signGroups={routeSignGroups}
         setSignGroup={setSignGroup}
         readOnly={readOnly}
       />

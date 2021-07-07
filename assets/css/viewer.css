@@ -34,30 +34,55 @@
   width: 5em;
 }
 
-.viewer--static-text-form {
+.viewer--sign-options {
   background-color: rgb(206, 206, 206);
   margin-bottom: 1em;
   margin-top: -1em;
-  padding: 0.25em 0.5em 0.5em 0.5em;
+  padding: 0 0.5em;
   width: 20em;
 }
 
-.react-datepicker__time-list-item {
-  font-size: smaller;
+.viewer--sign-options:empty {
+  display: none;
 }
 
-.viewer--schedule-expires {
-  background-color: rgb(206, 206, 206);
-  margin-bottom: 1em;
-  margin-top: -1em;
-  padding: 0.25em 0.5em 0.5em 0.5em;
-  width: 20em;
+.viewer--sign-options > * {
+  padding: 0.5em 0;
 }
 
-.viewer--schedule-expires:empty {
-  padding: 0em 0em 0em 0em;
-  margin-bottom: 0em;
-  margin-top: 0em;
+.viewer--sign-group {
+  font-size: 0.8rem;
+}
+
+.viewer--sign-group h4 {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.viewer--sign-group-panel {
+  align-items: end;
+  display: grid;
+  gap: 0.5rem;
+  grid: auto / auto min-content;
+}
+
+.viewer--sign-group-details {
+  background-color: white;
+  padding: 0.5rem;
+}
+
+.viewer--sign-ungroup-confirmation {
+  background-color: white;
+  border-radius: 6px;
+  box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.5);
+  padding: 0.75rem;
+  position: absolute;
+  z-index: 10;
+}
+
+.viewer--sign-ungroup-confirmation--buttons {
+  display: flex;
+  gap: 0.5rem;
 }
 
 .viewer--mode-select {

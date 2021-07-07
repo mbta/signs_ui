@@ -66,12 +66,15 @@ function SetExpiration({
   const isDateTimeSelected = !!signConfig.expires;
   const isAlertSelected = !!signConfig.alert_id;
   const isNoAlerts = Object.keys(alerts).length === 0;
+  const headerText = readOnly
+    ? 'Scheduled return to "Auto"'
+    : 'Schedule return to "Auto"';
 
   return isDateTimeSelected || isAlertSelected || !readOnly ? (
     <div>
-      {(!readOnly && <strong>Schedule return to &quot;Auto&quot;</strong>) || (
-        <strong>Scheduled return to &quot;Auto&quot;</strong>
-      )}
+      <div>
+        <strong>{headerText}</strong>
+      </div>
       <form>
         <label
           className={isAlertSelected ? 'set_expiration--label-disabled' : ''}

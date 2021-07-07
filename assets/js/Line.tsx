@@ -7,14 +7,16 @@ import { stationConfig, arincToRealtimeId, branchConfig } from './mbta';
 import SignGroups from './SignGroups';
 import featureIsEnabled from './laboratoryFeatures';
 import {
-  RouteAlerts,
-  SignContent,
   ConfiguredHeadways,
+  RouteAlerts,
+  RouteSignGroups,
   SignConfigs,
-  StationConfig,
-  SignGroupMap,
+  SignContent,
   SignGroup,
+  StationConfig,
 } from './types';
+
+/* eslint-disable camelcase */
 
 function name(line: string) {
   if (line === 'Red') {
@@ -85,7 +87,7 @@ interface LineProps {
   stationConfigs?: StationConfig[];
   chelseaBridgeAnnouncements: 'auto' | 'off';
   setChelseaBridgeAnnouncements: (x: 'auto' | 'off') => void;
-  signGroups: SignGroupMap;
+  signGroups: RouteSignGroups;
   setSignGroup: (line: string, key: string, signGroup: SignGroup) => void;
 }
 
@@ -105,13 +107,39 @@ function Line({
   signGroups,
   setSignGroup,
 }: LineProps): JSX.Element {
+  const branches = branchConfig[line] || [];
+
   const stations: StationConfig[] =
     stationConfigs ||
     (stationConfig[line] && stationConfig[line].stations) ||
     [];
+
+  const signsToGroups: { [id: string]: string } = React.useMemo(
+    () =>
+      Object.fromEntries(
+        Object.entries(signGroups).flatMap(([groupKey, { sign_ids }]) =>
+          sign_ids.map((id) => [id, groupKey]),
+        ),
+      ),
+    [signGroups],
+  );
+
+  const ungroupSign = React.useCallback(
+    (realtimeId: string) => {
+      const groupKey = signsToGroups[realtimeId];
+      const { sign_ids: signIds, ...signGroup } = signGroups[groupKey];
+
+      setSignGroup(line, groupKey, {
+        ...signGroup,
+        sign_ids: signIds.filter((id) => id !== realtimeId),
+      });
+    },
+    [line, signGroups, signsToGroups, setSignGroup],
+  );
+
   const batchModes =
     (stationConfig[line] && stationConfig[line].batchModes) || {};
-  const branches = branchConfig[line] || [];
+
   const batchMode = React.useMemo(() => {
     const uniqueModes: { [key: string]: string } = {};
     const isMixed = stations.some((station) =>
@@ -127,12 +155,14 @@ function Line({
         return false;
       }),
     );
+
     return isMixed ? 'mixed' : Object.keys(uniqueModes)[0];
   }, [signConfigs, stations, arincToRealtimeId]);
+
   return (
     <div>
       <h1>{name(line)}</h1>
-      <Collapse destroyInactivePanel={true}>
+      <Collapse destroyInactivePanel>
         <Panel header="Bulk Editing">
           <Tabs defaultActiveKey="0" tabBarStyle={{}}>
             {featureIsEnabled('sign_groups') && (
@@ -141,7 +171,7 @@ function Line({
                   line={line}
                   currentTime={currentTime}
                   alerts={alerts}
-                  signGroups={signGroups[line] || {}}
+                  signGroups={signGroups}
                   setSignGroup={setSignGroup}
                   readOnly={readOnly}
                 />
@@ -273,6 +303,9 @@ function Line({
           line={line}
           signConfigs={signConfigs}
           setConfigs={setConfigs}
+          signGroups={signGroups}
+          signsToGroups={signsToGroups}
+          ungroupSign={ungroupSign}
           readOnly={readOnly}
         />
       ))}

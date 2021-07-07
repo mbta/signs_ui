@@ -1,6 +1,6 @@
-import dateFormat from 'dateformat';
 import React from 'react';
 import SignText from './SignText';
+import SignGroupExpirationDetails from './SignGroupExpirationDetails';
 import { SignGroup } from './types';
 
 interface SignGroupProps {
@@ -21,20 +21,7 @@ export default function SignGroupItem({
   return (
     <div className="sign_groups--group-item" data-testid={groupKey}>
       <SignText time={currentTime} line1={group.line1} line2={group.line2} />
-      <div className="sign_group--expiration-container">
-        Scheduled return to auto:
-        {group.expires ? (
-          <div className="sign_groups--group-expiration">
-            at {dateFormat(new Date(group.expires), 'mm/dd/yyyy hh:MM TT')}
-          </div>
-        ) : group.alert_id ? (
-          <div className="sign_groups--group-expiration">
-            when alert {group.alert_id} closes
-          </div>
-        ) : (
-          <div className="sign_groups--group-expiration">manually</div>
-        )}
-      </div>
+      <SignGroupExpirationDetails group={group} />
       <div className="sign_groups--group-buttons">
         <button
           disabled={readOnly}
