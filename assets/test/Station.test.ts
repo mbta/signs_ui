@@ -23,23 +23,20 @@ test('shows the custom configuration information for a station', () => {
       m: { label: 'Entire Station', modes },
     },
   };
-  const currentTime = Date.now() + 2000;
-  const signs = {};
-  const line = 'Orange';
-  const signConfigs = {};
-  const setConfigs = () => true;
-  const readOnly = false;
 
   const wrapper = mount(
     React.createElement(Station, {
-      alerts: {},
       config,
-      signs,
-      currentTime,
-      line,
-      signConfigs,
-      setConfigs,
-      readOnly,
+      alerts: {},
+      signs: {},
+      currentTime: Date.now() + 2000,
+      line: 'Orange',
+      signConfigs: {},
+      setConfigs: jest.fn(),
+      signGroups: {},
+      signsToGroups: {},
+      ungroupSign: jest.fn(),
+      readOnly: false,
     }),
   );
 
@@ -66,23 +63,20 @@ test('allows custom reordering of sign positions', () => {
       s: { label: 'bar', modes },
     },
   };
-  const currentTime = Date.now() + 2000;
-  const signs = {};
-  const line = 'Orange';
-  const signConfigs = {};
-  const setConfigs = () => true;
-  const readOnly = false;
 
   const wrapper = mount(
     React.createElement(Station, {
-      alerts: {},
       config,
-      signs,
-      currentTime,
-      line,
-      signConfigs,
-      setConfigs,
-      readOnly,
+      alerts: {},
+      signs: {},
+      currentTime: Date.now() + 2000,
+      line: 'Orange',
+      signConfigs: {},
+      setConfigs: jest.fn(),
+      signGroups: {},
+      signsToGroups: {},
+      ungroupSign: jest.fn(),
+      readOnly: false,
     }),
   );
 

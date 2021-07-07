@@ -3,6 +3,7 @@ import SignPanel from './SignPanel';
 import { arincToRealtimeId } from './mbta';
 import {
   RouteAlerts,
+  RouteSignGroups,
   SignConfig,
   SignConfigs,
   SignContent,
@@ -52,6 +53,9 @@ function makeSign(
   line: string,
   signConfigs: { [x: string]: SignConfig },
   setConfigs: (x: SignConfigs) => void,
+  signGroups: RouteSignGroups,
+  signsToGroups: { [id: string]: string },
+  ungroupSign: (id: string) => void,
   readOnly: boolean,
 ) {
   const zoneConfig = config.zones[zone];
@@ -60,6 +64,9 @@ function makeSign(
     const signContent = signs[key] || { sign_id: key, lines: {} };
     const realtimeId = arincToRealtimeId(key, line);
     const signConfig = signConfigs[realtimeId] || { mode: 'off' };
+    const signGroupKey = signsToGroups[realtimeId];
+    const signGroup = signGroupKey ? signGroups[signGroupKey] : undefined;
+    const ungroupMe = signGroupKey ? () => ungroupSign(realtimeId) : undefined;
 
     return (
       <SignPanel
@@ -73,6 +80,8 @@ function makeSign(
         signConfig={signConfig}
         setConfigs={setConfigs}
         realtimeId={realtimeId}
+        signGroup={signGroup}
+        ungroupSign={ungroupMe}
         readOnly={readOnly}
       />
     );
@@ -89,6 +98,9 @@ interface StationProps {
   line: string;
   signConfigs: SignConfigs;
   setConfigs: (x: SignConfigs) => void;
+  signGroups: RouteSignGroups;
+  signsToGroups: { [id: string]: string };
+  ungroupSign: (id: string) => void;
   readOnly: boolean;
 }
 
@@ -100,6 +112,9 @@ function Station({
   line,
   signConfigs,
   setConfigs,
+  signGroups,
+  signsToGroups,
+  ungroupSign,
   readOnly,
 }: StationProps): JSX.Element {
   const zonePositions = config.zonePositions || {
@@ -109,7 +124,7 @@ function Station({
   };
 
   return (
-    <div key={config.id}>
+    <section key={config.id} aria-label={config.name}>
       <h3>
         {config.name} <small>({config.id})</small>
       </h3>
@@ -124,6 +139,9 @@ function Station({
             line,
             signConfigs,
             setConfigs,
+            signGroups,
+            signsToGroups,
+            ungroupSign,
             readOnly,
           )}
           {makeSign(
@@ -135,6 +153,9 @@ function Station({
             line,
             signConfigs,
             setConfigs,
+            signGroups,
+            signsToGroups,
+            ungroupSign,
             readOnly,
           )}
         </div>
@@ -148,6 +169,9 @@ function Station({
             line,
             signConfigs,
             setConfigs,
+            signGroups,
+            signsToGroups,
+            ungroupSign,
             readOnly,
           )}
           {makeSign(
@@ -159,6 +183,9 @@ function Station({
             line,
             signConfigs,
             setConfigs,
+            signGroups,
+            signsToGroups,
+            ungroupSign,
             readOnly,
           )}
         </div>
@@ -172,6 +199,9 @@ function Station({
             line,
             signConfigs,
             setConfigs,
+            signGroups,
+            signsToGroups,
+            ungroupSign,
             readOnly,
           )}
           {makeSign(
@@ -183,12 +213,15 @@ function Station({
             line,
             signConfigs,
             setConfigs,
+            signGroups,
+            signsToGroups,
+            ungroupSign,
             readOnly,
           )}
         </div>
       </div>
       <hr />
-    </div>
+    </section>
   );
 }
 

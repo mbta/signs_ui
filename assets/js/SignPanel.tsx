@@ -4,9 +4,11 @@ import {
   RouteAlerts,
   SignConfig,
   SignConfigs,
+  SignGroup,
   SingleSignContent,
 } from './types';
 import { choosePage } from './helpers';
+import SignGroupExpirationDetails from './SignGroupExpirationDetails';
 import SignTextInput from './SignTextInput';
 import SetExpiration from './SetExpiration';
 import SignText from './SignText';
@@ -111,6 +113,8 @@ interface SignPanelProps {
   setConfigs: (x: SignConfigs) => void;
   signConfig: SignConfig;
   realtimeId: string;
+  signGroup?: SignGroup;
+  ungroupSign?: () => void;
   readOnly: boolean;
 }
 
@@ -121,6 +125,7 @@ class SignPanel extends React.Component<
     staticLine2: string;
     customChanges: boolean;
     initialTime: number;
+    confirmingUngroup: boolean;
   }
 > {
   constructor(props: SignPanelProps) {
@@ -135,6 +140,7 @@ class SignPanel extends React.Component<
       staticLine2: props.signConfig.line2 || '',
       customChanges: false,
       initialTime: props.currentTime,
+      confirmingUngroup: false,
     };
   }
 
@@ -144,6 +150,19 @@ class SignPanel extends React.Component<
 
   handleInputLine2(newText: string): void {
     this.setState({ staticLine2: newText, customChanges: true });
+  }
+
+  performUngroup(): void {
+    const { ungroupSign } = this.props;
+
+    if (ungroupSign !== undefined) {
+      this.setState({ confirmingUngroup: false });
+      ungroupSign();
+    }
+  }
+
+  setConfirmingUngroup(confirming: boolean): void {
+    this.setState({ confirmingUngroup: confirming });
   }
 
   saveStaticText(): void {
@@ -175,6 +194,7 @@ class SignPanel extends React.Component<
       setConfigs,
       realtimeId,
       readOnly,
+      signGroup,
       modes = {
         auto: true,
         custom: true,
@@ -182,10 +202,17 @@ class SignPanel extends React.Component<
         off: true,
       },
     } = this.props;
-    const { staticLine1, staticLine2, customChanges, initialTime } = this.state;
+
+    const {
+      staticLine1,
+      staticLine2,
+      customChanges,
+      initialTime,
+      confirmingUngroup,
+    } = this.state;
 
     return (
-      <div>
+      <section aria-label={signId}>
         <div className="viewer--sign">
           <div
             className="viewer--sign-id"
@@ -197,7 +224,7 @@ class SignPanel extends React.Component<
                 {displayName(signConfig.mode)}
               </div>
             )}
-            {!readOnly && (
+            {!readOnly && !signGroup && (
               <div>
                 <select
                   id={realtimeId}
@@ -246,46 +273,99 @@ class SignPanel extends React.Component<
           </div>
         </div>
 
-        {signConfig.mode === 'static_text' && !readOnly && (
-          <div className="viewer--static-text-form">
-            <div>
-              <strong>Set custom message</strong>
-            </div>
-            <SignTextInput
-              signID={realtimeId}
-              line1={staticLine1}
-              line2={staticLine2}
-              onValidLine1Change={this.handleInputLine1}
-              onValidLine2Change={this.handleInputLine2}
-            />
-            <div>
-              <input
-                className="viewer--apply-button"
-                disabled={!customChanges}
-                type="submit"
-                value="Apply"
-                onClick={this.saveStaticText}
+        <div className="viewer--sign-options">
+          {signConfig.mode === 'static_text' && !readOnly && !signGroup && (
+            <div className="viewer--static-text-form">
+              <div>
+                <strong>Set custom message</strong>
+              </div>
+              <SignTextInput
+                signID={realtimeId}
+                line1={staticLine1}
+                line2={staticLine2}
+                onValidLine1Change={this.handleInputLine1}
+                onValidLine2Change={this.handleInputLine2}
               />
-              {customChanges ? '*' : ''}
+              <div>
+                <input
+                  className="viewer--apply-button"
+                  disabled={!customChanges}
+                  type="submit"
+                  value="Apply"
+                  onClick={this.saveStaticText}
+                />
+                {customChanges ? '*' : ''}
+              </div>
             </div>
-          </div>
-        )}
-        {signConfig.mode !== 'auto' && modes.auto && (
-          <div className="viewer--schedule-expires">
-            <SetExpiration
-              alerts={alerts}
-              realtimeId={realtimeId}
-              signConfig={signConfig}
-              setConfigs={setConfigs}
-              readOnly={readOnly}
-              showAlertSelector={shouldShowAlertSelector(line)}
-            />
-          </div>
-        )}
-      </div>
+          )}
+
+          {signConfig.mode !== 'auto' && modes.auto && !signGroup && (
+            <div className="viewer--schedule-expires">
+              <SetExpiration
+                alerts={alerts}
+                realtimeId={realtimeId}
+                signConfig={signConfig}
+                setConfigs={setConfigs}
+                readOnly={readOnly}
+                showAlertSelector={shouldShowAlertSelector(line)}
+              />
+            </div>
+          )}
+
+          {signGroup && (
+            <div className="viewer--sign-group">
+              {confirmingUngroup && (
+                <div className="viewer--sign-ungroup-confirmation">
+                  <h4>This sign is part of a group</h4>
+                  <p>
+                    Ungrouping will return this sign to &quot;Auto&quot;.
+                    <br />
+                    Would you like to ungroup the sign?
+                  </p>
+
+                  <div className="viewer--sign-ungroup-confirmation--buttons">
+                    <button
+                      type="button"
+                      className="btn btn-primary"
+                      onClick={() => this.performUngroup()}
+                    >
+                      Yes, ungroup this sign
+                    </button>
+                    <button
+                      type="button"
+                      className="btn"
+                      onClick={() => this.setConfirmingUngroup(false)}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              <div className="viewer--sign-group-panel">
+                <div className="viewer--sign-group-details">
+                  <h4>Grouped</h4>
+                  <SignGroupExpirationDetails group={signGroup} />
+                </div>
+
+                <div>
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={() => this.setConfirmingUngroup(true)}
+                    disabled={confirmingUngroup}
+                  >
+                    Ungroup
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
     );
   }
 }
 
 export default SignPanel;
-export { SignModeOptions };
+export { SignModeOptions, SignPanelProps };

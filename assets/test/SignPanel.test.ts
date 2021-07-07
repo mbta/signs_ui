@@ -1,8 +1,66 @@
 import * as React from 'react';
 import { mount } from 'enzyme';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
-import SignPanel, { SignModeOptions } from '../js/SignPanel';
-import { ZoneConfig, SignConfig, SingleSignContent } from '../js/types';
+import SignPanel, { SignModeOptions, SignPanelProps } from '../js/SignPanel';
+import {
+  ZoneConfig,
+  SignConfig,
+  SignGroup,
+  SingleSignContent,
+} from '../js/types';
+
+function customSignContent(): SingleSignContent {
+  const now = new Date().valueOf();
+  const soon = new Date(now + 5000).toLocaleString();
+
+  return {
+    sign_id: 'RDAV-n',
+    lines: {
+      1: {
+        text: [
+          {
+            content: 'No trains',
+            duration: 5,
+          },
+        ],
+        expiration: soon,
+      },
+      2: {
+        text: [
+          {
+            content: 'Use shuttle bus',
+            duration: 5,
+          },
+        ],
+        expiration: soon,
+      },
+    },
+  };
+}
+
+function customModeSignProps(): SignPanelProps {
+  const now = new Date().valueOf();
+
+  return {
+    alerts: {},
+    signId: 'RDAV-n',
+    signContent: customSignContent(),
+    currentTime: now + 2000,
+    line: 'Red',
+    signConfig: { mode: 'static_text' },
+    setConfigs: () => true,
+    realtimeId: 'id',
+    readOnly: false,
+    modes: {
+      auto: true,
+      custom: true,
+      headway: true,
+      off: true,
+    },
+  };
+}
 
 function signContentWithExpirations(
   time1: string,
@@ -414,4 +472,74 @@ test('shows clock even when no other content is present', () => {
   );
 
   expect(wrapper.text()).toMatch('3:15');
+});
+
+test('does not show a group indicator if the sign is not grouped', () => {
+  render(React.createElement(SignPanel, customModeSignProps(), null));
+
+  expect(screen.queryByText('Grouped')).toBeNull();
+});
+
+test('shows info about the group if the sign is grouped', () => {
+  const signGroup: SignGroup = {
+    sign_ids: ['id'],
+    line1: 'custom',
+    line2: 'text',
+    expires: null,
+    alert_id: '123456',
+  };
+  const props = { ...customModeSignProps(), signGroup: signGroup };
+  render(React.createElement(SignPanel, props, null));
+
+  expect(screen.queryByRole('heading', { name: 'Grouped' })).toBeVisible();
+  const groupInfo = screen.getByText('Scheduled return to auto:');
+  expect(groupInfo).toHaveTextContent('when alert 123456 closes');
+});
+
+test('allows ungrouping the sign if it is grouped', () => {
+  const signGroup: SignGroup = {
+    sign_ids: ['id'],
+    line1: 'custom',
+    line2: 'text',
+    expires: null,
+    alert_id: null,
+  };
+  const ungroupFn = jest.fn();
+  const props: SignPanelProps = {
+    ...customModeSignProps(),
+    signGroup: signGroup,
+    ungroupSign: ungroupFn,
+  };
+  render(React.createElement(SignPanel, props, null));
+
+  userEvent.click(screen.getByRole('button', { name: 'Ungroup' }));
+  userEvent.click(
+    screen.getByRole('button', { name: 'Yes, ungroup this sign' }),
+  );
+
+  expect(ungroupFn).toHaveBeenCalled();
+});
+
+test('allows backing out of the ungrouping prompt', () => {
+  const signGroup: SignGroup = {
+    sign_ids: ['id'],
+    line1: 'custom',
+    line2: 'text',
+    expires: null,
+    alert_id: null,
+  };
+  const ungroupFn = jest.fn();
+  const props: SignPanelProps = {
+    ...customModeSignProps(),
+    signGroup: signGroup,
+    ungroupSign: ungroupFn,
+  };
+  render(React.createElement(SignPanel, props, null));
+
+  userEvent.click(screen.getByRole('button', { name: 'Ungroup' }));
+  userEvent.click(screen.getByRole('button', { name: 'Cancel' }));
+
+  expect(ungroupFn).not.toHaveBeenCalled();
+  expect(screen.getByRole('button', { name: 'Ungroup' })).not.toBeDisabled();
+  expect(screen.queryByRole('button', { name: 'Cancel' })).toBeNull();
 });
