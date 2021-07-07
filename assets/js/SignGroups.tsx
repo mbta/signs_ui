@@ -12,6 +12,7 @@ import {
   SignGroup,
 } from './types';
 import { defaultZoneLabel } from './helpers';
+import SignGroupItem from './SignGroupItem';
 
 interface ZoneSelectorProps {
   config: StationConfig;
@@ -293,6 +294,7 @@ function SignGroupsForm({
 interface SignGroupsListProps {
   signGroups: RouteSignGroups;
   readOnly: boolean;
+  currentTime: number;
   onCreate: () => void;
   onEdit: (timestamp: string) => void;
 }
@@ -300,26 +302,37 @@ interface SignGroupsListProps {
 function SignGroupsList({
   signGroups,
   readOnly,
+  currentTime,
   onCreate,
   onEdit,
 }: SignGroupsListProps): JSX.Element | null {
+  const groupCount = Object.keys(signGroups).length;
+
   return (
-    <div>
-      {Object.keys(signGroups).map((timestamp) => (
-        <p key={timestamp}>
-          <button
-            disabled={readOnly}
-            onClick={() => onEdit(timestamp)}
-            type="button"
-          >
-            Edit
-          </button>
-          {timestamp}: {JSON.stringify(signGroups[timestamp])}
-        </p>
-      ))}
-      <button disabled={readOnly} onClick={onCreate} type="button">
+    <div className="sign_groups--groups-container">
+      <button
+        className="btn btn-primary"
+        disabled={readOnly}
+        onClick={onCreate}
+        type="button"
+      >
         Create
       </button>
+      <div className="sign_groups--group-list-container">
+        {groupCount > 0 && <h6>Active Groups</h6>}
+        <div className="sign_groups--group-list">
+          {Object.keys(signGroups).map((timestamp) => (
+            <SignGroupItem
+              key={timestamp}
+              timestamp={timestamp}
+              currentTime={currentTime}
+              group={signGroups[timestamp]}
+              readOnly={readOnly}
+              onEdit={onEdit}
+            />
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
@@ -352,10 +365,10 @@ function SignGroups({
   const [formSignGroup, setFormSignGroup] = React.useState(newSignGroup);
   const [isFormOpen, setIsFormOpen] = React.useState(false);
 
-  const openEditForm = React.useCallback(
-    (timestamp: string) => {
-      setFormKey(timestamp);
-      setFormSignGroup(signGroups[timestamp]);
+  const openForm = React.useCallback(
+    (formKey: string | null) => {
+      setFormKey(formKey);
+      setFormSignGroup(formKey ? signGroups[formKey] : newSignGroup);
       setIsFormOpen(true);
     },
     [signGroups],
@@ -386,9 +399,10 @@ function SignGroups({
   return (
     <SignGroupsList
       signGroups={signGroups}
+      currentTime={currentTime}
       readOnly={readOnly}
-      onCreate={() => setIsFormOpen(true)}
-      onEdit={openEditForm}
+      onCreate={() => openForm(null)}
+      onEdit={openForm}
     />
   );
 }
