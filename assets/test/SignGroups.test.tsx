@@ -9,7 +9,7 @@ function openNewGroupForm() {
 }
 
 function openEditGroupForm(timestamp: string) {
-  const groupContext = within(screen.getByText(timestamp, { exact: false }));
+  const groupContext = within(screen.getByTestId(timestamp, { exact: false }));
   userEvent.click(groupContext.getByRole('button', { name: 'Edit' }));
 }
 

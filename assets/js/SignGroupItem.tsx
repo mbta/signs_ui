@@ -19,7 +19,7 @@ export default function SignGroupItem({
   onEdit,
 }: SignGroupProps) {
   return (
-    <div className="sign_groups--group-item">
+    <div className="sign_groups--group-item" data-testid={timestamp}>
       <SignText time={currentTime} line1={group.line1} line2={group.line2} />
       <div className="sign_group--expiration-container">
         Scheduled return to auto:
