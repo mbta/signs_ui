@@ -31,6 +31,7 @@ function ModalPrompt({
         width: `${box.width}px`,
         height: `${box.height}px`,
       }}
+      data-testid="modal-prompt"
     >
       <div className="modal_prompt--container">
         {contents}

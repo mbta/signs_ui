@@ -43,6 +43,24 @@ function cancelFormButton() {
   return screen.getByRole('button', { name: 'Cancel' });
 }
 
+function getModalPrompt(): HTMLElement {
+  return screen.getByTestId('modal-prompt');
+}
+
+function cancelModalPrompt(modalPrompt: HTMLElement) {
+  const cancelButton = within(modalPrompt).getByRole('button', {
+    name: 'Cancel',
+  });
+  userEvent.click(cancelButton);
+}
+
+function acceptModalPrompt(modalPrompt: HTMLElement) {
+  const acceptButton = within(modalPrompt).getByRole('button', {
+    name: 'Yes, reassign this sign',
+  });
+  userEvent.click(acceptButton);
+}
+
 type SignGroupUpdate = {
   line: string;
   timestamp: number;
@@ -184,4 +202,90 @@ test('can edit an existing sign group', () => {
       },
     },
   ]);
+});
+
+test('can cancel prompt when moving a sign from one sign group to another', () => {
+  const signGroupSubmissions: Array<SignGroup> = [];
+  const otherSignGroupKey = 1622149900;
+
+  render(
+    React.createElement(SignGroups, {
+      line: 'Orange',
+      currentTime: otherSignGroupKey + 1,
+      alerts: {},
+      signGroups: {
+        [otherSignGroupKey]: {
+          sign_ids: [
+            'orange_north_station_commuter_rail_exit',
+            'orange_north_station_northbound',
+          ],
+          line1: 'custom',
+          line2: 'text',
+          expires: null,
+          alert_id: null,
+        },
+      },
+      setSignGroup: (line, timestamp, signGroup) => {
+        signGroupSubmissions.push(signGroup);
+      },
+      readOnly: false,
+    }),
+  );
+
+  openNewGroupForm();
+  setMessage('text1', 'text2');
+  toggleZones(['tufts_southbound', 'orange_north_station_commuter_rail_exit']);
+
+  const modalPrompt = getModalPrompt();
+
+  expect(modalPrompt).toHaveTextContent(
+    'The North Station CR Exit sign is part of an active sign group',
+  );
+
+  cancelModalPrompt(modalPrompt);
+  userEvent.click(newGroupSubmitButton());
+
+  expect(signGroupSubmissions[0].sign_ids).toEqual(['tufts_southbound']);
+});
+
+test('can accept prompt when moving a sign from one sign group to another', () => {
+  const signGroupSubmissions: Array<SignGroup> = [];
+  const otherSignGroupKey = 1622149900;
+  const movingId = 'orange_north_station_commuter_rail_exit';
+
+  render(
+    React.createElement(SignGroups, {
+      line: 'Orange',
+      currentTime: otherSignGroupKey + 1,
+      alerts: {},
+      signGroups: {
+        [otherSignGroupKey]: {
+          sign_ids: [movingId, 'orange_north_station_northbound'],
+          line1: 'custom',
+          line2: 'text',
+          expires: null,
+          alert_id: null,
+        },
+      },
+      setSignGroup: (line, timestamp, signGroup) => {
+        signGroupSubmissions.push(signGroup);
+      },
+      readOnly: false,
+    }),
+  );
+
+  openNewGroupForm();
+  setMessage('text1', 'text2');
+  toggleZones(['tufts_southbound', movingId]);
+
+  const modalPrompt = getModalPrompt();
+
+  expect(modalPrompt).toHaveTextContent(
+    'The North Station CR Exit sign is part of an active sign group',
+  );
+
+  acceptModalPrompt(modalPrompt);
+  userEvent.click(newGroupSubmitButton());
+
+  expect(signGroupSubmissions[0].sign_ids).toContain(movingId);
 });
