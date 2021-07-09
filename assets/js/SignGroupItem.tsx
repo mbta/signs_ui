@@ -4,22 +4,22 @@ import SignText from './SignText';
 import { SignGroup } from './types';
 
 interface SignGroupProps {
-  timestamp: string;
   currentTime: number;
+  groupKey: string;
   group: SignGroup;
   readOnly: boolean;
-  onEdit: (timestamp: string) => void;
+  onEdit: (key: string) => void;
 }
 
 export default function SignGroupItem({
-  timestamp,
+  groupKey,
   currentTime,
   group,
   readOnly,
   onEdit,
 }: SignGroupProps) {
   return (
-    <div className="sign_groups--group-item" data-testid={timestamp}>
+    <div className="sign_groups--group-item" data-testid={groupKey}>
       <SignText time={currentTime} line1={group.line1} line2={group.line2} />
       <div className="sign_group--expiration-container">
         Scheduled return to auto:
@@ -38,7 +38,7 @@ export default function SignGroupItem({
       <div className="sign_groups--group-buttons">
         <button
           disabled={readOnly}
-          onClick={() => onEdit(timestamp)}
+          onClick={() => onEdit(groupKey)}
           type="button"
           className="btn btn-secondary sign_groups--group-edit-button"
         >

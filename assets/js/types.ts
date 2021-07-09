@@ -93,7 +93,7 @@ type SignGroup = {
 };
 
 type RouteSignGroups = {
-  [timestamp: string]: SignGroup;
+  [key: string]: SignGroup;
 };
 
 type SignGroupMap = {
