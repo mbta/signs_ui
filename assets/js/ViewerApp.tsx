@@ -191,12 +191,12 @@ class ViewerApp extends React.Component<
     }
   }
 
-  setSignGroup(line: string, timestamp: number, signGroup: SignGroup): void {
+  setSignGroup(line: string, key: string, signGroup: SignGroup): void {
     const { signGroupsChannel: channel } = this.state;
 
     if (channel) {
       channel.push('changeSignGroups', {
-        data: { [timestamp]: { ...signGroup, ...{ route_id: line } } },
+        data: { [key]: { ...signGroup, ...{ route_id: line } } },
       });
     } else {
       Sentry.captureMessage('signGroupsChannel not present');

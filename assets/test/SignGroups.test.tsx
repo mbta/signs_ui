@@ -8,8 +8,8 @@ function openNewGroupForm() {
   userEvent.click(screen.getByRole('button', { name: 'Create' }));
 }
 
-function openEditGroupForm(timestamp: string) {
-  const groupContext = within(screen.getByTestId(timestamp, { exact: false }));
+function openEditGroupForm(groupKey: string) {
+  const groupContext = within(screen.getByTestId(groupKey, { exact: false }));
   userEvent.click(groupContext.getByRole('button', { name: 'Edit' }));
 }
 
@@ -45,7 +45,7 @@ function cancelFormButton() {
 
 type SignGroupUpdate = {
   line: string;
-  timestamp: number;
+  key: string;
   signGroup: SignGroup;
 };
 
@@ -66,8 +66,8 @@ test('can create a sign group', () => {
         },
       },
       signGroups: {},
-      setSignGroup: (line, timestamp, signGroup) => {
-        signGroupSubmissions.push({ line, timestamp, signGroup });
+      setSignGroup: (line, key, signGroup) => {
+        signGroupSubmissions.push({ line, key, signGroup });
       },
       readOnly: false,
     }),
@@ -82,7 +82,7 @@ test('can create a sign group', () => {
   expect(signGroupSubmissions).toEqual([
     {
       line,
-      timestamp: currentTime,
+      key: currentTime.toString(),
       signGroup: {
         sign_ids: ['central_northbound', 'central_southbound'],
         line1: 'Line 1 text',
@@ -103,8 +103,8 @@ test('can cancel creating a sign group', () => {
       currentTime: 1622149913,
       alerts: {},
       signGroups: {},
-      setSignGroup: (line, timestamp, signGroup) => {
-        signGroupSubmissions.push({ line, timestamp, signGroup });
+      setSignGroup: (line, key, signGroup) => {
+        signGroupSubmissions.push({ line, key, signGroup });
       },
       readOnly: false,
     }),
@@ -127,7 +127,7 @@ test('requires selecting at least one sign', () => {
       currentTime: 1622149913,
       alerts: {},
       signGroups: {},
-      setSignGroup: (line, timestamp, signGroup) => {},
+      setSignGroup: (line, key, signGroup) => {},
       readOnly: false,
     }),
   );
@@ -143,7 +143,7 @@ test('requires selecting at least one sign', () => {
 test('can edit an existing sign group', () => {
   let signGroupSubmissions: Array<SignGroupUpdate> = [];
   const line = 'Blue';
-  const timestamp = 1622149900;
+  const groupKey = '1622149900';
 
   render(
     React.createElement(SignGroups, {
@@ -151,7 +151,7 @@ test('can edit an existing sign group', () => {
       currentTime: 1622149913,
       alerts: {},
       signGroups: {
-        [timestamp]: {
+        [groupKey]: {
           sign_ids: ['airport_westbound', 'airport_eastbound'],
           line1: 'custom',
           line2: 'text',
@@ -159,14 +159,14 @@ test('can edit an existing sign group', () => {
           alert_id: null,
         },
       },
-      setSignGroup: (line, timestamp, signGroup) => {
-        signGroupSubmissions.push({ line, timestamp, signGroup });
+      setSignGroup: (line, key, signGroup) => {
+        signGroupSubmissions.push({ line, key, signGroup });
       },
       readOnly: false,
     }),
   );
 
-  openEditGroupForm(timestamp.toString());
+  openEditGroupForm(groupKey);
   toggleZones(['airport_eastbound', 'maverick_westbound']);
   setMessage('other', 'text');
   userEvent.click(editGroupSubmitButton());
@@ -174,7 +174,7 @@ test('can edit an existing sign group', () => {
   expect(signGroupSubmissions).toEqual([
     {
       line,
-      timestamp: timestamp,
+      key: groupKey,
       signGroup: {
         sign_ids: ['airport_westbound', 'maverick_westbound'],
         line1: 'other',

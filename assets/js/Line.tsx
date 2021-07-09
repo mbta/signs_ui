@@ -86,7 +86,7 @@ interface LineProps {
   chelseaBridgeAnnouncements: 'auto' | 'off';
   setChelseaBridgeAnnouncements: (x: 'auto' | 'off') => void;
   signGroups: SignGroupMap;
-  setSignGroup: (line: string, timestamp: number, signGroup: SignGroup) => void;
+  setSignGroup: (line: string, key: string, signGroup: SignGroup) => void;
 }
 
 function Line({

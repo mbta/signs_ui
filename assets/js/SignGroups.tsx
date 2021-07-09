@@ -296,7 +296,7 @@ interface SignGroupsListProps {
   readOnly: boolean;
   currentTime: number;
   onCreate: () => void;
-  onEdit: (timestamp: string) => void;
+  onEdit: (groupKey: string) => void;
 }
 
 function SignGroupsList({
@@ -321,12 +321,12 @@ function SignGroupsList({
       <div className="sign_groups--group-list-container">
         {groupCount > 0 && <h6>Active Groups</h6>}
         <div className="sign_groups--group-list">
-          {Object.keys(signGroups).map((timestamp) => (
+          {Object.keys(signGroups).map((groupKey) => (
             <SignGroupItem
-              key={timestamp}
-              timestamp={timestamp}
+              key={groupKey}
               currentTime={currentTime}
-              group={signGroups[timestamp]}
+              groupKey={groupKey}
+              group={signGroups[groupKey]}
               readOnly={readOnly}
               onEdit={onEdit}
             />
@@ -342,7 +342,7 @@ interface SignGroupsProps {
   currentTime: number;
   alerts: RouteAlerts;
   signGroups: RouteSignGroups;
-  setSignGroup: (line: string, timestamp: number, signGroup: SignGroup) => void;
+  setSignGroup: (line: string, key: string, signGroup: SignGroup) => void;
   readOnly: boolean;
 }
 
@@ -366,19 +366,19 @@ function SignGroups({
   const [isFormOpen, setIsFormOpen] = React.useState(false);
 
   const openForm = React.useCallback(
-    (formKey: string | null) => {
-      setFormKey(formKey);
-      setFormSignGroup(formKey ? signGroups[formKey] : newSignGroup);
+    (groupKey: string | null) => {
+      setFormKey(groupKey);
+      setFormSignGroup(groupKey ? signGroups[groupKey] : newSignGroup);
       setIsFormOpen(true);
     },
     [signGroups],
   );
 
   const setSignGroupAndCloseForm = React.useCallback(
-    (key: string | null, signGroup: SignGroup) => {
+    (groupKey: string | null, signGroup: SignGroup) => {
       setIsFormOpen(false);
-      const timestamp = key === null ? currentTime : parseInt(key, 10);
-      setSignGroup(line, timestamp, signGroup);
+      const key = groupKey || currentTime.toString();
+      setSignGroup(line, key, signGroup);
     },
     [line, currentTime, setSignGroup, setIsFormOpen],
   );
