@@ -17,7 +17,7 @@ function isNotExpired(expiration: string, currentTime: number) {
   return Date.parse(expiration) - currentTime > 0;
 }
 
-function fontSize(signId: string | boolean | undefined) {
+function fontSize(signId: string) {
   if (
     signId === 'NB' ||
     signId === 'SB' ||
@@ -98,7 +98,7 @@ function lineDisplayText(
 
 interface SignPanelProps {
   alerts: RouteAlerts;
-  signId: string | boolean | undefined;
+  signId: string;
   modes: {
     auto: boolean;
     custom: boolean;
