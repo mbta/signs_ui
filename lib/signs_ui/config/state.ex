@@ -102,7 +102,9 @@ defmodule SignsUi.Config.State do
   end
 
   def handle_call({:update_sign_groups, changes}, _from, old_state) do
-    new_state = save_sign_group_changes(changes, old_state)
+    sign_config_changes = SignsUi.Config.SignGroupToSignConfigs.apply(changes, old_state)
+    new_sign_group_state = save_sign_group_changes(changes, old_state)
+    new_state = save_sign_config_changes(sign_config_changes, new_sign_group_state)
     {:reply, {:ok, new_state}, new_state}
   end
 
