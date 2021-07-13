@@ -4,6 +4,7 @@ import { stationConfig, arincToRealtimeId } from './mbta';
 import SignText from './SignText';
 import SignTextInput from './SignTextInput';
 import AlertPicker from './AlertPicker';
+import ModalPrompt from './ModalPrompt';
 import {
   RouteAlerts,
   StationConfig,
@@ -14,12 +15,34 @@ import {
 import { defaultZoneLabel } from './helpers';
 import SignGroupItem from './SignGroupItem';
 
+function changeGroupSignText([station, zone]: [string, Zone], line: string) {
+  const stationConfigs = stationConfig[line]?.stations || [];
+  const config = stationConfigs.find((s) => s.id === station);
+  const stationName = config?.name;
+  const zoneLabel =
+    config?.zones[zone]?.label || defaultZoneLabel(zone as Zone);
+
+  return (
+    <div>
+      <p>
+        The{' '}
+        <span className="sign_groups--prompt-station">{`${stationName} ${zoneLabel}`}</span>{' '}
+        sign is part of an active sign group.
+      </p>
+      <p>
+        Would you like to remove it from its current group and reassign it to
+        this one?
+      </p>
+    </div>
+  );
+}
+
 interface ZoneSelectorProps {
   config: StationConfig;
   zone: Zone;
   line: string;
   selectedSigns: Set<string>;
-  onSignChange: (signId: string, selected: boolean) => void;
+  onSignChange: ([stationId, zone]: [string, Zone], selected: boolean) => void;
   kind: 'default' | 'named';
 }
 
@@ -31,11 +54,6 @@ function ZoneSelector({
   onSignChange,
   kind,
 }: ZoneSelectorProps): JSX.Element | null {
-  const handleChange = React.useCallback(
-    (evt) => onSignChange(evt.target.name, evt.target.checked),
-    [onSignChange],
-  );
-
   const zoneConfig = config.zones[zone];
 
   if (
@@ -62,7 +80,9 @@ function ZoneSelector({
           name={signId}
           data-testid={signId}
           checked={isSelected}
-          onChange={handleChange}
+          onChange={(evt) =>
+            onSignChange([config.id, zone], evt.target.checked)
+          }
         />
         {zoneLabel}
       </label>
@@ -74,6 +94,7 @@ interface SignGroupsFormProps {
   line: string;
   currentTime: number;
   alerts: RouteAlerts;
+  signGroups: RouteSignGroups;
   signGroupKey: string | null;
   initialSignGroup: SignGroup;
   onApply: (key: string | null, signGroup: SignGroup) => void;
@@ -84,12 +105,26 @@ function SignGroupsForm({
   line,
   currentTime,
   alerts,
+  signGroups,
   signGroupKey,
   initialSignGroup,
   onApply,
   onCancel,
 }: SignGroupsFormProps): JSX.Element | null {
+  const signIdsInOtherGroups = React.useMemo(() => {
+    const signIds = new Set();
+    Object.entries(signGroups).forEach(([key, signGroup]) => {
+      if (key !== signGroupKey) {
+        signGroup.sign_ids.forEach((id) => signIds.add(id));
+      }
+    });
+    return signIds;
+  }, [signGroupKey, signGroups]);
+
   const [signGroup, setSignGroup] = React.useState(initialSignGroup);
+  const [arincSignChangingGroup, setArincSignChangingGroup] = React.useState<
+    null | [string, Zone]
+  >(null);
 
   const expires = React.useMemo(
     () => (signGroup.expires ? new Date(signGroup.expires) : null),
@@ -105,16 +140,22 @@ function SignGroupsForm({
   );
 
   const onSignChange = React.useCallback(
-    (signId: string, isChecked: boolean) => {
+    ([stationId, zone]: [string, Zone], isChecked: boolean) => {
       const newSignIds = new Set(signIds);
+      const signId = arincToRealtimeId(`${stationId}-${zone}`, line);
       if (isChecked) {
-        newSignIds.add(signId);
+        if (signIdsInOtherGroups.has(signId)) {
+          setArincSignChangingGroup([stationId, zone]);
+        } else {
+          newSignIds.add(signId);
+          setSignGroup({ ...signGroup, sign_ids: Array.from(newSignIds) });
+        }
       } else {
         newSignIds.delete(signId);
+        setSignGroup({ ...signGroup, sign_ids: Array.from(newSignIds) });
       }
-      setSignGroup({ ...signGroup, sign_ids: Array.from(newSignIds) });
     },
-    [signGroup, setSignGroup],
+    [signGroup, setSignGroup, setArincSignChangingGroup, signIdsInOtherGroups],
   );
 
   const onSubmit = React.useCallback(
@@ -132,6 +173,23 @@ function SignGroupsForm({
 
   return (
     <form onSubmit={onSubmit}>
+      {arincSignChangingGroup && (
+        <ModalPrompt
+          acceptText="Yes, reassign this sign"
+          contents={changeGroupSignText(arincSignChangingGroup, line)}
+          elementId="tab-panel-container"
+          onAccept={() => {
+            const [station, zone] = arincSignChangingGroup;
+            const signId = arincToRealtimeId(`${station}-${zone}`, line);
+            const newSignIds = new Set(signIds).add(signId);
+            setSignGroup({ ...signGroup, sign_ids: Array.from(newSignIds) });
+            setArincSignChangingGroup(null);
+          }}
+          onCancel={() => {
+            setArincSignChangingGroup(null);
+          }}
+        />
+      )}
       <div className="sign_groups--container">
         <div className="sign_groups--container-left">
           Select Signs
@@ -389,6 +447,7 @@ function SignGroups({
         line={line}
         currentTime={currentTime}
         alerts={alerts}
+        signGroups={signGroups}
         signGroupKey={formKey}
         initialSignGroup={formSignGroup}
         onApply={setSignGroupAndCloseForm}

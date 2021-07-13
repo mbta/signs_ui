@@ -1,0 +1,16 @@
+.modal_prompt--container {
+  background-color: #d8d8d8;
+  border-radius: 0.3rem;
+  box-shadow: 0.3rem 0.3rem 0.3rem rgba(0, 0, 0, 0.2);
+  max-width: 400px;
+  padding: 1rem;
+  z-index: 101;
+}
+
+.modal_prompt--backdrop {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.6);
+  display: flex;
+  justify-content: center;
+  z-index: 100;
+}

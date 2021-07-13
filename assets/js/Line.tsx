@@ -132,9 +132,9 @@ function Line({
   return (
     <div>
       <h1>{name(line)}</h1>
-      <Collapse destroyInactivePanel={true}>
+      <Collapse destroyInactivePanel>
         <Panel header="Bulk Editing">
-          <Tabs defaultActiveKey="0" tabBarStyle={{}}>
+          <Tabs defaultActiveKey="0" tabBarStyle={{}} id="tab-panel-container">
             {featureIsEnabled('sign_groups') && (
               <TabPane tab="Sign Groups">
                 <SignGroups

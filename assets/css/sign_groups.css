@@ -163,3 +163,8 @@
 .sign_groups--group-edit-button {
   align-self: flex-end;
 }
+
+.sign_groups--prompt-station {
+  font-weight: bold;
+  font-style: italic;
+}
