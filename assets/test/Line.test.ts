@@ -626,5 +626,4 @@ test('allows removing an individual sign from a group', () => {
     expires: null,
     alert_id: null,
   });
-  // TODO: assert sign was returned to auto, once it does that
 });

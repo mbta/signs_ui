@@ -263,5 +263,28 @@ defmodule SignsUi.Config.StateTest do
 
       assert_broadcast("new_sign_groups_state", ^display_state)
     end
+
+    test "updates sign configs, too" do
+      {:ok, pid} = GenServer.start_link(SignsUi.Config.State, [], [])
+      @endpoint.subscribe("signGroups:all")
+      @endpoint.subscribe("signs:all")
+
+      updates = %{
+        "new_sign_group" => %SignsUi.Config.SignGroup{
+          sign_ids: ["sign_one"],
+          route_id: "Red",
+          line1: "line1",
+          line2: "line2",
+          alert_id: "alert"
+        }
+      }
+
+      {:ok, new_state} = update_sign_groups(pid, updates)
+
+      assert %{"new_sign_group" => %{}} = new_state.sign_groups
+      assert %{"sign_one" => %{}} = new_state.signs
+      assert_broadcast("new_sign_groups_state", %{"Red" => %{"new_sign_group" => %{}}})
+      assert_broadcast("new_sign_configs_state", %{"sign_one" => %{}})
+    end
   end
 end
