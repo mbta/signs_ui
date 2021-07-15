@@ -75,12 +75,23 @@ defmodule SignsUi.Config.SignGroupToSignConfigs do
     %{}
   end
 
+  @spec set_signs_to_auto(Enumerable.t(Sign.id())) :: %{Sign.id() => Sign.t()}
   defp set_signs_to_auto(sign_ids) do
     Map.new(sign_ids, fn sign_id ->
       {sign_id, %Sign{id: sign_id, config: %{mode: :auto}}}
     end)
   end
 
+  @spec set_signs_to_static_text(
+          Enumerable.t(Sign.id()),
+          String.t(),
+          String.t(),
+          Sign.expires_on() | nil,
+          String.t() | nil
+        ) ::
+          %{
+            Sign.id() => Sign.t()
+          }
   defp set_signs_to_static_text(sign_ids, line1, line2, expires, alert_id) do
     Map.new(sign_ids, fn sign_id ->
       {
@@ -99,6 +110,7 @@ defmodule SignsUi.Config.SignGroupToSignConfigs do
     end)
   end
 
+  @spec normalize(SignGroup.t() | map()) :: SignGroup.t() | nil
   defp normalize(%SignGroup{} = sign_group), do: sign_group
   defp normalize(sg) when sg == %{}, do: nil
 end
