@@ -2,7 +2,7 @@ import * as React from 'react';
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import SignGroups from '../js/SignGroups';
-import { SignGroup } from '../js/types';
+import { RouteSignGroups, SignGroup } from '../js/types';
 
 function openNewGroupForm() {
   userEvent.click(screen.getByRole('button', { name: 'Create' }));
@@ -63,8 +63,7 @@ function acceptModalPrompt(modalPrompt: HTMLElement) {
 
 type SignGroupUpdate = {
   line: string;
-  key: string;
-  signGroup: SignGroup;
+  signGroups: RouteSignGroups;
 };
 
 test('can create a sign group', () => {
@@ -84,8 +83,8 @@ test('can create a sign group', () => {
         },
       },
       signGroups: {},
-      setSignGroup: (line, key, signGroup) => {
-        signGroupSubmissions.push({ line, key, signGroup });
+      setSignGroups: (line, signGroups) => {
+        signGroupSubmissions.push({ line, signGroups });
       },
       readOnly: false,
     }),
@@ -100,13 +99,14 @@ test('can create a sign group', () => {
   expect(signGroupSubmissions).toEqual([
     {
       line,
-      key: currentTime.toString(),
-      signGroup: {
-        sign_ids: ['central_northbound', 'central_southbound'],
-        line1: 'Line 1 text',
-        line2: 'Line 2 text',
-        expires: null,
-        alert_id: 'alert1',
+      signGroups: {
+        [currentTime.toString()]: {
+          sign_ids: ['central_northbound', 'central_southbound'],
+          line1: 'Line 1 text',
+          line2: 'Line 2 text',
+          expires: null,
+          alert_id: 'alert1',
+        },
       },
     },
   ]);
@@ -121,8 +121,8 @@ test('can cancel creating a sign group', () => {
       currentTime: 1622149913,
       alerts: {},
       signGroups: {},
-      setSignGroup: (line, key, signGroup) => {
-        signGroupSubmissions.push({ line, key, signGroup });
+      setSignGroups: (line, signGroups) => {
+        signGroupSubmissions.push({ line, signGroups });
       },
       readOnly: false,
     }),
@@ -145,7 +145,7 @@ test('requires selecting at least one sign', () => {
       currentTime: 1622149913,
       alerts: {},
       signGroups: {},
-      setSignGroup: (line, key, signGroup) => {},
+      setSignGroups: (line, signGroups) => {},
       readOnly: false,
     }),
   );
@@ -177,8 +177,8 @@ test('can edit an existing sign group', () => {
           alert_id: null,
         },
       },
-      setSignGroup: (line, key, signGroup) => {
-        signGroupSubmissions.push({ line, key, signGroup });
+      setSignGroups: (line, signGroups) => {
+        signGroupSubmissions.push({ line, signGroups });
       },
       readOnly: false,
     }),
@@ -192,26 +192,28 @@ test('can edit an existing sign group', () => {
   expect(signGroupSubmissions).toEqual([
     {
       line,
-      key: groupKey,
-      signGroup: {
-        sign_ids: ['airport_westbound', 'maverick_westbound'],
-        line1: 'other',
-        line2: 'text',
-        expires: null,
-        alert_id: null,
+      signGroups: {
+        [groupKey]: {
+          sign_ids: ['airport_westbound', 'maverick_westbound'],
+          line1: 'other',
+          line2: 'text',
+          expires: null,
+          alert_id: null,
+        },
       },
     },
   ]);
 });
 
 test('can cancel prompt when moving a sign from one sign group to another', () => {
-  const signGroupSubmissions: Array<SignGroup> = [];
+  const signGroupSubmissions: Array<RouteSignGroups> = [];
   const otherSignGroupKey = 1622149900;
+  const newSignGroupKey = otherSignGroupKey + 1;
 
   render(
     React.createElement(SignGroups, {
       line: 'Orange',
-      currentTime: otherSignGroupKey + 1,
+      currentTime: newSignGroupKey,
       alerts: {},
       signGroups: {
         [otherSignGroupKey]: {
@@ -225,8 +227,8 @@ test('can cancel prompt when moving a sign from one sign group to another', () =
           alert_id: null,
         },
       },
-      setSignGroup: (line, timestamp, signGroup) => {
-        signGroupSubmissions.push(signGroup);
+      setSignGroups: (line, signGroups) => {
+        signGroupSubmissions.push(signGroups);
       },
       readOnly: false,
     }),
@@ -245,18 +247,21 @@ test('can cancel prompt when moving a sign from one sign group to another', () =
   cancelModalPrompt(modalPrompt);
   userEvent.click(newGroupSubmitButton());
 
-  expect(signGroupSubmissions[0].sign_ids).toEqual(['tufts_southbound']);
+  expect(signGroupSubmissions[0][`${newSignGroupKey}`].sign_ids).toEqual([
+    'tufts_southbound',
+  ]);
 });
 
 test('can accept prompt when moving a sign from one sign group to another', () => {
-  const signGroupSubmissions: Array<SignGroup> = [];
+  const signGroupSubmissions: Array<RouteSignGroups> = [];
   const otherSignGroupKey = 1622149900;
+  const newSignGroupKey = otherSignGroupKey + 1;
   const movingId = 'orange_north_station_commuter_rail_exit';
 
   render(
     React.createElement(SignGroups, {
       line: 'Orange',
-      currentTime: otherSignGroupKey + 1,
+      currentTime: newSignGroupKey,
       alerts: {},
       signGroups: {
         [otherSignGroupKey]: {
@@ -267,8 +272,8 @@ test('can accept prompt when moving a sign from one sign group to another', () =
           alert_id: null,
         },
       },
-      setSignGroup: (line, timestamp, signGroup) => {
-        signGroupSubmissions.push(signGroup);
+      setSignGroups: (line, signGroups) => {
+        signGroupSubmissions.push(signGroups);
       },
       readOnly: false,
     }),
@@ -287,5 +292,7 @@ test('can accept prompt when moving a sign from one sign group to another', () =
   acceptModalPrompt(modalPrompt);
   userEvent.click(newGroupSubmitButton());
 
-  expect(signGroupSubmissions[0].sign_ids).toContain(movingId);
+  expect(signGroupSubmissions[0][`${newSignGroupKey}`].sign_ids).toContain(
+    movingId,
+  );
 });

@@ -12,7 +12,6 @@ import {
   RouteSignGroups,
   SignConfigs,
   SignContent,
-  SignGroup,
   StationConfig,
 } from './types';
 
@@ -88,7 +87,7 @@ interface LineProps {
   chelseaBridgeAnnouncements: 'auto' | 'off';
   setChelseaBridgeAnnouncements: (x: 'auto' | 'off') => void;
   signGroups: RouteSignGroups;
-  setSignGroup: (line: string, key: string, signGroup: SignGroup) => void;
+  setSignGroups: (line: string, signGroups: RouteSignGroups) => void;
 }
 
 function Line({
@@ -105,7 +104,7 @@ function Line({
   setChelseaBridgeAnnouncements,
   stationConfigs,
   signGroups,
-  setSignGroup,
+  setSignGroups,
 }: LineProps): JSX.Element {
   const branches = branchConfig[line] || [];
 
@@ -129,12 +128,14 @@ function Line({
       const groupKey = signsToGroups[realtimeId];
       const { sign_ids: signIds, ...signGroup } = signGroups[groupKey];
 
-      setSignGroup(line, groupKey, {
-        ...signGroup,
-        sign_ids: signIds.filter((id) => id !== realtimeId),
+      setSignGroups(line, {
+        [groupKey]: {
+          ...signGroup,
+          sign_ids: signIds.filter((id) => id !== realtimeId),
+        },
       });
     },
-    [line, signGroups, signsToGroups, setSignGroup],
+    [line, signGroups, signsToGroups, setSignGroups],
   );
 
   const batchModes =
@@ -172,7 +173,7 @@ function Line({
                   currentTime={currentTime}
                   alerts={alerts}
                   signGroups={signGroups}
-                  setSignGroup={setSignGroup}
+                  setSignGroups={setSignGroups}
                   readOnly={readOnly}
                 />
               </TabPane>

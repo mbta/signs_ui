@@ -40,7 +40,7 @@ test('Shows all signs for a line', () => {
         chelseaBridgeAnnouncements: 'off',
         setChelseaBridgeAnnouncements: () => {},
         signGroups: {},
-        setSignGroup: () => {},
+        setSignGroups: () => {},
       },
       null,
     ),
@@ -78,7 +78,7 @@ test('Shows batch mode buttons when not read-only', () => {
         chelseaBridgeAnnouncements: 'off',
         setChelseaBridgeAnnouncements: () => {},
         signGroups: {},
-        setSignGroup: () => {},
+        setSignGroups: () => {},
       },
       null,
     ),
@@ -118,7 +118,7 @@ test.each([['Silver'], ['Busway']])(
           chelseaBridgeAnnouncements: 'off',
           setChelseaBridgeAnnouncements: () => {},
           signGroups: {},
-          setSignGroup: () => {},
+          setSignGroups: () => {},
         },
         null,
       ),
@@ -161,7 +161,7 @@ test('Shows "Mixed" batch mode buttons when multiple modes are chosen', () => {
         chelseaBridgeAnnouncements: 'off',
         setChelseaBridgeAnnouncements: () => {},
         signGroups: {},
-        setSignGroup: () => {},
+        setSignGroups: () => {},
       },
       null,
     ),
@@ -204,7 +204,7 @@ test('Does not show "Mixed" batch mode buttons when one mode is chosen', () => {
         chelseaBridgeAnnouncements: 'off',
         setChelseaBridgeAnnouncements: () => {},
         signGroups: {},
-        setSignGroup: () => {},
+        setSignGroups: () => {},
       },
       null,
     ),
@@ -244,7 +244,7 @@ test("Doesn't show batch mode buttons when read-only", () => {
         chelseaBridgeAnnouncements: 'off',
         setChelseaBridgeAnnouncements: () => {},
         signGroups: {},
-        setSignGroup: () => {},
+        setSignGroups: () => {},
       },
       null,
     ),
@@ -283,7 +283,7 @@ test('Shows ConfiguredHeadwaysForm if current line has branches configured', () 
         chelseaBridgeAnnouncements: 'off',
         setChelseaBridgeAnnouncements: () => {},
         signGroups: {},
-        setSignGroup: () => {},
+        setSignGroups: () => {},
       },
       null,
     ),
@@ -320,7 +320,7 @@ test('Doesn\t show ConfiguredHeadwaysForm if current line has no branches config
         chelseaBridgeAnnouncements: 'off',
         setChelseaBridgeAnnouncements: () => {},
         signGroups: {},
-        setSignGroup: () => {},
+        setSignGroups: () => {},
       },
       null,
     ),
@@ -357,7 +357,7 @@ test('Shows ConfiguredHeadwaysForm if current line has branches configured', () 
         chelseaBridgeAnnouncements: 'off',
         setChelseaBridgeAnnouncements: () => {},
         signGroups: {},
-        setSignGroup: () => {},
+        setSignGroups: () => {},
       },
       null,
     ),
@@ -456,7 +456,7 @@ test('Sign config is not affected by batch updates if sign does not support mode
         chelseaBridgeAnnouncements: 'off',
         setChelseaBridgeAnnouncements: () => {},
         signGroups: {},
-        setSignGroup: () => {},
+        setSignGroups: () => {},
       },
       null,
     ),
@@ -510,7 +510,7 @@ test('can toggle chelsea bridge announcements on and off on Silver Line page', (
         chelseaBridgeAnnouncements: 'off',
         setChelseaBridgeAnnouncements,
         signGroups: {},
-        setSignGroup: () => {},
+        setSignGroups: () => {},
       },
       null,
     ),
@@ -544,7 +544,7 @@ test('does not show chelsea bridge announcements toggle on non-Silver Line pages
         chelseaBridgeAnnouncements: 'off',
         setChelseaBridgeAnnouncements,
         signGroups: {},
-        setSignGroup: () => {},
+        setSignGroups: () => {},
       },
       null,
     ),
@@ -569,7 +569,7 @@ test('does not show chelsea bridge toggle if in read-only mode', () => {
       chelseaBridgeAnnouncements: 'auto',
       setChelseaBridgeAnnouncements: () => {},
       signGroups: {},
-      setSignGroup: () => {},
+      setSignGroups: () => {},
     }),
   );
 
@@ -580,7 +580,7 @@ test('does not show chelsea bridge toggle if in read-only mode', () => {
 
 test('allows removing an individual sign from a group', () => {
   const line = 'Red';
-  const setSignGroup = jest.fn();
+  const setSignGroups = jest.fn();
   const groupKey = '1625778000';
 
   render(
@@ -607,7 +607,7 @@ test('allows removing an individual sign from a group', () => {
             alert_id: null,
           },
         },
-        setSignGroup,
+        setSignGroups,
       },
       null,
     ),
@@ -619,11 +619,13 @@ test('allows removing an individual sign from a group', () => {
   userEvent.click(centralNB.getByRole('button', { name: /Yes/ }));
 
   expect(centralNB.queryByRole('button', { name: /Yes/ })).toBeNull();
-  expect(setSignGroup).toHaveBeenCalledWith(line, groupKey, {
-    sign_ids: ['central_southbound'],
-    line1: 'custom',
-    line2: 'text',
-    expires: null,
-    alert_id: null,
+  expect(setSignGroups).toHaveBeenCalledWith(line, {
+    [groupKey]: {
+      sign_ids: ['central_southbound'],
+      line1: 'custom',
+      line2: 'text',
+      expires: null,
+      alert_id: null,
+    },
   });
 });
