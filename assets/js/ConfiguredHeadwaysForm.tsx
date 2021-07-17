@@ -232,11 +232,6 @@ const ConfiguredHeadwaysForm = ({
               )}
             </div>
             <div>
-              {!isValid ? (
-                <div className="alert alert-danger">
-                  Error: All headway ranges must be valid.
-                </div>
-              ) : null}
               {!readOnly && (
                 <div>
                   <button
@@ -244,6 +239,7 @@ const ConfiguredHeadwaysForm = ({
                     id="apply"
                     type="submit"
                     disabled={!dirty || !isValid}
+                    onClick={() => alert("Are you sure?")}
                   >
                     Return to "Auto"
                   </button>
