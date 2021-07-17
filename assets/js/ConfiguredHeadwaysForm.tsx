@@ -237,47 +237,6 @@ const ConfiguredHeadwaysForm = ({
                   Error: All headway ranges must be valid.
                 </div>
               ) : null}
-              {timePeriods.map((period) => (
-                <FieldArray
-                  key={period.id}
-                  name="branches"
-                  render={() => (
-                    <div>
-                      <div className="d-flex align-items-center">
-                        <h3>{period.name}</h3>
-                        {period.description && (
-                          <span className="ml-2">{`(${period.description})`}</span>
-                        )}
-                      </div>
-                      <div className="row mb-3">
-                        {branches.map((branch, index) => (
-                          <div key={branch.id} className="col-6 col-md-4">
-                            <h5>{branch.name}</h5>
-                            <div className="mb-3">
-                              <Field
-                                id={`branches.[${index}].${period.id}.range_low`}
-                                name={`branches.[${index}].${period.id}.range_low`}
-                                type="number"
-                                disabled={readOnly || !inEditMode}
-                                className="mr-2"
-                              />
-                              to
-                              <Field
-                                id={`branches.[${index}].${period.id}.range_high`}
-                                name={`branches.[${index}].${period.id}.range_high`}
-                                className="mx-2"
-                                disabled={readOnly || !inEditMode}
-                                type="number"
-                              />
-                              mins
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                />
-              ))}
               {!readOnly && (
                 <div>
                   <button
