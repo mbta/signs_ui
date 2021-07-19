@@ -1,7 +1,35 @@
 import React from 'react';
 import SignText from './SignText';
 import SignGroupExpirationDetails from './SignGroupExpirationDetails';
-import { SignGroup } from './types';
+import { SignConfigs, SignGroup, StationConfig } from './types';
+import { stationConfig, arincToRealtimeId } from './mbta';
+
+
+function returnToAutoMode(
+  setConfigFn: (x: SignConfigs) => void,
+  stations: StationConfig[],
+  line: string,
+) {
+  const statuses: {
+    [key: string]: { mode: 'auto' | 'off' | 'headway'; expires?: null };
+  } = {};
+
+  stations.forEach((station: StationConfig) => {
+    ['n', 's', 'e', 'w', 'm', 'c'].forEach((zone) => {
+      const realtimeId = arincToRealtimeId(`${station.id}-${zone}`, line);
+      const zoneConfig = station.zones[zone];
+      if (zoneConfig!== undefined) {
+        const { modes } = zoneConfig;
+        if (realtimeId) {
+          statuses[realtimeId] = { mode: 'auto', expires: null };
+        }
+      }
+    }) 
+  })
+
+  setConfigFn(statuses);
+}
+
 
 interface SignGroupProps {
   currentTime: number;
@@ -9,6 +37,7 @@ interface SignGroupProps {
   group: SignGroup;
   readOnly: boolean;
   onEdit: (key: string) => void;
+  setConfigs: (x: SignConfigs) => void;
 }
 
 export default function SignGroupItem({
@@ -31,7 +60,11 @@ export default function SignGroupItem({
         >
           Edit
         </button>
-        <button type="button" className="btn btn-primary">
+        <button
+          type="button"
+          className="btn btn-primary"
+          onClick={() => {returnToAutoMode(setConfigs, stations, line)}}
+        >
           Return to "Auto"
         </button>
       </div>
