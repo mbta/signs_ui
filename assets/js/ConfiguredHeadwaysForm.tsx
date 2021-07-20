@@ -239,7 +239,7 @@ const ConfiguredHeadwaysForm = ({
                     id="apply"
                     type="submit"
                     disabled={!dirty || !isValid}
-                    onClick={() => alert("Are you sure?")}
+                    onClick={() => confirm("Are you sure?")}
                   >
                     Return to "Auto"
                   </button>
