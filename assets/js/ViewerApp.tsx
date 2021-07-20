@@ -12,6 +12,8 @@ import {
   SignGroupMap,
 } from './types';
 
+/* eslint-disable camelcase */
+
 declare global {
   interface Window {
     userToken: string;
