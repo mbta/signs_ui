@@ -38,6 +38,8 @@ interface SignGroupProps {
   readOnly: boolean;
   onEdit: (key: string) => void;
   setConfigs: (x: SignConfigs) => void;
+  stationConfigs?: StationConfig[];
+  line: string;
 }
 
 export default function SignGroupItem({
@@ -46,7 +48,14 @@ export default function SignGroupItem({
   group,
   readOnly,
   onEdit,
+  setConfigs,
+  stationConfigs,
+  line,
 }: SignGroupProps) {
+  const stations: StationConfig[] =
+    stationConfigs ||
+    (stationConfig[line] && stationConfig[line].stations) ||
+    [];
   return (
     <div className="sign_groups--group-item" data-testid={groupKey}>
       <SignText time={currentTime} line1={group.line1} line2={group.line2} />
