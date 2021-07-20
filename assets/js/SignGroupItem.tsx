@@ -28,6 +28,17 @@ function returnToAutoMode(
   })
 
   setConfigFn(statuses);
+
+  return (
+    <button
+      className="mr-2"
+      id="apply"
+      type="submit"
+      onClick={() => alert("Are you sure?")}
+    >
+      Apply
+    </button>
+  );
 }
 
 
@@ -69,14 +80,13 @@ export default function SignGroupItem({
         >
           Edit
         </button>
-        <button
-          type="button"
-          className="btn btn-primary"
-          onClick={() => {returnToAutoMode(setConfigs, stations, line)}}
-        >
-          Return to "Auto"
-        </button>
       </div>
     </div>
   );
 }
+
+export {
+  returnToAutoMode,
+  SignGroupItem,
+  SignGroupProps,
+};
