@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { timePeriodConfig } from './mbta';
 import { ConfiguredHeadways } from './types';
+import returnToAutoMode from "./SignGroupItem";
 
 /* eslint-disable camelcase */
 
