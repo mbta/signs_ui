@@ -3,9 +3,8 @@ import { Formik, Form, Field, FieldArray } from 'formik';
 import { object, string, array, number, ref } from 'yup';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { arincToRealtimeId, timePeriodConfig } from './mbta';
+import { timePeriodConfig } from './mbta';
 import { ConfiguredHeadways } from './types';
-import { returnToAutoMode, SignGroupItem, SignGroupProps } from "./SignGroupItem";
 
 /* eslint-disable camelcase */
 
@@ -229,17 +228,6 @@ const ConfiguredHeadwaysForm = ({
                   >
                     Apply
                   </button>
-                </div>
-              )}
-            </div>
-            <div>
-              {!readOnly && (
-                <div>
-                  {() => (<returnToAutoMode
-                  setConfigFn={}
-                  stations={}
-                  line={branches.name}
-                  />)}
                 </div>
               )}
             </div>

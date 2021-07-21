@@ -5,8 +5,19 @@ import { SignConfigs, SignGroup, StationConfig } from './types';
 import { stationConfig, arincToRealtimeId } from './mbta';
 
 
+interface SignGroupProps {
+  currentTime: number;
+  groupKey: string;
+  group: SignGroup;
+  readOnly: boolean;
+  onEdit: (key: string) => void;
+  setConfigs: (x: SignConfigs) => void;
+  stationConfigs?: StationConfig[];
+  line: string;
+  setSignGroup: (line: string, key: string, signGroup: SignGroup) => void;
+}
+
 function returnToAutoMode(
-  setConfigFn: (x: SignConfigs) => void,
   stations: StationConfig[],
   line: string,
 ) {
@@ -27,8 +38,6 @@ function returnToAutoMode(
     }) 
   })
 
-  setConfigFn(statuses);
-
   return (
     <button
       className="mr-2"
@@ -36,21 +45,9 @@ function returnToAutoMode(
       type="submit"
       onClick={() => alert("Are you sure?")}
     >
-      Apply
+      Return to "Auto"
     </button>
   );
-}
-
-
-interface SignGroupProps {
-  currentTime: number;
-  groupKey: string;
-  group: SignGroup;
-  readOnly: boolean;
-  onEdit: (key: string) => void;
-  setConfigs: (x: SignConfigs) => void;
-  stationConfigs?: StationConfig[];
-  line: string;
 }
 
 export default function SignGroupItem({
