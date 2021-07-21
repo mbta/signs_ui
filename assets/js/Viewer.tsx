@@ -4,7 +4,7 @@ import {
   Alerts,
   SignContent,
   ConfiguredHeadways,
-  RouteSignGroups,
+  RouteSignGroupsWithDeletions,
   SignConfigs,
   SignGroupMap,
 } from './types';
@@ -23,7 +23,10 @@ interface ViewerProps {
   chelseaBridgeAnnouncements: 'auto' | 'off';
   setChelseaBridgeAnnouncements: (x: 'auto' | 'off') => void;
   signGroups: SignGroupMap;
-  setSignGroups: (line: string, signGroups: RouteSignGroups) => void;
+  setSignGroups: (
+    line: string,
+    signGroups: RouteSignGroupsWithDeletions,
+  ) => void;
 }
 
 function Viewer({

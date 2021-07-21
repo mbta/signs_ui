@@ -10,7 +10,7 @@ import {
   Alerts,
   SignGroup,
   SignGroupMap,
-  RouteSignGroups,
+  RouteSignGroupsWithDeletions,
 } from './types';
 
 /* eslint-disable camelcase */
@@ -20,6 +20,8 @@ declare global {
     userToken: string;
   }
 }
+
+type SignGroupApi = (SignGroup & { route_id: string }) | Record<string, never>;
 
 interface ViewerAppProps {
   initialAlerts: Alerts;
@@ -194,14 +196,18 @@ class ViewerApp extends React.Component<
     }
   }
 
-  setSignGroups(line: string, signGroups: RouteSignGroups): void {
+  setSignGroups(line: string, signGroups: RouteSignGroupsWithDeletions): void {
     const { signGroupsChannel: channel } = this.state;
 
     if (channel) {
-      const data: { [key: string]: SignGroup & { route_id: string } } = {};
+      const data: { [key: string]: SignGroupApi } = {};
 
       Object.entries(signGroups).forEach(([key, signGroup]) => {
-        data[key] = { ...signGroup, ...{ route_id: line } };
+        if (Object.keys(signGroup).length > 0) {
+          data[key] = { ...(signGroup as SignGroup), ...{ route_id: line } };
+        } else {
+          data[key] = {};
+        }
       });
 
       channel.push('changeSignGroups', { data });

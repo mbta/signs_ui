@@ -6,10 +6,12 @@ import Station from './Station';
 import { stationConfig, arincToRealtimeId, branchConfig } from './mbta';
 import SignGroups from './SignGroups';
 import featureIsEnabled from './laboratoryFeatures';
+import ModalPrompt from './ModalPrompt';
 import {
   ConfiguredHeadways,
   RouteAlerts,
   RouteSignGroups,
+  RouteSignGroupsWithDeletions,
   SignConfigs,
   SignContent,
   StationConfig,
@@ -87,7 +89,10 @@ interface LineProps {
   chelseaBridgeAnnouncements: 'auto' | 'off';
   setChelseaBridgeAnnouncements: (x: 'auto' | 'off') => void;
   signGroups: RouteSignGroups;
-  setSignGroups: (line: string, signGroups: RouteSignGroups) => void;
+  setSignGroups: (
+    line: string,
+    signGroups: RouteSignGroupsWithDeletions,
+  ) => void;
 }
 
 function Line({
@@ -160,8 +165,70 @@ function Line({
     return isMixed ? 'mixed' : Object.keys(uniqueModes)[0];
   }, [signConfigs, stations, arincToRealtimeId]);
 
+  const [promptChangeAllMode, setPromptChangeAllMode] = React.useState<
+    string | null
+  >(null);
+
+  const promptText = (
+    <div>
+      <p>
+        <strong>There are active sign groups at this time.</strong>
+      </p>
+      <p>
+        Setting all signs to &ldquo;{promptChangeAllMode}&rdquo; will ungroup
+        those signs and set them to &ldquo;{promptChangeAllMode}&rdquo;.
+      </p>
+      <p>
+        Would you like to set all the signs on this line to &ldquo;
+        {promptChangeAllMode}&rdquo;?
+      </p>
+    </div>
+  );
+
+  const modalAccept = React.useCallback(() => {
+    if (promptChangeAllMode) {
+      const signGroupDeletions: RouteSignGroupsWithDeletions = {};
+      Object.keys(signGroups).forEach((groupKey) => {
+        signGroupDeletions[groupKey] = {};
+      });
+      setSignGroups(line, signGroupDeletions);
+      setAllStationsMode(setConfigs, stations, line, promptChangeAllMode);
+    }
+
+    setPromptChangeAllMode(null);
+  }, [
+    promptChangeAllMode,
+    signGroups,
+    setAllStationsMode,
+    setConfigs,
+    stations,
+    line,
+    setPromptChangeAllMode,
+  ]);
+
+  const modalCancel = React.useCallback(
+    () => setPromptChangeAllMode(null),
+    [setPromptChangeAllMode],
+  );
+
+  const setAllMode = (mode: string) => {
+    if (Object.keys(signGroups).length > 0) {
+      setPromptChangeAllMode(mode);
+    } else {
+      setAllStationsMode(setConfigs, stations, line, mode);
+    }
+  };
+
   return (
     <div>
+      {promptChangeAllMode && (
+        <ModalPrompt
+          contents={promptText}
+          acceptText={`Yes, set all signs to "${promptChangeAllMode}"`}
+          onAccept={modalAccept}
+          onCancel={modalCancel}
+        />
+      )}
       <h1>{name(line)}</h1>
       <Collapse destroyInactivePanel>
         <Panel header="Bulk Editing">
@@ -234,9 +301,7 @@ function Line({
                 id="auto"
                 value="auto"
                 checked={batchMode === 'auto'}
-                onChange={() => {
-                  setAllStationsMode(setConfigs, stations, line, 'auto');
-                }}
+                onChange={() => setAllMode('auto')}
               />
             </label>
           )}
@@ -252,9 +317,7 @@ function Line({
                 id="headway"
                 value="headway"
                 checked={batchMode === 'headway'}
-                onChange={() => {
-                  setAllStationsMode(setConfigs, stations, line, 'headway');
-                }}
+                onChange={() => setAllMode('headway')}
               />
             </label>
           )}
@@ -270,9 +333,7 @@ function Line({
                 id="off"
                 value="off"
                 checked={batchMode === 'off'}
-                onChange={() => {
-                  setAllStationsMode(setConfigs, stations, line, 'off');
-                }}
+                onChange={() => setAllMode('off')}
               />
             </label>
           )}

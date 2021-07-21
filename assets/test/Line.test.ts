@@ -7,10 +7,26 @@ import Line from '../js/Line';
 import ConfiguredHeadwaysForm from '../js/ConfiguredHeadwaysForm';
 import {
   ConfiguredHeadways,
+  RouteSignGroupsWithDeletions,
   SignConfigs,
   SignContent,
   StationConfig,
 } from '../js/types';
+
+function setAllToAuto() {
+  userEvent.click(screen.getByText('All to auto'));
+}
+
+function getModalPrompt(): HTMLElement {
+  return screen.getByTestId('modal-prompt');
+}
+
+function acceptModalPrompt(modalPrompt: HTMLElement) {
+  const acceptButton = within(modalPrompt).getByRole('button', {
+    name: 'Yes, set all signs to "auto"',
+  });
+  userEvent.click(acceptButton);
+}
 
 test('Shows all signs for a line', () => {
   const now = Date.now();
@@ -253,6 +269,67 @@ test("Doesn't show batch mode buttons when read-only", () => {
   expect(wrapper.text()).not.toMatch('All to auto');
   expect(wrapper.text()).not.toMatch('Set all to headway');
   expect(wrapper.text()).not.toMatch('All to off');
+});
+
+type SignGroupCalls = {
+  line: string;
+  signGroups: RouteSignGroupsWithDeletions;
+};
+
+test('Batch mode buttons clear sign groups, too', () => {
+  const setSignGroupsCalls: SignGroupCalls[] = [];
+
+  render(
+    React.createElement(
+      Line,
+      {
+        alerts: {},
+        signs: {},
+        currentTime: Date.now() + 2000,
+        line: 'Red',
+        signConfigs: {
+          alewife_center_southbound: {
+            mode: 'off',
+          },
+        },
+        setConfigs: () => {},
+        readOnly: false,
+        configuredHeadways: {},
+        setConfiguredHeadways: () => {},
+        chelseaBridgeAnnouncements: 'off',
+        setChelseaBridgeAnnouncements: () => {},
+        signGroups: {
+          group1: {
+            sign_ids: ['sign1'],
+            line1: 'line1',
+            line2: 'line2',
+            expires: null,
+            alert_id: null,
+          },
+          group2: {
+            sign_ids: ['sign2'],
+            line1: 'line1b',
+            line2: 'line2b',
+            expires: null,
+            alert_id: null,
+          },
+        },
+        setSignGroups: (line, signGroups) => {
+          setSignGroupsCalls.push({ line, signGroups });
+        },
+      },
+      null,
+    ),
+  );
+
+  setAllToAuto();
+  const prompt = getModalPrompt();
+  expect(prompt).toHaveTextContent('There are active sign groups at this time');
+  acceptModalPrompt(prompt);
+
+  expect(setSignGroupsCalls).toEqual([
+    { line: 'Red', signGroups: { group1: {}, group2: {} } },
+  ]);
 });
 
 test('Shows ConfiguredHeadwaysForm if current line has branches configured', () => {
