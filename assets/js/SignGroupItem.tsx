@@ -77,6 +77,9 @@ export default function SignGroupItem({
         >
           Edit
         </button>
+        <button type="button" className="btn btn-primary">
+          Return to "Auto"
+        </button>
       </div>
     </div>
   );
