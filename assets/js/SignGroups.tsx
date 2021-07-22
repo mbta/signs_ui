@@ -400,7 +400,7 @@ interface SignGroupsProps {
   currentTime: number;
   alerts: RouteAlerts;
   signGroups: RouteSignGroups;
-  setSignGroup: (line: string, key: string, signGroup: SignGroup) => void;
+  setSignGroups: (line: string, signGroups: RouteSignGroups) => void;
   readOnly: boolean;
 }
 
@@ -409,7 +409,7 @@ function SignGroups({
   currentTime,
   alerts,
   signGroups,
-  setSignGroup,
+  setSignGroups,
   readOnly,
 }: SignGroupsProps): JSX.Element | null {
   const newSignGroup: SignGroup = {
@@ -436,9 +436,9 @@ function SignGroups({
     (groupKey: string | null, signGroup: SignGroup) => {
       setIsFormOpen(false);
       const key = groupKey || currentTime.toString();
-      setSignGroup(line, key, signGroup);
+      setSignGroups(line, { [key]: signGroup });
     },
-    [line, currentTime, setSignGroup, setIsFormOpen],
+    [line, currentTime, setSignGroups, setIsFormOpen],
   );
 
   if (isFormOpen) {

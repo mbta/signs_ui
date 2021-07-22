@@ -1,4 +1,4 @@
-name: Elixir CI
+name: Static Checks CI
 
 on: [pull_request]
 
@@ -30,18 +30,27 @@ jobs:
           echo "$ASDF_DIR/bin" >> $GITHUB_PATH
           echo "$ASDF_DIR/shims" >> $GITHUB_PATH
           $ASDF_DIR/bin/asdf reshim
-      - name: Restore dependencies cache
-        id: deps-cache
+      - name: <elixir> Restore dependencies cache
+        id: elixir-cache
         uses: actions/cache@v2
         with:
           path: deps
           key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
-          restore-keys: ${{ runner.os }}-mix-
-      - name: Install dependencies
+      - name: <elixir> Install dependencies (if needed)
+        if: steps.elixir-cache.outputs.cache-hit != 'true'
         run: |
-          mix local.rebar --foce
+          mix local.rebar --force
           mix local.hex --force
           mix deps.get
+      - name: <node> Restore dependencies cache
+        uses: actions/cache@v2
+        with:
+          path: "assets/node_modules"
+          key: ${{ runner.os }}-nodejs-${{ hashFiles('assets/package-lock.json') }}
+        id: node-cache
+      - name: <node> Install dependencies (if needed)
+        if: steps.node-cache.outputs.cache-hit != 'true'
+        run: npm install --prefix assets
       - name: Compile (warnings as errors)
         run: mix compile --force --warnings-as-errors
       - name: Check formatting
@@ -52,6 +61,10 @@ jobs:
         run: mix sobelow mix sobelow --skip --exit
       - name: Run tests
         run: mix test --cover
+      - name: JS checks
+        run: npm run check --prefix assets
+      - name: JS tests
+        run: npm run test --prefix assets
       - name: Save PR information
         run: |
           echo "${{ github.event.pull_request.number }}" > cover/PR_NUMBER

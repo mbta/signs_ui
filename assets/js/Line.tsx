@@ -6,13 +6,14 @@ import Station from './Station';
 import { stationConfig, arincToRealtimeId, branchConfig } from './mbta';
 import SignGroups from './SignGroups';
 import featureIsEnabled from './laboratoryFeatures';
+import ModalPrompt from './ModalPrompt';
 import {
   ConfiguredHeadways,
   RouteAlerts,
   RouteSignGroups,
+  RouteSignGroupsWithDeletions,
   SignConfigs,
   SignContent,
-  SignGroup,
   StationConfig,
 } from './types';
 
@@ -88,7 +89,10 @@ interface LineProps {
   chelseaBridgeAnnouncements: 'auto' | 'off';
   setChelseaBridgeAnnouncements: (x: 'auto' | 'off') => void;
   signGroups: RouteSignGroups;
-  setSignGroup: (line: string, key: string, signGroup: SignGroup) => void;
+  setSignGroups: (
+    line: string,
+    signGroups: RouteSignGroupsWithDeletions,
+  ) => void;
 }
 
 function Line({
@@ -105,7 +109,7 @@ function Line({
   setChelseaBridgeAnnouncements,
   stationConfigs,
   signGroups,
-  setSignGroup,
+  setSignGroups,
 }: LineProps): JSX.Element {
   const branches = branchConfig[line] || [];
 
@@ -129,12 +133,14 @@ function Line({
       const groupKey = signsToGroups[realtimeId];
       const { sign_ids: signIds, ...signGroup } = signGroups[groupKey];
 
-      setSignGroup(line, groupKey, {
-        ...signGroup,
-        sign_ids: signIds.filter((id) => id !== realtimeId),
+      setSignGroups(line, {
+        [groupKey]: {
+          ...signGroup,
+          sign_ids: signIds.filter((id) => id !== realtimeId),
+        },
       });
     },
-    [line, signGroups, signsToGroups, setSignGroup],
+    [line, signGroups, signsToGroups, setSignGroups],
   );
 
   const batchModes =
@@ -159,8 +165,70 @@ function Line({
     return isMixed ? 'mixed' : Object.keys(uniqueModes)[0];
   }, [signConfigs, stations, arincToRealtimeId]);
 
+  const [promptChangeAllMode, setPromptChangeAllMode] = React.useState<
+    string | null
+  >(null);
+
+  const promptText = (
+    <div>
+      <p>
+        <strong>There are active sign groups at this time.</strong>
+      </p>
+      <p>
+        Setting all signs to &ldquo;{promptChangeAllMode}&rdquo; will ungroup
+        those signs and set them to &ldquo;{promptChangeAllMode}&rdquo;.
+      </p>
+      <p>
+        Would you like to set all the signs on this line to &ldquo;
+        {promptChangeAllMode}&rdquo;?
+      </p>
+    </div>
+  );
+
+  const modalAccept = React.useCallback(() => {
+    if (promptChangeAllMode) {
+      const signGroupDeletions: RouteSignGroupsWithDeletions = {};
+      Object.keys(signGroups).forEach((groupKey) => {
+        signGroupDeletions[groupKey] = {};
+      });
+      setSignGroups(line, signGroupDeletions);
+      setAllStationsMode(setConfigs, stations, line, promptChangeAllMode);
+    }
+
+    setPromptChangeAllMode(null);
+  }, [
+    promptChangeAllMode,
+    signGroups,
+    setAllStationsMode,
+    setConfigs,
+    stations,
+    line,
+    setPromptChangeAllMode,
+  ]);
+
+  const modalCancel = React.useCallback(
+    () => setPromptChangeAllMode(null),
+    [setPromptChangeAllMode],
+  );
+
+  const setAllMode = (mode: string) => {
+    if (Object.keys(signGroups).length > 0) {
+      setPromptChangeAllMode(mode);
+    } else {
+      setAllStationsMode(setConfigs, stations, line, mode);
+    }
+  };
+
   return (
     <div>
+      {promptChangeAllMode && (
+        <ModalPrompt
+          contents={promptText}
+          acceptText={`Yes, set all signs to "${promptChangeAllMode}"`}
+          onAccept={modalAccept}
+          onCancel={modalCancel}
+        />
+      )}
       <h1>{name(line)}</h1>
       <Collapse destroyInactivePanel>
         <Panel header="Bulk Editing">
@@ -172,7 +240,7 @@ function Line({
                   currentTime={currentTime}
                   alerts={alerts}
                   signGroups={signGroups}
-                  setSignGroup={setSignGroup}
+                  setSignGroups={setSignGroups}
                   readOnly={readOnly}
                 />
               </TabPane>
@@ -233,9 +301,7 @@ function Line({
                 id="auto"
                 value="auto"
                 checked={batchMode === 'auto'}
-                onChange={() => {
-                  setAllStationsMode(setConfigs, stations, line, 'auto');
-                }}
+                onChange={() => setAllMode('auto')}
               />
             </label>
           )}
@@ -251,9 +317,7 @@ function Line({
                 id="headway"
                 value="headway"
                 checked={batchMode === 'headway'}
-                onChange={() => {
-                  setAllStationsMode(setConfigs, stations, line, 'headway');
-                }}
+                onChange={() => setAllMode('headway')}
               />
             </label>
           )}
@@ -269,9 +333,7 @@ function Line({
                 id="off"
                 value="off"
                 checked={batchMode === 'off'}
-                onChange={() => {
-                  setAllStationsMode(setConfigs, stations, line, 'off');
-                }}
+                onChange={() => setAllMode('off')}
               />
             </label>
           )}

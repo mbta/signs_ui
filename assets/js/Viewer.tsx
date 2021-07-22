@@ -4,9 +4,9 @@ import {
   Alerts,
   SignContent,
   ConfiguredHeadways,
+  RouteSignGroupsWithDeletions,
   SignConfigs,
   SignGroupMap,
-  SignGroup,
 } from './types';
 import { alertsForLine } from './helpers';
 
@@ -23,7 +23,10 @@ interface ViewerProps {
   chelseaBridgeAnnouncements: 'auto' | 'off';
   setChelseaBridgeAnnouncements: (x: 'auto' | 'off') => void;
   signGroups: SignGroupMap;
-  setSignGroup: (line: string, key: string, signGroup: SignGroup) => void;
+  setSignGroups: (
+    line: string,
+    signGroups: RouteSignGroupsWithDeletions,
+  ) => void;
 }
 
 function Viewer({
@@ -39,7 +42,7 @@ function Viewer({
   setChelseaBridgeAnnouncements,
   chelseaBridgeAnnouncements,
   signGroups,
-  setSignGroup,
+  setSignGroups,
 }: ViewerProps): JSX.Element {
   const routeSignGroups = React.useMemo(
     () => signGroups[line] || {},
@@ -60,7 +63,7 @@ function Viewer({
         chelseaBridgeAnnouncements={chelseaBridgeAnnouncements}
         setChelseaBridgeAnnouncements={setChelseaBridgeAnnouncements}
         signGroups={routeSignGroups}
-        setSignGroup={setSignGroup}
+        setSignGroups={setSignGroups}
         readOnly={readOnly}
       />
     </div>
