@@ -21,6 +21,8 @@ export default function SignGroupItem({
   group,
   readOnly,
   onEdit,
+  line,
+  setSignGroups
 }: SignGroupProps): JSX.Element {
   return (
     <div className="sign_groups--group-item" data-testid={groupKey}>
