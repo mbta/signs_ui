@@ -2,8 +2,6 @@ import React from 'react';
 import SignText from './SignText';
 import SignGroupExpirationDetails from './SignGroupExpirationDetails';
 import { SignConfigs, SignGroup, StationConfig } from './types';
-import { stationConfig, arincToRealtimeId } from './mbta';
-import setSignGroup from "./ViewerApp"
 
 
 interface SignGroupProps {
@@ -15,7 +13,7 @@ interface SignGroupProps {
   setConfigs: (x: SignConfigs) => void;
   stationConfigs?: StationConfig[];
   line: string;
-  setSignGroup: (line: string, key: string, signGroup: SignGroup) => void;
+  setSignGroups: (line: string, key: string, signGroup: SignGroup) => void;
 }
 
 export default function SignGroupItem({
@@ -43,7 +41,7 @@ export default function SignGroupItem({
         onClick={
           () => {
             confirm("Are you sure?");
-            setSignGroups();
+            this.setSignGroups();
           }}>
           Return to &ldquo;Auto&rdquo;
         </button>
