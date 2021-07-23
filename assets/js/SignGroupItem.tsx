@@ -17,39 +17,6 @@ interface SignGroupProps {
   setSignGroup: (line: string, key: string, signGroup: SignGroup) => void;
 }
 
-function returnToAutoMode(
-  stations: StationConfig[],
-  line: string,
-) {
-  const statuses: {
-    [key: string]: { mode: 'auto' | 'off' | 'headway'; expires?: null };
-  } = {};
-
-  stations.forEach((station: StationConfig) => {
-    ['n', 's', 'e', 'w', 'm', 'c'].forEach((zone) => {
-      const realtimeId = arincToRealtimeId(`${station.id}-${zone}`, line);
-      const zoneConfig = station.zones[zone];
-      if (zoneConfig!== undefined) {
-        const { modes } = zoneConfig;
-        if (realtimeId) {
-          statuses[realtimeId] = { mode: 'auto', expires: null };
-        }
-      }
-    }) 
-  })
-
-  return (
-    <button
-      className="mr-2"
-      id="apply"
-      type="submit"
-      onClick={() => alert("Are you sure?")}
-    >
-      Return to "Auto"
-    </button>
-  );
-}
-
 export default function SignGroupItem({
   groupKey,
   currentTime,
@@ -90,7 +57,7 @@ export default function SignGroupItem({
         className="btn btn-primary"
         onClick={(group) => {
           confirm("Are you sure?");
-          setSignGroup(line, groupKey, newSignGroup);}}>
+          setSignGroup(line, groupKey, {});}}>
           Return to "Auto"
         </button>
       </div>
