@@ -38,7 +38,13 @@ export default function SignGroupItem({
         >
           Edit
         </button>
-        <button type="button" className="btn btn-primary">
+        <button type="button"
+        className="btn btn-primary"
+        onClick={
+          () => {
+            confirm("Are you sure?");
+            setSignGroups();
+          }}>
           Return to &ldquo;Auto&rdquo;
         </button>
       </div>
