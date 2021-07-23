@@ -96,6 +96,12 @@ type RouteSignGroups = {
   [key: string]: SignGroup;
 };
 
+// {groupKey: {}} means "delete groupKey sign group"
+// {} is represented in TS as Record<string, never>
+type RouteSignGroupsWithDeletions = {
+  [key: string]: SignGroup | Record<string, never>;
+};
+
 type SignGroupMap = {
   [routeId: string]: RouteSignGroups;
 };
@@ -114,5 +120,6 @@ export {
   ZoneConfig,
   SignGroupMap,
   RouteSignGroups,
+  RouteSignGroupsWithDeletions,
   SignGroup,
 };

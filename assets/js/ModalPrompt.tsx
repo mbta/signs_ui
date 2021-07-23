@@ -15,21 +15,34 @@ function ModalPrompt({
   contents,
   elementId,
 }: ModalPromptProps): JSX.Element {
-  const obscuredElement = elementId
-    ? document.getElementById(elementId) || document.body
-    : document.body;
+  const obscuredElement = elementId && document.getElementById(elementId);
+  let top;
+  let left;
+  let width;
+  let height;
 
-  const box = obscuredElement.getBoundingClientRect();
+  if (obscuredElement) {
+    const box = obscuredElement.getBoundingClientRect();
+    top = box.top;
+    left = box.left;
+    width = box.width;
+    height = box.height;
+  } else {
+    top = window.scrollY;
+    left = window.scrollX;
+    width = window.innerWidth;
+    height = window.innerHeight;
+  }
 
   return (
     <div
       className="modal_prompt--backdrop"
       style={{
         position: 'absolute',
-        top: `${box.top}px`,
-        left: `${box.left}px`,
-        width: `${box.width}px`,
-        height: `${box.height}px`,
+        top: `${top}px`,
+        left: `${left}px`,
+        width: `${width}px`,
+        height: `${height}px`,
       }}
       data-testid="modal-prompt"
     >

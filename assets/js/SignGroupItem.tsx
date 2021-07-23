@@ -24,22 +24,7 @@ export default function SignGroupItem({
   group,
   readOnly,
   onEdit,
-  setSignGroup,
-  stationConfigs,
-  line,
-}: 
-  SignGroupProps) {
-  const stations: StationConfig[] =
-    stationConfigs ||
-    (stationConfig[line] && stationConfig[line].stations) ||
-    [];
-  const newSignGroup: SignGroup = {
-    sign_ids: [],
-    line1: '',
-    line2: '',
-    expires: null,
-    alert_id: null,
-  };
+}: SignGroupProps): JSX.Element {
   return (
     <div className="sign_groups--group-item" data-testid={groupKey}>
       <SignText time={currentTime} line1={group.line1} line2={group.line2} />
@@ -53,13 +38,8 @@ export default function SignGroupItem({
         >
           Edit
         </button>
-        <button 
-        type="button"
-        className="btn btn-primary"
-        onClick={(group) => {
-          confirm("Are you sure?");
-          setSignGroup(line, groupKey, {});}}>
-          Return to "Auto"
+        <button type="button" className="btn btn-primary">
+          Return to &ldquo;Auto&rdquo;
         </button>
       </div>
     </div>

@@ -152,6 +152,10 @@ class SignPanel extends React.Component<
     this.setState({ staticLine2: newText, customChanges: true });
   }
 
+  setConfirmingUngroup(confirming: boolean): void {
+    this.setState({ confirmingUngroup: confirming });
+  }
+
   performUngroup(): void {
     const { ungroupSign } = this.props;
 
@@ -159,10 +163,6 @@ class SignPanel extends React.Component<
       this.setState({ confirmingUngroup: false });
       ungroupSign();
     }
-  }
-
-  setConfirmingUngroup(confirming: boolean): void {
-    this.setState({ confirmingUngroup: confirming });
   }
 
   saveStaticText(): void {

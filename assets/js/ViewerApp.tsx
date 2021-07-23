@@ -10,13 +10,18 @@ import {
   Alerts,
   SignGroup,
   SignGroupMap,
+  RouteSignGroupsWithDeletions,
 } from './types';
+
+/* eslint-disable camelcase */
 
 declare global {
   interface Window {
     userToken: string;
   }
 }
+
+type SignGroupApi = (SignGroup & { route_id: string }) | Record<string, never>;
 
 interface ViewerAppProps {
   initialAlerts: Alerts;
@@ -58,7 +63,7 @@ class ViewerApp extends React.Component<
     this.setConfiguredHeadways = this.setConfiguredHeadways.bind(this);
     this.setChelseaBridgeAnnouncements =
       this.setChelseaBridgeAnnouncements.bind(this);
-    this.setSignGroup = this.setSignGroup.bind(this);
+    this.setSignGroups = this.setSignGroups.bind(this);
     this.changeLine = this.changeLine.bind(this);
     this.updateTime = this.updateTime.bind(this);
     this.state = {
@@ -191,13 +196,21 @@ class ViewerApp extends React.Component<
     }
   }
 
-  setSignGroup(line: string, key: string, signGroup: SignGroup): void {
+  setSignGroups(line: string, signGroups: RouteSignGroupsWithDeletions): void {
     const { signGroupsChannel: channel } = this.state;
 
     if (channel) {
-      channel.push('changeSignGroups', {
-        data: { [key]: { ...signGroup, ...{ route_id: line } } },
+      const data: { [key: string]: SignGroupApi } = {};
+
+      Object.entries(signGroups).forEach(([key, signGroup]) => {
+        if (Object.keys(signGroup).length > 0) {
+          data[key] = { ...(signGroup as SignGroup), ...{ route_id: line } };
+        } else {
+          data[key] = {};
+        }
       });
+
+      channel.push('changeSignGroups', { data });
     } else {
       Sentry.captureMessage('signGroupsChannel not present');
     }
@@ -296,7 +309,7 @@ class ViewerApp extends React.Component<
             configuredHeadways={configuredHeadways}
             setConfiguredHeadways={this.setConfiguredHeadways}
             signGroups={signGroups}
-            setSignGroup={this.setSignGroup}
+            setSignGroups={this.setSignGroups}
             currentTime={currentTime}
             line={line}
             chelseaBridgeAnnouncements={chelseaBridgeAnnouncements}
