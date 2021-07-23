@@ -1,8 +1,7 @@
 import React from 'react';
 import SignText from './SignText';
 import SignGroupExpirationDetails from './SignGroupExpirationDetails';
-import { SignConfigs, SignGroup, StationConfig } from './types';
-
+import { SignConfigs, SignGroup, StationConfig, RouteSignGroupsWithDeletions } from './types';
 
 interface SignGroupProps {
   currentTime: number;
@@ -13,7 +12,7 @@ interface SignGroupProps {
   setConfigs: (x: SignConfigs) => void;
   stationConfigs?: StationConfig[];
   line: string;
-  setSignGroups: (line: string, key: string, signGroup: SignGroup) => void;
+  setSignGroups: (line: string, signGroups: RouteSignGroupsWithDeletions) => void;
 }
 
 export default function SignGroupItem({
@@ -41,7 +40,7 @@ export default function SignGroupItem({
         onClick={
           () => {
             confirm("Are you sure?");
-            this.setSignGroups();
+            setSignGroups(line, {});
           }}>
           Return to &ldquo;Auto&rdquo;
         </button>
