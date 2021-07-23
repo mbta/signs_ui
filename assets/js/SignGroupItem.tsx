@@ -3,6 +3,7 @@ import SignText from './SignText';
 import SignGroupExpirationDetails from './SignGroupExpirationDetails';
 import { SignConfigs, SignGroup, StationConfig } from './types';
 import { stationConfig, arincToRealtimeId } from './mbta';
+import setSignGroup from "./ViewerApp"
 
 
 interface SignGroupProps {
@@ -66,7 +67,6 @@ export default function SignGroupItem({
 }
 
 export {
-  returnToAutoMode,
   SignGroupItem,
   SignGroupProps,
 };
