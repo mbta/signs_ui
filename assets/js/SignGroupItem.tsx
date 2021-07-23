@@ -24,6 +24,7 @@ export default function SignGroupItem({
   line,
   setSignGroups
 }: SignGroupProps): JSX.Element {
+  //const { setConfigs } = this.props;
   return (
     <div className="sign_groups--group-item" data-testid={groupKey}>
       <SignText time={currentTime} line1={group.line1} line2={group.line2} />
@@ -42,7 +43,7 @@ export default function SignGroupItem({
         onClick={
           () => {
             confirm("Are you sure?");
-            setSignGroups(line, {});
+            this.setSignGroups(line, {});
           }}>
           Return to &ldquo;Auto&rdquo;
         </button>

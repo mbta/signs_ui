@@ -387,6 +387,7 @@ function SignGroupsList({
               group={signGroups[groupKey]}
               readOnly={readOnly}
               onEdit={onEdit}
+              setSignGroups={setSignGroups}
             />
           ))}
         </div>
@@ -462,6 +463,7 @@ function SignGroups({
       readOnly={readOnly}
       onCreate={() => openForm(null)}
       onEdit={openForm}
+      setSignGroups={setSignGroups}
     />
   );
 }
