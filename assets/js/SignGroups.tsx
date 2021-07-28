@@ -10,6 +10,7 @@ import {
   StationConfig,
   Zone,
   RouteSignGroups,
+  RouteSignGroupsWithDeletions,
   SignGroup,
 } from './types';
 import { defaultZoneLabel } from './helpers';
@@ -355,6 +356,11 @@ interface SignGroupsListProps {
   currentTime: number;
   onCreate: () => void;
   onEdit: (groupKey: string) => void;
+  line: string;
+  setSignGroups: (
+    line: string,
+    signGroups: RouteSignGroupsWithDeletions,
+  ) => void;
 }
 
 function SignGroupsList({
@@ -363,6 +369,8 @@ function SignGroupsList({
   currentTime,
   onCreate,
   onEdit,
+  line,
+  setSignGroups,
 }: SignGroupsListProps): JSX.Element | null {
   const groupCount = Object.keys(signGroups).length;
 
@@ -385,6 +393,8 @@ function SignGroupsList({
               currentTime={currentTime}
               groupKey={groupKey}
               group={signGroups[groupKey]}
+              line={line}
+              setSignGroups={setSignGroups}
               readOnly={readOnly}
               onEdit={onEdit}
             />
@@ -400,7 +410,10 @@ interface SignGroupsProps {
   currentTime: number;
   alerts: RouteAlerts;
   signGroups: RouteSignGroups;
-  setSignGroups: (line: string, signGroups: RouteSignGroups) => void;
+  setSignGroups: (
+    line: string,
+    signGroups: RouteSignGroupsWithDeletions,
+  ) => void;
   readOnly: boolean;
 }
 
@@ -462,6 +475,8 @@ function SignGroups({
       readOnly={readOnly}
       onCreate={() => openForm(null)}
       onEdit={openForm}
+      line={line}
+      setSignGroups={setSignGroups}
     />
   );
 }
