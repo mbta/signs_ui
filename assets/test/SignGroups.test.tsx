@@ -2,7 +2,7 @@ import * as React from 'react';
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import SignGroups from '../js/SignGroups';
-import { RouteSignGroups, SignGroup } from '../js/types';
+import { RouteSignGroupsWithDeletions } from '../js/types';
 
 function openNewGroupForm() {
   userEvent.click(screen.getByRole('button', { name: 'Create' }));
@@ -43,6 +43,10 @@ function cancelFormButton() {
   return screen.getByRole('button', { name: 'Cancel' });
 }
 
+function returnToAutoButton() {
+  return screen.getByRole('button', { name: 'Return to “Auto”' });
+}
+
 function getModalPrompt(): HTMLElement {
   return screen.getByTestId('modal-prompt');
 }
@@ -63,7 +67,7 @@ function acceptModalPrompt(modalPrompt: HTMLElement) {
 
 type SignGroupUpdate = {
   line: string;
-  signGroups: RouteSignGroups;
+  signGroups: RouteSignGroupsWithDeletions;
 };
 
 test('can create a sign group', () => {
@@ -206,7 +210,7 @@ test('can edit an existing sign group', () => {
 });
 
 test('can cancel prompt when moving a sign from one sign group to another', () => {
-  const signGroupSubmissions: Array<RouteSignGroups> = [];
+  const signGroupSubmissions: Array<SignGroupUpdate> = [];
   const otherSignGroupKey = 1622149900;
   const newSignGroupKey = otherSignGroupKey + 1;
 
@@ -228,7 +232,7 @@ test('can cancel prompt when moving a sign from one sign group to another', () =
         },
       },
       setSignGroups: (line, signGroups) => {
-        signGroupSubmissions.push(signGroups);
+        signGroupSubmissions.push({ line, signGroups });
       },
       readOnly: false,
     }),
@@ -247,13 +251,13 @@ test('can cancel prompt when moving a sign from one sign group to another', () =
   cancelModalPrompt(modalPrompt);
   userEvent.click(newGroupSubmitButton());
 
-  expect(signGroupSubmissions[0][`${newSignGroupKey}`].sign_ids).toEqual([
-    'tufts_southbound',
-  ]);
+  expect(
+    signGroupSubmissions[0].signGroups[`${newSignGroupKey}`].sign_ids,
+  ).toEqual(['tufts_southbound']);
 });
 
 test('can accept prompt when moving a sign from one sign group to another', () => {
-  const signGroupSubmissions: Array<RouteSignGroups> = [];
+  const signGroupSubmissions: Array<SignGroupUpdate> = [];
   const otherSignGroupKey = 1622149900;
   const newSignGroupKey = otherSignGroupKey + 1;
   const movingId = 'orange_north_station_commuter_rail_exit';
@@ -273,7 +277,7 @@ test('can accept prompt when moving a sign from one sign group to another', () =
         },
       },
       setSignGroups: (line, signGroups) => {
-        signGroupSubmissions.push(signGroups);
+        signGroupSubmissions.push({ line, signGroups });
       },
       readOnly: false,
     }),
@@ -292,7 +296,41 @@ test('can accept prompt when moving a sign from one sign group to another', () =
   acceptModalPrompt(modalPrompt);
   userEvent.click(newGroupSubmitButton());
 
-  expect(signGroupSubmissions[0][`${newSignGroupKey}`].sign_ids).toContain(
-    movingId,
+  expect(
+    signGroupSubmissions[0].signGroups[`${newSignGroupKey}`].sign_ids,
+  ).toContain(movingId);
+});
+
+test('can return a sign group back to auto', () => {
+  const signGroupSubmissions: Array<SignGroupUpdate> = [];
+  const signGroupKey = 1622149900;
+
+  render(
+    React.createElement(SignGroups, {
+      line: 'Orange',
+      currentTime: signGroupKey + 1,
+      alerts: {},
+      signGroups: {
+        [signGroupKey]: {
+          sign_ids: ['orange_north_station_northbound'],
+          line1: 'custom',
+          line2: 'text',
+          expires: null,
+          alert_id: null,
+        },
+      },
+      setSignGroups: (line, signGroups) => {
+        signGroupSubmissions.push({ line, signGroups });
+      },
+      readOnly: false,
+    }),
   );
+
+  userEvent.click(returnToAutoButton());
+  expect(signGroupSubmissions).toEqual([
+    {
+      line: 'Orange',
+      signGroups: { [signGroupKey]: {} },
+    },
+  ]);
 });

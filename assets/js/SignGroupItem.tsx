@@ -1,12 +1,17 @@
 import React from 'react';
 import SignText from './SignText';
 import SignGroupExpirationDetails from './SignGroupExpirationDetails';
-import { SignGroup } from './types';
+import { RouteSignGroupsWithDeletions, SignGroup } from './types';
 
 interface SignGroupProps {
   currentTime: number;
   groupKey: string;
   group: SignGroup;
+  line: string;
+  setSignGroups: (
+    line: string,
+    signGroups: RouteSignGroupsWithDeletions,
+  ) => void;
   readOnly: boolean;
   onEdit: (key: string) => void;
 }
@@ -15,6 +20,8 @@ export default function SignGroupItem({
   groupKey,
   currentTime,
   group,
+  line,
+  setSignGroups,
   readOnly,
   onEdit,
 }: SignGroupProps): JSX.Element {
@@ -31,7 +38,11 @@ export default function SignGroupItem({
         >
           Edit
         </button>
-        <button type="button" className="btn btn-primary">
+        <button
+          onClick={() => setSignGroups(line, { [groupKey]: {} })}
+          type="button"
+          className="btn btn-primary"
+        >
           Return to &ldquo;Auto&rdquo;
         </button>
       </div>
