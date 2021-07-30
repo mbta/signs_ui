@@ -27,16 +27,21 @@ function setMessage(line1: string, line2: string) {
 }
 
 function chooseAlert(alertId: string) {
-  userEvent.click(screen.getByRole('textbox', { name: /alert id picker/i }));
+  userEvent.click(
+    screen.getByRole('checkbox', { name: 'Schedule return to "Auto"' }),
+  );
+  userEvent.click(
+    screen.getByRole('radio', { name: 'At the end of an alert effect period' }),
+  );
   userEvent.click(screen.getByRole('button', { name: alertId }));
 }
 
 function newGroupSubmitButton() {
-  return screen.getByRole('button', { name: 'Create group' });
+  return screen.getByRole('button', { name: 'Create' });
 }
 
 function editGroupSubmitButton() {
-  return screen.getByRole('button', { name: 'Apply changes' });
+  return screen.getByRole('button', { name: 'Apply' });
 }
 
 function cancelFormButton() {

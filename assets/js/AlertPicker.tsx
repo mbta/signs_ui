@@ -74,6 +74,7 @@ interface AlertPickerProps {
   alertId: string;
   alerts: RouteAlerts;
   onChange: (alertId: string) => void;
+  startOpen?: boolean;
   disabled: boolean;
 }
 
@@ -81,24 +82,22 @@ function AlertPicker({
   alertId,
   alerts,
   onChange,
+  startOpen = false,
   disabled,
 }: AlertPickerProps): JSX.Element | null {
-  const [isOpen, setIsOpen] = React.useState(false);
-
   // if alerts change out from under us, AlertPickerPopup should re-render,
   // since it relies on the presence of alerts.
   const popupKey = JSON.stringify(Object.keys(alerts).sort());
+  const [open, setOpen] = React.useState(startOpen);
 
-  const isNoAlerts = Object.keys(alerts).length === 0;
-
-  if (isOpen) {
+  if (open) {
     return (
       <AlertPickerPopup
         key={popupKey}
-        setIsOpen={setIsOpen}
+        setIsOpen={setOpen}
         alerts={alerts}
         onChange={(newAlertId) => {
-          setIsOpen(false);
+          setOpen(false);
           onChange(newAlertId);
         }}
       />
@@ -113,11 +112,11 @@ function AlertPicker({
         type="text"
         value={alertId}
         onClick={() => {
-          setIsOpen(true);
+          setOpen(true);
         }}
         readOnly
       />
-      {isNoAlerts ? (
+      {Object.keys(alerts).length === 0 ? (
         <div className="alert_picker--no_alerts">
           There are currently no active alerts for this line.
         </div>

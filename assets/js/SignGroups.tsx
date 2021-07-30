@@ -1,9 +1,7 @@
 import * as React from 'react';
-import ReactDatePicker from 'react-datepicker';
 import { stationConfig, arincToRealtimeId } from './mbta';
 import SignText from './SignText';
 import SignTextInput from './SignTextInput';
-import AlertPicker from './AlertPicker';
 import ModalPrompt from './ModalPrompt';
 import {
   RouteAlerts,
@@ -15,6 +13,7 @@ import {
 } from './types';
 import { defaultZoneLabel } from './helpers';
 import SignGroupItem from './SignGroupItem';
+import SetExpiration from './SetExpiration';
 
 function changeGroupSignText([station, zone]: [string, Zone], line: string) {
   const stationConfigs = stationConfig[line]?.stations || [];
@@ -168,7 +167,7 @@ function SignGroupsForm({
   );
 
   const stations = stationConfig[line]?.stations ?? [];
-  const submitText = signGroupKey === null ? 'Create group' : 'Apply changes';
+  const submitText = signGroupKey === null ? 'Create' : 'Apply';
   const canSubmit =
     signGroup !== initialSignGroup && signGroup.sign_ids.length > 0;
 
@@ -274,9 +273,9 @@ function SignGroupsForm({
           </div>
         </div>
         <div className="sign_groups--container-right">
-          <div>
+          <div className="sign_groups--custom_message-container">
             Set Custom Message
-            <div className="sign_groups--custom_message-container">
+            <div className="sign_groups--custom_message-input">
               <div>
                 <SignTextInput
                   signID="sign_group"
@@ -299,38 +298,20 @@ function SignGroupsForm({
               </div>
             </div>
           </div>
-          <div>
-            Schedule return to &quot;Auto&quot;
-            <div className="sign_groups--schedule-container">
-              <div className="sign_groups--schedule-date">
-                Date and time
-                <div>
-                  <ReactDatePicker
-                    selected={expires}
-                    onChange={onDatePickerChange}
-                    showTimeSelect
-                    timeFormat="HH:mm"
-                    timeIntervals={15}
-                    dateFormat="MMM d @ h:mm aa"
-                    disabled={signGroup.alert_id !== null}
-                  />
-                </div>
-              </div>
-              <div className="sign_groups--schedule-alert">
-                Upon alert closing
-                <div>
-                  <AlertPicker
-                    alertId={signGroup.alert_id || ''}
-                    onChange={(id) =>
-                      setSignGroup({ ...signGroup, alert_id: id })
-                    }
-                    alerts={alerts}
-                    disabled={
-                      expires !== null || Object.keys(alerts).length === 0
-                    }
-                  />
-                </div>
-              </div>
+          <div className="sign_groups--container-message-expiration">
+            Message Expiration
+            <div className="sign-groups--container-expiration-picker">
+              <SetExpiration
+                alerts={alerts}
+                expires={expires}
+                alertId={signGroup.alert_id}
+                onDateChange={onDatePickerChange}
+                onAlertChange={(id) =>
+                  setSignGroup({ ...signGroup, alert_id: id })
+                }
+                readOnly={false}
+                showAlertSelector
+              />
             </div>
           </div>
           <div className="sign_groups--buttons-container">

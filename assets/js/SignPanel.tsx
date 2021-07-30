@@ -98,6 +98,49 @@ function lineDisplayText(
   return '';
 }
 
+function stringify(expires: Date | null) {
+  if (expires) {
+    return expires.toISOString();
+  }
+
+  return null;
+}
+
+function updateConfig(
+  setConfigsFn: (x: SignConfigs) => void,
+  realtimeId: string,
+  signConfig: SignConfig,
+  expires: Date | [Date, Date] | null,
+  alertId: string | null,
+) {
+  if (Array.isArray(expires)) {
+    return;
+  }
+  const expirationConfig = stringify(expires);
+
+  const newConfig = {
+    ...signConfig,
+    expires: expirationConfig,
+    alert_id: alertId,
+  };
+
+  setConfigsFn({
+    [realtimeId]: newConfig,
+  });
+}
+
+function parseDate(str: string | null | undefined): Date | null {
+  if (str) {
+    const date = new Date(str);
+
+    if (date.toString() !== 'Invalid Date') {
+      return date;
+    }
+  }
+
+  return null;
+}
+
 interface SignPanelProps {
   alerts: RouteAlerts;
   signId: string;
@@ -303,9 +346,20 @@ class SignPanel extends React.Component<
             <div className="viewer--schedule-expires">
               <SetExpiration
                 alerts={alerts}
-                realtimeId={realtimeId}
-                signConfig={signConfig}
-                setConfigs={setConfigs}
+                expires={parseDate(signConfig.expires)}
+                alertId={signConfig.alert_id}
+                onDateChange={(dt) => {
+                  updateConfig(setConfigs, realtimeId, signConfig, dt, null);
+                }}
+                onAlertChange={(alertId) =>
+                  updateConfig(
+                    setConfigs,
+                    realtimeId,
+                    signConfig,
+                    null,
+                    alertId,
+                  )
+                }
                 readOnly={readOnly}
                 showAlertSelector={shouldShowAlertSelector(line)}
               />

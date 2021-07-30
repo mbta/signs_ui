@@ -1,155 +1,123 @@
 import * as React from 'react';
 import ReactDatePicker from 'react-datepicker';
-import { RouteAlerts, SignConfig, SignConfigs } from './types';
+import { RouteAlerts } from './types';
 import AlertPicker from './AlertPicker';
-
-function stringify(expires: Date | null) {
-  if (expires) {
-    return expires.toISOString();
-  }
-
-  return null;
-}
-
-function updateConfig(
-  setConfigsFn: (x: SignConfigs) => void,
-  realtimeId: string,
-  signConfig: SignConfig,
-  expires: Date | [Date, Date] | null,
-  alertId: string | null,
-) {
-  if (Array.isArray(expires)) {
-    return;
-  }
-  const expirationConfig = stringify(expires);
-
-  const newConfig = {
-    ...signConfig,
-    expires: expirationConfig,
-    alert_id: alertId,
-  };
-
-  setConfigsFn({
-    [realtimeId]: newConfig,
-  });
-}
-
-function parseDate(str: string | null | undefined) {
-  if (str) {
-    const date = new Date(str);
-
-    if (date.toString() !== 'Invalid Date') {
-      return date;
-    }
-  }
-
-  return null;
-}
 
 interface SetExpirationProps {
   alerts: RouteAlerts;
-  realtimeId: string;
-  signConfig: SignConfig;
-  setConfigs: (x: SignConfigs) => void;
+  expires?: Date | null;
+  alertId?: string | null;
+  onDateChange: (date: Date | null) => void;
+  onAlertChange: (alertId: string | null) => void;
   readOnly: boolean;
   showAlertSelector: boolean;
 }
 
+type Picker = 'date' | 'alert' | null;
+
 function SetExpiration({
   alerts,
-  realtimeId,
-  signConfig,
-  setConfigs,
+  expires,
+  alertId,
   readOnly,
+  onDateChange,
+  onAlertChange,
   showAlertSelector,
 }: SetExpirationProps): JSX.Element | null {
-  const isDateTimeSelected = !!signConfig.expires;
-  const isAlertSelected = !!signConfig.alert_id;
+  const isDateTimeSelected = !!expires;
+  const isAlertSelected = !!alertId;
   const isNoAlerts = Object.keys(alerts).length === 0;
-  const headerText = readOnly
-    ? 'Scheduled return to "Auto"'
-    : 'Schedule return to "Auto"';
+  const [picker, setPicker] = React.useState<Picker>(null);
+  const [returnsToAuto, setReturnsToAuto] = React.useState(
+    isDateTimeSelected || isAlertSelected,
+  );
 
-  return isDateTimeSelected || isAlertSelected || !readOnly ? (
-    <div>
-      <div>
-        <strong>{headerText}</strong>
-      </div>
-      <form>
-        <label
-          className={isAlertSelected ? 'set_expiration--label-disabled' : ''}
-        >
+  const focusDatePicker = () => {
+    onAlertChange(null);
+    setPicker('date');
+  };
+
+  const focusAlertPicker = () => {
+    onDateChange(null);
+    setPicker('alert');
+  };
+
+  const toggleReturnToAuto = () => {
+    if (returnsToAuto) {
+      onAlertChange(null);
+      onDateChange(null);
+      setPicker(null);
+    }
+    setReturnsToAuto(!returnsToAuto);
+  };
+
+  return returnsToAuto || !readOnly ? (
+    <div className="set_expiration">
+      {(!readOnly && (
+        <label>
           <input
             className="mr-1"
-            type="radio"
-            checked={isDateTimeSelected}
-            disabled={isAlertSelected}
+            type="checkbox"
+            checked={returnsToAuto}
+            onClick={toggleReturnToAuto}
             readOnly
           />
-          Date and time
-          <div>
-            <ReactDatePicker
-              selected={parseDate(signConfig.expires)}
-              onChange={(dt) =>
-                updateConfig(setConfigs, realtimeId, signConfig, dt, null)
-              }
-              showTimeSelect
-              timeFormat="HH:mm"
-              timeIntervals={15}
-              dateFormat="MMM d @ h:mm aa"
-              disabled={readOnly || isAlertSelected}
-            />
-          </div>
-          {isDateTimeSelected && !readOnly && (
-            <button
-              className="set_expiration--cancel"
-              type="button"
-              onClick={() =>
-                updateConfig(setConfigs, realtimeId, signConfig, null, null)
-              }
-            >
-              Cancel
-            </button>
-          )}
+          <strong>Schedule return to &quot;Auto&quot;</strong>
         </label>
-        {showAlertSelector ? (
-          <label
-            className={
-              isDateTimeSelected || isNoAlerts
-                ? 'set_expiration--label-disabled'
-                : ''
-            }
-          >
+      )) || <strong>Scheduled return to &quot;Auto&quot;</strong>}
+      {returnsToAuto && (
+        <>
+          <label>
             <input
-              className="mr-1"
+              className="mr-1 set_expiration--datetime"
               type="radio"
-              checked={isAlertSelected}
-              disabled={isDateTimeSelected || isNoAlerts}
+              checked={picker === 'date' || isDateTimeSelected}
+              onChange={focusDatePicker}
+              disabled={readOnly}
               readOnly
             />
-            At the end of an alert effect period
-            <AlertPicker
-              alertId={signConfig.alert_id || ''}
-              alerts={alerts}
-              onChange={(alertId) =>
-                updateConfig(setConfigs, realtimeId, signConfig, null, alertId)
-              }
-              disabled={readOnly || isDateTimeSelected || isNoAlerts}
-            />
-            {isAlertSelected && !readOnly && (
-              <button
-                className="set_expiration--cancel"
-                type="button"
-                onClick={() =>
-                  updateConfig(setConfigs, realtimeId, signConfig, null, null)
-                }
-              >
-                Cancel
-              </button>
-            )}
+            Date and time
+            <div>
+              {(picker === 'date' || isDateTimeSelected) && (
+                <ReactDatePicker
+                  selected={expires}
+                  onChange={onDateChange}
+                  showTimeSelect
+                  timeFormat="HH:mm"
+                  timeIntervals={15}
+                  dateFormat="MMM d @ h:mm aa"
+                  disabled={readOnly}
+                  startOpen={picker === 'date'}
+                />
+              )}
+            </div>
           </label>
-        ) : null}
-      </form>
+          {showAlertSelector && (
+            <label
+              className={isNoAlerts ? 'set_expiration--label-disabled' : ''}
+            >
+              <input
+                className="mr-1"
+                type="radio"
+                checked={picker === 'alert' || isAlertSelected}
+                disabled={isNoAlerts || readOnly}
+                onChange={focusAlertPicker}
+                readOnly
+              />
+              At the end of an alert effect period
+              {(picker === 'alert' || isAlertSelected) && (
+                <AlertPicker
+                  alertId={alertId || ''}
+                  alerts={alerts}
+                  onChange={onAlertChange}
+                  disabled={isNoAlerts || readOnly}
+                  startOpen={picker === 'alert'}
+                />
+              )}
+            </label>
+          )}
+        </>
+      )}
     </div>
   ) : null;
 }
