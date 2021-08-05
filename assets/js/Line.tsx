@@ -5,7 +5,6 @@ import ConfiguredHeadwaysForm from './ConfiguredHeadwaysForm';
 import Station from './Station';
 import { stationConfig, arincToRealtimeId, branchConfig } from './mbta';
 import SignGroups from './SignGroups';
-import featureIsEnabled from './laboratoryFeatures';
 import ModalPrompt from './ModalPrompt';
 import {
   ConfiguredHeadways,
@@ -233,18 +232,16 @@ function Line({
       <Collapse destroyInactivePanel>
         <Panel header="Bulk Editing">
           <Tabs defaultActiveKey="0" tabBarStyle={{}} id="tab-panel-container">
-            {featureIsEnabled('sign_groups') && (
-              <TabPane tab="Sign Groups">
-                <SignGroups
-                  line={line}
-                  currentTime={currentTime}
-                  alerts={alerts}
-                  signGroups={signGroups}
-                  setSignGroups={setSignGroups}
-                  readOnly={readOnly}
-                />
-              </TabPane>
-            )}
+            <TabPane tab="Sign Groups">
+              <SignGroups
+                line={line}
+                currentTime={currentTime}
+                alerts={alerts}
+                signGroups={signGroups}
+                setSignGroups={setSignGroups}
+                readOnly={readOnly}
+              />
+            </TabPane>
             {branches.length > 0 && (
               <TabPane tab="Set Headways" key="1">
                 <ConfiguredHeadwaysForm
