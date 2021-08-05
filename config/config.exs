@@ -52,10 +52,7 @@ config :sentry,
 config :elixir, :time_zone_database, Tzdata.TimeZoneDatabase
 
 config :laboratory,
-  features: [
-    {:sign_groups, "Sign groups",
-     "Turns on ability to edit sign text in groups instead of one by one."}
-  ],
+  features: [],
   cookie: [
     # one month,
     max_age: 3600 * 24 * 30,
