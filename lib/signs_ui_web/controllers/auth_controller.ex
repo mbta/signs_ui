@@ -96,7 +96,7 @@ defmodule SignsUiWeb.AuthController do
           |> Application.get_env(Ueberauth.Strategy.Cognito)
           |> Keyword.get(:client_id)
           |> config_value,
-        "logout_uri" => SignsUiWeb.Router.Helpers.page_url(conn, :index)
+        "logout_uri" => "https://priapps.mbta.com/adfs/ls/?wa=wsignout1.0"
       })
 
     "https://#{auth_domain}/logout?" <> redirect_params
