@@ -329,16 +329,6 @@ class SignPanel extends React.Component<
                 onValidLine1Change={this.handleInputLine1}
                 onValidLine2Change={this.handleInputLine2}
               />
-              <div>
-                <input
-                  className="viewer--apply-button"
-                  disabled={!customChanges}
-                  type="submit"
-                  value="Apply"
-                  onClick={this.saveStaticText}
-                />
-                {customChanges ? '*' : ''}
-              </div>
             </div>
           )}
 
@@ -365,6 +355,16 @@ class SignPanel extends React.Component<
               />
             </div>
           )}
+          <div>
+                <input
+                  className="viewer--apply-button"
+                  disabled={!customChanges}
+                  type="submit"
+                  value="Apply"
+                  onClick={this.saveStaticText}
+                />
+                {customChanges ? '*' : ''}
+                </div>
 
           {signGroup && (
             <div className="viewer--sign-group">
