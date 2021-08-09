@@ -356,15 +356,15 @@ class SignPanel extends React.Component<
             </div>
           )}
           <div>
-                <input
-                  className="viewer--apply-button"
-                  disabled={!customChanges}
-                  type="submit"
-                  value="Apply"
-                  onClick={this.saveStaticText}
-                />
-                {customChanges ? '*' : ''}
-                </div>
+            <input
+              className="viewer--apply-button"
+              disabled={!customChanges}
+              type="submit"
+              value="Apply"
+              onClick={this.saveStaticText}
+            />
+            {customChanges ? '*' : ''}
+          </div>
 
           {signGroup && (
             <div className="viewer--sign-group">
