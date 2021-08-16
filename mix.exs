@@ -56,7 +56,7 @@ defmodule SignsUi.Mixfile do
       {:httpoison, "~> 1.0"},
       {:jason, "~> 1.2.0"},
       {:nimble_parsec, "~> 1.0"},
-      {:phoenix_html, "~> 2.10"},
+      {:phoenix_html, "~> 3.0"},
       {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:phoenix_pubsub, "~> 2.0"},
       {:phoenix, "~> 1.5.0"},
