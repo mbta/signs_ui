@@ -1,12 +1,6 @@
 import * as React from 'react';
 import lineToColor from './colors';
-import {
-  RouteAlerts,
-  SignConfig,
-  SignConfigs,
-  SignGroup,
-  SingleSignContent,
-} from './types';
+import { RouteAlerts, SignConfig, SignGroup, SingleSignContent } from './types';
 import { choosePage } from './helpers';
 import SignGroupExpirationDetails from './SignGroupExpirationDetails';
 import SignTextInput from './SignTextInput';
@@ -106,29 +100,6 @@ function stringify(expires: Date | null) {
   return null;
 }
 
-function updateConfig(
-  setConfigsFn: (x: SignConfigs) => void,
-  realtimeId: string,
-  signConfig: SignConfig,
-  expires: Date | [Date, Date] | null,
-  alertId: string | null,
-) {
-  if (Array.isArray(expires)) {
-    return;
-  }
-  const expirationConfig = stringify(expires);
-
-  const newConfig = {
-    ...signConfig,
-    expires: expirationConfig,
-    alert_id: alertId,
-  };
-
-  setConfigsFn({
-    [realtimeId]: newConfig,
-  });
-}
-
 function parseDate(str: string | null | undefined): Date | null {
   if (str) {
     const date = new Date(str);
@@ -153,7 +124,7 @@ interface SignPanelProps {
   signContent: SingleSignContent;
   currentTime: number;
   line: string;
-  setConfigs: (x: SignConfigs) => void;
+  setConfig: (x: SignConfig) => void;
   signConfig: SignConfig;
   realtimeId: string;
   signGroup?: SignGroup;
@@ -173,27 +144,48 @@ function SignPanel({
   signContent,
   currentTime,
   line,
-  setConfigs,
-  signConfig,
+  setConfig,
+  signConfig: initialSignConfig,
   realtimeId,
   signGroup,
   ungroupSign,
   readOnly,
 }: SignPanelProps): JSX.Element {
-  const [staticLine1, setStaticLine1] = React.useState(signConfig.line1 || '');
-  const [staticLine2, setStaticLine2] = React.useState(signConfig.line2 || '');
-  const [customChanges, setCustomChanges] = React.useState(false);
+  const [signConfig, setSignConfig] = React.useState(initialSignConfig);
+  const [hasCustomChanges, setHasCustomChanges] = React.useState(false);
   const [initialTime] = React.useState(currentTime);
   const [confirmingUngroup, setConfirmingUngroup] = React.useState(false);
 
+  React.useEffect(() => {
+    if (!hasCustomChanges) {
+      setSignConfig(initialSignConfig);
+    }
+  }, [initialSignConfig, hasCustomChanges]);
+
+  function save(config: SignConfig): void {
+    setHasCustomChanges(false);
+    setConfig(config);
+  }
+
   function handleInputLine1(newText: string): void {
-    setStaticLine1(newText);
-    setCustomChanges(true);
+    setSignConfig({ ...signConfig, line1: newText });
+    setHasCustomChanges(true);
   }
 
   function handleInputLine2(newText: string): void {
-    setStaticLine2(newText);
-    setCustomChanges(true);
+    setSignConfig({ ...signConfig, line2: newText });
+    setHasCustomChanges(true);
+  }
+
+  function handleModeSelect(event: React.ChangeEvent<HTMLSelectElement>): void {
+    const value = event.target.value as SignModeOptions;
+    const newConfig = makeConfig(value);
+    setSignConfig(newConfig);
+    setHasCustomChanges(true);
+
+    if (value !== 'static_text') {
+      save(newConfig);
+    }
   }
 
   function performUngroup(): void {
@@ -201,21 +193,6 @@ function SignPanel({
       setConfirmingUngroup(false);
       ungroupSign();
     }
-  }
-
-  function saveStaticText(): void {
-    setCustomChanges(false);
-
-    const newConfig: SignConfig = {
-      ...signConfig,
-      mode: 'static_text',
-      line1: staticLine1,
-      line2: staticLine2,
-    };
-
-    setConfigs({
-      [realtimeId]: newConfig,
-    });
   }
 
   return (
@@ -235,23 +212,10 @@ function SignPanel({
             <div>
               <select
                 id={realtimeId}
+                data-testid={realtimeId}
                 className="viewer--mode-select"
                 value={signConfig.mode}
-                onChange={(event) => {
-                  const newConfig = makeConfig(
-                    event.target.value as
-                      | 'auto'
-                      | 'headway'
-                      | 'off'
-                      | 'static_text',
-                  );
-                  setStaticLine1(newConfig.line1 || '');
-                  setStaticLine2(newConfig.line2 || '');
-                  setCustomChanges(false);
-                  setConfigs({
-                    [realtimeId]: newConfig,
-                  });
-                }}
+                onChange={handleModeSelect}
               >
                 {modes.auto && <option value="auto">Auto</option>}
                 {modes.headway && <option value="headway">Headways</option>}
@@ -286,39 +250,43 @@ function SignPanel({
             </div>
             <SignTextInput
               signID={realtimeId}
-              line1={staticLine1}
-              line2={staticLine2}
+              line1={signConfig.line1 || ''}
+              line2={signConfig.line2 || ''}
               onValidLine1Change={handleInputLine1}
               onValidLine2Change={handleInputLine2}
             />
-            <div>
-              <input
-                className="viewer--apply-button"
-                disabled={!customChanges}
-                type="submit"
-                value="Apply"
-                onClick={saveStaticText}
-              />
-              {customChanges ? '*' : ''}
-            </div>
           </div>
         )}
 
         {signConfig.mode !== 'auto' && modes.auto && !signGroup && (
-          <div className="viewer--schedule-expires">
-            <SetExpiration
-              alerts={alerts}
-              expires={parseDate(signConfig.expires)}
-              alertId={signConfig.alert_id}
-              onDateChange={(dt) => {
-                updateConfig(setConfigs, realtimeId, signConfig, dt, null);
-              }}
-              onAlertChange={(alertId) =>
-                updateConfig(setConfigs, realtimeId, signConfig, null, alertId)
-              }
-              readOnly={readOnly}
-              showAlertSelector={shouldShowAlertSelector(line)}
-            />
+          <div>
+            <div className="viewer--schedule-expires">
+              <SetExpiration
+                alerts={alerts}
+                expires={parseDate(signConfig.expires)}
+                alertId={signConfig.alert_id}
+                onDateChange={(dt) => {
+                  setSignConfig({ ...signConfig, expires: stringify(dt) });
+                  setHasCustomChanges(true);
+                }}
+                onAlertChange={(alertId) => {
+                  setSignConfig({ ...signConfig, alert_id: alertId });
+                  setHasCustomChanges(true);
+                }}
+                readOnly={readOnly}
+                showAlertSelector={shouldShowAlertSelector(line)}
+              />
+            </div>
+            <div>
+              <input
+                className="viewer--apply-button"
+                disabled={!hasCustomChanges}
+                type="submit"
+                value="Apply"
+                onClick={() => save(signConfig)}
+              />
+              {hasCustomChanges ? '*' : ''}
+            </div>
           </div>
         )}
 
