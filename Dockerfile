@@ -14,8 +14,9 @@ WORKDIR /root
 ADD . .
 
 # Install git so we can install dependencies from GitHub
-RUN apt-get update && apt-get install -y --no-install-recommends \
-  git ca-certificates
+RUN apt-get update --allow-releaseinfo-change && \
+  apt-get install -y --no-install-recommends git ca-certificates
+
 RUN mix do local.hex --force, local.rebar --force, deps.get --only prod
 
 # next, build the frontend assets within a node.js container
@@ -42,9 +43,9 @@ RUN mix do compile --force, phx.digest, distillery.release --verbose
 # the one the elixir image was built with
 FROM debian:buster
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    libssl1.1 libsctp1 curl \
-    && rm -rf /var/lib/apt/lists/*
+RUN apt-get update --allow-releaseinfo-change && \
+  apt-get install -y --no-install-recommends libssl1.1 libsctp1 curl && \
+  rm -rf /var/lib/apt/lists/*
 
 WORKDIR /root
 EXPOSE 4000
