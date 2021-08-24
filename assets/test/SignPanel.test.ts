@@ -9,6 +9,7 @@ import {
   SignConfig,
   SignGroup,
   SingleSignContent,
+  SignConfigs,
 } from '../js/types';
 
 function customSignContent(): SingleSignContent {
@@ -50,7 +51,7 @@ function customModeSignProps(): SignPanelProps {
     currentTime: now + 2000,
     line: 'Red',
     signConfig: { mode: 'static_text' },
-    setConfigs: () => true,
+    setConfig: () => true,
     realtimeId: 'id',
     readOnly: false,
     modes: {
@@ -100,7 +101,7 @@ test('does not show messages that have expired', () => {
   const line = 'Red';
   const signConfig: SignConfig = { mode: 'auto' };
   const signContent = signContentWithExpirations(fresh, expired);
-  const setConfigs = () => true;
+  const setConfig = () => true;
   const realtimeId = 'id';
   const readOnly = false;
   const modes = {
@@ -120,7 +121,7 @@ test('does not show messages that have expired', () => {
         currentTime,
         line,
         signConfig,
-        setConfigs,
+        setConfig,
         realtimeId,
         readOnly,
         modes,
@@ -146,7 +147,7 @@ test('does not show select in read-only mode', () => {
     fresh,
     fresh,
   );
-  const setConfigs = () => true;
+  const setConfig = () => true;
   const realtimeId = 'id';
   const readOnly = true;
   const modes = {
@@ -167,7 +168,7 @@ test('does not show select in read-only mode', () => {
         currentTime,
         line,
         signConfig,
-        setConfigs,
+        setConfig,
         realtimeId,
         readOnly,
       },
@@ -189,7 +190,7 @@ test('shows the mode the sign is in in read-only mode', () => {
     fresh,
     fresh,
   );
-  const setConfigs = () => true;
+  const setConfig = () => true;
   const realtimeId = 'id';
   const readOnly = true;
   const modes = {
@@ -210,7 +211,7 @@ test('shows the mode the sign is in in read-only mode', () => {
         currentTime,
         line,
         signConfig,
-        setConfigs,
+        setConfig,
         realtimeId,
         readOnly,
       },
@@ -229,7 +230,7 @@ test('does show select when not in read-only mode', () => {
   const line = 'Red';
   const signConfig: SignConfig = { mode: 'auto' };
   const signContent = signContentWithExpirations(fresh, fresh);
-  const setConfigs = () => true;
+  const setConfig = () => true;
   const realtimeId = 'id';
   const readOnly = false;
   const modes = {
@@ -250,7 +251,7 @@ test('does show select when not in read-only mode', () => {
         line,
         modes,
         signConfig,
-        setConfigs,
+        setConfig,
         realtimeId,
         readOnly,
       },
@@ -316,7 +317,7 @@ test.each([
     const line = 'Red';
     const signConfig: SignConfig = { mode: 'auto' };
     const signContent = signContentWithExpirations(fresh, fresh);
-    const setConfigs = () => true;
+    const setConfig = () => true;
     const realtimeId = 'id';
     const readOnly = false;
     const modes: ZoneConfig['modes'] = {
@@ -337,7 +338,7 @@ test.each([
           currentTime,
           line,
           signConfig,
-          setConfigs,
+          setConfig,
           realtimeId,
           readOnly,
           modes,
@@ -362,7 +363,7 @@ test('shows the return to auto time field if sign can be set to auto', () => {
   const line = 'Red';
   const signConfig: SignConfig = { mode: 'static_text' };
   const signContent = signContentWithExpirations(fresh, fresh);
-  const setConfigs = () => true;
+  const setConfig = () => true;
   const realtimeId = 'id';
   const readOnly = false;
   const modes = {
@@ -383,7 +384,7 @@ test('shows the return to auto time field if sign can be set to auto', () => {
         line,
         modes,
         signConfig,
-        setConfigs,
+        setConfig,
         realtimeId,
         readOnly,
       },
@@ -402,7 +403,7 @@ test('does not show the return to auto time field if sign can be set to auto', (
   const line = 'Red';
   const signConfig: SignConfig = { mode: 'off' };
   const signContent = signContentWithExpirations(fresh, fresh);
-  const setConfigs = () => true;
+  const setConfig = () => true;
   const realtimeId = 'id';
   const readOnly = false;
   const modes = {
@@ -423,7 +424,7 @@ test('does not show the return to auto time field if sign can be set to auto', (
         line,
         modes,
         signConfig,
-        setConfigs,
+        setConfig,
         realtimeId,
         readOnly,
       },
@@ -442,7 +443,7 @@ test('shows clock even when no other content is present', () => {
   const line = 'Red';
   const signConfig: SignConfig = { mode: 'auto' };
   const signContent = signContentWithExpirations(expired, expired);
-  const setConfigs = () => true;
+  const setConfig = () => true;
   const realtimeId = 'id';
   const readOnly = false;
   const modes = {
@@ -462,7 +463,7 @@ test('shows clock even when no other content is present', () => {
         currentTime,
         line,
         signConfig,
-        setConfigs,
+        setConfig,
         realtimeId,
         readOnly,
         modes,
@@ -542,4 +543,59 @@ test('allows backing out of the ungrouping prompt', () => {
   expect(ungroupFn).not.toHaveBeenCalled();
   expect(screen.getByRole('button', { name: 'Ungroup' })).not.toBeDisabled();
   expect(screen.queryByRole('button', { name: 'Cancel' })).toBeNull();
+});
+
+test('does not save changes to backend until Apply is pressed', () => {
+  const now = new Date('2019-01-15T20:15:00Z').valueOf();
+  const fresh = new Date(now + 5000).toLocaleString();
+  const currentTime = now + 2000;
+
+  const setConfigHistory: SignConfig[] = [];
+
+  render(
+    React.createElement(SignPanel, {
+      alerts: {
+        alert1: {
+          id: 'alert1',
+          service_effect: "there's a problem",
+          created_at: null,
+        },
+      },
+      signId: 'signId',
+      modes: { auto: true, custom: true, headway: true, off: true },
+      signContent: signContentWithExpirations(fresh, fresh),
+      currentTime,
+      line: 'Red',
+      setConfig: (signConfig: SignConfig) => {
+        setConfigHistory.push(signConfig);
+      },
+      signConfig: { mode: 'auto' },
+      realtimeId: 'arincId',
+      readOnly: false,
+    }),
+  );
+
+  userEvent.selectOptions(screen.getByTestId('arincId'), 'Custom');
+  userEvent.type(screen.getByTestId('arincId-line1-input'), 'line1');
+  userEvent.type(screen.getByTestId('arincId-line2-input'), 'line2');
+  userEvent.click(screen.getByLabelText('Schedule return to "Auto"'));
+  userEvent.click(screen.getByLabelText('Date and time'));
+  userEvent.click(
+    screen.getByLabelText('At the end of an alert effect period'),
+  );
+  userEvent.click(screen.getByRole('button', { name: 'alert1' }));
+
+  expect(setConfigHistory).toEqual([]);
+
+  userEvent.click(screen.getByRole('button', { name: 'Apply' }));
+
+  expect(setConfigHistory).toEqual([
+    {
+      mode: 'static_text',
+      line1: 'line1',
+      line2: 'line2',
+      expires: null,
+      alert_id: 'alert1',
+    },
+  ]);
 });

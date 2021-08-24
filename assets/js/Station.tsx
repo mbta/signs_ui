@@ -68,6 +68,13 @@ function makeSign(
     const signGroup = signGroupKey ? signGroups[signGroupKey] : undefined;
     const ungroupMe = signGroupKey ? () => ungroupSign(realtimeId) : undefined;
 
+    const setConfig = React.useCallback(
+      (conf: SignConfig) => {
+        setConfigs({ [realtimeId]: conf });
+      },
+      [setConfigs, realtimeId],
+    );
+
     return (
       <SignPanel
         alerts={alerts}
@@ -78,7 +85,7 @@ function makeSign(
         signContent={signContent}
         currentTime={currentTime}
         signConfig={signConfig}
-        setConfigs={setConfigs}
+        setConfig={setConfig}
         realtimeId={realtimeId}
         signGroup={signGroup}
         ungroupSign={ungroupMe}
