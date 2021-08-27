@@ -18,7 +18,7 @@
     "jest": "^26.1.0",
     "jest-environment-jsdom-sixteen": "^1.0.3",
     "prettier": "^2.3.1",
-    "rc-tabs": "^11.9.0",
+    "rc-tabs": "^11.10.1",
     "regenerator-runtime": "^0.13.7"
   },
   "scripts": {
