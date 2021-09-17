@@ -1075,7 +1075,7 @@ const stationConfig: {
         name: 'JFK/UMass',
         zones: {
           n: {
-            label: 'Braintree Platform NB',
+            label: 'Braintree NB',
             modes: {
               auto: true,
               custom: true,
@@ -1084,7 +1084,7 @@ const stationConfig: {
             },
           },
           s: {
-            label: 'Braintree Platform SB',
+            label: 'Braintree SB',
             modes: {
               auto: true,
               custom: true,
@@ -1093,7 +1093,7 @@ const stationConfig: {
             },
           },
           e: {
-            label: 'Ashmont Platform NB',
+            label: 'Ashmont NB',
             modes: {
               auto: true,
               custom: true,
@@ -1102,7 +1102,7 @@ const stationConfig: {
             },
           },
           w: {
-            label: 'Ashmont Platform SB',
+            label: 'Ashmont SB',
             modes: {
               auto: true,
               custom: true,
