@@ -258,25 +258,27 @@ function SignPanel({
           </div>
         )}
 
-        {signConfig.mode !== 'auto' && modes.auto && !signGroup && (
+        {signConfig.mode !== 'auto' && !signGroup && (
           <div>
-            <div className="viewer--schedule-expires">
-              <SetExpiration
-                alerts={alerts}
-                expires={parseDate(signConfig.expires)}
-                alertId={signConfig.alert_id}
-                onDateChange={(dt) => {
-                  setSignConfig({ ...signConfig, expires: stringify(dt) });
-                  setHasCustomChanges(true);
-                }}
-                onAlertChange={(alertId) => {
-                  setSignConfig({ ...signConfig, alert_id: alertId });
-                  setHasCustomChanges(true);
-                }}
-                readOnly={readOnly}
-                showAlertSelector={shouldShowAlertSelector(line)}
-              />
-            </div>
+            {modes.auto && (
+              <div className="viewer--schedule-expires">
+                <SetExpiration
+                  alerts={alerts}
+                  expires={parseDate(signConfig.expires)}
+                  alertId={signConfig.alert_id}
+                  onDateChange={(dt) => {
+                    setSignConfig({ ...signConfig, expires: stringify(dt) });
+                    setHasCustomChanges(true);
+                  }}
+                  onAlertChange={(alertId) => {
+                    setSignConfig({ ...signConfig, alert_id: alertId });
+                    setHasCustomChanges(true);
+                  }}
+                  readOnly={readOnly}
+                  showAlertSelector={shouldShowAlertSelector(line)}
+                />
+              </div>
+            )}
             <div>
               <input
                 className="viewer--apply-button"

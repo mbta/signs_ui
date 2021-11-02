@@ -599,3 +599,49 @@ test('does not save changes to backend until Apply is pressed', () => {
     },
   ]);
 });
+
+test("allows setting custom text for signs with no 'Auto' mode", () => {
+  const now = new Date('2019-01-15T20:15:00Z').valueOf();
+  const fresh = new Date(now + 5000).toLocaleString();
+  const currentTime = now + 2000;
+
+  const setConfigHistory: SignConfig[] = [];
+
+  render(
+    React.createElement(SignPanel, {
+      alerts: {},
+      signId: 'signId',
+      modes: { auto: false, custom: true, headway: false, off: true },
+      signContent: signContentWithExpirations(fresh, fresh),
+      currentTime: currentTime,
+      line: 'Silver',
+      setConfig: (signConfig: SignConfig) => {
+        setConfigHistory.push(signConfig);
+      },
+      signConfig: { mode: 'off' },
+      realtimeId: 'arincId',
+      readOnly: false,
+    }),
+  );
+
+  expect(screen.queryByText('Set custom message')).toBeNull();
+
+  userEvent.selectOptions(screen.getByTestId('arincId'), 'Custom');
+
+  expect(screen.queryByText('Set custom message')).not.toBeNull();
+  expect(screen.queryByText('Schedule return to "Auto"')).toBeNull();
+
+  userEvent.type(screen.getByTestId('arincId-line1-input'), 'line1');
+  userEvent.type(screen.getByTestId('arincId-line2-input'), 'line2');
+
+  userEvent.click(screen.getByRole('button', { name: 'Apply' }));
+
+  expect(setConfigHistory).toEqual([
+    {
+      mode: 'static_text',
+      line1: 'line1',
+      line2: 'line2',
+      expires: null,
+    },
+  ]);
+});
