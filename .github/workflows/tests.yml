@@ -1,4 +1,4 @@
-name: Static Checks CI
+name: Elixir and JavaScript CI
 
 on: [pull_request]
 
