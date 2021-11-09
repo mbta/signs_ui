@@ -46,6 +46,10 @@ const branchConfig: { [key: string]: { id: string; name: string }[] } = {
       name: 'Green Line Trunk',
     },
     {
+      id: 'green_b',
+      name: 'Green - B',
+    },
+    {
       id: 'green_d',
       name: 'Green - D',
     },
@@ -2365,6 +2369,50 @@ const stationConfig: {
         },
       },
       {
+        id: 'GAMO',
+        name: 'Amory St',
+        zones: {
+          e: {
+            modes: {
+              auto: true,
+              custom: true,
+              headway: true,
+              off: true,
+            },
+          },
+          w: {
+            modes: {
+              auto: true,
+              custom: true,
+              headway: true,
+              off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'GBAB',
+        name: 'Babcock St',
+        zones: {
+          e: {
+            modes: {
+              auto: true,
+              custom: true,
+              headway: true,
+              off: true,
+            },
+          },
+          w: {
+            modes: {
+              auto: true,
+              custom: true,
+              headway: true,
+              off: true,
+            },
+          },
+        },
+      },
+      {
         id: 'GFEN',
         name: 'Fenway',
         zones: {
@@ -3047,6 +3095,10 @@ const arincToRealtimeIdMap: { [key: string]: string } = {
   'GLON-w': 'longwood_westbound',
   'GFEN-e': 'fenway_eastbound',
   'GFEN-w': 'fenway_westbound',
+  'GAMO-e': 'amory_st_eastbound',
+  'GAMO-w': 'amory_st_westbound',
+  'GBAB-e': 'babcock_st_eastbound',
+  'GBAB-w': 'babcock_st_westbound',
   'GKEN-e': 'kenmore_b_eastbound',
   'GKEN-w': 'kenmore_b_westbound',
   'GKEN-n': 'kenmore_c_d_eastbound',
