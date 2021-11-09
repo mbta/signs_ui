@@ -35,7 +35,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: deps
-          key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
+          key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}-${{ hashFiles('.tool-versions') }}
       - name: <elixir> Install dependencies (if needed)
         if: steps.elixir-cache.outputs.cache-hit != 'true'
         run: |
