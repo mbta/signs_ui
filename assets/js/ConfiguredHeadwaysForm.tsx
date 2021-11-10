@@ -191,7 +191,7 @@ const ConfiguredHeadwaysForm = ({
                       </div>
                       <div className="row mb-3">
                         {branches.map((branch, index) => (
-                          <div key={branch.id} className="col-6 col-md-4">
+                          <div key={branch.id} className="col-6 col-md-3">
                             <h5>{branch.name}</h5>
                             <div className="mb-3">
                               <Field
