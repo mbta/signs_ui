@@ -35,9 +35,9 @@ jobs:
         uses: actions/cache@v2
         with:
           path: deps
-          key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}-${{ hashFiles('.tool-versions') }}
+          key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
       - name: <elixir> Install dependencies (if needed)
-        if: steps.elixir-cache.outputs.cache-hit != 'true'
+        if: steps.asdf-cache.outputs.cache-hit != 'true'
         run: |
           mix local.rebar --force
           mix local.hex --force
