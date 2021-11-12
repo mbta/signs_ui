@@ -59,7 +59,7 @@ defmodule SignsUi.Mixfile do
       {:phoenix_html, "~> 3.0"},
       {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:phoenix_pubsub, "~> 2.0"},
-      {:phoenix, "~> 1.5.0"},
+      {:phoenix, "~> 1.6.2"},
       {:plug_cowboy, "~> 2.3"},
       {:sentry, "~> 8.0"},
       {:sobelow, "~> 0.8", only: :dev},
