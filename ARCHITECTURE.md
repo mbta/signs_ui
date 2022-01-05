@@ -57,3 +57,6 @@ configuration state are serialized onto the page as global variables on `window`
 uses this data to initialize the page with all the relevant data. There are handlers that listen
 on the Phoenix channels for sign and configuration updates, and update the top-level state when
 there are changes.
+
+## Diagram
+![Signs UI Architecture Diagram](/signs_ui_architecture.jpg)
