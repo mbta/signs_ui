@@ -1988,6 +1988,36 @@ const stationConfig: {
     batchModes: { auto: true, headway: true, off: true },
     stations: [
       {
+        id: 'GUNS',
+        name: 'Union Sq',
+        zones: {
+          e: {
+            modes: {
+              auto: false,
+              custom: false,
+              headway: false,
+              off: true,
+            },
+          },
+          w: {
+            modes: {
+              auto: false,
+              custom: false,
+              headway: false,
+              off: true,
+            },
+          },
+          m: {
+            modes: {
+              auto: false,
+              custom: false,
+              headway: false,
+              off: true,
+            },
+          },
+        },
+      },
+      {
         id: 'GLEC',
         name: 'Lechmere',
         zones: {
