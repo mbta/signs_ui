@@ -2777,6 +2777,20 @@ const stationConfig: {
         },
       },
       {
+        id: 'SLEC',
+        name: 'Lechmere - GLX',
+        zones: {
+          m: {
+            modes: {
+              auto: false,
+              custom: false,
+              headway: false,
+              off: true,
+            }
+          }
+        }
+      },
+      {
         id: 'GLEC',
         name: 'Lechmere',
         zonePositions: {
