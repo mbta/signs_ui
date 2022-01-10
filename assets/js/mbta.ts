@@ -1991,12 +1991,27 @@ const stationConfig: {
         id: 'GLEC',
         name: 'Lechmere',
         zones: {
-          w: {
-            label: 'Green Line',
+          e: {
             modes: {
-              auto: true,
-              custom: true,
-              headway: true,
+              auto: false,
+              custom: false,
+              headway: false,
+              off: true,
+            },
+          },
+          w: {
+            modes: {
+              auto: false,
+              custom: false,
+              headway: false,
+              off: true,
+            },
+          },
+          m: {
+            modes: {
+              auto: false,
+              custom: false,
+              headway: false,
               off: true,
             },
           },
