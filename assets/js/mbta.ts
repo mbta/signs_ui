@@ -2816,9 +2816,9 @@ const stationConfig: {
               custom: false,
               headway: false,
               off: true,
-            }
-          }
-        }
+            },
+          },
+        },
       },
       {
         id: 'GLEC',
