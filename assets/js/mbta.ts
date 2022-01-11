@@ -1994,7 +1994,7 @@ const stationConfig: {
           e: {
             modes: {
               auto: false,
-              custom: false,
+              custom: true,
               headway: false,
               off: true,
             },
@@ -2002,7 +2002,7 @@ const stationConfig: {
           w: {
             modes: {
               auto: false,
-              custom: false,
+              custom: true,
               headway: false,
               off: true,
             },
@@ -2010,7 +2010,7 @@ const stationConfig: {
           m: {
             modes: {
               auto: false,
-              custom: false,
+              custom: true,
               headway: false,
               off: true,
             },
