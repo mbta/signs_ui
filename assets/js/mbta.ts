@@ -2024,7 +2024,7 @@ const stationConfig: {
           e: {
             modes: {
               auto: false,
-              custom: false,
+              custom: true,
               headway: false,
               off: true,
             },
@@ -2032,7 +2032,7 @@ const stationConfig: {
           w: {
             modes: {
               auto: false,
-              custom: false,
+              custom: true,
               headway: false,
               off: true,
             },
@@ -2040,7 +2040,7 @@ const stationConfig: {
           m: {
             modes: {
               auto: false,
-              custom: false,
+              custom: true,
               headway: false,
               off: true,
             },
@@ -2813,7 +2813,7 @@ const stationConfig: {
           m: {
             modes: {
               auto: false,
-              custom: false,
+              custom: true,
               headway: false,
               off: true,
             },
@@ -2826,7 +2826,7 @@ const stationConfig: {
         zonePositions: {
           left: ['n'],
           center: [],
-          right: ['m'],
+          right: ['s'],
         },
         zones: {
           n: {
@@ -2838,7 +2838,7 @@ const stationConfig: {
               off: true,
             },
           },
-          m: {
+          s: {
             label: 'South',
             modes: {
               auto: true,
@@ -3194,7 +3194,9 @@ const arincToRealtimeIdMap: { [key: string]: string } = {
   'GSCI-e': 'science_park_eastbound',
   'GSCI-w': 'science_park_westbound',
   'GSCI-m': 'science_park_mezzanine',
-  'GLEC-w': 'lechmere_green_line',
+  'GLEC-e': 'lechmere_green_line_eastbound',
+  'GLEC-w': 'lechmere_green_line_westbound',
+  'GLEC-m': 'lechmere_green_line_mezzanine',
   'SDUD-n': 'bus.Nubian_Platform_F',
   'SDUD-s': 'bus.Nubian_Platform_C',
   'SDUD-e': 'bus.Nubian_Platform_D',
@@ -3202,7 +3204,8 @@ const arincToRealtimeIdMap: { [key: string]: string } = {
   'SDUD-c': 'bus.Nubian_Platform_E_east',
   'SDUD-m': 'bus.Nubian_Platform_E_west',
   'GLEC-n': 'bus.Lechmere_bus_north',
-  'GLEC-m': 'bus.Lechmere_bus_south',
+  'GLEC-s': 'bus.Lechmere_bus_south',
+  'SLEC-m': 'bus.Lechmere_bus_mezzanine',
   'SHAR-n': 'bus.Harvard_upper',
   'SHAR-m': 'bus.Harvard_lower',
   'MMAT-n': 'bus.Mattapan_south',
