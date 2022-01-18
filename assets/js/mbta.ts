@@ -2821,35 +2821,6 @@ const stationConfig: {
         },
       },
       {
-        id: 'GLEC',
-        name: 'Lechmere',
-        zonePositions: {
-          left: ['n'],
-          center: [],
-          right: ['s'],
-        },
-        zones: {
-          n: {
-            label: 'North',
-            modes: {
-              auto: true,
-              custom: true,
-              headway: false,
-              off: true,
-            },
-          },
-          s: {
-            label: 'South',
-            modes: {
-              auto: true,
-              custom: true,
-              headway: false,
-              off: true,
-            },
-          },
-        },
-      },
-      {
         id: 'SHAR',
         name: 'Harvard',
         zonePositions: {
@@ -3203,8 +3174,6 @@ const arincToRealtimeIdMap: { [key: string]: string } = {
   'SDUD-w': 'bus.Nubian_Platform_A',
   'SDUD-c': 'bus.Nubian_Platform_E_east',
   'SDUD-m': 'bus.Nubian_Platform_E_west',
-  'GLEC-n': 'bus.Lechmere_bus_north',
-  'GLEC-s': 'bus.Lechmere_bus_south',
   'SLEC-m': 'bus.Lechmere_bus_mezzanine',
   'SHAR-n': 'bus.Harvard_upper',
   'SHAR-m': 'bus.Harvard_lower',
