@@ -1992,6 +1992,7 @@ const stationConfig: {
         name: 'Union Sq',
         zones: {
           e: {
+            label: "North track",
             modes: {
               auto: false,
               custom: true,
@@ -2000,6 +2001,7 @@ const stationConfig: {
             },
           },
           w: {
+            label: "South track",
             modes: {
               auto: false,
               custom: true,
@@ -2022,6 +2024,7 @@ const stationConfig: {
         name: 'Lechmere',
         zones: {
           e: {
+            label: "To Union Sq",
             modes: {
               auto: false,
               custom: true,
@@ -2030,6 +2033,7 @@ const stationConfig: {
             },
           },
           w: {
+            label: "To Heath St",
             modes: {
               auto: false,
               custom: true,
