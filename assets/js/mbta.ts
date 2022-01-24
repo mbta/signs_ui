@@ -2024,7 +2024,7 @@ const stationConfig: {
         name: 'Lechmere',
         zones: {
           e: {
-            label: 'Union Sq/College Ave',
+            label: 'Union Sq',
             modes: {
               auto: false,
               custom: true,
