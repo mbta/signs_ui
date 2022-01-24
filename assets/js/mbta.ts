@@ -1992,7 +1992,7 @@ const stationConfig: {
         name: 'Union Sq',
         zones: {
           e: {
-            label: 'North track',
+            label: 'Track 1',
             modes: {
               auto: false,
               custom: true,
@@ -2001,7 +2001,7 @@ const stationConfig: {
             },
           },
           w: {
-            label: 'South track',
+            label: 'Track 2',
             modes: {
               auto: false,
               custom: true,
@@ -3172,8 +3172,8 @@ const arincToRealtimeIdMap: { [key: string]: string } = {
   'GLEC-e': 'lechmere_green_line_eastbound',
   'GLEC-w': 'lechmere_green_line_westbound',
   'GLEC-m': 'lechmere_green_line_mezzanine',
-  'GUNS-e': 'union_sq_north',
-  'GUNS-w': 'union_sq_south',
+  'GUNS-e': 'union_sq_track_one',
+  'GUNS-w': 'union_sq_track_two',
   'GUNS-m': 'union_sq_mezzanine',
   'SDUD-n': 'bus.Nubian_Platform_F',
   'SDUD-s': 'bus.Nubian_Platform_C',
