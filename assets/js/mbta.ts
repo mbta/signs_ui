@@ -2024,7 +2024,7 @@ const stationConfig: {
         name: 'Lechmere',
         zones: {
           e: {
-            label: 'To Union Sq',
+            label: 'Union Sq/College Ave',
             modes: {
               auto: false,
               custom: true,
@@ -2033,7 +2033,7 @@ const stationConfig: {
             },
           },
           w: {
-            label: 'To Heath St',
+            label: 'Copley & West',
             modes: {
               auto: false,
               custom: true,
