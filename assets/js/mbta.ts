@@ -2812,7 +2812,7 @@ const stationConfig: {
       },
       {
         id: 'SLEC',
-        name: 'Lechmere - GLX',
+        name: 'Lechmere',
         zones: {
           m: {
             modes: {
