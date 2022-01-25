@@ -2815,6 +2815,7 @@ const stationConfig: {
         name: 'Lechmere',
         zones: {
           m: {
+            label: 'Busway',
             modes: {
               auto: false,
               custom: true,
