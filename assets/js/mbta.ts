@@ -1988,15 +1988,64 @@ const stationConfig: {
     batchModes: { auto: true, headway: true, off: true },
     stations: [
       {
+        id: 'GUNS',
+        name: 'Union Sq',
+        zones: {
+          e: {
+            label: 'Track 1',
+            modes: {
+              auto: false,
+              custom: true,
+              headway: false,
+              off: true,
+            },
+          },
+          w: {
+            label: 'Track 2',
+            modes: {
+              auto: false,
+              custom: true,
+              headway: false,
+              off: true,
+            },
+          },
+          m: {
+            modes: {
+              auto: false,
+              custom: true,
+              headway: false,
+              off: true,
+            },
+          },
+        },
+      },
+      {
         id: 'GLEC',
         name: 'Lechmere',
         zones: {
-          w: {
-            label: 'Green Line',
+          e: {
+            label: 'Union Sq',
             modes: {
-              auto: true,
+              auto: false,
               custom: true,
-              headway: true,
+              headway: false,
+              off: true,
+            },
+          },
+          w: {
+            label: 'Copley & West',
+            modes: {
+              auto: false,
+              custom: true,
+              headway: false,
+              off: true,
+            },
+          },
+          m: {
+            modes: {
+              auto: false,
+              custom: true,
+              headway: false,
               off: true,
             },
           },
@@ -2762,27 +2811,13 @@ const stationConfig: {
         },
       },
       {
-        id: 'GLEC',
+        id: 'SLEC',
         name: 'Lechmere',
-        zonePositions: {
-          left: ['n'],
-          center: [],
-          right: ['m'],
-        },
         zones: {
-          n: {
-            label: 'North',
-            modes: {
-              auto: true,
-              custom: true,
-              headway: false,
-              off: true,
-            },
-          },
           m: {
-            label: 'South',
+            label: 'Busway',
             modes: {
-              auto: true,
+              auto: false,
               custom: true,
               headway: false,
               off: true,
@@ -3135,15 +3170,19 @@ const arincToRealtimeIdMap: { [key: string]: string } = {
   'GSCI-e': 'science_park_eastbound',
   'GSCI-w': 'science_park_westbound',
   'GSCI-m': 'science_park_mezzanine',
-  'GLEC-w': 'lechmere_green_line',
+  'GLEC-e': 'lechmere_green_line_eastbound',
+  'GLEC-w': 'lechmere_green_line_westbound',
+  'GLEC-m': 'lechmere_green_line_mezzanine',
+  'GUNS-e': 'union_sq_track_one',
+  'GUNS-w': 'union_sq_track_two',
+  'GUNS-m': 'union_sq_mezzanine',
   'SDUD-n': 'bus.Nubian_Platform_F',
   'SDUD-s': 'bus.Nubian_Platform_C',
   'SDUD-e': 'bus.Nubian_Platform_D',
   'SDUD-w': 'bus.Nubian_Platform_A',
   'SDUD-c': 'bus.Nubian_Platform_E_east',
   'SDUD-m': 'bus.Nubian_Platform_E_west',
-  'GLEC-n': 'bus.Lechmere_bus_north',
-  'GLEC-m': 'bus.Lechmere_bus_south',
+  'SLEC-m': 'bus.Lechmere_bus_mezzanine',
   'SHAR-n': 'bus.Harvard_upper',
   'SHAR-m': 'bus.Harvard_lower',
   'MMAT-n': 'bus.Mattapan_south',
