@@ -1994,26 +1994,26 @@ const stationConfig: {
           e: {
             label: 'Track 1',
             modes: {
-              auto: false,
+              auto: true,
               custom: true,
-              headway: false,
+              headway: true,
               off: true,
             },
           },
           w: {
             label: 'Track 2',
             modes: {
-              auto: false,
+              auto: true,
               custom: true,
-              headway: false,
+              headway: true,
               off: true,
             },
           },
           m: {
             modes: {
-              auto: false,
+              auto: true,
               custom: true,
-              headway: false,
+              headway: true,
               off: true,
             },
           },
@@ -2026,26 +2026,26 @@ const stationConfig: {
           e: {
             label: 'Union Sq',
             modes: {
-              auto: false,
+              auto: true,
               custom: true,
-              headway: false,
+              headway: true,
               off: true,
             },
           },
           w: {
             label: 'Copley & West',
             modes: {
-              auto: false,
+              auto: true,
               custom: true,
-              headway: false,
+              headway: true,
               off: true,
             },
           },
           m: {
             modes: {
-              auto: false,
+              auto: true,
               custom: true,
-              headway: false,
+              headway: true,
               off: true,
             },
           },
