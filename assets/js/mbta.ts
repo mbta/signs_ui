@@ -2938,7 +2938,7 @@ const stationConfig: {
               custom: true,
               headway: false,
               off: true,
-           }
+            }
           }
         }
       },
