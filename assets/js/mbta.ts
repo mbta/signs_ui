@@ -2922,6 +2922,26 @@ const stationConfig: {
           },
         },
       },
+      {
+        id: 'SBRA',
+        name: 'Braintree',
+        zonePositions: {
+          left: [],
+          center: ['n'],
+          right: [],
+        },
+        zones: {
+          n: {
+            label: 'Busway',
+            modes: {
+              auto: true,
+              custom: true,
+              headway: false,
+              off: true,
+            },
+          },
+        },
+      },
     ],
   },
 };
@@ -3190,6 +3210,7 @@ const arincToRealtimeIdMap: { [key: string]: string } = {
   'SDAV-m': 'bus.Davis',
   'SFOR-n': 'bus.Forest_Hills_upper_fence',
   'SFOR-s': 'bus.Forest_Hills_upper_island',
+  'SBRA-n': 'bus.Braintree',
 };
 
 function arincToRealtimeId(stationZone: string, line: string): string {
