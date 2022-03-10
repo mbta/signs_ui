@@ -2923,7 +2923,7 @@ const stationConfig: {
         },
       },
       {
-        id: 'SBRA',
+        id: 'RBRA',
         name: 'Braintree',
         zonePositions: {
           left: [],
@@ -3210,7 +3210,7 @@ const arincToRealtimeIdMap: { [key: string]: string } = {
   'SDAV-m': 'bus.Davis',
   'SFOR-n': 'bus.Forest_Hills_upper_fence',
   'SFOR-s': 'bus.Forest_Hills_upper_island',
-  'SBRA-n': 'bus.Braintree',
+  'RBRA-n': 'bus.Braintree',
 };
 
 function arincToRealtimeId(stationZone: string, line: string): string {
