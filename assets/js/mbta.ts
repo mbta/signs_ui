@@ -2938,9 +2938,9 @@ const stationConfig: {
               custom: true,
               headway: false,
               off: true,
-            }
-          }
-        }
+            },
+          },
+        },
       },
     ],
   },
@@ -3210,7 +3210,7 @@ const arincToRealtimeIdMap: { [key: string]: string } = {
   'SDAV-m': 'bus.Davis',
   'SFOR-n': 'bus.Forest_Hills_upper_fence',
   'SFOR-s': 'bus.Forest_Hills_upper_island',
-  'SBRA-n': 'bus.Braintree'
+  'SBRA-n': 'bus.Braintree',
 };
 
 function arincToRealtimeId(stationZone: string, line: string): string {
