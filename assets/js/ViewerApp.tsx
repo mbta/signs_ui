@@ -302,6 +302,7 @@ class ViewerApp extends React.Component<
         </div>
         {line && (
           <Viewer
+            key={line}
             alerts={alerts}
             signs={signs}
             signConfigs={signConfigs}
