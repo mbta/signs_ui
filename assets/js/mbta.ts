@@ -1996,7 +1996,7 @@ const stationConfig: {
             modes: {
               auto: false,
               custom: true,
-              headway: false,
+              headway: true,
               off: true,
             },
           },
@@ -2005,7 +2005,7 @@ const stationConfig: {
             modes: {
               auto: false,
               custom: true,
-              headway: false,
+              headway: true,
               off: true,
             },
           },
@@ -2013,7 +2013,7 @@ const stationConfig: {
             modes: {
               auto: false,
               custom: true,
-              headway: false,
+              headway: true,
               off: true,
             },
           },
@@ -2028,7 +2028,7 @@ const stationConfig: {
             modes: {
               auto: false,
               custom: true,
-              headway: false,
+              headway: true,
               off: true,
             },
           },
@@ -2037,7 +2037,7 @@ const stationConfig: {
             modes: {
               auto: false,
               custom: true,
-              headway: false,
+              headway: true,
               off: true,
             },
           },
@@ -2045,7 +2045,7 @@ const stationConfig: {
             modes: {
               auto: false,
               custom: true,
-              headway: false,
+              headway: true,
               off: true,
             },
           },
