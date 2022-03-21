@@ -2057,7 +2057,7 @@ const stationConfig: {
         zones: {
           e: {
             modes: {
-              auto: true,
+              auto: false,
               custom: true,
               headway: true,
               off: true,
@@ -2073,7 +2073,7 @@ const stationConfig: {
           },
           m: {
             modes: {
-              auto: true,
+              auto: false,
               custom: true,
               headway: true,
               off: true,
