@@ -2817,7 +2817,7 @@ const stationConfig: {
           m: {
             label: 'Busway',
             modes: {
-              auto: false,
+              auto: true,
               custom: true,
               headway: false,
               off: true,
