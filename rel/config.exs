@@ -29,19 +29,11 @@ environment :dev do
   # dev mode.
   set(dev_mode: true)
   set(include_erts: false)
-  set(cookie: :"enj7(zuMT9(q,8h0CbDR}b9HL4zuDB/hD&O4jU`Z.&4;1JHKq_%bO&wY$o5)J~cZ")
 end
 
 environment :prod do
   set(include_erts: true)
   set(include_src: false)
-
-  set(
-    cookie:
-      :crypto.hash(:sha256, Map.fetch!(System.get_env(), "ERL_COOKIE"))
-      |> Base.encode16()
-      |> String.to_atom()
-  )
 end
 
 # You may define one or more releases in this file.
