@@ -38,7 +38,7 @@ WORKDIR /root
 # add frontend assets compiled in node container, required by phx.digest
 COPY --from=assets-builder /root/priv/static ./priv/static
 
-RUN mix do compile --force, phx.digest, distillery.release --verbose
+RUN mix do compile --force, phx.digest, release
 
 # the one the elixir image was built with
 FROM debian:buster
