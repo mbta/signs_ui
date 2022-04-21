@@ -43,7 +43,6 @@ defmodule SignsUi.Mixfile do
     [
       {:credo, "~> 1.4", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 1.1.0", only: [:dev, :test], runtime: false},
-      {:distillery, "~> 2.1.1", runtime: false},
       {:ex_aws_s3, "~> 2.0"},
       {:ex_aws, "~> 2.0"},
       {:lcov_ex, "~> 0.2", only: [:dev, :test], runtime: false},
