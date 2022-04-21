@@ -55,5 +55,6 @@ ENV MIX_ENV=prod TERM=xterm LANG="C.UTF-8" PORT=4000
 COPY --from=app-builder /root/priv/static ./priv/static
 COPY --from=app-builder /root/_build/prod/rel/signs_ui .
 RUN mkdir gtfs
-RUN tar -xzf signs_ui.tar.gz
-CMD ["bin/signs_ui", "foreground"]
+
+# Start application
+CMD ["bin/screens", "start"]
