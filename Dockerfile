@@ -57,4 +57,4 @@ COPY --from=app-builder /root/_build/prod/rel/signs_ui .
 RUN mkdir gtfs
 
 # Start application
-CMD ["bin/screens", "start"]
+CMD ["bin/signs_ui", "start"]
