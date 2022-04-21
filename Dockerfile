@@ -40,7 +40,8 @@ COPY --from=assets-builder /root/priv/static ./priv/static
 
 RUN mix do compile --force, phx.digest, release
 
-FROM alpine:3.15.0
+# the one the elixir image was built with
+FROM debian:buster
 
 RUN apt-get update --allow-releaseinfo-change && \
   apt-get install -y --no-install-recommends libssl1.1 libsctp1 curl && \
