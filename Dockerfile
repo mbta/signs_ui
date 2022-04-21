@@ -43,11 +43,13 @@ RUN mix do compile --force, phx.digest, release
 # the one the elixir image was built with
 FROM debian:buster
 
+WORKDIR /root
+ADD . .
+
 RUN apt-get update --allow-releaseinfo-change && \
   apt-get install -y --no-install-recommends libssl1.1 libsctp1 curl && \
   rm -rf /var/lib/apt/lists/*
 
-WORKDIR /root
 EXPOSE 4000
 ENV MIX_ENV=prod TERM=xterm LANG="C.UTF-8" PORT=4000
 
@@ -55,6 +57,9 @@ ENV MIX_ENV=prod TERM=xterm LANG="C.UTF-8" PORT=4000
 COPY --from=app-builder /root/priv/static ./priv/static
 COPY --from=app-builder /root/_build/prod/rel/signs_ui .
 RUN mkdir gtfs
+
+# Healthcheck
+HEALTHCHECK CMD ["bin/signs_ui", "rpc", "1 + 1"]
 
 # Start application
 CMD ["bin/signs_ui", "start"]
