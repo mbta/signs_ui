@@ -2,10 +2,6 @@
 FROM hexpm/elixir:1.11.4-erlang-23.3.1-debian-buster-20210326 as elixir-builder
 ENV LANG="C.UTF-8" MIX_ENV="prod"
 
-ARG ERL_COOKIE
-ENV ERL_COOKIE=${ERL_COOKIE}
-RUN if test -z $ERL_COOKIE; then (>&2 echo "No ERL_COOKIE"); exit 1; fi
-
 ARG SECRET_KEY_BASE
 ENV SECRET_KEY_BASE=${SECRET_KEY_BASE}
 RUN if test -z $SECRET_KEY_BASE; then (>&2 echo "No SECRET_KEY_BASE"); exit 1; fi
