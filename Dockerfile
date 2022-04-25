@@ -52,8 +52,5 @@ COPY --from=app-builder /root/priv/static ./priv/static
 COPY --from=app-builder /root/_build/prod/rel/signs_ui .
 RUN mkdir gtfs
 
-# Healthcheck
-HEALTHCHECK CMD ["bin/signs_ui", "rpc", "1 + 1"]
-
 # Start application
 CMD ["bin/signs_ui", "start"]
