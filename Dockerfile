@@ -1,5 +1,5 @@
 # first, get the elixir dependencies within an elixir container
-FROM hexpm/elixir:1.13.1-erlang-24.2-alpine-3.15.0 as elixir-builder
+FROM hexpm/elixir:1.11.4-erlang-23.3.1-debian-buster-20210326 as elixir-builder
 ENV LANG="C.UTF-8" MIX_ENV="prod"
 
 ARG SECRET_KEY_BASE
@@ -10,7 +10,8 @@ WORKDIR /root
 ADD . .
 
 # Install git so we can install dependencies from GitHub
-RUN apk --update add git make
+RUN apt-get update --allow-releaseinfo-change && \
+  apt-get install -y --no-install-recommends git ca-certificates
 
 RUN mix do local.hex --force, local.rebar --force, deps.get --only prod
 
@@ -36,16 +37,13 @@ COPY --from=assets-builder /root/priv/static ./priv/static
 RUN mix do compile --force, phx.digest, release
 
 # the one the elixir image was built with
-FROM alpine:3.15.0
+FROM debian:buster
+
+RUN apt-get update --allow-releaseinfo-change && \
+  apt-get install -y --no-install-recommends libssl1.1 libsctp1 curl && \
+  rm -rf /var/lib/apt/lists/*
 
 WORKDIR /root
-ADD . .
-
-RUN apk --update add \
-  libssl1.1 libstdc++ \
-  libgcc ncurses-libs bash curl dumb-init \
-  && rm -rf /var/cache/apk/*
-
 EXPOSE 4000
 ENV MIX_ENV=prod TERM=xterm LANG="C.UTF-8" PORT=4000
 
