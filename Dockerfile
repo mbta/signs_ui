@@ -2,10 +2,6 @@
 FROM hexpm/elixir:1.11.4-erlang-23.3.1-debian-buster-20210326 as elixir-builder
 ENV LANG="C.UTF-8" MIX_ENV="prod"
 
-ARG ERL_COOKIE
-ENV ERL_COOKIE=${ERL_COOKIE}
-RUN if test -z $ERL_COOKIE; then (>&2 echo "No ERL_COOKIE"); exit 1; fi
-
 ARG SECRET_KEY_BASE
 ENV SECRET_KEY_BASE=${SECRET_KEY_BASE}
 RUN if test -z $SECRET_KEY_BASE; then (>&2 echo "No SECRET_KEY_BASE"); exit 1; fi
@@ -38,7 +34,7 @@ WORKDIR /root
 # add frontend assets compiled in node container, required by phx.digest
 COPY --from=assets-builder /root/priv/static ./priv/static
 
-RUN mix do compile --force, phx.digest, distillery.release --verbose
+RUN mix do compile --force, phx.digest, release
 
 # the one the elixir image was built with
 FROM debian:buster
@@ -53,7 +49,11 @@ ENV MIX_ENV=prod TERM=xterm LANG="C.UTF-8" PORT=4000
 
 # add frontend assets with manifests from app build container
 COPY --from=app-builder /root/priv/static ./priv/static
-COPY --from=app-builder /root/_build/prod/rel/signs_ui/releases/current/signs_ui.tar.gz .
+COPY --from=app-builder /root/_build/prod/rel/signs_ui .
 RUN mkdir gtfs
-RUN tar -xzf signs_ui.tar.gz
-CMD ["bin/signs_ui", "foreground"]
+
+# Healthcheck
+HEALTHCHECK CMD ["bin/signs_ui", "rpc", "1 + 1"]
+
+# Start application
+CMD ["bin/signs_ui", "start"]
