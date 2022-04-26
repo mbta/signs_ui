@@ -34,7 +34,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           ecs-cluster: ${{ env.ECS_CLUSTER }}
           ecs-service: ${{ env.ECS_SERVICE }}
-          docker-tag: ${{ steps.build-push.outputs.docker-tag }
+          docker-tag: ${{ steps.build-push.outputs.docker-tag }}
       - uses: mbta/actions/notify-slack-deploy@v1
         if: ${{ !cancelled() }}
         with:
