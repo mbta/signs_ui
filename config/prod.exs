@@ -16,7 +16,6 @@ import Config
 config :signs_ui, SignsUiWeb.Endpoint,
   load_from_system_env: true,
   url: [host: "example.com", port: 443, scheme: "https"],
-  secret_key_base: Map.fetch!(System.get_env(), "SECRET_KEY_BASE"),
   cache_static_manifest: "priv/static/cache_manifest.json"
 
 config :signs_ui, :redirect_http?, true
