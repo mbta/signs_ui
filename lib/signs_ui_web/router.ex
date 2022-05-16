@@ -18,6 +18,10 @@ defmodule SignsUiWeb.Router do
     plug(SignsUiWeb.Plugs.ApiAuth)
   end
 
+  pipeline :api_no_auth do
+    plug(:accepts, ["json"])
+  end
+
   pipeline :redirect_prod_http do
     if Application.get_env(:signs_ui, :redirect_http?) do
       plug(Plug.SSL, rewrite_on: [:x_forwarded_proto])
@@ -89,6 +93,11 @@ defmodule SignsUiWeb.Router do
     ])
 
     forward("/", Laboratory.Router)
+  end
+
+  scope "/", SignsUiWeb do
+    pipe_through([:api_no_auth])
+    get("/render", RenderingController, :render)
   end
 
   defp put_user_token(conn, _) do
