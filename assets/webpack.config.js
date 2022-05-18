@@ -1,26 +1,29 @@
 const path = require('path');
-const CopyWebpackPlugin = require('copy-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-module.exports = function(env) {
+module.exports = function (env) {
   return {
-    entry: './js/app.ts',
+    entry: {
+      app: './js/app.ts',
+      single_sign: './js/SingleSignApp.tsx',
+    },
     output: {
       path: path.resolve(__dirname, '../priv/static/js'),
-      filename: 'app.js',
+      filename: '[name].js',
       publicPath: '/',
     },
     module: {
       rules: [
-        { test: /\.tsx?$/, loader: "ts-loader" },
+        { test: /\.tsx?$/, loader: 'ts-loader' },
         {
           test: /\.css$/,
-          use: [MiniCssExtractPlugin.loader, 'css-loader']
+          use: [MiniCssExtractPlugin.loader, 'css-loader'],
         },
         {
           test: /\.js$/,
-          enforce: "pre",
-          use: ["source-map-loader"],
+          enforce: 'pre',
+          use: ['source-map-loader'],
         },
       ],
     },
@@ -29,8 +32,8 @@ module.exports = function(env) {
       extensions: ['.js', '.jsx', '.ts', '.tsx'],
     },
     plugins: [
-      new CopyWebpackPlugin({patterns: [{from: "./static", to: "../"}]}),
-      new MiniCssExtractPlugin({ filename: "../css/app.css"})
-    ]
+      new CopyWebpackPlugin({ patterns: [{ from: './static', to: '../' }] }),
+      new MiniCssExtractPlugin({ filename: '../css/app.css' }),
+    ],
   };
 };
