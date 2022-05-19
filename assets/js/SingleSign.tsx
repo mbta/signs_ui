@@ -18,16 +18,13 @@ function SingleSign({ signContent }: SingleSignProps): JSX.Element {
       params: { sign_id: signContent.sign_id },
     });
     socket.connect();
-    const signsChannel = socket.channel('signs:single', {});
+    const signsChannel = socket.channel(`sign:${signContent.sign_id}`, {});
     signsChannel.join().receive('ok', () => true);
-    signsChannel.on(
-      `sign_update:${signContent.sign_id}`,
-      (sign: SingleSignContent) => {
-        if (sign.sign_id === signContent.sign_id) {
-          setSignContent(sign);
-        }
-      },
-    );
+    signsChannel.on(`sign_update`, (sign: SingleSignContent) => {
+      if (sign.sign_id === signContent.sign_id) {
+        setSignContent(sign);
+      }
+    });
 
     return () => {
       signsChannel.leave();
