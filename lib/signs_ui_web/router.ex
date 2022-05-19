@@ -91,7 +91,7 @@ defmodule SignsUiWeb.Router do
     forward("/", Laboratory.Router)
   end
 
-  scope "/sign", SignsUiWeb do
+  scope "/", SignsUiWeb do
     pipe_through([:browser])
     get("/:station_code/:zone", SingleSignController, :index)
   end
