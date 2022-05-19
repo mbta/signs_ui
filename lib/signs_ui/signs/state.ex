@@ -68,5 +68,6 @@ defmodule SignsUi.Signs.State do
   @spec broadcast_update(Sign.t()) :: :ok
   defp broadcast_update(sign) do
     SignsUiWeb.Endpoint.broadcast!("signs:all", "sign_update", Sign.to_json(sign))
+    SignsUiWeb.Endpoint.broadcast!("signs:single", "sign_update", Sign.to_json(sign))
   end
 end

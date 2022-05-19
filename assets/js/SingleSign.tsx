@@ -1,5 +1,6 @@
 import * as React from 'react';
 import SignText from './SignText';
+import { Socket } from 'phoenix';
 import { SingleSignContent } from './types';
 import { lineDisplayText } from './SignPanel';
 
@@ -10,6 +11,28 @@ interface SingleSignProps {
 function SingleSign({ signContent }: SingleSignProps): JSX.Element {
   const [initialTime] = React.useState(Date.now());
   const [currentTime, setTime] = React.useState(Date.now());
+  const [currentSignContent, setSignContent] = React.useState(signContent);
+
+  React.useEffect(() => {
+    const socket = new Socket('/socket/sign', {
+      params: { sign_id: signContent.sign_id },
+    });
+    socket.connect();
+    const signsChannel = socket.channel('signs:single', {});
+    signsChannel.join().receive('ok', () => true);
+    signsChannel.on(
+      'sign_update:' + signContent.sign_id,
+      (sign: SingleSignContent) => {
+        if (sign.sign_id === signContent.sign_id) {
+          setSignContent(sign);
+        }
+      },
+    );
+
+    return () => {
+      signsChannel.leave();
+    };
+  }, []);
 
   function updateTime() {
     setTime(Date.now());
@@ -26,12 +49,12 @@ function SingleSign({ signContent }: SingleSignProps): JSX.Element {
     <div className="single_sign--sign_text">
       <SignText
         line1={lineDisplayText(
-          signContent.lines['1'],
+          currentSignContent.lines['1'],
           currentTime,
           initialTime,
         )}
         line2={lineDisplayText(
-          signContent.lines['2'],
+          currentSignContent.lines['2'],
           currentTime,
           initialTime,
         )}
