@@ -1,6 +1,6 @@
 import * as React from 'react';
-import SignText from './SignText';
 import { Socket } from 'phoenix';
+import SignText from './SignText';
 import { SingleSignContent } from './types';
 import { lineDisplayText } from './SignPanel';
 
@@ -21,7 +21,7 @@ function SingleSign({ signContent }: SingleSignProps): JSX.Element {
     const signsChannel = socket.channel('signs:single', {});
     signsChannel.join().receive('ok', () => true);
     signsChannel.on(
-      'sign_update:' + signContent.sign_id,
+      `sign_update:${signContent.sign_id}`,
       (sign: SingleSignContent) => {
         if (sign.sign_id === signContent.sign_id) {
           setSignContent(sign);
