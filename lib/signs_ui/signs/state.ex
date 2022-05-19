@@ -48,8 +48,13 @@ defmodule SignsUi.Signs.State do
   end
 
   def handle_call({:get_single_sign, sign_id}, _from, state) do
-    sign = Map.get(state, sign_id)
-    {:reply, Sign.to_json(sign), state}
+    case Map.get(state, sign_id) do
+      %Sign{} = sign ->
+        {:reply, Sign.to_json(sign), state}
+
+      nil ->
+        {:reply, %{sign_id: sign_id, lines: %{}}, state}
+    end
   end
 
   def handle_call({:process_message, message}, _from, state) do
