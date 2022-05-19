@@ -49,7 +49,6 @@ defmodule SignsUi.Signs.State do
 
   def handle_call({:get_single_sign, sign_id}, _from, state) do
     sign = Map.get(state, sign_id)
-    IO.inspect(sign, label: "sign")
     {:reply, Sign.to_json(sign), state}
   end
 
