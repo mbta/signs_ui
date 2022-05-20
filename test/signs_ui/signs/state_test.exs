@@ -102,4 +102,53 @@ defmodule SignsUi.Signs.StateTest do
               }
             }} = State.handle_call({:process_message, msg}, self(), state)
   end
+
+  test "returns data in state for a given sign_id" do
+    state = %{
+      "ABCD-w" => %Sign{
+        station: "ABCD",
+        zone: "w",
+        lines: %{
+          1 => %SignLine{
+            text: [{"Alewife 1 min", 5}],
+            expiration: DateTime.utc_now()
+          }
+        }
+      },
+      "ABCD-m" => %Sign{
+        station: "ABCD",
+        zone: "m",
+        lines: %{
+          1 => %SignLine{
+            text: [{"Alewife 2 min", 5}],
+            expiration: DateTime.utc_now()
+          }
+        }
+      },
+      "ABCD-e" => %Sign{
+        station: "ABCD",
+        zone: "e",
+        lines: %{
+          1 => %SignLine{
+            text: [{"Alewife 3 min", 5}],
+            expiration: DateTime.utc_now()
+          }
+        }
+      }
+    }
+
+    assert {:reply,
+            %{
+              sign_id: "ABCD-m",
+              lines: %{
+                1 => %{expiration: _, text: [%{content: "Alewife 2 min", duration: 5}]}
+              }
+            }, _} = State.handle_call({:get_single_sign, "ABCD-m"}, self(), state)
+  end
+
+  test "returns empty map if state does not contain sign_id yet" do
+    state = %{}
+
+    assert {:reply, %{}, _} = State.handle_call({:get_single_sign, "ABCD-m"}, self(), state)
+  end
 end
