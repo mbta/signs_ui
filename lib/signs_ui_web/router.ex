@@ -91,6 +91,11 @@ defmodule SignsUiWeb.Router do
     forward("/", Laboratory.Router)
   end
 
+  scope "/", SignsUiWeb do
+    pipe_through([:browser])
+    get("/:station_code/:zone", SingleSignController, :index)
+  end
+
   defp put_user_token(conn, _) do
     token = Guardian.Plug.current_token(conn)
     assign(conn, :user_token, token)

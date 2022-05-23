@@ -347,4 +347,4 @@ function SignPanel({
 }
 
 export default SignPanel;
-export { SignModeOptions, SignPanelProps };
+export { SignModeOptions, SignPanelProps, lineDisplayText };

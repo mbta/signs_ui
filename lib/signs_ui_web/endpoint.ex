@@ -3,6 +3,7 @@ defmodule SignsUiWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :signs_ui
 
   socket("/socket", SignsUiWeb.UserSocket, websocket: true)
+  socket("/socket/sign", SignsUiWeb.SingleSignSocket, websocket: true)
 
   # Serve at "/" the static files from "priv/static" directory.
   #
