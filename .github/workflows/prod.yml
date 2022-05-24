@@ -1,17 +1,20 @@
 name: Deploy to Prod
 
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: prod
+  cancel-in-progress: true
 
 jobs:
   deploy:
     name: Deploy to Prod
     runs-on: ubuntu-latest
     environment: prod
-    concurrency: prod
     env:
-      AWS_REGION: us-east-1
-      ELASTICBEANSTALK_APPLICATION_NAME: signs-ui
-      ELASTICBEANSTALK_ENVIRONMENT_NAME: signs-ui-prod
+      ECS_CLUSTER: signs-ui
+      ECS_SERVICE: signs-ui-prod
 
     steps:
       - uses: actions/checkout@v2
@@ -19,30 +22,17 @@ jobs:
         uses: mbta/actions/commit-metadata@v1
       - uses: mbta/actions/build-push-ecr@v1
         id: build-push
-        env:
-          ERL_COOKIE: ${{ secrets.ERL_COOKIE }}
-          SECRET_KEY_BASE: ${{ secrets.SECRET_KEY_BASE }}
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           docker-repo: ${{ secrets.DOCKER_REPO }}
-          docker-additional-args: '--build-arg ERL_COOKIE --build-arg SECRET_KEY_BASE'
-      - id: deployment-package
-        uses: mbta/actions/eb-ecr-dockerrun@v1
-        with:
-          docker-tag: ${{ steps.build-push.outputs.docker-tag }}
-      - name: Deploy to EB
-        uses: mbta/beanstalk-deploy@v18
+      - uses: mbta/actions/deploy-ecs@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          application-name: ${{ env.ELASTICBEANSTALK_APPLICATION_NAME }}
-          environment-name: ${{ env.ELASTICBEANSTALK_ENVIRONMENT_NAME }}
-          version-label: ${{ steps.metadata.outputs.sha-short }}
-          version-description: ${{ steps.metadata.outputs.commit-message }}
-          region: ${{ env.AWS_REGION }}
-          deployment-package: ${{ steps.deployment-package.outputs.deployment-package }}
-          use-existing-version-if-available: true
+          ecs-cluster: ${{ env.ECS_CLUSTER }}
+          ecs-service: ${{ env.ECS_SERVICE }}
+          docker-tag: ${{ steps.build-push.outputs.docker-tag }}
       - uses: mbta/actions/notify-slack-deploy@v1
         if: ${{ !cancelled() }}
         with:
