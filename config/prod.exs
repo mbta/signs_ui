@@ -16,7 +16,8 @@ import Config
 config :signs_ui, SignsUiWeb.Endpoint,
   load_from_system_env: true,
   url: [host: "example.com", port: 443, scheme: "https"],
-  cache_static_manifest: "priv/static/cache_manifest.json"
+  cache_static_manifest: "priv/static/cache_manifest.json",
+  screenplay_base_url: "https://screenplay.mbta.com/"
 
 config :signs_ui, :redirect_http?, true
 
