@@ -7,12 +7,12 @@ import Config
 # watchers to your application. For example, we use it
 # with brunch.io to recompile .js and .css sources.
 config :signs_ui, SignsUiWeb.Endpoint,
-  http: [port: 4000],
+  http: [port: 5000],
   debug_errors: true,
   code_reloader: true,
   check_origin: false,
   watchers: [npm: ["run", "watch", cd: Path.expand("../assets", __DIR__)]],
-  screenplay_base_url: "https://screenplay-dev.mbtace.com/"
+  screenplay_base_url: "localhost:4000/"
 
 # ## SSL Support
 #

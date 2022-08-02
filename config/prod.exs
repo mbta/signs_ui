@@ -16,8 +16,7 @@ import Config
 config :signs_ui, SignsUiWeb.Endpoint,
   load_from_system_env: true,
   url: [host: "example.com", port: 443, scheme: "https"],
-  cache_static_manifest: "priv/static/cache_manifest.json",
-  screenplay_base_url: "https://screenplay.mbta.com/"
+  cache_static_manifest: "priv/static/cache_manifest.json"
 
 config :signs_ui, :redirect_http?, true
 
@@ -35,6 +34,16 @@ config :ueberauth, Ueberauth.Strategy.Cognito,
   client_secret: {System, :get_env, ["COGNITO_CLIENT_SECRET"]},
   user_pool_id: {System, :get_env, ["COGNITO_USER_POOL_ID"]},
   aws_region: {System, :get_env, ["COGNITO_AWS_REGION"]}
+
+if System.get_env("ENVIRONMENT_NAME") == "dev" do
+  config :signs_ui, SignsUiWeb.Endpoint,
+    screenplay_base_url: "localhost:4000/ https://screenplay-dev.mbtace.com/"
+end
+
+if System.get_env("ENVIRONMENT_NAME") == "prod" do
+  config :signs_ui, SignsUiWeb.Endpoint,
+    screenplay_base_url: "https://screenplay.mbta.com/"
+end
 
 # ## SSL Support
 #
