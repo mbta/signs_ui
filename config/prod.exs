@@ -35,16 +35,6 @@ config :ueberauth, Ueberauth.Strategy.Cognito,
   user_pool_id: {System, :get_env, ["COGNITO_USER_POOL_ID"]},
   aws_region: {System, :get_env, ["COGNITO_AWS_REGION"]}
 
-if System.get_env("ENVIRONMENT_NAME") == "dev" do
-  config :signs_ui, SignsUiWeb.Endpoint,
-    screenplay_base_url: "localhost:4000/ https://screenplay-dev.mbtace.com/"
-end
-
-if System.get_env("ENVIRONMENT_NAME") == "prod" do
-  config :signs_ui, SignsUiWeb.Endpoint,
-    screenplay_base_url: "https://screenplay.mbta.com/"
-end
-
 # ## SSL Support
 #
 # To get SSL working, you will need to add the `https` key
