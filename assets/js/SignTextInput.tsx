@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 function isValidText(text: string) {
-  return !/[^a-zA-Z0-9,/!@' +]/.test(text);
+  return !/[^a-zA-Z0-9,/!@()' +]/.test(text);
 }
 
 interface SignTextInputProps {
@@ -39,7 +39,7 @@ function SignTextInput({
     <div>
       {showTipText && (
         <small className="custom_text_input--error-text">
-          You may use letters, numbers, and: /,!@&quot;
+          You may use letters, numbers, and: /,!@()&quot;
         </small>
       )}
       <div>
