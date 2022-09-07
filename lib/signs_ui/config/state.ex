@@ -75,7 +75,7 @@ defmodule SignsUi.Config.State do
       {:ok, config} ->
         # re-save state, since format was updated
         save_state(config)
-        schedule_clean(self(), 60000)
+        schedule_clean(self(), 60_000)
         {:ok, config}
 
       {:error, reason} ->
@@ -110,7 +110,7 @@ defmodule SignsUi.Config.State do
   end
 
   def handle_info(:clean, %{signs: sign_configs} = state) do
-    schedule_clean(self(), 60000)
+    schedule_clean(self(), 60_000)
     new_state = %{state | signs: Utilities.clean_configs(sign_configs)}
     save_state(new_state)
     {:noreply, new_state}
