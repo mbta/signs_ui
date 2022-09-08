@@ -27,6 +27,7 @@ interface ViewerProps {
     line: string,
     signGroups: RouteSignGroupsWithDeletions,
   ) => void;
+  arincToRealtimeIdMap: { [key: string]: string };
 }
 
 function Viewer({
@@ -43,6 +44,7 @@ function Viewer({
   chelseaBridgeAnnouncements,
   signGroups,
   setSignGroups,
+  arincToRealtimeIdMap,
 }: ViewerProps): JSX.Element {
   const routeSignGroups = React.useMemo(
     () => signGroups[line] || {},
@@ -65,6 +67,7 @@ function Viewer({
         signGroups={routeSignGroups}
         setSignGroups={setSignGroups}
         readOnly={readOnly}
+        arincToRealtimeIdMap={arincToRealtimeIdMap}
       />
     </div>
   );

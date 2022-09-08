@@ -35,6 +35,13 @@ function someSignContent(now: number): SignContent {
   };
 }
 
+function fakeArincToRealtimeIdMap(): { [key: string]: string } {
+  return {
+    'RDAV-s': 'davis_southbound',
+    'OGRE-m': 'green_street_mezzanine',
+  };
+}
+
 test('Shows all signs for a line', () => {
   const now = Date.now();
   const signs = someSignContent(now);
@@ -42,6 +49,7 @@ test('Shows all signs for a line', () => {
   const readOnly = false;
   const configuredHeadways = {};
   const signOutPath = '/path';
+  const arincToRealtimeIdMap = fakeArincToRealtimeIdMap();
 
   const wrapper = mount(
     React.createElement(
@@ -55,6 +63,7 @@ test('Shows all signs for a line', () => {
         initialSignGroups: {},
         readOnly,
         signOutPath,
+        arincToRealtimeIdMap,
       },
       null,
     ),
@@ -78,6 +87,7 @@ test('Can enable/disable a sign', () => {
   const readOnly = false;
   const configuredHeadways = {};
   const signOutPath = '/path';
+  const arincToRealtimeIdMap = fakeArincToRealtimeIdMap();
 
   const wrapper = mount(
     React.createElement(
@@ -91,6 +101,7 @@ test('Can enable/disable a sign', () => {
         initialSignGroups: {},
         readOnly,
         signOutPath,
+        arincToRealtimeIdMap,
       },
       null,
     ),
@@ -113,6 +124,7 @@ test('Disabling a sign clears any static text', () => {
   const readOnly = false;
   const configuredHeadways = {};
   const signOutPath = '/path';
+  const arincToRealtimeIdMap = fakeArincToRealtimeIdMap();
 
   const wrapper = mount(
     React.createElement(
@@ -126,6 +138,7 @@ test('Disabling a sign clears any static text', () => {
         initialSignGroups: {},
         readOnly,
         signOutPath,
+        arincToRealtimeIdMap,
       },
       null,
     ),
@@ -152,6 +165,7 @@ test('Shows sign out link', () => {
   const readOnly = false;
   const configuredHeadways = {};
   const signOutPath = '/path';
+  const arincToRealtimeIdMap = fakeArincToRealtimeIdMap();
 
   const wrapper = mount(
     React.createElement(
@@ -165,6 +179,7 @@ test('Shows sign out link', () => {
         initialSignGroups: {},
         readOnly,
         signOutPath,
+        arincToRealtimeIdMap,
       },
       null,
     ),

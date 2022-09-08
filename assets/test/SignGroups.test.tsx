@@ -96,6 +96,10 @@ test('can create a sign group', () => {
         signGroupSubmissions.push({ line, signGroups });
       },
       readOnly: false,
+      arincToRealtimeIdMap: {
+        'RCEN-n': 'central_northbound',
+        'RCEN-s': 'central_southbound',
+      },
     }),
   );
 
@@ -134,6 +138,10 @@ test('can cancel creating a sign group', () => {
         signGroupSubmissions.push({ line, signGroups });
       },
       readOnly: false,
+      arincToRealtimeIdMap: {
+        'RCEN-n': 'central_northbound',
+        'RCEN-s': 'central_southbound',
+      },
     }),
   );
 
@@ -156,6 +164,10 @@ test('requires selecting at least one sign', () => {
       signGroups: {},
       setSignGroups: (line, signGroups) => {},
       readOnly: false,
+      arincToRealtimeIdMap: {
+        'RCEN-n': 'central_northbound',
+        'RCEN-s': 'central_southbound',
+      },
     }),
   );
 
@@ -190,6 +202,11 @@ test('can edit an existing sign group', () => {
         signGroupSubmissions.push({ line, signGroups });
       },
       readOnly: false,
+      arincToRealtimeIdMap: {
+        'BAIR-w': 'airport_westbound',
+        'BAIR-e': 'airport_eastbound',
+        'BMAV-w': 'maverick_westbound',
+      },
     }),
   );
 
@@ -240,6 +257,11 @@ test('can cancel prompt when moving a sign from one sign group to another', () =
         signGroupSubmissions.push({ line, signGroups });
       },
       readOnly: false,
+      arincToRealtimeIdMap: {
+        'ONST-m': 'orange_north_station_commuter_rail_exit',
+        'ONST-n': 'orange_north_station_northbound',
+        'ONEM-s': 'tufts_southbound',
+      },
     }),
   );
 
@@ -285,6 +307,11 @@ test('can accept prompt when moving a sign from one sign group to another', () =
         signGroupSubmissions.push({ line, signGroups });
       },
       readOnly: false,
+      arincToRealtimeIdMap: {
+        'ONST-m': 'orange_north_station_commuter_rail_exit',
+        'ONST-n': 'orange_north_station_northbound',
+        'ONEM-s': 'tufts_southbound',
+      },
     }),
   );
 
@@ -328,6 +355,7 @@ test('can return a sign group back to auto', () => {
         signGroupSubmissions.push({ line, signGroups });
       },
       readOnly: false,
+      arincToRealtimeIdMap: { 'ONST-n': 'orange_north_station_northbound' },
     }),
   );
 

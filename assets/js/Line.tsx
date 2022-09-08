@@ -3,7 +3,7 @@ import Collapse, { Panel } from 'rc-collapse';
 import Tabs, { TabPane } from 'rc-tabs';
 import ConfiguredHeadwaysForm from './ConfiguredHeadwaysForm';
 import Station from './Station';
-import { stationConfig, arincToRealtimeId, branchConfig } from './mbta';
+import { stationConfig, branchConfig } from './mbta';
 import SignGroups from './SignGroups';
 import ModalPrompt from './ModalPrompt';
 import {
@@ -15,6 +15,7 @@ import {
   SignContent,
   StationConfig,
 } from './types';
+import { arincToRealtimeId } from './helpers';
 
 /* eslint-disable camelcase */
 
@@ -49,6 +50,7 @@ function setAllStationsMode(
   stations: StationConfig[],
   line: string,
   mode: string,
+  arincToRealtimeIdMap: { [key: string]: string },
 ) {
   const statuses: {
     [key: string]: { mode: 'auto' | 'off' | 'headway'; expires?: null };
@@ -56,7 +58,11 @@ function setAllStationsMode(
 
   stations.forEach((station: StationConfig) => {
     ['n', 's', 'e', 'w', 'm', 'c'].forEach((zone) => {
-      const realtimeId = arincToRealtimeId(`${station.id}-${zone}`, line);
+      const realtimeId = arincToRealtimeId(
+        `${station.id}-${zone}`,
+        line,
+        arincToRealtimeIdMap,
+      );
       const zoneConfig = station.zones[zone];
       if (zoneConfig !== undefined) {
         const { modes } = zoneConfig;
@@ -92,6 +98,7 @@ interface LineProps {
     line: string,
     signGroups: RouteSignGroupsWithDeletions,
   ) => void;
+  arincToRealtimeIdMap: { [key: string]: string };
 }
 
 function Line({
@@ -109,6 +116,7 @@ function Line({
   stationConfigs,
   signGroups,
   setSignGroups,
+  arincToRealtimeIdMap,
 }: LineProps): JSX.Element {
   const branches = branchConfig[line] || [];
 
@@ -150,7 +158,11 @@ function Line({
     const isMixed = stations.some((station) =>
       Object.keys(station.zones).some((zone) => {
         if (station.zones[zone]) {
-          const realtimeId = arincToRealtimeId(`${station.id}-${zone}`, line);
+          const realtimeId = arincToRealtimeId(
+            `${station.id}-${zone}`,
+            line,
+            arincToRealtimeIdMap,
+          );
           const mode = signConfigs[realtimeId] && signConfigs[realtimeId].mode;
           if (mode) {
             uniqueModes[mode] = mode;
@@ -191,7 +203,13 @@ function Line({
         signGroupDeletions[groupKey] = {};
       });
       setSignGroups(line, signGroupDeletions);
-      setAllStationsMode(setConfigs, stations, line, promptChangeAllMode);
+      setAllStationsMode(
+        setConfigs,
+        stations,
+        line,
+        promptChangeAllMode,
+        arincToRealtimeIdMap,
+      );
     }
 
     setPromptChangeAllMode(null);
@@ -214,7 +232,13 @@ function Line({
     if (Object.keys(signGroups).length > 0) {
       setPromptChangeAllMode(mode);
     } else {
-      setAllStationsMode(setConfigs, stations, line, mode);
+      setAllStationsMode(
+        setConfigs,
+        stations,
+        line,
+        mode,
+        arincToRealtimeIdMap,
+      );
     }
   };
 
@@ -240,6 +264,7 @@ function Line({
                 signGroups={signGroups}
                 setSignGroups={setSignGroups}
                 readOnly={readOnly}
+                arincToRealtimeIdMap={arincToRealtimeIdMap}
               />
             </TabPane>
             {branches.length > 0 && (
@@ -366,6 +391,7 @@ function Line({
           signsToGroups={signsToGroups}
           ungroupSign={ungroupSign}
           readOnly={readOnly}
+          arincToRealtimeIdMap={arincToRealtimeIdMap}
         />
       ))}
     </div>

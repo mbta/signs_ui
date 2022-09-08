@@ -37,6 +37,7 @@ test('shows the custom configuration information for a station', () => {
       signsToGroups: {},
       ungroupSign: jest.fn(),
       readOnly: false,
+      arincToRealtimeIdMap: { 'OMAL-m': 'malden_lobby' },
     }),
   );
 
@@ -77,6 +78,7 @@ test('allows custom reordering of sign positions', () => {
       signsToGroups: {},
       ungroupSign: jest.fn(),
       readOnly: false,
+      arincToRealtimeIdMap: { 'OMAL-m': 'malden_lobby' },
     }),
   );
 

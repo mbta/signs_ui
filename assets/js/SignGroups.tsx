@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { stationConfig, arincToRealtimeId } from './mbta';
+import { stationConfig } from './mbta';
 import SignText from './SignText';
 import SignTextInput from './SignTextInput';
 import ModalPrompt from './ModalPrompt';
@@ -11,7 +11,7 @@ import {
   RouteSignGroupsWithDeletions,
   SignGroup,
 } from './types';
-import { defaultZoneLabel } from './helpers';
+import { defaultZoneLabel, arincToRealtimeId } from './helpers';
 import SignGroupItem from './SignGroupItem';
 import SetExpiration from './SetExpiration';
 
@@ -44,6 +44,7 @@ interface ZoneSelectorProps {
   selectedSigns: Set<string>;
   onSignChange: ([stationId, zone]: [string, Zone], selected: boolean) => void;
   kind: 'default' | 'named';
+  arincToRealtimeIdMap: { [key: string]: string };
 }
 
 function ZoneSelector({
@@ -53,6 +54,7 @@ function ZoneSelector({
   selectedSigns,
   onSignChange,
   kind,
+  arincToRealtimeIdMap,
 }: ZoneSelectorProps): JSX.Element | null {
   const zoneConfig = config.zones[zone];
 
@@ -65,7 +67,11 @@ function ZoneSelector({
   }
 
   const zoneLabel = zoneConfig.label || defaultZoneLabel(zone);
-  const signId = arincToRealtimeId(`${config.id}-${zone}`, line);
+  const signId = arincToRealtimeId(
+    `${config.id}-${zone}`,
+    line,
+    arincToRealtimeIdMap,
+  );
   const isSelected = selectedSigns.has(signId);
 
   return (
@@ -99,6 +105,7 @@ interface SignGroupsFormProps {
   initialSignGroup: SignGroup;
   onApply: (key: string | null, signGroup: SignGroup) => void;
   onCancel: () => void;
+  arincToRealtimeIdMap: { [key: string]: string };
 }
 
 function SignGroupsForm({
@@ -110,6 +117,7 @@ function SignGroupsForm({
   initialSignGroup,
   onApply,
   onCancel,
+  arincToRealtimeIdMap,
 }: SignGroupsFormProps): JSX.Element | null {
   const signIdsInOtherGroups = React.useMemo(() => {
     const signIds = new Set();
@@ -142,7 +150,11 @@ function SignGroupsForm({
   const onSignChange = React.useCallback(
     ([stationId, zone]: [string, Zone], isChecked: boolean) => {
       const newSignIds = new Set(signIds);
-      const signId = arincToRealtimeId(`${stationId}-${zone}`, line);
+      const signId = arincToRealtimeId(
+        `${stationId}-${zone}`,
+        line,
+        arincToRealtimeIdMap,
+      );
       if (isChecked) {
         if (signIdsInOtherGroups.has(signId)) {
           setArincSignChangingGroup([stationId, zone]);
@@ -180,7 +192,11 @@ function SignGroupsForm({
           elementId="tab-panel-container"
           onAccept={() => {
             const [station, zone] = arincSignChangingGroup;
-            const signId = arincToRealtimeId(`${station}-${zone}`, line);
+            const signId = arincToRealtimeId(
+              `${station}-${zone}`,
+              line,
+              arincToRealtimeIdMap,
+            );
             const newSignIds = new Set(signIds).add(signId);
             setSignGroup({ ...signGroup, sign_ids: Array.from(newSignIds) });
             setArincSignChangingGroup(null);
@@ -221,6 +237,7 @@ function SignGroupsForm({
                             selectedSigns={signIds}
                             onSignChange={onSignChange}
                             kind="default"
+                            arincToRealtimeIdMap={arincToRealtimeIdMap}
                           />
                         ))}
                       </div>
@@ -234,6 +251,7 @@ function SignGroupsForm({
                             selectedSigns={signIds}
                             onSignChange={onSignChange}
                             kind="default"
+                            arincToRealtimeIdMap={arincToRealtimeIdMap}
                           />
                         ))}
                       </div>
@@ -247,6 +265,7 @@ function SignGroupsForm({
                             selectedSigns={signIds}
                             onSignChange={onSignChange}
                             kind="default"
+                            arincToRealtimeIdMap={arincToRealtimeIdMap}
                           />
                         ))}
                       </div>
@@ -262,6 +281,7 @@ function SignGroupsForm({
                             selectedSigns={signIds}
                             onSignChange={onSignChange}
                             kind="named"
+                            arincToRealtimeIdMap={arincToRealtimeIdMap}
                           />
                         ),
                       )}
@@ -396,6 +416,7 @@ interface SignGroupsProps {
     signGroups: RouteSignGroupsWithDeletions,
   ) => void;
   readOnly: boolean;
+  arincToRealtimeIdMap: { [key: string]: string };
 }
 
 function SignGroups({
@@ -405,6 +426,7 @@ function SignGroups({
   signGroups,
   setSignGroups,
   readOnly,
+  arincToRealtimeIdMap,
 }: SignGroupsProps): JSX.Element | null {
   const newSignGroup: SignGroup = {
     sign_ids: [],
@@ -446,6 +468,7 @@ function SignGroups({
         initialSignGroup={formSignGroup}
         onApply={setSignGroupAndCloseForm}
         onCancel={() => setIsFormOpen(false)}
+        arincToRealtimeIdMap={arincToRealtimeIdMap}
       />
     );
   }

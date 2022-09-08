@@ -1,6 +1,5 @@
 import * as React from 'react';
 import SignPanel from './SignPanel';
-import { arincToRealtimeId } from './mbta';
 import {
   RouteAlerts,
   RouteSignGroups,
@@ -11,7 +10,7 @@ import {
   StationConfig,
   Zone,
 } from './types';
-import { defaultZoneLabel } from './helpers';
+import { defaultZoneLabel, arincToRealtimeId } from './helpers';
 
 /* eslint-disable camelcase */
 
@@ -57,12 +56,13 @@ function makeSign(
   signsToGroups: { [id: string]: string },
   ungroupSign: (id: string) => void,
   readOnly: boolean,
+  arincToRealtimeIdMap: { [key: string]: string },
 ) {
   const zoneConfig = config.zones[zone];
   if (zone && zoneConfig) {
     const key = `${config.id}-${zone}`;
     const signContent = signs[key] || { sign_id: key, lines: {} };
-    const realtimeId = arincToRealtimeId(key, line);
+    const realtimeId = arincToRealtimeId(key, line, arincToRealtimeIdMap);
     const signConfig = signConfigs[realtimeId] || { mode: 'off' };
     const signGroupKey = signsToGroups[realtimeId];
     const signGroup = signGroupKey ? signGroups[signGroupKey] : undefined;
@@ -109,6 +109,7 @@ interface StationProps {
   signsToGroups: { [id: string]: string };
   ungroupSign: (id: string) => void;
   readOnly: boolean;
+  arincToRealtimeIdMap: { [key: string]: string };
 }
 
 function Station({
@@ -123,6 +124,7 @@ function Station({
   signsToGroups,
   ungroupSign,
   readOnly,
+  arincToRealtimeIdMap,
 }: StationProps): JSX.Element {
   const zonePositions = config.zonePositions || {
     left: ['s', 'w'],
@@ -150,6 +152,7 @@ function Station({
             signsToGroups,
             ungroupSign,
             readOnly,
+            arincToRealtimeIdMap,
           )}
           {makeSign(
             alerts,
@@ -164,6 +167,7 @@ function Station({
             signsToGroups,
             ungroupSign,
             readOnly,
+            arincToRealtimeIdMap,
           )}
         </div>
         <div className="col">
@@ -180,6 +184,7 @@ function Station({
             signsToGroups,
             ungroupSign,
             readOnly,
+            arincToRealtimeIdMap,
           )}
           {makeSign(
             alerts,
@@ -194,6 +199,7 @@ function Station({
             signsToGroups,
             ungroupSign,
             readOnly,
+            arincToRealtimeIdMap,
           )}
         </div>
         <div className="col">
@@ -210,6 +216,7 @@ function Station({
             signsToGroups,
             ungroupSign,
             readOnly,
+            arincToRealtimeIdMap,
           )}
           {makeSign(
             alerts,
@@ -224,6 +231,7 @@ function Station({
             signsToGroups,
             ungroupSign,
             readOnly,
+            arincToRealtimeIdMap,
           )}
         </div>
       </div>

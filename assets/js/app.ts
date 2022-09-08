@@ -26,6 +26,7 @@ declare global {
     initialChelseaBridgeAnnouncements: 'auto' | 'off';
     initialConfiguredHeadways: ConfiguredHeadways;
     initialSignGroups: SignGroupMap;
+    arincToRealtimeIdMap: { [key: string]: string };
     sentry?: {
       dsn: string;
     };
@@ -49,6 +50,7 @@ if (realtimeRoot) {
     initialConfiguredHeadways,
     initialSignGroups,
     signOutPath,
+    arincToRealtimeIdMap,
   } = window;
   const viewerApp = React.createElement(
     ViewerApp,
@@ -61,6 +63,7 @@ if (realtimeRoot) {
       initialSignGroups,
       signOutPath,
       initialChelseaBridgeAnnouncements,
+      arincToRealtimeIdMap,
     },
     null,
   );
