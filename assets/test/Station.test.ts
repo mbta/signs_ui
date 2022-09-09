@@ -4,6 +4,12 @@ import { mount } from 'enzyme';
 import Station from '../js/Station';
 import { StationConfig } from '../js/types';
 
+beforeAll(() => {
+  window.arincToRealtimeIdMap = {
+    'OMAL-m': 'malden_lobby',
+  };
+});
+
 test('shows the custom configuration information for a station', () => {
   const modes = {
     auto: true,

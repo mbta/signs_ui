@@ -1,6 +1,5 @@
 import * as React from 'react';
 import SignPanel from './SignPanel';
-import { arincToRealtimeId } from './mbta';
 import {
   RouteAlerts,
   RouteSignGroups,
@@ -11,7 +10,7 @@ import {
   StationConfig,
   Zone,
 } from './types';
-import { defaultZoneLabel } from './helpers';
+import { defaultZoneLabel, arincToRealtimeId } from './helpers';
 
 /* eslint-disable camelcase */
 

@@ -104,4 +104,21 @@ function defaultZoneLabel(z: Zone): string {
   }
 }
 
-export { choosePage, alertsForLine, formatTime, defaultZoneLabel };
+function arincToRealtimeId(stationZone: string, line: string): string {
+  if (stationZone === 'RSOU-m' && line === 'Red') {
+    return 'red_south_station_mezzanine';
+  }
+  if (stationZone === 'RSOU-m' && line === 'Silver') {
+    return 'south_station_mezzanine';
+  }
+
+  return window.arincToRealtimeIdMap[stationZone];
+}
+
+export {
+  choosePage,
+  alertsForLine,
+  formatTime,
+  defaultZoneLabel,
+  arincToRealtimeId,
+};

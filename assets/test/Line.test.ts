@@ -28,6 +28,17 @@ function acceptModalPrompt(modalPrompt: HTMLElement) {
   userEvent.click(acceptButton);
 }
 
+beforeAll(() => {
+  window.arincToRealtimeIdMap = {
+    'RSOU-n': 'red_south_station_northbound',
+    'RCEN-n': 'central_northbound',
+    'RCEN-s': 'central_southbound',
+    'RDAV-m': 'davis_mezzanine',
+    'RDAV-n': 'davis_northbound',
+    'RDAV-s': 'davis_southbound',
+  };
+});
+
 test('Shows all signs for a line', () => {
   const now = Date.now();
   const signs: SignContent = {};

@@ -3,6 +3,7 @@ defmodule SignsUiWeb.MessagesController do
   use SignsUiWeb, :controller
 
   alias SignsUi.Config.SignGroups
+  alias SignsUi.Config.Utilities
   alias SignsUi.Messages.SignContent
   alias SignsUi.Signs.State
 
@@ -42,7 +43,8 @@ defmodule SignsUiWeb.MessagesController do
       configured_headways: configured_headways,
       chelsea_bridge_announcements: chelsea_bridge_announcements,
       sign_groups: sign_groups,
-      sign_out_path: sign_out_path
+      sign_out_path: sign_out_path,
+      arinc_to_realtime_map: Utilities.get_arinc_to_realtime_mapping()
     )
   end
 

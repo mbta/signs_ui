@@ -8,6 +8,7 @@ defmodule SignsUi.Config.State do
   alias SignsUi.Config
   alias SignsUi.Config.ConfiguredHeadways
   alias SignsUi.Config.SignGroups
+  alias SignsUi.Config.Utilities
 
   @type t :: %{
           signs: %{Config.Sign.id() => Config.Sign.t()},
@@ -74,7 +75,7 @@ defmodule SignsUi.Config.State do
       {:ok, config} ->
         # re-save state, since format was updated
         save_state(config)
-
+        schedule_clean(self(), 60_000)
         {:ok, config}
 
       {:error, reason} ->
@@ -106,6 +107,13 @@ defmodule SignsUi.Config.State do
     new_sign_group_state = save_sign_group_changes(changes, old_state)
     new_state = save_sign_config_changes(sign_config_changes, new_sign_group_state)
     {:reply, {:ok, new_state}, new_state}
+  end
+
+  def handle_info(:clean, %{signs: sign_configs} = state) do
+    schedule_clean(self(), 60_000)
+    new_state = %{state | signs: Utilities.clean_configs(sign_configs)}
+    save_state(new_state)
+    {:noreply, new_state}
   end
 
   @spec save_sign_config_changes(%{Config.Sign.id() => Config.Sign.t()}, t()) :: t()
@@ -176,5 +184,9 @@ defmodule SignsUi.Config.State do
   defp save_state(new_state) do
     external_post_mod = Application.get_env(:signs_ui, :signs_external_post_mod)
     {:ok, _} = external_post_mod.update(new_state)
+  end
+
+  defp schedule_clean(pid, ms) do
+    Process.send_after(pid, :clean, ms)
   end
 end

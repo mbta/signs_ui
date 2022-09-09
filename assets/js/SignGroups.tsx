@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { stationConfig, arincToRealtimeId } from './mbta';
+import { stationConfig } from './mbta';
 import SignText from './SignText';
 import SignTextInput from './SignTextInput';
 import ModalPrompt from './ModalPrompt';
@@ -11,7 +11,7 @@ import {
   RouteSignGroupsWithDeletions,
   SignGroup,
 } from './types';
-import { defaultZoneLabel } from './helpers';
+import { defaultZoneLabel, arincToRealtimeId } from './helpers';
 import SignGroupItem from './SignGroupItem';
 import SetExpiration from './SetExpiration';
 

@@ -3,7 +3,7 @@ import Collapse, { Panel } from 'rc-collapse';
 import Tabs, { TabPane } from 'rc-tabs';
 import ConfiguredHeadwaysForm from './ConfiguredHeadwaysForm';
 import Station from './Station';
-import { stationConfig, arincToRealtimeId, branchConfig } from './mbta';
+import { stationConfig, branchConfig } from './mbta';
 import SignGroups from './SignGroups';
 import ModalPrompt from './ModalPrompt';
 import {
@@ -15,6 +15,7 @@ import {
   SignContent,
   StationConfig,
 } from './types';
+import { arincToRealtimeId } from './helpers';
 
 /* eslint-disable camelcase */
 

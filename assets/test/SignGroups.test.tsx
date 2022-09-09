@@ -75,6 +75,19 @@ type SignGroupUpdate = {
   signGroups: RouteSignGroupsWithDeletions;
 };
 
+beforeAll(() => {
+  window.arincToRealtimeIdMap = {
+    'RCEN-n': 'central_northbound',
+    'RCEN-s': 'central_southbound',
+    'BAIR-w': 'airport_westbound',
+    'BAIR-e': 'airport_eastbound',
+    'BMAV-w': 'maverick_westbound',
+    'ONST-m': 'orange_north_station_commuter_rail_exit',
+    'ONST-n': 'orange_north_station_northbound',
+    'ONEM-s': 'tufts_southbound',
+  };
+});
+
 test('can create a sign group', () => {
   let signGroupSubmissions: Array<SignGroupUpdate> = [];
   const line = 'Red';

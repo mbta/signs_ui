@@ -26,6 +26,7 @@ declare global {
     initialChelseaBridgeAnnouncements: 'auto' | 'off';
     initialConfiguredHeadways: ConfiguredHeadways;
     initialSignGroups: SignGroupMap;
+    arincToRealtimeIdMap: { [key: string]: string };
     sentry?: {
       dsn: string;
     };

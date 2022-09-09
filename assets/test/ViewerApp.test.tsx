@@ -35,6 +35,13 @@ function someSignContent(now: number): SignContent {
   };
 }
 
+beforeAll(() => {
+  window.arincToRealtimeIdMap = {
+    'RDAV-s': 'davis_southbound',
+    'OGRE-m': 'green_street_mezzanine',
+  };
+});
+
 test('Shows all signs for a line', () => {
   const now = Date.now();
   const signs = someSignContent(now);
