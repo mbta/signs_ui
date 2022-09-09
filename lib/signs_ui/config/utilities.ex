@@ -14,11 +14,11 @@ defmodule SignsUi.Config.Utilities do
     )
   end
 
-  def get_realtime_ids() do
+  def get_realtime_ids do
     get_arinc_to_realtime_mapping() |> Enum.map(fn {_k, v} -> v end)
   end
 
-  def get_arinc_to_realtime_mapping() do
+  def get_arinc_to_realtime_mapping do
     :signs_ui
     |> :code.priv_dir()
     |> Path.join("arinc_to_realtime.json")
