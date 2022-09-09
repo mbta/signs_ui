@@ -32,7 +32,6 @@ interface ViewerAppProps {
   readOnly: boolean;
   signOutPath: string;
   initialChelseaBridgeAnnouncements?: 'auto' | 'off';
-  arincToRealtimeIdMap: { [key: string]: string };
 }
 
 class ViewerApp extends React.Component<
@@ -53,7 +52,6 @@ class ViewerApp extends React.Component<
     signOutPath: string;
     line?: string;
     chelseaBridgeAnnouncements: 'auto' | 'off';
-    arincToRealtimeIdMap: { [key: string]: string };
   }
 > {
   private timerID?: ReturnType<typeof setTimeout>;
@@ -84,7 +82,6 @@ class ViewerApp extends React.Component<
       signOutPath: props.signOutPath,
       chelseaBridgeAnnouncements:
         props.initialChelseaBridgeAnnouncements || 'off',
-      arincToRealtimeIdMap: props.arincToRealtimeIdMap,
     };
   }
 
@@ -242,7 +239,6 @@ class ViewerApp extends React.Component<
       signGroups,
       signOutPath,
       chelseaBridgeAnnouncements,
-      arincToRealtimeIdMap,
     } = this.state;
     return (
       <div className="viewer--main container">
@@ -320,7 +316,6 @@ class ViewerApp extends React.Component<
             chelseaBridgeAnnouncements={chelseaBridgeAnnouncements}
             setChelseaBridgeAnnouncements={this.setChelseaBridgeAnnouncements}
             readOnly={readOnly}
-            arincToRealtimeIdMap={arincToRealtimeIdMap}
           />
         )}
       </div>

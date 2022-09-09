@@ -104,11 +104,7 @@ function defaultZoneLabel(z: Zone): string {
   }
 }
 
-function arincToRealtimeId(
-  stationZone: string,
-  line: string,
-  arincToRealtimeIdMap: { [key: string]: string },
-): string {
+function arincToRealtimeId(stationZone: string, line: string): string {
   if (stationZone === 'RSOU-m' && line === 'Red') {
     return 'red_south_station_mezzanine';
   }
@@ -116,7 +112,7 @@ function arincToRealtimeId(
     return 'south_station_mezzanine';
   }
 
-  return arincToRealtimeIdMap[stationZone];
+  return window.arincToRealtimeIdMap[stationZone];
 }
 
 export {

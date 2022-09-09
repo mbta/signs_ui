@@ -50,7 +50,6 @@ if (realtimeRoot) {
     initialConfiguredHeadways,
     initialSignGroups,
     signOutPath,
-    arincToRealtimeIdMap,
   } = window;
   const viewerApp = React.createElement(
     ViewerApp,
@@ -63,7 +62,6 @@ if (realtimeRoot) {
       initialSignGroups,
       signOutPath,
       initialChelseaBridgeAnnouncements,
-      arincToRealtimeIdMap,
     },
     null,
   );

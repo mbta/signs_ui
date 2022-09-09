@@ -4,6 +4,12 @@ import { mount } from 'enzyme';
 import Station from '../js/Station';
 import { StationConfig } from '../js/types';
 
+beforeAll(() => {
+  window.arincToRealtimeIdMap = {
+    'OMAL-m': 'malden_lobby',
+  };
+});
+
 test('shows the custom configuration information for a station', () => {
   const modes = {
     auto: true,
@@ -37,7 +43,6 @@ test('shows the custom configuration information for a station', () => {
       signsToGroups: {},
       ungroupSign: jest.fn(),
       readOnly: false,
-      arincToRealtimeIdMap: { 'OMAL-m': 'malden_lobby' },
     }),
   );
 
@@ -78,7 +83,6 @@ test('allows custom reordering of sign positions', () => {
       signsToGroups: {},
       ungroupSign: jest.fn(),
       readOnly: false,
-      arincToRealtimeIdMap: { 'OMAL-m': 'malden_lobby' },
     }),
   );
 

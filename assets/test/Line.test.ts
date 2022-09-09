@@ -28,6 +28,17 @@ function acceptModalPrompt(modalPrompt: HTMLElement) {
   userEvent.click(acceptButton);
 }
 
+beforeAll(() => {
+  window.arincToRealtimeIdMap = {
+    'RSOU-n': 'red_south_station_northbound',
+    'RCEN-n': 'central_northbound',
+    'RCEN-s': 'central_southbound',
+    'RDAV-m': 'davis_mezzanine',
+    'RDAV-n': 'davis_northbound',
+    'RDAV-s': 'davis_southbound',
+  };
+});
+
 test('Shows all signs for a line', () => {
   const now = Date.now();
   const signs: SignContent = {};
@@ -57,7 +68,6 @@ test('Shows all signs for a line', () => {
         setChelseaBridgeAnnouncements: () => {},
         signGroups: {},
         setSignGroups: () => {},
-        arincToRealtimeIdMap: {},
       },
       null,
     ),
@@ -96,7 +106,6 @@ test('Shows batch mode buttons when not read-only', () => {
         setChelseaBridgeAnnouncements: () => {},
         signGroups: {},
         setSignGroups: () => {},
-        arincToRealtimeIdMap: {},
       },
       null,
     ),
@@ -137,7 +146,6 @@ test.each([['Silver'], ['Busway']])(
           setChelseaBridgeAnnouncements: () => {},
           signGroups: {},
           setSignGroups: () => {},
-          arincToRealtimeIdMap: {},
         },
         null,
       ),
@@ -181,10 +189,6 @@ test('Shows "Mixed" batch mode buttons when multiple modes are chosen', () => {
         setChelseaBridgeAnnouncements: () => {},
         signGroups: {},
         setSignGroups: () => {},
-        arincToRealtimeIdMap: {
-          'RSOU-n': 'red_south_station_northbound',
-          'RCEN-s': 'central_southbound',
-        },
       },
       null,
     ),
@@ -228,7 +232,6 @@ test('Does not show "Mixed" batch mode buttons when one mode is chosen', () => {
         setChelseaBridgeAnnouncements: () => {},
         signGroups: {},
         setSignGroups: () => {},
-        arincToRealtimeIdMap: {},
       },
       null,
     ),
@@ -269,7 +272,6 @@ test("Doesn't show batch mode buttons when read-only", () => {
         setChelseaBridgeAnnouncements: () => {},
         signGroups: {},
         setSignGroups: () => {},
-        arincToRealtimeIdMap: {},
       },
       null,
     ),
@@ -326,7 +328,6 @@ test('Batch mode buttons clear sign groups, too', () => {
         setSignGroups: (line, signGroups) => {
           setSignGroupsCalls.push({ line, signGroups });
         },
-        arincToRealtimeIdMap: {},
       },
       null,
     ),
@@ -371,7 +372,6 @@ test('Shows ConfiguredHeadwaysForm if current line has branches configured', () 
         setChelseaBridgeAnnouncements: () => {},
         signGroups: {},
         setSignGroups: () => {},
-        arincToRealtimeIdMap: {},
       },
       null,
     ),
@@ -409,7 +409,6 @@ test('Doesn\t show ConfiguredHeadwaysForm if current line has no branches config
         setChelseaBridgeAnnouncements: () => {},
         signGroups: {},
         setSignGroups: () => {},
-        arincToRealtimeIdMap: {},
       },
       null,
     ),
@@ -447,7 +446,6 @@ test('Shows ConfiguredHeadwaysForm if current line has branches configured', () 
         setChelseaBridgeAnnouncements: () => {},
         signGroups: {},
         setSignGroups: () => {},
-        arincToRealtimeIdMap: {},
       },
       null,
     ),
@@ -547,11 +545,6 @@ test('Sign config is not affected by batch updates if sign does not support mode
         setChelseaBridgeAnnouncements: () => {},
         signGroups: {},
         setSignGroups: () => {},
-        arincToRealtimeIdMap: {
-          'RDAV-m': 'davis_mezzanine',
-          'RDAV-n': 'davis_northbound',
-          'RDAV-s': 'davis_southbound',
-        },
       },
       null,
     ),
@@ -606,7 +599,6 @@ test('can toggle chelsea bridge announcements on and off on Silver Line page', (
         setChelseaBridgeAnnouncements,
         signGroups: {},
         setSignGroups: () => {},
-        arincToRealtimeIdMap: {},
       },
       null,
     ),
@@ -641,7 +633,6 @@ test('does not show chelsea bridge announcements toggle on non-Silver Line pages
         setChelseaBridgeAnnouncements,
         signGroups: {},
         setSignGroups: () => {},
-        arincToRealtimeIdMap: {},
       },
       null,
     ),
@@ -667,7 +658,6 @@ test('does not show chelsea bridge toggle if in read-only mode', () => {
       setChelseaBridgeAnnouncements: () => {},
       signGroups: {},
       setSignGroups: () => {},
-      arincToRealtimeIdMap: {},
     }),
   );
 
@@ -706,10 +696,6 @@ test('allows removing an individual sign from a group', () => {
           },
         },
         setSignGroups,
-        arincToRealtimeIdMap: {
-          'RCEN-n': 'central_northbound',
-          'RCEN-s': 'central_southbound',
-        },
       },
       null,
     ),
