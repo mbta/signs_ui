@@ -3,9 +3,9 @@ defmodule SignsUiWeb.MessagesController do
   use SignsUiWeb, :controller
 
   alias SignsUi.Config.SignGroups
+  alias SignsUi.Config.Utilities
   alias SignsUi.Messages.SignContent
   alias SignsUi.Signs.State
-  alias SignsUi.Config.Utilities
 
   plug(:laboratory_features)
 
