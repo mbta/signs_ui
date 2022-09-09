@@ -15,9 +15,10 @@ defmodule SignsUi.Config.Utilities do
   end
 
   def get_realtime_ids do
-    get_arinc_to_realtime_mapping() |> Enum.map(fn {_k, v} -> v end)
+    Map.values(get_arinc_to_realtime_mapping())
   end
 
+  # sobelow_skip ["Traversal"]
   def get_arinc_to_realtime_mapping do
     :signs_ui
     |> :code.priv_dir()
