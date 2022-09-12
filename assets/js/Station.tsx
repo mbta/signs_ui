@@ -61,7 +61,7 @@ function makeSign(
   if (zone && zoneConfig) {
     const key = `${config.id}-${zone}`;
     const signContent = signs[key] || { sign_id: key, lines: {} };
-    const realtimeId = arincToRealtimeId(key, line);
+    const realtimeId = arincToRealtimeId(key);
     const signConfig = signConfigs[realtimeId] || { mode: 'off' };
     const signGroupKey = signsToGroups[realtimeId];
     const signGroup = signGroupKey ? signGroups[signGroupKey] : undefined;
