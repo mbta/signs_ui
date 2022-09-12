@@ -57,7 +57,7 @@ function setAllStationsMode(
 
   stations.forEach((station: StationConfig) => {
     ['n', 's', 'e', 'w', 'm', 'c'].forEach((zone) => {
-      const realtimeId = arincToRealtimeId(`${station.id}-${zone}`, line);
+      const realtimeId = arincToRealtimeId(`${station.id}-${zone}`);
       const zoneConfig = station.zones[zone];
       if (zoneConfig !== undefined) {
         const { modes } = zoneConfig;
@@ -151,7 +151,7 @@ function Line({
     const isMixed = stations.some((station) =>
       Object.keys(station.zones).some((zone) => {
         if (station.zones[zone]) {
-          const realtimeId = arincToRealtimeId(`${station.id}-${zone}`, line);
+          const realtimeId = arincToRealtimeId(`${station.id}-${zone}`);
           const mode = signConfigs[realtimeId] && signConfigs[realtimeId].mode;
           if (mode) {
             uniqueModes[mode] = mode;

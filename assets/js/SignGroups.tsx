@@ -65,7 +65,7 @@ function ZoneSelector({
   }
 
   const zoneLabel = zoneConfig.label || defaultZoneLabel(zone);
-  const signId = arincToRealtimeId(`${config.id}-${zone}`, line);
+  const signId = arincToRealtimeId(`${config.id}-${zone}`);
   const isSelected = selectedSigns.has(signId);
 
   return (
@@ -142,7 +142,7 @@ function SignGroupsForm({
   const onSignChange = React.useCallback(
     ([stationId, zone]: [string, Zone], isChecked: boolean) => {
       const newSignIds = new Set(signIds);
-      const signId = arincToRealtimeId(`${stationId}-${zone}`, line);
+      const signId = arincToRealtimeId(`${stationId}-${zone}`);
       if (isChecked) {
         if (signIdsInOtherGroups.has(signId)) {
           setArincSignChangingGroup([stationId, zone]);
@@ -180,7 +180,7 @@ function SignGroupsForm({
           elementId="tab-panel-container"
           onAccept={() => {
             const [station, zone] = arincSignChangingGroup;
-            const signId = arincToRealtimeId(`${station}-${zone}`, line);
+            const signId = arincToRealtimeId(`${station}-${zone}`);
             const newSignIds = new Set(signIds).add(signId);
             setSignGroup({ ...signGroup, sign_ids: Array.from(newSignIds) });
             setArincSignChangingGroup(null);

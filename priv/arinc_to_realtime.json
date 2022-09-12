@@ -140,6 +140,7 @@
   "RDTC-s": "red_downtown_crossing_southbound",
   "RSOU-n": "red_south_station_northbound",
   "RSOU-s": "red_south_station_southbound",
+  "RSOU-m": "red_south_station_mezzanine",
   "SSOU-w": "south_station_silver_line_arrival_platform",
   "RBRO-m": "broadway_mezzanine",
   "RBRO-n": "broadway_northbound",
