@@ -2026,7 +2026,7 @@ const stationConfig: {
           e: {
             label: 'Union Sq',
             modes: {
-              auto: false,
+              auto: true,
               custom: true,
               headway: true,
               off: true,
@@ -2035,7 +2035,7 @@ const stationConfig: {
           w: {
             label: 'Copley & West',
             modes: {
-              auto: false,
+              auto: true,
               custom: true,
               headway: true,
               off: true,
@@ -2043,7 +2043,7 @@ const stationConfig: {
           },
           m: {
             modes: {
-              auto: false,
+              auto: true,
               custom: true,
               headway: true,
               off: true,
