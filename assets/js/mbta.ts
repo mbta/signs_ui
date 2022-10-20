@@ -1693,6 +1693,15 @@ const stationConfig: {
               off: true,
             },
           },
+          w: {
+            label: 'Drop-off',
+            modes: {
+              auto: true,
+              custom: true,
+              headway: true,
+              off: true,
+            },
+          },
         },
       },
     ],

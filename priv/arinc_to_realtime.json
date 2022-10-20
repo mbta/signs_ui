@@ -54,6 +54,7 @@
   "BGOV-w": "government_center_westbound",
   "BBOW-e": "bowdoin_eastbound",
   "BBOW-m": "bowdoin_mezzanine",
+  "BBOW-w": "bowdoin_drop_off",
   "OOAK-m": "oak_grove_mezzanine_southbound",
   "OOAK-e": "oak_grove_east_busway",
   "OOAK-s": "oak_grove_platform",
