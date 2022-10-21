@@ -1997,6 +1997,166 @@ const stationConfig: {
     batchModes: { auto: true, headway: true, off: true },
     stations: [
       {
+        id: 'GCOS',
+        name: 'College Ave',
+        zones: {
+          e: {
+            label: 'Track 2',
+            modes: {
+              auto: true,
+              custom: true,
+              headway: true,
+              off: true,
+            },
+          },
+          w: {
+            label: 'Track 1',
+            modes: {
+              auto: true,
+              custom: true,
+              headway: true,
+              off: true,
+            },
+          },
+          m: {
+            modes: {
+              auto: true,
+              custom: true,
+              headway: true,
+              off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'GBSS',
+        name: 'Ball Sq',
+        zones: {
+          e: {
+            label: 'Medford/ Tufts',
+            modes: {
+              auto: true,
+              custom: true,
+              headway: true,
+              off: true,
+            },
+          },
+          w: {
+            label: 'Copley & West',
+            modes: {
+              auto: true,
+              custom: true,
+              headway: true,
+              off: true,
+            },
+          },
+          m: {
+            modes: {
+              auto: true,
+              custom: true,
+              headway: true,
+              off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'GMSS',
+        name: 'Magoun Sq',
+        zones: {
+          e: {
+            label: 'Medford/ Tufts',
+            modes: {
+              auto: true,
+              custom: true,
+              headway: true,
+              off: true,
+            },
+          },
+          w: {
+            label: 'Copley & West',
+            modes: {
+              auto: true,
+              custom: true,
+              headway: true,
+              off: true,
+            },
+          },
+          m: {
+            modes: {
+              auto: true,
+              custom: true,
+              headway: true,
+              off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'GGSS',
+        name: 'Gilman Sq',
+        zones: {
+          e: {
+            label: 'Medford/ Tufts',
+            modes: {
+              auto: true,
+              custom: true,
+              headway: true,
+              off: true,
+            },
+          },
+          w: {
+            label: 'Copley & West',
+            modes: {
+              auto: true,
+              custom: true,
+              headway: true,
+              off: true,
+            },
+          },
+          m: {
+            modes: {
+              auto: true,
+              custom: true,
+              headway: true,
+              off: true,
+            },
+          },
+        },
+      },
+      {
+        id: 'GESS',
+        name: 'East Somerville',
+        zones: {
+          e: {
+            label: 'Medford/ Tufts',
+            modes: {
+              auto: true,
+              custom: true,
+              headway: true,
+              off: true,
+            },
+          },
+          w: {
+            label: 'Copley & West',
+            modes: {
+              auto: true,
+              custom: true,
+              headway: true,
+              off: true,
+            },
+          },
+          m: {
+            modes: {
+              auto: true,
+              custom: true,
+              headway: true,
+              off: true,
+            },
+          },
+        },
+      },
+      {
         id: 'GUNS',
         name: 'Union Sq',
         zones: {
