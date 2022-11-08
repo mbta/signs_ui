@@ -94,18 +94,16 @@ defmodule SignsUiWeb.AuthControllerTest do
     end
   end
 
-  describe "logout" do
+  describe "initiate_logout" do
     @tag :authenticated
     test "clears refresh token, logs user out, and redirects to Cognito logout", %{conn: conn} do
       reassign_env(:refresh_token_store, SignsUiWeb.AuthControllerTest.FakeRefreshTokenStore)
 
       log =
         capture_log([level: :info], fn ->
-          conn = get(conn, SignsUiWeb.Router.Helpers.auth_path(conn, :logout, "cognito"))
+          conn = get(conn, SignsUiWeb.Router.Helpers.auth_path(conn, :initiate_logout, "cognito"))
 
           response = response(conn, 302)
-
-          assert is_nil(Guardian.Plug.current_claims(conn))
 
           assert response =~ "https://test_auth_domain/logout?client_id=test_client_secret"
         end)
@@ -129,11 +127,23 @@ defmodule SignsUiWeb.AuthControllerTest do
 
       Application.put_env(:ueberauth, Ueberauth.Strategy.Cognito, new_config)
 
-      conn = get(conn, SignsUiWeb.Router.Helpers.auth_path(conn, :logout, "cognito"))
+      conn = get(conn, SignsUiWeb.Router.Helpers.auth_path(conn, :initiate_logout, "cognito"))
 
       response = response(conn, 302)
 
       assert response =~ "https://test_auth_domain/logout?client_id=test_client_secret_2"
+    end
+  end
+
+  describe "logout" do
+    test "logs user out and redirects to homepage", %{conn: conn} do
+      conn = get(conn, SignsUiWeb.Router.Helpers.auth_path(conn, :logout, "cognito"))
+
+      response = response(conn, 302)
+
+      assert is_nil(Guardian.Plug.current_claims(conn))
+
+      assert redirected_to(conn) == SignsUiWeb.Router.Helpers.page_path(conn, :index)
     end
   end
 

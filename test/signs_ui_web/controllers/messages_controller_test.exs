@@ -52,7 +52,10 @@ defmodule SignsUiWeb.MessagesControllerTest do
 
       response = html_response(conn, 200)
 
-      assert response =~ "signOutPath = \"/auth/cognito/logout\""
+      assert response =~
+               "signOutPath = \"#{
+                 SignsUiWeb.Router.Helpers.auth_path(conn, :initiate_logout, "cognito")
+               }\""
     end
   end
 

@@ -41,6 +41,7 @@ defmodule SignsUiWeb.Router do
 
     get("/:provider", AuthController, :request)
     get("/:provider/callback", AuthController, :callback)
+    get("/:provider/initiate_logout", AuthController, :initiate_logout)
     get("/:provider/logout", AuthController, :logout)
   end
 

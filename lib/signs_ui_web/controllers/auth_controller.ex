@@ -52,8 +52,8 @@ defmodule SignsUiWeb.AuthController do
     end
   end
 
-  @spec logout(Plug.Conn.t(), map()) :: Plug.Conn.t()
-  def logout(conn, params) do
+  @spec initiate_logout(Plug.Conn.t(), map()) :: Plug.Conn.t()
+  def initiate_logout(conn, params) do
     refresh_token_store = Application.get_env(:signs_ui, :refresh_token_store)
 
     conn
@@ -66,6 +66,13 @@ defmodule SignsUiWeb.AuthController do
     conn
     |> Guardian.Plug.sign_out(SignsUiWeb.AuthManager)
     |> redirect(external: redirect_url)
+  end
+
+  @spec logout(Plug.Conn.t(), map()) :: Plug.Conn.t()
+  def logout(conn, _params) do
+    conn
+    |> Guardian.Plug.sign_out(SignsUiWeb.AuthManager)
+    |> redirect(to: SignsUiWeb.Router.Helpers.page_path(conn, :index))
   end
 
   @spec error?([Ueberauth.Failure.t(), ...], String.t()) :: boolean
@@ -96,7 +103,7 @@ defmodule SignsUiWeb.AuthController do
           |> Application.get_env(Ueberauth.Strategy.Cognito)
           |> Keyword.get(:client_id)
           |> config_value,
-        "logout_uri" => SignsUiWeb.Router.Helpers.page_url(conn, :index)
+        "logout_uri" => SignsUiWeb.Router.Helpers.auth_url(conn, :logout, "cognito")
       })
 
     "https://#{auth_domain}/logout?" <> redirect_params

@@ -8,7 +8,7 @@ defmodule SignsUiWeb.UnauthorizedControllerTest do
       html = html_response(conn, 403)
 
       assert html =~ "not authorized"
-      assert html =~ "/logout"
+      assert html =~ SignsUiWeb.Router.Helpers.auth_path(conn, :initiate_logout, "cognito")
     end
   end
 end
