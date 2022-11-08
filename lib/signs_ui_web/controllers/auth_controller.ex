@@ -82,7 +82,7 @@ defmodule SignsUiWeb.AuthController do
   end
 
   @spec logout_redirect_url_for_provider(Plug.Conn.t(), String.t()) :: String.t()
-  defp logout_redirect_url_for_provider(conn, "cognito") do
+  defp logout_redirect_url_for_provider(_conn, "cognito") do
     auth_domain =
       :ueberauth
       |> Application.get_env(Ueberauth.Strategy.Cognito)
@@ -96,7 +96,8 @@ defmodule SignsUiWeb.AuthController do
           |> Application.get_env(Ueberauth.Strategy.Cognito)
           |> Keyword.get(:client_id)
           |> config_value,
-        "logout_uri" => SignsUiWeb.Router.Helpers.page_url(conn, :index)
+        # temporarily hardcoded for testing - Cognito docs say to use the allowed callback URI
+        "redirect_uri" => "https://signs-dev.mbtace.com/auth/cognito/callback"
       })
 
     "https://#{auth_domain}/logout?" <> redirect_params
