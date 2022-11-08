@@ -96,8 +96,7 @@ defmodule SignsUiWeb.AuthController do
           |> Application.get_env(Ueberauth.Strategy.Cognito)
           |> Keyword.get(:client_id)
           |> config_value,
-        # temporarily hardcoded for testing - Cognito docs say to use the allowed callback URI
-        "redirect_uri" => "https://signs-dev.mbtace.com/auth/cognito/callback"
+        "logout_uri" => "https://www.mbta.com/"
       })
 
     "https://#{auth_domain}/logout?" <> redirect_params
