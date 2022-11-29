@@ -160,6 +160,7 @@
   "RSHA-s": "shawmut_southbound",
   "RASH-m": "ashmont_mezzanine",
   "RASH-n": "red_ashmont_northbound",
+  "RASH-s": "red_ashmont_southbound",
   "RNQU-m": "north_quincy_mezzanine",
   "RNQU-n": "north_quincy_northbound",
   "RNQU-s": "north_quincy_southbound",
