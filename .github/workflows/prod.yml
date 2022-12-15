@@ -10,7 +10,7 @@ concurrency:
 jobs:
   deploy:
     name: Deploy to Prod
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     environment: prod
     env:
       ECS_CLUSTER: signs-ui
