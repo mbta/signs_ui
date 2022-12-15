@@ -2202,7 +2202,6 @@ const stationConfig: {
         name: 'Lechmere',
         zones: {
           e: {
-            label: 'Union Sq',
             modes: {
               auto: true,
               custom: true,
