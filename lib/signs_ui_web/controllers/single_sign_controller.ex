@@ -15,11 +15,7 @@ defmodule SignsUiWeb.SingleSignController do
     |> put_resp_header(
       "content-security-policy",
       policy <>
-        " frame-ancestors #{
-          :signs_ui
-          |> Application.get_env(SignsUiWeb.Endpoint)
-          |> Keyword.get(:screenplay_base_url)
-        };"
+        " frame-ancestors #{:signs_ui |> Application.get_env(SignsUiWeb.Endpoint) |> Keyword.get(:screenplay_base_url)};"
     )
     |> render("single_sign.html", sign: sign)
   end

@@ -13,11 +13,10 @@ defmodule RealtimeSignsBodyReader do
     body_params =
       body
       |> String.split("&")
-      |> Enum.map(fn
+      |> Enum.map_join("&", fn
         "c=" <> rest -> "c[]=" <> rest
         value -> value
       end)
-      |> Enum.join("&")
 
     {:ok, body_params, conn}
   end
