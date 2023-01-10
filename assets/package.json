@@ -56,7 +56,7 @@
     "lodash": "^4.17.20",
     "mini-css-extract-plugin": "^1.6.2",
     "phoenix": "^1.5.6",
-    "phoenix_html": "^2.10.4",
+    "phoenix_html": "^3.0.4",
     "rc-collapse": "^3.1.1",
     "react": "^16.4.1",
     "react-datepicker": "^3.3.0",
