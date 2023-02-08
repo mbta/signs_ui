@@ -17,7 +17,7 @@ function AlertPickerPopup({
   const [hoveredAlertId, setHoveredAlertId] = React.useState<string>(
     alertIds[0],
   );
-  const hoveredAlert = alerts[hoveredAlertId];
+  const hoveredAlert = hoveredAlertId && alerts[hoveredAlertId];
 
   const ref = React.useRef<HTMLDivElement | null>(null);
 
