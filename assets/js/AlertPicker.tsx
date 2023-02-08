@@ -17,6 +17,7 @@ function AlertPickerPopup({
   const [hoveredAlertId, setHoveredAlertId] = React.useState<string>(
     alertIds[0],
   );
+  const hoveredAlert = alerts[hoveredAlertId];
 
   const ref = React.useRef<HTMLDivElement | null>(null);
 
@@ -55,13 +56,13 @@ function AlertPickerPopup({
         ))}
       </div>
       <div className="alert_picker--content">
-        {hoveredAlertId === null ? (
+        {!hoveredAlert ? (
           'No alert selected'
         ) : (
           <>
-            <div>{alerts[hoveredAlertId].service_effect}</div>
+            <div>{hoveredAlert.service_effect}</div>
             <div className="alert_picker--created_at">
-              Created {formatTime(alerts[hoveredAlertId].created_at)}
+              Created {formatTime(hoveredAlert.created_at)}
             </div>
           </>
         )}
