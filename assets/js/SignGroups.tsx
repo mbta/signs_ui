@@ -40,7 +40,6 @@ function changeGroupSignText([station, zone]: [string, Zone], line: string) {
 interface ZoneSelectorProps {
   config: StationConfig;
   zone: Zone;
-  line: string;
   selectedSigns: Set<string>;
   onSignChange: ([stationId, zone]: [string, Zone], selected: boolean) => void;
   kind: 'default' | 'named';
@@ -49,7 +48,6 @@ interface ZoneSelectorProps {
 function ZoneSelector({
   config,
   zone,
-  line,
   selectedSigns,
   onSignChange,
   kind,
@@ -217,7 +215,6 @@ function SignGroupsForm({
                             key={`${station}-${zone}`}
                             config={station}
                             zone={zone}
-                            line={line}
                             selectedSigns={signIds}
                             onSignChange={onSignChange}
                             kind="default"
@@ -230,7 +227,6 @@ function SignGroupsForm({
                             key={`${station}-${zone}`}
                             config={station}
                             zone={zone}
-                            line={line}
                             selectedSigns={signIds}
                             onSignChange={onSignChange}
                             kind="default"
@@ -243,7 +239,6 @@ function SignGroupsForm({
                             key={`${station}-${zone}`}
                             config={station}
                             zone={zone}
-                            line={line}
                             selectedSigns={signIds}
                             onSignChange={onSignChange}
                             kind="default"
@@ -258,7 +253,6 @@ function SignGroupsForm({
                             key={`${station}-${zone}`}
                             config={station}
                             zone={zone}
-                            line={line}
                             selectedSigns={signIds}
                             onSignChange={onSignChange}
                             kind="named"
