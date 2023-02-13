@@ -3,7 +3,8 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import AlertPicker from '../js/AlertPicker';
 
-test('can choose an alert from the pop-up', () => {
+test('can choose an alert from the pop-up', async () => {
+  const user = userEvent.setup()
   let chosenAlertId = null;
 
   render(
@@ -28,8 +29,8 @@ test('can choose an alert from the pop-up', () => {
     }),
   );
 
-  userEvent.click(screen.getByRole('textbox', { name: /alert id picker/i }));
-  userEvent.click(screen.getByRole('button', { name: 'alert1' }));
+  await user.click(screen.getByRole('textbox', { name: /alert id picker/i }));
+  await user.click(screen.getByRole('button', { name: 'alert1' }));
 
   expect(chosenAlertId).toEqual('alert1');
 });

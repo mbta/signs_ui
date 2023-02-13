@@ -3,7 +3,8 @@ import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import ModalPrompt from '../js/ModalPrompt';
 
-test('can accept or cancel the prompt', () => {
+test('can accept or cancel the prompt', async () => {
+  const user = userEvent.setup()
   let isAccepted = false;
 
   render(
@@ -23,9 +24,9 @@ test('can accept or cancel the prompt', () => {
     }),
   );
 
-  userEvent.click(screen.getByRole('button', { name: 'Yes, accept' }));
+  await user.click(screen.getByRole('button', { name: 'Yes, accept' }));
   expect(isAccepted).toBe(true);
 
-  userEvent.click(screen.getByRole('button', { name: 'Cancel' }));
+  await user.click(screen.getByRole('button', { name: 'Cancel' }));
   expect(isAccepted).toBe(false);
 });

@@ -12,20 +12,21 @@ import {
   SignContent,
   StationConfig,
 } from '../js/types';
+import { UserEvent } from '@testing-library/user-event/dist/types/setup/setup';
 
-function setAllToAuto() {
-  userEvent.click(screen.getByText('All to auto'));
+async function setAllToAuto(user: UserEvent) {
+  await user.click(screen.getByText('All to auto'));
 }
 
 function getModalPrompt(): HTMLElement {
   return screen.getByTestId('modal-prompt');
 }
 
-function acceptModalPrompt(modalPrompt: HTMLElement) {
+async function acceptModalPrompt(user: UserEvent, modalPrompt: HTMLElement) {
   const acceptButton = within(modalPrompt).getByRole('button', {
     name: 'Yes, set all signs to "auto"',
   });
-  userEvent.click(acceptButton);
+  await user.click(acceptButton);
 }
 
 beforeAll(() => {
@@ -287,7 +288,8 @@ type SignGroupCalls = {
   signGroups: RouteSignGroupsWithDeletions;
 };
 
-test('Batch mode buttons clear sign groups, too', () => {
+test('Batch mode buttons clear sign groups, too', async () => {
+  const user = userEvent.setup()
   const setSignGroupsCalls: SignGroupCalls[] = [];
 
   render(
@@ -333,10 +335,10 @@ test('Batch mode buttons clear sign groups, too', () => {
     ),
   );
 
-  setAllToAuto();
+  await setAllToAuto(user);
   const prompt = getModalPrompt();
   expect(prompt).toHaveTextContent('There are active sign groups at this time');
-  acceptModalPrompt(prompt);
+  await acceptModalPrompt(user, prompt);
 
   expect(setSignGroupsCalls).toEqual([
     { line: 'Red', signGroups: { group1: {}, group2: {} } },
@@ -666,7 +668,8 @@ test('does not show chelsea bridge toggle if in read-only mode', () => {
   expect(chelseaInput.exists()).toEqual(false);
 });
 
-test('allows removing an individual sign from a group', () => {
+test('allows removing an individual sign from a group', async () => {
+  const user = userEvent.setup()
   const line = 'Red';
   const setSignGroups = jest.fn();
   const groupKey = '1625778000';
@@ -703,8 +706,8 @@ test('allows removing an individual sign from a group', () => {
 
   const central = within(screen.getByRole('region', { name: 'Central' }));
   const centralNB = within(central.getByRole('region', { name: 'NB' }));
-  userEvent.click(centralNB.getByRole('button', { name: 'Ungroup' }));
-  userEvent.click(centralNB.getByRole('button', { name: /Yes/ }));
+  await user.click(centralNB.getByRole('button', { name: 'Ungroup' }));
+  await user.click(centralNB.getByRole('button', { name: /Yes/ }));
 
   expect(centralNB.queryByRole('button', { name: /Yes/ })).toBeNull();
   expect(setSignGroups).toHaveBeenCalledWith(line, {
