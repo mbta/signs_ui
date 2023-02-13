@@ -134,7 +134,7 @@ class ViewerApp extends React.Component<
     });
 
     signsChannel.on('auth_expired', () => {
-      window.location.reload(true);
+      window.location.reload();
     });
 
     this.setState({
