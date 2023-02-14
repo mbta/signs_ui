@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 import AlertPicker from '../js/AlertPicker';
 
 test('can choose an alert from the pop-up', async () => {
-  const user = userEvent.setup()
+  const user = userEvent.setup();
   let chosenAlertId = null;
 
   render(

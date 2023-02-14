@@ -289,7 +289,7 @@ type SignGroupCalls = {
 };
 
 test('Batch mode buttons clear sign groups, too', async () => {
-  const user = userEvent.setup()
+  const user = userEvent.setup();
   const setSignGroupsCalls: SignGroupCalls[] = [];
 
   render(
@@ -669,7 +669,7 @@ test('does not show chelsea bridge toggle if in read-only mode', () => {
 });
 
 test('allows removing an individual sign from a group', async () => {
-  const user = userEvent.setup()
+  const user = userEvent.setup();
   const line = 'Red';
   const setSignGroups = jest.fn();
   const groupKey = '1625778000';

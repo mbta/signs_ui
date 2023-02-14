@@ -16,7 +16,7 @@ async function openEditGroupForm(user: UserEvent, groupKey: string) {
 
 async function toggleZones(user: UserEvent, zones: string[]) {
   for (const z of zones) {
-    await user.click(screen.getByTestId(z))
+    await user.click(screen.getByTestId(z));
   }
 }
 
@@ -92,7 +92,7 @@ beforeAll(() => {
 });
 
 test('can create a sign group', async () => {
-  const user = userEvent.setup()
+  const user = userEvent.setup();
   let signGroupSubmissions: Array<SignGroupUpdate> = [];
   const line = 'Red';
   const currentTime = 1622149913;
@@ -139,7 +139,7 @@ test('can create a sign group', async () => {
 });
 
 test('can cancel creating a sign group', async () => {
-  const user = userEvent.setup()
+  const user = userEvent.setup();
   let signGroupSubmissions: Array<SignGroupUpdate> = [];
 
   render(
@@ -166,7 +166,7 @@ test('can cancel creating a sign group', async () => {
 });
 
 test('requires selecting at least one sign', async () => {
-  const user = userEvent.setup()
+  const user = userEvent.setup();
   render(
     React.createElement(SignGroups, {
       line: 'Red',
@@ -187,7 +187,7 @@ test('requires selecting at least one sign', async () => {
 });
 
 test('can edit an existing sign group', async () => {
-  const user = userEvent.setup()
+  const user = userEvent.setup();
   let signGroupSubmissions: Array<SignGroupUpdate> = [];
   const line = 'Blue';
   const groupKey = '1622149900';
@@ -235,7 +235,7 @@ test('can edit an existing sign group', async () => {
 });
 
 test('can cancel prompt when moving a sign from one sign group to another', async () => {
-  const user = userEvent.setup()
+  const user = userEvent.setup();
   const signGroupSubmissions: Array<SignGroupUpdate> = [];
   const otherSignGroupKey = 1622149900;
   const newSignGroupKey = otherSignGroupKey + 1;
@@ -266,7 +266,10 @@ test('can cancel prompt when moving a sign from one sign group to another', asyn
 
   await openNewGroupForm(user);
   await setMessage(user, 'text1', 'text2');
-  await toggleZones(user, ['tufts_southbound', 'orange_north_station_commuter_rail_exit']);
+  await toggleZones(user, [
+    'tufts_southbound',
+    'orange_north_station_commuter_rail_exit',
+  ]);
 
   const modalPrompt = getModalPrompt();
 
@@ -283,7 +286,7 @@ test('can cancel prompt when moving a sign from one sign group to another', asyn
 });
 
 test('can accept prompt when moving a sign from one sign group to another', async () => {
-  const user = userEvent.setup()
+  const user = userEvent.setup();
   const signGroupSubmissions: Array<SignGroupUpdate> = [];
   const otherSignGroupKey = 1622149900;
   const newSignGroupKey = otherSignGroupKey + 1;
@@ -329,7 +332,7 @@ test('can accept prompt when moving a sign from one sign group to another', asyn
 });
 
 test('can return a sign group back to auto', async () => {
-  const user = userEvent.setup()
+  const user = userEvent.setup();
   const signGroupSubmissions: Array<SignGroupUpdate> = [];
   const signGroupKey = 1622149900;
 

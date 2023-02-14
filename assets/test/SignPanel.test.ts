@@ -498,7 +498,7 @@ test('shows info about the group if the sign is grouped', () => {
 });
 
 test('allows ungrouping the sign if it is grouped', async () => {
-  const user = userEvent.setup()
+  const user = userEvent.setup();
   const signGroup: SignGroup = {
     sign_ids: ['id'],
     line1: 'custom',
@@ -523,7 +523,7 @@ test('allows ungrouping the sign if it is grouped', async () => {
 });
 
 test('allows backing out of the ungrouping prompt', async () => {
-  const user = userEvent.setup()
+  const user = userEvent.setup();
   const signGroup: SignGroup = {
     sign_ids: ['id'],
     line1: 'custom',
@@ -548,7 +548,7 @@ test('allows backing out of the ungrouping prompt', async () => {
 });
 
 test('does not save changes to backend until Apply is pressed', async () => {
-  const user = userEvent.setup()
+  const user = userEvent.setup();
   const now = new Date('2019-01-15T20:15:00Z').valueOf();
   const fresh = new Date(now + 5000).toLocaleString();
   const currentTime = now + 2000;
@@ -604,7 +604,7 @@ test('does not save changes to backend until Apply is pressed', async () => {
 });
 
 test("allows setting custom text for signs with no 'Auto' mode", async () => {
-  const user = userEvent.setup()
+  const user = userEvent.setup();
   const now = new Date('2019-01-15T20:15:00Z').valueOf();
   const fresh = new Date(now + 5000).toLocaleString();
   const currentTime = now + 2000;

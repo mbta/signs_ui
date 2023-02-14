@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 import ModalPrompt from '../js/ModalPrompt';
 
 test('can accept or cancel the prompt', async () => {
-  const user = userEvent.setup()
+  const user = userEvent.setup();
   let isAccepted = false;
 
   render(

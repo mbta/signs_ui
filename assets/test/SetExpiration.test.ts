@@ -32,7 +32,7 @@ test('Can set the expiration time', () => {
 });
 
 test('Can clear the expiration time', async () => {
-  const user = userEvent.setup()
+  const user = userEvent.setup();
   const dates: (Date | null)[] = [];
   const readOnly = false;
 
@@ -67,7 +67,7 @@ test('Can clear the expiration time', async () => {
 });
 
 test('Deselecting return to auto clears the expiration ', async () => {
-  const user = userEvent.setup()
+  const user = userEvent.setup();
   const dates: (Date | null)[] = [];
   const alerts: (string | null)[] = [];
   const readOnly = false;
