@@ -3,37 +3,40 @@ import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import SignGroups from '../js/SignGroups';
 import { RouteSignGroupsWithDeletions } from '../js/types';
+import { UserEvent } from '@testing-library/user-event/dist/types/setup/setup';
 
-function openNewGroupForm() {
-  userEvent.click(screen.getByRole('button', { name: 'Create' }));
+async function openNewGroupForm(user: UserEvent) {
+  await user.click(screen.getByRole('button', { name: 'Create' }));
 }
 
-function openEditGroupForm(groupKey: string) {
+async function openEditGroupForm(user: UserEvent, groupKey: string) {
   const groupContext = within(screen.getByTestId(groupKey, { exact: false }));
-  userEvent.click(groupContext.getByRole('button', { name: 'Edit' }));
+  await user.click(groupContext.getByRole('button', { name: 'Edit' }));
 }
 
-function toggleZones(zones: string[]) {
-  zones.forEach((z) => userEvent.click(screen.getByTestId(z)));
+async function toggleZones(user: UserEvent, zones: string[]) {
+  for (const z of zones) {
+    await user.click(screen.getByTestId(z));
+  }
 }
 
-function setMessage(line1: string, line2: string) {
+async function setMessage(user: UserEvent, line1: string, line2: string) {
   const line1Input = screen.getByAltText('Line one custom text input');
   const line2Input = screen.getByAltText('Line two custom text input');
-  userEvent.clear(line1Input);
-  userEvent.clear(line2Input);
-  userEvent.type(line1Input, line1);
-  userEvent.type(line2Input, line2);
+  await user.clear(line1Input);
+  await user.clear(line2Input);
+  await user.type(line1Input, line1);
+  await user.type(line2Input, line2);
 }
 
-function chooseAlert(alertId: string) {
-  userEvent.click(
+async function chooseAlert(user: UserEvent, alertId: string) {
+  await user.click(
     screen.getByRole('checkbox', { name: 'Schedule return to "Auto"' }),
   );
-  userEvent.click(
+  await user.click(
     screen.getByRole('radio', { name: 'At the end of an alert effect period' }),
   );
-  userEvent.click(screen.getByRole('button', { name: alertId }));
+  await user.click(screen.getByRole('button', { name: alertId }));
 }
 
 function newGroupSubmitButton() {
@@ -56,18 +59,18 @@ function getModalPrompt(): HTMLElement {
   return screen.getByTestId('modal-prompt');
 }
 
-function cancelModalPrompt(modalPrompt: HTMLElement) {
+async function cancelModalPrompt(user: UserEvent, modalPrompt: HTMLElement) {
   const cancelButton = within(modalPrompt).getByRole('button', {
     name: 'Cancel',
   });
-  userEvent.click(cancelButton);
+  await user.click(cancelButton);
 }
 
-function acceptModalPrompt(modalPrompt: HTMLElement) {
+async function acceptModalPrompt(user: UserEvent, modalPrompt: HTMLElement) {
   const acceptButton = within(modalPrompt).getByRole('button', {
     name: 'Yes, reassign this sign',
   });
-  userEvent.click(acceptButton);
+  await user.click(acceptButton);
 }
 
 type SignGroupUpdate = {
@@ -88,7 +91,8 @@ beforeAll(() => {
   };
 });
 
-test('can create a sign group', () => {
+test('can create a sign group', async () => {
+  const user = userEvent.setup();
   let signGroupSubmissions: Array<SignGroupUpdate> = [];
   const line = 'Red';
   const currentTime = 1622149913;
@@ -112,11 +116,11 @@ test('can create a sign group', () => {
     }),
   );
 
-  openNewGroupForm();
-  toggleZones(['central_northbound', 'central_southbound']);
-  setMessage('Line 1 text', 'Line 2 text');
-  chooseAlert('alert1');
-  userEvent.click(newGroupSubmitButton());
+  await openNewGroupForm(user);
+  await toggleZones(user, ['central_northbound', 'central_southbound']);
+  await setMessage(user, 'Line 1 text', 'Line 2 text');
+  await chooseAlert(user, 'alert1');
+  await user.click(newGroupSubmitButton());
 
   expect(signGroupSubmissions).toEqual([
     {
@@ -134,7 +138,8 @@ test('can create a sign group', () => {
   ]);
 });
 
-test('can cancel creating a sign group', () => {
+test('can cancel creating a sign group', async () => {
+  const user = userEvent.setup();
   let signGroupSubmissions: Array<SignGroupUpdate> = [];
 
   render(
@@ -150,17 +155,18 @@ test('can cancel creating a sign group', () => {
     }),
   );
 
-  openNewGroupForm();
-  toggleZones(['central_northbound', 'central_southbound']);
-  setMessage('Line 1 text', 'Line 2 text');
-  userEvent.click(cancelFormButton());
-  openNewGroupForm();
+  await openNewGroupForm(user);
+  await toggleZones(user, ['central_northbound', 'central_southbound']);
+  await setMessage(user, 'Line 1 text', 'Line 2 text');
+  await user.click(cancelFormButton());
+  await openNewGroupForm(user);
 
   expect(signGroupSubmissions).toEqual([]);
   expect(screen.getByAltText('Line one custom text input')).toHaveValue('');
 });
 
-test('requires selecting at least one sign', () => {
+test('requires selecting at least one sign', async () => {
+  const user = userEvent.setup();
   render(
     React.createElement(SignGroups, {
       line: 'Red',
@@ -172,15 +178,16 @@ test('requires selecting at least one sign', () => {
     }),
   );
 
-  openNewGroupForm();
-  toggleZones(['central_northbound']);
-  toggleZones(['central_northbound']);
-  setMessage('Line 1 text', 'Line 2 text');
+  await openNewGroupForm(user);
+  await toggleZones(user, ['central_northbound']);
+  await toggleZones(user, ['central_northbound']);
+  await setMessage(user, 'Line 1 text', 'Line 2 text');
 
   expect(newGroupSubmitButton()).toBeDisabled();
 });
 
-test('can edit an existing sign group', () => {
+test('can edit an existing sign group', async () => {
+  const user = userEvent.setup();
   let signGroupSubmissions: Array<SignGroupUpdate> = [];
   const line = 'Blue';
   const groupKey = '1622149900';
@@ -206,10 +213,10 @@ test('can edit an existing sign group', () => {
     }),
   );
 
-  openEditGroupForm(groupKey);
-  toggleZones(['airport_eastbound', 'maverick_westbound']);
-  setMessage('other', 'text');
-  userEvent.click(editGroupSubmitButton());
+  await openEditGroupForm(user, groupKey);
+  await toggleZones(user, ['airport_eastbound', 'maverick_westbound']);
+  await setMessage(user, 'other', 'text');
+  await user.click(editGroupSubmitButton());
 
   expect(signGroupSubmissions).toEqual([
     {
@@ -227,7 +234,8 @@ test('can edit an existing sign group', () => {
   ]);
 });
 
-test('can cancel prompt when moving a sign from one sign group to another', () => {
+test('can cancel prompt when moving a sign from one sign group to another', async () => {
+  const user = userEvent.setup();
   const signGroupSubmissions: Array<SignGroupUpdate> = [];
   const otherSignGroupKey = 1622149900;
   const newSignGroupKey = otherSignGroupKey + 1;
@@ -256,9 +264,12 @@ test('can cancel prompt when moving a sign from one sign group to another', () =
     }),
   );
 
-  openNewGroupForm();
-  setMessage('text1', 'text2');
-  toggleZones(['tufts_southbound', 'orange_north_station_commuter_rail_exit']);
+  await openNewGroupForm(user);
+  await setMessage(user, 'text1', 'text2');
+  await toggleZones(user, [
+    'tufts_southbound',
+    'orange_north_station_commuter_rail_exit',
+  ]);
 
   const modalPrompt = getModalPrompt();
 
@@ -266,15 +277,16 @@ test('can cancel prompt when moving a sign from one sign group to another', () =
     'The North Station CR Exit sign is part of an active sign group',
   );
 
-  cancelModalPrompt(modalPrompt);
-  userEvent.click(newGroupSubmitButton());
+  await cancelModalPrompt(user, modalPrompt);
+  await user.click(newGroupSubmitButton());
 
   expect(
     signGroupSubmissions[0].signGroups[`${newSignGroupKey}`].sign_ids,
   ).toEqual(['tufts_southbound']);
 });
 
-test('can accept prompt when moving a sign from one sign group to another', () => {
+test('can accept prompt when moving a sign from one sign group to another', async () => {
+  const user = userEvent.setup();
   const signGroupSubmissions: Array<SignGroupUpdate> = [];
   const otherSignGroupKey = 1622149900;
   const newSignGroupKey = otherSignGroupKey + 1;
@@ -301,9 +313,9 @@ test('can accept prompt when moving a sign from one sign group to another', () =
     }),
   );
 
-  openNewGroupForm();
-  setMessage('text1', 'text2');
-  toggleZones(['tufts_southbound', movingId]);
+  await openNewGroupForm(user);
+  await setMessage(user, 'text1', 'text2');
+  await toggleZones(user, ['tufts_southbound', movingId]);
 
   const modalPrompt = getModalPrompt();
 
@@ -311,15 +323,16 @@ test('can accept prompt when moving a sign from one sign group to another', () =
     'The North Station CR Exit sign is part of an active sign group',
   );
 
-  acceptModalPrompt(modalPrompt);
-  userEvent.click(newGroupSubmitButton());
+  await acceptModalPrompt(user, modalPrompt);
+  await user.click(newGroupSubmitButton());
 
   expect(
     signGroupSubmissions[0].signGroups[`${newSignGroupKey}`].sign_ids,
   ).toContain(movingId);
 });
 
-test('can return a sign group back to auto', () => {
+test('can return a sign group back to auto', async () => {
+  const user = userEvent.setup();
   const signGroupSubmissions: Array<SignGroupUpdate> = [];
   const signGroupKey = 1622149900;
 
@@ -344,7 +357,7 @@ test('can return a sign group back to auto', () => {
     }),
   );
 
-  userEvent.click(returnToAutoButton());
+  await user.click(returnToAutoButton());
   expect(signGroupSubmissions).toEqual([
     {
       line: 'Orange',
