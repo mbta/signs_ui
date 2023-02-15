@@ -54,7 +54,7 @@
     "dateformat": "^4.5.1",
     "formik": "^2.2.1",
     "lodash": "^4.17.20",
-    "mini-css-extract-plugin": "^1.6.2",
+    "mini-css-extract-plugin": "^2.7.2",
     "phoenix": "^1.5.6",
     "phoenix_html": "^2.10.4",
     "rc-collapse": "^3.1.1",
