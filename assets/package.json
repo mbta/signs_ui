@@ -84,6 +84,9 @@
           "isolatedModules": true
         }
       ]
-    }
+    },
+    "transformIgnorePatterns": [
+      "/node_modules/(?!(dateformat)/)"
+    ]
   }
 }
