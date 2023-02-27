@@ -139,6 +139,7 @@ const ConfiguredHeadwaysForm = ({
       >
         {({ dirty, isValid, resetForm }) => (
           <Form
+            name="configured-headways-form"
             className={`configured-headways-form ${
               !inEditMode ? 'disabled' : ''
             }`}
@@ -149,6 +150,7 @@ const ConfiguredHeadwaysForm = ({
                   <button
                     type="button"
                     id="edit"
+                    data-testid="headways-edit-button"
                     className="btn p-0 bg-transparent d-flex align-items-center"
                     onClick={() => setInEditMode(true)}
                   >

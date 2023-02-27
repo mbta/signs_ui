@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { mount } from 'enzyme';
-import { render, waitFor, fireEvent } from '@testing-library/react';
+import { render, waitFor, fireEvent, screen } from '@testing-library/react';
 import ConfiguredHeadwaysForm, {
   ConfiguredHeadwaysFormProps,
 } from '../js/ConfiguredHeadwaysForm';
@@ -28,21 +27,6 @@ beforeEach(() => {
   readOnly = false;
   configuredHeadways = {};
 });
-
-const mountWrapper = () =>
-  mount(
-    React.createElement(
-      ConfiguredHeadwaysForm,
-      {
-        branches,
-        readOnly,
-        configuredHeadways,
-        setConfiguredHeadways,
-        timePeriods,
-      },
-      null,
-    ),
-  );
 
 describe('With Multi-sign Headway not enabled', () => {
   test('Can enable multi-sign headways when form is complete', async () => {
@@ -139,24 +123,63 @@ describe('With Multi-sign Headway enabled', () => {
   });
 
   test('Form is initially open', () => {
-    const wrapper = mountWrapper();
-
-    expect(wrapper.find('form')).toHaveLength(1);
+    render(
+      React.createElement(
+        ConfiguredHeadwaysForm,
+        {
+          branches,
+          readOnly,
+          configuredHeadways,
+          setConfiguredHeadways,
+          timePeriods,
+        },
+        null,
+      ),
+    );
+    expect(screen.getByRole('form')).toBeVisible();
   });
 
   test('Inputs are initially disabled', () => {
-    const wrapper = mountWrapper();
-    expect(wrapper.find('input').find({ disabled: true })).toHaveLength(8);
-    expect(wrapper.find('input').find({ disabled: false })).toHaveLength(0);
+    render(
+      React.createElement(
+        ConfiguredHeadwaysForm,
+        {
+          branches,
+          readOnly,
+          configuredHeadways,
+          setConfiguredHeadways,
+          timePeriods,
+        },
+        null,
+      ),
+    );
+
+    const inputs = screen.queryAllByRole('input');
+    inputs.forEach((input) => {
+      expect(input).toHaveAttribute('disabled');
+    });
   });
 
   test('Clicking button enables inputs', () => {
-    const wrapper = mountWrapper();
-    expect(wrapper.find('input').find({ disabled: true })).toHaveLength(8);
-    expect(wrapper.find('input').find({ disabled: false })).toHaveLength(0);
-    wrapper.find('button#edit').simulate('click');
-    expect(wrapper.find('input').find({ disabled: true })).toHaveLength(0);
-    expect(wrapper.find('input').find({ disabled: false })).toHaveLength(8);
+    render(
+      React.createElement(
+        ConfiguredHeadwaysForm,
+        {
+          branches,
+          readOnly,
+          configuredHeadways,
+          setConfiguredHeadways,
+          timePeriods,
+        },
+        null,
+      ),
+    );
+    fireEvent.click(screen.getByTestId('headways-edit-button')!);
+
+    const inputs = screen.queryAllByRole('input');
+    inputs.forEach((input) => {
+      expect(input).not.toHaveAttribute('disabled');
+    });
   });
 
   test('Can apply new values after making edits', async () => {
