@@ -174,7 +174,7 @@ describe('With Multi-sign Headway enabled', () => {
         null,
       ),
     );
-    fireEvent.click(screen.getByTestId('headways-edit-button')!);
+    fireEvent.click(screen.getByTestId('headways-edit-button'));
 
     const inputs = screen.queryAllByRole('input');
     inputs.forEach((input) => {

@@ -1,10 +1,8 @@
 import * as React from 'react';
-import { mount, shallow } from 'enzyme';
-import { render, screen, within } from '@testing-library/react';
+import { fireEvent, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import Line from '../js/Line';
-import ConfiguredHeadwaysForm from '../js/ConfiguredHeadwaysForm';
 import {
   ConfiguredHeadways,
   RouteSignGroupsWithDeletions,
@@ -51,7 +49,7 @@ test('Shows all signs for a line', () => {
   const readOnly = false;
   const configuredHeadways: ConfiguredHeadways = {};
 
-  const wrapper = mount(
+  render(
     React.createElement(
       Line,
       {
@@ -73,8 +71,8 @@ test('Shows all signs for a line', () => {
     ),
   );
 
-  expect(wrapper.text()).toMatch('Alewife (RALE)');
-  expect(wrapper.text()).not.toMatch('Oak Grove (OOAK)');
+  expect(screen.getByText('Alewife')).toBeInTheDocument();
+  expect(screen.queryByText('Oak Grove')).toBeNull();
 });
 
 test('Shows batch mode buttons when not read-only', () => {
@@ -89,7 +87,7 @@ test('Shows batch mode buttons when not read-only', () => {
   const configuredHeadways = {};
   const setConfiguredHeadways = () => true;
 
-  const wrapper = mount(
+  render(
     React.createElement(
       Line,
       {
@@ -111,9 +109,9 @@ test('Shows batch mode buttons when not read-only', () => {
     ),
   );
 
-  expect(wrapper.text()).toMatch('All to auto');
-  expect(wrapper.text()).toMatch('All to headway');
-  expect(wrapper.text()).toMatch('All to off');
+  expect(screen.getByText('All to auto')).toBeInTheDocument();
+  expect(screen.getByText('All to headway')).toBeInTheDocument();
+  expect(screen.getByText('All to off')).toBeInTheDocument();
 });
 
 test.each([['Silver'], ['Busway']])(
@@ -129,7 +127,7 @@ test.each([['Silver'], ['Busway']])(
     const configuredHeadways = {};
     const setConfiguredHeadways = () => true;
 
-    const wrapper = mount(
+    render(
       React.createElement(
         Line,
         {
@@ -151,9 +149,9 @@ test.each([['Silver'], ['Busway']])(
       ),
     );
 
-    expect(wrapper.text()).toMatch('All to auto');
-    expect(wrapper.text()).not.toMatch('All to headway');
-    expect(wrapper.text()).toMatch('All to off');
+    expect(screen.getByText('All to auto')).toBeInTheDocument();
+    expect(screen.queryByText('All to headway')).toBeNull();
+    expect(screen.getByText('All to off')).toBeInTheDocument();
   },
 );
 
@@ -172,7 +170,7 @@ test('Shows "Mixed" batch mode buttons when multiple modes are chosen', () => {
   const configuredHeadways = {};
   const setConfiguredHeadways = () => true;
 
-  const wrapper = mount(
+  render(
     React.createElement(
       Line,
       {
@@ -194,10 +192,10 @@ test('Shows "Mixed" batch mode buttons when multiple modes are chosen', () => {
     ),
   );
 
-  expect(wrapper.text()).toMatch('All to auto');
-  expect(wrapper.text()).toMatch('All to headway');
-  expect(wrapper.text()).toMatch('All to off');
-  expect(wrapper.text()).toMatch('Mixed');
+  expect(screen.getByText('All to auto')).toBeInTheDocument();
+  expect(screen.getByText('All to headway')).toBeInTheDocument();
+  expect(screen.getByText('All to off')).toBeInTheDocument();
+  expect(screen.getByText('Mixed')).toBeInTheDocument();
 });
 
 test('Does not show "Mixed" batch mode buttons when one mode is chosen', () => {
@@ -215,7 +213,7 @@ test('Does not show "Mixed" batch mode buttons when one mode is chosen', () => {
   const configuredHeadways = {};
   const setConfiguredHeadways = () => true;
 
-  const wrapper = mount(
+  render(
     React.createElement(
       Line,
       {
@@ -237,10 +235,10 @@ test('Does not show "Mixed" batch mode buttons when one mode is chosen', () => {
     ),
   );
 
-  expect(wrapper.text()).toMatch('All to auto');
-  expect(wrapper.text()).toMatch('All to headway');
-  expect(wrapper.text()).toMatch('All to off');
-  expect(wrapper.text()).not.toMatch('Mixed');
+  expect(screen.getByText('All to auto')).toBeInTheDocument();
+  expect(screen.getByText('All to headway')).toBeInTheDocument();
+  expect(screen.getByText('All to off')).toBeInTheDocument();
+  expect(screen.queryByText('Mixed')).toBeNull();
 });
 
 test("Doesn't show batch mode buttons when read-only", () => {
@@ -255,7 +253,7 @@ test("Doesn't show batch mode buttons when read-only", () => {
   const configuredHeadways = {};
   const setConfiguredHeadways = () => true;
 
-  const wrapper = mount(
+  render(
     React.createElement(
       Line,
       {
@@ -277,9 +275,9 @@ test("Doesn't show batch mode buttons when read-only", () => {
     ),
   );
 
-  expect(wrapper.text()).not.toMatch('All to auto');
-  expect(wrapper.text()).not.toMatch('Set all to headway');
-  expect(wrapper.text()).not.toMatch('All to off');
+  expect(screen.queryByText('All to auto')).toBeNull();
+  expect(screen.queryByText('Set all to headway')).toBeNull();
+  expect(screen.queryByText('All to off')).toBeNull();
 });
 
 type SignGroupCalls = {
@@ -355,7 +353,7 @@ test('Shows ConfiguredHeadwaysForm if current line has branches configured', () 
   const configuredHeadways = {};
   const setConfiguredHeadways = () => true;
 
-  const wrapper = shallow(
+  render(
     React.createElement(
       Line,
       {
@@ -377,7 +375,10 @@ test('Shows ConfiguredHeadwaysForm if current line has branches configured', () 
     ),
   );
 
-  expect(wrapper.find(ConfiguredHeadwaysForm)).toHaveLength(1);
+  fireEvent.click(screen.getByText('Bulk Editing'));
+  fireEvent.click(screen.getByText('Set Headways'));
+
+  expect(screen.getByRole('form')).toBeInTheDocument();
 });
 
 test('Doesn\t show ConfiguredHeadwaysForm if current line has no branches configured', () => {
@@ -392,7 +393,7 @@ test('Doesn\t show ConfiguredHeadwaysForm if current line has no branches config
   const configuredHeadways = {};
   const setConfiguredHeadways = () => true;
 
-  const wrapper = shallow(
+  render(
     React.createElement(
       Line,
       {
@@ -414,10 +415,12 @@ test('Doesn\t show ConfiguredHeadwaysForm if current line has no branches config
     ),
   );
 
-  expect(wrapper.find(ConfiguredHeadwaysForm)).toHaveLength(0);
+  fireEvent.click(screen.getByText('Bulk Editing'));
+
+  expect(screen.queryByText('Set Headways')).toBeNull();
 });
 
-test('Shows ConfiguredHeadwaysForm if current line has branches configured', () => {
+test('Shows ConfiguredHeadwaysForm if current line has branches configured in read-only mode', () => {
   const now = Date.now();
   const signs = {};
 
@@ -429,7 +432,7 @@ test('Shows ConfiguredHeadwaysForm if current line has branches configured', () 
   const configuredHeadways = {};
   const setConfiguredHeadways = () => true;
 
-  const wrapper = shallow(
+  render(
     React.createElement(
       Line,
       {
@@ -451,7 +454,10 @@ test('Shows ConfiguredHeadwaysForm if current line has branches configured', () 
     ),
   );
 
-  expect(wrapper.find(ConfiguredHeadwaysForm)).toHaveLength(1);
+  fireEvent.click(screen.getByText('Bulk Editing'));
+  fireEvent.click(screen.getByText('Set Headways'));
+
+  expect(screen.getByRole('form')).toBeInTheDocument();
 });
 
 test('Sign config is not affected by batch updates if sign does not support mode', () => {
@@ -471,8 +477,8 @@ test('Sign config is not affected by batch updates if sign does not support mode
       name: 'Alewife',
       zonePositions: {
         left: ['n'],
-        center: [],
-        right: ['m'],
+        center: ['m'],
+        right: ['s'],
       },
       zones: {
         n: {
@@ -527,7 +533,7 @@ test('Sign config is not affected by batch updates if sign does not support mode
     },
   ];
 
-  const wrapper = mount(
+  render(
     React.createElement(
       Line,
       {
@@ -550,8 +556,7 @@ test('Sign config is not affected by batch updates if sign does not support mode
     ),
   );
 
-  const offInput = wrapper.find('input#off');
-  offInput.simulate('change');
+  fireEvent.click(screen.getByText('All to off'));
   expect(setConfigs.mock.calls.length).toEqual(1);
   expect(setConfigs).toHaveBeenCalledWith({
     davis_mezzanine: {
@@ -560,8 +565,7 @@ test('Sign config is not affected by batch updates if sign does not support mode
     },
   });
 
-  const autoInput = wrapper.find('input#auto');
-  autoInput.simulate('change');
+  fireEvent.click(screen.getByText('All to auto'));
   expect(setConfigs.mock.calls.length).toEqual(2);
   expect(setConfigs).toHaveBeenCalledWith({
     davis_northbound: {
@@ -569,8 +573,7 @@ test('Sign config is not affected by batch updates if sign does not support mode
     },
   });
 
-  const headwayInput = wrapper.find('input#headway');
-  headwayInput.simulate('change');
+  fireEvent.click(screen.getByText('All to headway'));
   expect(setConfigs.mock.calls.length).toEqual(3);
   expect(setConfigs).toHaveBeenCalledWith({
     davis_southbound: {
@@ -580,9 +583,9 @@ test('Sign config is not affected by batch updates if sign does not support mode
   });
 });
 
-test('can toggle chelsea bridge announcements on and off on Silver Line page', () => {
+test('can toggle chelsea bridge announcements on on Silver Line page', () => {
   const setChelseaBridgeAnnouncements = jest.fn(() => true);
-  const wrapper = mount(
+  render(
     React.createElement(
       Line,
       {
@@ -604,19 +607,43 @@ test('can toggle chelsea bridge announcements on and off on Silver Line page', (
     ),
   );
 
-  const chelseaInput = wrapper.find('input[name="chelsea_bridge"]');
-  chelseaInput.simulate('change', { target: { checked: true } });
+  fireEvent.click(screen.getByTestId('chelsea_bridge_toggle'));
   expect(setChelseaBridgeAnnouncements.mock.calls.length).toEqual(1);
   expect(setChelseaBridgeAnnouncements).toHaveBeenCalledWith('auto');
+});
 
-  chelseaInput.simulate('change', { target: { checked: false } });
-  expect(setChelseaBridgeAnnouncements.mock.calls.length).toEqual(2);
+test('can toggle chelsea bridge announcements off on Silver Line page', () => {
+  const setChelseaBridgeAnnouncements = jest.fn(() => true);
+  render(
+    React.createElement(
+      Line,
+      {
+        alerts: {},
+        signs: {},
+        currentTime: Date.now() + 2000,
+        line: 'Silver',
+        signConfigs: {},
+        setConfigs: jest.fn(() => true),
+        readOnly: false,
+        configuredHeadways: {},
+        setConfiguredHeadways: () => {},
+        chelseaBridgeAnnouncements: 'auto',
+        setChelseaBridgeAnnouncements,
+        signGroups: {},
+        setSignGroups: () => {},
+      },
+      null,
+    ),
+  );
+
+  fireEvent.click(screen.getByTestId('chelsea_bridge_toggle'));
+  expect(setChelseaBridgeAnnouncements.mock.calls.length).toEqual(1);
   expect(setChelseaBridgeAnnouncements).toHaveBeenCalledWith('off');
 });
 
 test('does not show chelsea bridge announcements toggle on non-Silver Line pages', () => {
   const setChelseaBridgeAnnouncements = jest.fn(() => true);
-  const wrapper = mount(
+  render(
     React.createElement(
       Line,
       {
@@ -638,12 +665,11 @@ test('does not show chelsea bridge announcements toggle on non-Silver Line pages
     ),
   );
 
-  const chelseaInput = wrapper.find('input[name="chelsea_bridge"]');
-  expect(chelseaInput.exists()).toEqual(false);
+  expect(screen.queryByTestId('chelsea_bridge_toggle')).toBeNull();
 });
 
 test('does not show chelsea bridge toggle if in read-only mode', () => {
-  const wrapper = mount(
+  render(
     React.createElement(Line, {
       alerts: {},
       signs: {},
@@ -661,9 +687,11 @@ test('does not show chelsea bridge toggle if in read-only mode', () => {
     }),
   );
 
-  expect(wrapper.text()).toMatch('Chelsea Drawbridge Announcements:Auto');
-  const chelseaInput = wrapper.find('input[name="chelsea_bridge"]');
-  expect(chelseaInput.exists()).toEqual(false);
+  expect(
+    screen.getByText('Chelsea Drawbridge Announcements:'),
+  ).toBeInTheDocument();
+  expect(screen.getByText('Auto')).toBeInTheDocument();
+  expect(screen.queryByTestId('chelsea_bridge_toggle')).toBeNull();
 });
 
 test('allows removing an individual sign from a group', () => {
