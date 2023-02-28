@@ -39,7 +39,7 @@
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@sentry/browser": "^6.4.0",
     "@sentry/react": "^6.4.0",
-    "@types/dateformat": "^3.0.1",
+    "@types/dateformat": "^5.0.0",
     "@types/enzyme": "^3.10.8",
     "@types/jest": "^29.4.0",
     "@types/phoenix": "^1.5.5",
@@ -50,7 +50,7 @@
     "@typescript-eslint/parser": "^5.53.0",
     "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.7.3",
-    "dateformat": "^4.5.1",
+    "dateformat": "^5.0.3",
     "formik": "^2.2.1",
     "lodash": "^4.17.20",
     "mini-css-extract-plugin": "^2.7.2",
@@ -84,6 +84,9 @@
           "isolatedModules": true
         }
       ]
-    }
+    },
+    "transformIgnorePatterns": [
+      "/node_modules/(?!(dateformat)/)"
+    ]
   }
 }
