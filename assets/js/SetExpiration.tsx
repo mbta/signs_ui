@@ -56,6 +56,7 @@ function SetExpiration({
       {(!readOnly && (
         <label>
           <input
+            data-testid="set_return_to_auto_checkbox"
             className="mr-1"
             type="checkbox"
             checked={returnsToAuto}
@@ -69,6 +70,7 @@ function SetExpiration({
         <>
           <label>
             <input
+              data-testid="set_datetime_radio"
               className="mr-1 set_expiration--datetime"
               type="radio"
               checked={picker === 'date' || isDateTimeSelected}
@@ -80,6 +82,7 @@ function SetExpiration({
             <div>
               {(picker === 'date' || isDateTimeSelected) && (
                 <ReactDatePicker
+                  data-testid="set_datetime_picker"
                   selected={expires}
                   onChange={onDateChange}
                   showTimeSelect
