@@ -197,7 +197,7 @@ function SignPanel({
 
   return (
     <section aria-label={signId}>
-      <div className="viewer--sign">
+      <div data-testid="sign-panel" className="viewer--sign">
         <div
           className="viewer--sign-id"
           style={{ borderTopColor: lineToColor(line) }}
