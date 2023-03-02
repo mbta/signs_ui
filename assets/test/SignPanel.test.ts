@@ -399,12 +399,10 @@ test('can enable/disable a sign', () => {
     ),
   );
 
-  fireEvent.change(screen.getByRole('combobox'), { target: { value: 'off' } });
+  userEvent.selectOptions(screen.getByTestId('select-id'), 'off');
   expect(setConfig).toHaveBeenCalledWith({ expires: null, mode: 'off' });
 
-  fireEvent.change(screen.getByRole('combobox'), {
-    target: { value: 'auto' },
-  });
+  userEvent.selectOptions(screen.getByTestId('select-id'), 'auto');
   expect(setConfig).toHaveBeenCalledWith({ mode: 'auto' });
 });
 
