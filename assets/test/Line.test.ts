@@ -375,8 +375,8 @@ test('Shows ConfiguredHeadwaysForm if current line has branches configured', () 
     ),
   );
 
-  fireEvent.click(screen.getByText('Bulk Editing'));
-  fireEvent.click(screen.getByText('Set Headways'));
+  userEvent.click(screen.getByText('Bulk Editing'));
+  userEvent.click(screen.getByText('Set Headways'));
 
   expect(screen.getByRole('form')).toBeInTheDocument();
 });
@@ -415,7 +415,7 @@ test('Doesn\t show ConfiguredHeadwaysForm if current line has no branches config
     ),
   );
 
-  fireEvent.click(screen.getByText('Bulk Editing'));
+  userEvent.click(screen.getByText('Bulk Editing'));
 
   expect(screen.queryByText('Set Headways')).toBeNull();
 });
@@ -454,8 +454,8 @@ test('Shows ConfiguredHeadwaysForm if current line has branches configured in re
     ),
   );
 
-  fireEvent.click(screen.getByText('Bulk Editing'));
-  fireEvent.click(screen.getByText('Set Headways'));
+  userEvent.click(screen.getByText('Bulk Editing'));
+  userEvent.click(screen.getByText('Set Headways'));
 
   expect(screen.getByRole('form')).toBeInTheDocument();
 });
