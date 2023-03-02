@@ -85,7 +85,7 @@ test('allows custom reordering of sign positions', () => {
     }),
   );
 
-  const signs = screen.queryAllByTestId('sign-panel');
+  const signs = screen.queryAllByTestId(/sign-panel-*/);
   expect(signs[0]).toHaveTextContent('foo');
   expect(signs[1]).toHaveTextContent('bar');
 });
