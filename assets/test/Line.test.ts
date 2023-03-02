@@ -388,6 +388,9 @@ test('Shows ConfiguredHeadwaysForm if current line has branches configured', asy
   });
   userEvent.click(screen.getByText('Set Headways'));
 
+  await waitFor(() => {
+    expect(screen.getByRole('form')).toBeInTheDocument();
+  });
   expect(screen.getByRole('form')).toBeInTheDocument();
 });
 
