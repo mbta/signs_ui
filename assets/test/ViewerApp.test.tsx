@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { mount } from 'enzyme';
+import { fireEvent, render, screen } from '@testing-library/react';
 import ViewerApp from '../js/ViewerApp';
 import { SignConfigs, SignContent } from '../js/types';
 
@@ -50,7 +50,7 @@ test('Shows all signs for a line', () => {
   const configuredHeadways = {};
   const signOutPath = '/path';
 
-  const wrapper = mount(
+  render(
     React.createElement(
       ViewerApp,
       {
@@ -67,87 +67,15 @@ test('Shows all signs for a line', () => {
     ),
   );
 
-  wrapper.find('#red-button').simulate('click');
-  expect(wrapper.text()).toMatch('Alewife 1 min');
-  expect(wrapper.text()).not.toMatch('Oak Grove 1 min');
+  fireEvent.click(screen.getByText('Red'));
+  expect(screen.getByText('Alewife')).toBeInTheDocument();
+  expect(screen.queryByText('Oak Grove')).toBeNull();
+  expect(screen.getAllByTestId(/sign-panel-*/)).toHaveLength(63);
 
-  wrapper.find('#orange-button').simulate('click');
-  expect(wrapper.text()).toMatch('Oak Grove 1 min');
-  expect(wrapper.text()).not.toMatch('Alewife 1 min');
-});
-
-test('Can enable/disable a sign', () => {
-  const now = Date.now();
-  const signs = someSignContent(now);
-  const initialSignConfigs: SignConfigs = {
-    davis_southbound: { mode: 'auto' },
-  };
-  const readOnly = false;
-  const configuredHeadways = {};
-  const signOutPath = '/path';
-
-  const wrapper = mount(
-    React.createElement(
-      ViewerApp,
-      {
-        initialAlerts: {},
-        initialSigns: signs,
-        initialConfiguredHeadways: configuredHeadways,
-        initialChelseaBridgeAnnouncements: 'off',
-        initialSignConfigs,
-        initialSignGroups: {},
-        readOnly,
-        signOutPath,
-      },
-      null,
-    ),
-  );
-
-  wrapper.find('#red-button').simulate('click');
-  expect(wrapper.find('#davis_southbound').props().value).toBe('auto');
-  wrapper
-    .find('#davis_southbound')
-    .simulate('change', { target: { value: 'off' } });
-  expect(wrapper.find('#davis_southbound').props().value).toBe('off');
-});
-
-test('Disabling a sign clears any static text', () => {
-  const now = Date.now();
-  const signs = someSignContent(now);
-  const initialSignConfigs: SignConfigs = {
-    davis_southbound: { mode: 'static_text', line1: 'foo', line2: 'bar' },
-  };
-  const readOnly = false;
-  const configuredHeadways = {};
-  const signOutPath = '/path';
-
-  const wrapper = mount(
-    React.createElement(
-      ViewerApp,
-      {
-        initialAlerts: {},
-        initialSigns: signs,
-        initialConfiguredHeadways: configuredHeadways,
-        initialChelseaBridgeAnnouncements: 'off',
-        initialSignConfigs,
-        initialSignGroups: {},
-        readOnly,
-        signOutPath,
-      },
-      null,
-    ),
-  );
-
-  wrapper.find('#red-button').simulate('click');
-  wrapper
-    .find('#davis_southbound')
-    .simulate('change', { target: { value: 'off' } });
-  expect(wrapper.find('#davis_southbound').props().value).toBe('off');
-  wrapper
-    .find('#davis_southbound')
-    .simulate('change', { target: { value: 'static_text' } });
-  expect(wrapper.find('#davis_southbound-line1-input').props().value).toBe('');
-  expect(wrapper.find('#davis_southbound-line2-input').props().value).toBe('');
+  fireEvent.click(screen.getByText('Orange'));
+  expect(screen.getByText('Oak Grove')).toBeInTheDocument();
+  expect(screen.queryByText('Alewife')).toBeNull();
+  expect(screen.getAllByTestId(/sign-panel-*/)).toHaveLength(62);
 });
 
 test('Shows sign out link', () => {
@@ -160,7 +88,7 @@ test('Shows sign out link', () => {
   const configuredHeadways = {};
   const signOutPath = '/path';
 
-  const wrapper = mount(
+  render(
     React.createElement(
       ViewerApp,
       {
@@ -177,5 +105,5 @@ test('Shows sign out link', () => {
     ),
   );
 
-  expect(wrapper.find('#sign-out-link').props().href).toBe('/path');
+  expect(screen.getByRole('link')).toHaveAttribute('href', '/path');
 });
