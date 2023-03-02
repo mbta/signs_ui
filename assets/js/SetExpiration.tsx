@@ -56,7 +56,6 @@ function SetExpiration({
       {(!readOnly && (
         <label>
           <input
-            data-testid="set_return_to_auto_checkbox"
             className="mr-1"
             type="checkbox"
             checked={returnsToAuto}

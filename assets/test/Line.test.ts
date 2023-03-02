@@ -71,7 +71,7 @@ test('Shows all signs for a line', () => {
     ),
   );
 
-  expect(screen.getByText('Alewife')).toBeInTheDocument();
+  expect(screen.getByText('Alewife')).toBeVisible();
   expect(screen.queryByText('Oak Grove')).toBeNull();
 });
 

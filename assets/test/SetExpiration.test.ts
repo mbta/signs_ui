@@ -22,8 +22,8 @@ test('Can set the expiration time', () => {
     }),
   );
 
-  fireEvent.click(screen.getByTestId('set_return_to_auto_checkbox'));
-  fireEvent.click(screen.getByTestId('set_datetime_radio'));
+  userEvent.click(screen.getByText('Schedule return to "Auto"'));
+  userEvent.click(screen.getByTestId('set_datetime_radio'));
   fireEvent.click(screen.getByText('15'));
 
   expect(dates.length).toBe(1);
