@@ -556,7 +556,7 @@ test('Sign config is not affected by batch updates if sign does not support mode
     ),
   );
 
-  fireEvent.click(screen.getByText('All to off'));
+  userEvent.click(screen.getByText('All to off'));
   expect(setConfigs.mock.calls.length).toEqual(1);
   expect(setConfigs).toHaveBeenCalledWith({
     davis_mezzanine: {
@@ -565,7 +565,7 @@ test('Sign config is not affected by batch updates if sign does not support mode
     },
   });
 
-  fireEvent.click(screen.getByText('All to auto'));
+  userEvent.click(screen.getByText('All to auto'));
   expect(setConfigs.mock.calls.length).toEqual(2);
   expect(setConfigs).toHaveBeenCalledWith({
     davis_northbound: {
@@ -573,7 +573,7 @@ test('Sign config is not affected by batch updates if sign does not support mode
     },
   });
 
-  fireEvent.click(screen.getByText('All to headway'));
+  userEvent.click(screen.getByText('All to headway'));
   expect(setConfigs.mock.calls.length).toEqual(3);
   expect(setConfigs).toHaveBeenCalledWith({
     davis_southbound: {

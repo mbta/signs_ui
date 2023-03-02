@@ -90,13 +90,7 @@ describe('With Multi-sign Headway not enabled', () => {
       '10',
     );
 
-    await waitFor(() => {
-      expect(
-        (container.querySelector('button#apply') as HTMLButtonElement).disabled,
-      ).toEqual(false);
-    });
-
-    userEvent.click(screen.getByRole('button', { name: 'Apply' }));
+    userEvent.click(screen.getByText('Apply'));
 
     await waitFor(() => {
       expect(setConfiguredHeadways).toHaveBeenCalledWith({
@@ -179,6 +173,9 @@ describe('With Multi-sign Headway enabled', () => {
       expect(container.querySelector('input[disabled]')).toEqual(null);
     });
 
+    userEvent.clear(
+      container.querySelector('input[name="branches.[0].morning.range_high"]')!,
+    );
     userEvent.type(
       container.querySelector('input[name="branches.[0].morning.range_high"]')!,
       '8',
