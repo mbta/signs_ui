@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import SignPanel, { SignModeOptions, SignPanelProps } from '../js/SignPanel';
@@ -8,7 +8,6 @@ import {
   SignConfig,
   SignGroup,
   SingleSignContent,
-  SignConfigs,
 } from '../js/types';
 
 function customSignContent(): SingleSignContent {
@@ -50,6 +49,28 @@ function customModeSignProps(): SignPanelProps {
     currentTime: now + 2000,
     line: 'Red',
     signConfig: { mode: 'static_text' },
+    setConfig: () => true,
+    realtimeId: 'id',
+    readOnly: false,
+    modes: {
+      auto: true,
+      custom: true,
+      headway: true,
+      off: true,
+    },
+  };
+}
+
+function customModeSignPropsWithStaticContent(): SignPanelProps {
+  const now = new Date().valueOf();
+
+  return {
+    alerts: {},
+    signId: 'RDAV-n',
+    signContent: customSignContent(),
+    currentTime: now + 2000,
+    line: 'Red',
+    signConfig: { mode: 'static_text', line1: 'foo', line2: 'bar' },
     setConfig: () => true,
     realtimeId: 'id',
     readOnly: false,
@@ -367,6 +388,48 @@ test.each([
   },
 );
 
+test('can enable/disable a sign', () => {
+  const setConfig = jest.fn(() => true);
+
+  render(
+    React.createElement(
+      SignPanel,
+      { ...customModeSignProps(), setConfig },
+      null,
+    ),
+  );
+
+  fireEvent.change(screen.getByRole('combobox'), { target: { value: 'off' } });
+  expect(setConfig).toHaveBeenCalledWith({ expires: null, mode: 'off' });
+
+  fireEvent.change(screen.getByRole('combobox'), {
+    target: { value: 'auto' },
+  });
+  expect(setConfig).toHaveBeenCalledWith({ mode: 'auto' });
+});
+
+test('Disabling a sign clears any static text', () => {
+  const setConfig = jest.fn(() => true);
+  render(
+    React.createElement(
+      SignPanel,
+      { ...customModeSignPropsWithStaticContent(), setConfig },
+      null,
+    ),
+  );
+
+  expect(screen.getByTestId('id-line1-input').getAttribute('value')).toBe(
+    'foo',
+  );
+  expect(screen.getByTestId('id-line2-input').getAttribute('value')).toBe(
+    'bar',
+  );
+  userEvent.selectOptions(screen.getByTestId('select-id'), 'off');
+  userEvent.selectOptions(screen.getByTestId('select-id'), 'static_text');
+  expect(screen.getByTestId('id-line1-input').getAttribute('value')).toBe('');
+  expect(screen.getByTestId('id-line2-input').getAttribute('value')).toBe('');
+});
+
 test('shows the return to auto time field if sign can be set to auto', () => {
   const now = new Date('2019-01-15T20:15:00Z').valueOf();
   const fresh = new Date(now + 5000).toLocaleString();
@@ -587,7 +650,7 @@ test('does not save changes to backend until Apply is pressed', () => {
     }),
   );
 
-  userEvent.selectOptions(screen.getByTestId('arincId'), 'Custom');
+  userEvent.selectOptions(screen.getByTestId('select-arincId'), 'Custom');
   userEvent.type(screen.getByTestId('arincId-line1-input'), 'line1');
   userEvent.type(screen.getByTestId('arincId-line2-input'), 'line2');
   userEvent.click(screen.getByLabelText('Schedule return to "Auto"'));
@@ -638,7 +701,7 @@ test("allows setting custom text for signs with no 'Auto' mode", () => {
 
   expect(screen.queryByText('Set custom message')).toBeNull();
 
-  userEvent.selectOptions(screen.getByTestId('arincId'), 'Custom');
+  userEvent.selectOptions(screen.getByTestId('select-arincId'), 'Custom');
 
   expect(screen.queryByText('Set custom message')).not.toBeNull();
   expect(screen.queryByText('Schedule return to "Auto"')).toBeNull();
