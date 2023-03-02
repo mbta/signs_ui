@@ -197,7 +197,7 @@ function SignPanel({
 
   return (
     <section aria-label={signId}>
-      <div data-testid="sign-panel" className="viewer--sign">
+      <div data-testid={`sign-panel-${realtimeId}`} className="viewer--sign">
         <div
           className="viewer--sign-id"
           style={{ borderTopColor: lineToColor(line) }}
@@ -212,7 +212,7 @@ function SignPanel({
             <div>
               <select
                 id={realtimeId}
-                data-testid={realtimeId}
+                data-testid={`select-${realtimeId}`}
                 className="viewer--mode-select"
                 value={signConfig.mode}
                 onChange={handleModeSelect}
