@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { fireEvent, render, screen, within } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import Line from '../js/Line';
@@ -385,6 +385,7 @@ test('Shows ConfiguredHeadwaysForm if current line has branches configured', asy
 });
 
 test('Doesn\t show ConfiguredHeadwaysForm if current line has no branches configured', () => {
+  const user = userEvent.setup();
   const now = Date.now();
   const signs = {};
 
@@ -418,7 +419,7 @@ test('Doesn\t show ConfiguredHeadwaysForm if current line has no branches config
     ),
   );
 
-  userEvent.click(screen.getByText('Bulk Editing'));
+  user.click(screen.getByText('Bulk Editing'));
 
   expect(screen.queryByText('Set Headways')).toBeNull();
 });
@@ -588,7 +589,8 @@ test('Sign config is not affected by batch updates if sign does not support mode
   });
 });
 
-test('can toggle chelsea bridge announcements on on Silver Line page', () => {
+test('can toggle chelsea bridge announcements on on Silver Line page', async () => {
+  const user = userEvent.setup();
   const setChelseaBridgeAnnouncements = jest.fn(() => true);
   render(
     React.createElement(
@@ -612,12 +614,13 @@ test('can toggle chelsea bridge announcements on on Silver Line page', () => {
     ),
   );
 
-  fireEvent.click(screen.getByTestId('chelsea_bridge_toggle'));
+  await user.click(screen.getByTestId('chelsea_bridge_toggle'));
   expect(setChelseaBridgeAnnouncements.mock.calls.length).toEqual(1);
   expect(setChelseaBridgeAnnouncements).toHaveBeenCalledWith('auto');
 });
 
-test('can toggle chelsea bridge announcements off on Silver Line page', () => {
+test('can toggle chelsea bridge announcements off on Silver Line page', async () => {
+  const user = userEvent.setup();
   const setChelseaBridgeAnnouncements = jest.fn(() => true);
   render(
     React.createElement(
@@ -641,7 +644,7 @@ test('can toggle chelsea bridge announcements off on Silver Line page', () => {
     ),
   );
 
-  fireEvent.click(screen.getByTestId('chelsea_bridge_toggle'));
+  await user.click(screen.getByTestId('chelsea_bridge_toggle'));
   expect(setChelseaBridgeAnnouncements.mock.calls.length).toEqual(1);
   expect(setChelseaBridgeAnnouncements).toHaveBeenCalledWith('off');
 });
