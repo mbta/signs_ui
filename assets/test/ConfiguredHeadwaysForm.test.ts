@@ -57,37 +57,69 @@ describe('With Multi-sign Headway not enabled', () => {
       }),
     );
 
-    userEvent.type(
-      container.querySelector('input[name="branches.[0].morning.range_low"]')!,
-      '2',
+    await waitFor(() =>
+      userEvent.type(
+        container.querySelector(
+          'input[name="branches.[0].morning.range_low"]',
+        )!,
+        '2',
+      ),
     );
-    userEvent.type(
-      container.querySelector('input[name="branches.[0].morning.range_high"]')!,
-      '5',
+    await waitFor(() =>
+      userEvent.type(
+        container.querySelector(
+          'input[name="branches.[0].morning.range_high"]',
+        )!,
+        '5',
+      ),
     );
-    userEvent.type(
-      container.querySelector('input[name="branches.[0].evening.range_low"]')!,
-      '2',
+    await waitFor(() =>
+      userEvent.type(
+        container.querySelector(
+          'input[name="branches.[0].evening.range_low"]',
+        )!,
+        '2',
+      ),
     );
-    userEvent.type(
-      container.querySelector('input[name="branches.[0].evening.range_high"]')!,
-      '5',
+    await waitFor(() =>
+      userEvent.type(
+        container.querySelector(
+          'input[name="branches.[0].evening.range_high"]',
+        )!,
+        '5',
+      ),
     );
-    userEvent.type(
-      container.querySelector('input[name="branches.[1].morning.range_low"]')!,
-      '5',
+    await waitFor(() =>
+      userEvent.type(
+        container.querySelector(
+          'input[name="branches.[1].morning.range_low"]',
+        )!,
+        '5',
+      ),
     );
-    userEvent.type(
-      container.querySelector('input[name="branches.[1].morning.range_high"]')!,
-      '10',
+    await waitFor(() =>
+      userEvent.type(
+        container.querySelector(
+          'input[name="branches.[1].morning.range_high"]',
+        )!,
+        '10',
+      ),
     );
-    userEvent.type(
-      container.querySelector('input[name="branches.[1].evening.range_low"]')!,
-      '5',
+    await waitFor(() =>
+      userEvent.type(
+        container.querySelector(
+          'input[name="branches.[1].evening.range_low"]',
+        )!,
+        '5',
+      ),
     );
-    userEvent.type(
-      container.querySelector('input[name="branches.[1].evening.range_high"]')!,
-      '10',
+    await waitFor(() =>
+      userEvent.type(
+        container.querySelector(
+          'input[name="branches.[1].evening.range_high"]',
+        )!,
+        '10',
+      ),
     );
 
     await waitFor(() => userEvent.click(screen.getByText('Apply')));
