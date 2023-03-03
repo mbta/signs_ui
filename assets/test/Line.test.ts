@@ -433,7 +433,7 @@ test('Doesn\t show ConfiguredHeadwaysForm if current line has no branches config
   expect(screen.queryByText('Set Headways')).toBeNull();
 });
 
-test('Shows ConfiguredHeadwaysForm if current line has branches configured in read-only mode', () => {
+test('Shows ConfiguredHeadwaysForm if current line has branches configured in read-only mode', async () => {
   const now = Date.now();
   const signs = {};
 
@@ -468,12 +468,18 @@ test('Shows ConfiguredHeadwaysForm if current line has branches configured in re
   );
 
   userEvent.click(screen.getByText('Bulk Editing'));
+  await waitFor(() => {
+    expect(screen.getByText('Set Headways')).toBeInTheDocument();
+  });
   userEvent.click(screen.getByText('Set Headways'));
 
+  await waitFor(() => {
+    screen.getByRole('form');
+  });
   expect(screen.getByRole('form')).toBeInTheDocument();
 });
 
-test('Sign config is not affected by batch updates if sign does not support mode', () => {
+test('Sign config is not affected by batch updates if sign does not support mode', async () => {
   const now = Date.now();
   const signs = {};
 
@@ -569,7 +575,7 @@ test('Sign config is not affected by batch updates if sign does not support mode
     ),
   );
 
-  userEvent.click(screen.getByText('All to off'));
+  await waitFor(() => userEvent.click(screen.getByText('All to off')));
   expect(setConfigs.mock.calls.length).toEqual(1);
   expect(setConfigs).toHaveBeenCalledWith({
     davis_mezzanine: {
@@ -578,7 +584,7 @@ test('Sign config is not affected by batch updates if sign does not support mode
     },
   });
 
-  userEvent.click(screen.getByText('All to auto'));
+  await waitFor(() => userEvent.click(screen.getByText('All to auto')));
   expect(setConfigs.mock.calls.length).toEqual(2);
   expect(setConfigs).toHaveBeenCalledWith({
     davis_northbound: {
@@ -586,7 +592,7 @@ test('Sign config is not affected by batch updates if sign does not support mode
     },
   });
 
-  userEvent.click(screen.getByText('All to headway'));
+  await waitFor(() => userEvent.click(screen.getByText('All to headway')));
   expect(setConfigs.mock.calls.length).toEqual(3);
   expect(setConfigs).toHaveBeenCalledWith({
     davis_southbound: {

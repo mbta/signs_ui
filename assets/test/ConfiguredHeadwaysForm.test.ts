@@ -90,7 +90,7 @@ describe('With Multi-sign Headway not enabled', () => {
       '10',
     );
 
-    userEvent.click(screen.getByText('Apply'));
+    await waitFor(() => userEvent.click(screen.getByText('Apply')));
 
     await waitFor(() => {
       expect(setConfiguredHeadways).toHaveBeenCalledWith({

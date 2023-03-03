@@ -1,12 +1,12 @@
 import * as React from 'react';
 
 import SetExpiration from '../js/SetExpiration';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
-test('Can set the expiration time', () => {
+test('Can set the expiration time', async () => {
   const dates: (Date | null)[] = [];
   const readOnly = false;
 
@@ -22,8 +22,12 @@ test('Can set the expiration time', () => {
     }),
   );
 
-  userEvent.click(screen.getByText('Schedule return to "Auto"'));
-  userEvent.click(screen.getByTestId('set_datetime_radio'));
+  await waitFor(() =>
+    userEvent.click(screen.getByText('Schedule return to "Auto"')),
+  );
+  await waitFor(() =>
+    userEvent.click(screen.getByTestId('set_datetime_radio')),
+  );
   fireEvent.click(screen.getByText('15'));
 
   expect(dates.length).toBe(1);
