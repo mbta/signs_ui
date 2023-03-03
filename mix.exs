@@ -48,7 +48,7 @@ defmodule SignsUi.Mixfile do
       {:lcov_ex, "~> 0.2", only: [:dev, :test], runtime: false},
       {:gettext, "~> 0.11"},
       {:gen_stage, "~> 1.0"},
-      {:server_sent_event_stage, "~> 1.0.0"},
+      {:server_sent_event_stage, "~> 1.1.0"},
       {:castore, "~> 0.1"},
       {:guardian_phoenix, "~> 2.0"},
       {:guardian, "~> 2.0"},
