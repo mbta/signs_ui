@@ -1,11 +1,5 @@
 import * as React from 'react';
-import {
-  render,
-  waitFor,
-  screen,
-  act,
-  fireEvent,
-} from '@testing-library/react';
+import { render, waitFor, screen, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import ConfiguredHeadwaysForm, {
   ConfiguredHeadwaysFormProps,
@@ -19,6 +13,7 @@ let timePeriods: ConfiguredHeadwaysFormProps['timePeriods'];
 let readOnly: ConfiguredHeadwaysFormProps['readOnly'];
 let configuredHeadways: ConfiguredHeadwaysFormProps['configuredHeadways'];
 let setConfiguredHeadways: ConfiguredHeadwaysFormProps['setConfiguredHeadways'];
+const user = userEvent.setup();
 window.confirm = jest.fn(() => true);
 
 beforeEach(() => {
@@ -53,7 +48,6 @@ function renderWrapper() {
 
 describe('With Multi-sign Headway not enabled', () => {
   test('Can enable multi-sign headways when form is complete', async () => {
-    const user = userEvent.setup();
     const { container } = render(
       React.createElement(ConfiguredHeadwaysForm, {
         branches,
@@ -115,16 +109,9 @@ describe('With Multi-sign Headway not enabled', () => {
         '10',
       );
 
+      await user.tab();
       await user.click(screen.getByRole('button', { name: 'Apply' }));
     });
-
-    await waitFor(() => {
-      expect(
-        (container.querySelector('button#apply') as HTMLButtonElement).disabled,
-      ).toEqual(false);
-    });
-
-    fireEvent.click(container.querySelector('button#apply')!);
 
     await waitFor(() => {
       expect(setConfiguredHeadways).toHaveBeenCalledWith({
@@ -183,7 +170,7 @@ describe('With Multi-sign Headway enabled', () => {
 
   test('Clicking button enables inputs', () => {
     renderWrapper();
-    userEvent.click(screen.getByRole('button', { name: 'edit' }));
+    user.click(screen.getByRole('button', { name: 'edit' }));
 
     const inputs = screen.queryAllByRole('input');
     inputs.forEach((input) => {
@@ -202,29 +189,25 @@ describe('With Multi-sign Headway enabled', () => {
       }),
     );
 
-    userEvent.click(screen.getByRole('button', { name: 'edit' }));
-    await waitFor(() => {
-      expect(container.querySelector('input[disabled]')).toEqual(null);
-    });
+    await act(async () => {
+      await user.click(screen.getByRole('button', { name: 'edit' }));
+      await waitFor(() => {
+        expect(container.querySelector('input[disabled]')).toEqual(null);
+      });
 
-    userEvent.clear(
-      container.querySelector('input[name="branches.[0].morning.range_high"]')!,
-    );
-    userEvent.type(
-      container.querySelector('input[name="branches.[0].morning.range_high"]')!,
-      '8',
-    );
+      await user.clear(
+        container.querySelector(
+          'input[name="branches.[0].morning.range_high"]',
+        )!,
+      );
+      await user.type(
+        container.querySelector(
+          'input[name="branches.[0].morning.range_high"]',
+        )!,
+        '8',
+      );
 
-    await waitFor(() => {
-      expect(
-        (container.querySelector('button#apply') as HTMLButtonElement).disabled,
-      ).toEqual(false);
-    });
-
-    userEvent.click(screen.getByRole('button', { name: 'Apply' }));
-
-    await waitFor(() => {
-      expect(container.querySelector('button#edit')).toBeDefined();
+      await user.click(screen.getByRole('button', { name: 'Apply' }));
     });
 
     expect(setConfiguredHeadways).toHaveBeenCalledWith({
@@ -250,22 +233,25 @@ describe('With Multi-sign Headway enabled', () => {
       }),
     );
 
-    userEvent.click(screen.getByRole('button', { name: 'edit' }));
-    await waitFor(() => {
-      expect(container.querySelector('input[disabled]')).toEqual(null);
-    });
+    await act(async () => {
+      await user.click(screen.getByRole('button', { name: 'edit' }));
+      await waitFor(() => {
+        expect(container.querySelector('input[disabled]')).toEqual(null);
+      });
 
-    userEvent.type(
-      container.querySelector('input[name="branches.[0].morning.range_high"]')!,
-      '8',
-    );
-    await waitFor(() => {
+      await user.type(
+        container.querySelector(
+          'input[name="branches.[0].morning.range_high"]',
+        )!,
+        '8',
+      );
+
       expect(
-        (container.querySelector('button#apply') as HTMLButtonElement).disabled,
-      ).toEqual(false);
-    });
+        await screen.findByRole('button', { name: 'Apply' }),
+      ).not.toBeDisabled();
 
-    userEvent.click(screen.getByRole('button', { name: 'cancel' }));
+      await user.click(screen.getByRole('button', { name: 'cancel' }));
+    });
     await waitFor(() => {
       expect(
         (
@@ -274,11 +260,9 @@ describe('With Multi-sign Headway enabled', () => {
           ) as HTMLInputElement
         ).value,
       ).toEqual('3');
-      expect(container.querySelector('button#edit')).toBeDefined();
-      expect(
-        (container.querySelector('button#apply') as HTMLButtonElement).disabled,
-      ).toEqual(true);
     });
+    expect(await screen.findByRole('button', { name: 'edit' })).toBeDefined();
+    expect(await screen.findByRole('button', { name: 'Apply' })).toBeDisabled();
   });
 
   test('Invalid headways show error message', async () => {
@@ -292,26 +276,32 @@ describe('With Multi-sign Headway enabled', () => {
       }),
     );
 
-    userEvent.click(screen.getByRole('button', { name: 'edit' }));
-    await waitFor(() => {
-      expect(container.querySelector('input[disabled]')).toEqual(null);
+    await act(async () => {
+      await user.click(screen.getByRole('button', { name: 'edit' }));
+      await waitFor(() => {
+        expect(container.querySelector('input[disabled]')).toEqual(null);
+      });
+
+      await user.type(
+        container.querySelector(
+          'input[name="branches.[0].morning.range_high"]',
+        )!,
+        '8',
+      );
+
+      await user.type(
+        container.querySelector(
+          'input[name="branches.[0].morning.range_low"]',
+        )!,
+        '10',
+      );
+
+      await waitFor(() => {
+        expect(container.querySelector('.alert-danger')).toEqual(null);
+      });
+
+      await user.tab();
     });
-
-    userEvent.type(
-      container.querySelector('input[name="branches.[0].morning.range_high"]')!,
-      '8',
-    );
-
-    userEvent.type(
-      container.querySelector('input[name="branches.[0].morning.range_low"]')!,
-      '10',
-    );
-
-    await waitFor(() => {
-      expect(container.querySelector('.alert-danger')).toEqual(null);
-    });
-
-    userEvent.tab();
 
     await waitFor(() => {
       expect(container.querySelector('.alert-danger')).not.toEqual(null);
