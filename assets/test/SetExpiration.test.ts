@@ -34,7 +34,8 @@ test('Can set the expiration time', async () => {
   expect(dates[0]?.getDate()).toBe(15);
 });
 
-test('Can clear the expiration time', () => {
+test('Can clear the expiration time', async () => {
+  const user = userEvent.setup();
   const dates: (Date | null)[] = [];
   const readOnly = false;
 
@@ -56,11 +57,11 @@ test('Can clear the expiration time', () => {
     }),
   );
 
-  userEvent.click(
+  await user.click(
     screen.getByRole('checkbox', { name: 'Schedule return to "Auto"' }),
   );
-  userEvent.click(screen.getByRole('radio', { name: 'Date and time' }));
-  userEvent.click(
+  await user.click(screen.getByRole('radio', { name: 'Date and time' }));
+  await user.click(
     screen.getByRole('radio', { name: 'At the end of an alert effect period' }),
   );
 
@@ -68,7 +69,8 @@ test('Can clear the expiration time', () => {
   expect(dates[0]).toBe(null);
 });
 
-test('Deselecting return to auto clears the expiration ', () => {
+test('Deselecting return to auto clears the expiration ', async () => {
+  const user = userEvent.setup();
   const dates: (Date | null)[] = [];
   const alerts: (string | null)[] = [];
   const readOnly = false;
@@ -91,10 +93,10 @@ test('Deselecting return to auto clears the expiration ', () => {
     }),
   );
 
-  userEvent.click(
+  await user.click(
     screen.getByRole('checkbox', { name: 'Schedule return to "Auto"' }),
   );
-  userEvent.click(
+  await user.click(
     screen.getByRole('checkbox', { name: 'Schedule return to "Auto"' }),
   );
 
