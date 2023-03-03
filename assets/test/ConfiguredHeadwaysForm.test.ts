@@ -1,5 +1,11 @@
 import * as React from 'react';
-import { render, waitFor, screen } from '@testing-library/react';
+import {
+  render,
+  waitFor,
+  screen,
+  act,
+  fireEvent,
+} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import ConfiguredHeadwaysForm, {
   ConfiguredHeadwaysFormProps,
@@ -47,6 +53,7 @@ function renderWrapper() {
 
 describe('With Multi-sign Headway not enabled', () => {
   test('Can enable multi-sign headways when form is complete', async () => {
+    const user = userEvent.setup();
     const { container } = render(
       React.createElement(ConfiguredHeadwaysForm, {
         branches,
@@ -57,72 +64,67 @@ describe('With Multi-sign Headway not enabled', () => {
       }),
     );
 
-    await waitFor(() =>
-      userEvent.type(
+    await act(async () => {
+      await user.type(
         container.querySelector(
           'input[name="branches.[0].morning.range_low"]',
         )!,
         '2',
-      ),
-    );
-    await waitFor(() =>
-      userEvent.type(
+      );
+      await user.type(
         container.querySelector(
           'input[name="branches.[0].morning.range_high"]',
         )!,
         '5',
-      ),
-    );
-    await waitFor(() =>
-      userEvent.type(
+      );
+      await user.type(
         container.querySelector(
           'input[name="branches.[0].evening.range_low"]',
         )!,
         '2',
-      ),
-    );
-    await waitFor(() =>
-      userEvent.type(
+      );
+      await user.type(
         container.querySelector(
           'input[name="branches.[0].evening.range_high"]',
         )!,
         '5',
-      ),
-    );
-    await waitFor(() =>
-      userEvent.type(
+      );
+      await user.type(
         container.querySelector(
           'input[name="branches.[1].morning.range_low"]',
         )!,
         '5',
-      ),
-    );
-    await waitFor(() =>
-      userEvent.type(
+      );
+      await user.type(
         container.querySelector(
           'input[name="branches.[1].morning.range_high"]',
         )!,
         '10',
-      ),
-    );
-    await waitFor(() =>
-      userEvent.type(
+      );
+      await user.type(
         container.querySelector(
           'input[name="branches.[1].evening.range_low"]',
         )!,
         '5',
-      ),
-    );
-    await waitFor(() =>
-      userEvent.type(
+      );
+
+      await user.type(
         container.querySelector(
           'input[name="branches.[1].evening.range_high"]',
         )!,
         '10',
-      ),
-    );
+      );
 
-    await waitFor(() => userEvent.click(screen.getByText('Apply')));
+      await user.click(screen.getByRole('button', { name: 'Apply' }));
+    });
+
+    await waitFor(() => {
+      expect(
+        (container.querySelector('button#apply') as HTMLButtonElement).disabled,
+      ).toEqual(false);
+    });
+
+    fireEvent.click(container.querySelector('button#apply')!);
 
     await waitFor(() => {
       expect(setConfiguredHeadways).toHaveBeenCalledWith({
