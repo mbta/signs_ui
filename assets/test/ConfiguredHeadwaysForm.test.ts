@@ -168,9 +168,9 @@ describe('With Multi-sign Headway enabled', () => {
     });
   });
 
-  test('Clicking button enables inputs', () => {
+  test('Clicking button enables inputs', async () => {
     renderWrapper();
-    user.click(screen.getByRole('button', { name: 'edit' }));
+    await user.click(screen.getByRole('button', { name: 'edit' }));
 
     const inputs = screen.queryAllByRole('input');
     inputs.forEach((input) => {
