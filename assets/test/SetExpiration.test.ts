@@ -24,8 +24,8 @@ test('Can set the expiration time', async () => {
   );
 
   await user.click(screen.getByText('Schedule return to "Auto"'));
-  await user.click(screen.getByTestId('set_datetime_radio'));
-  fireEvent.click(screen.getByText('15'));
+  await user.click(screen.getByText('Date and time'));
+  await user.click(screen.getByRole('option', { name: /^Choose.*15th.*/ }));
 
   expect(dates.length).toBe(1);
   expect(dates[0]?.getDate()).toBe(15);
