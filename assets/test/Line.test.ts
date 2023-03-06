@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { render, screen, within } from '@testing-library/react';
+import { render, screen, within, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import Line from '../js/Line';
@@ -333,7 +333,9 @@ test('Batch mode buttons clear sign groups, too', async () => {
     ),
   );
 
-  await setAllToAuto(user);
+  await act(async () => {
+    await setAllToAuto(user);
+  });
   const prompt = getModalPrompt();
   expect(prompt).toHaveTextContent('There are active sign groups at this time');
   await acceptModalPrompt(user, prompt);
@@ -378,13 +380,15 @@ test('Shows ConfiguredHeadwaysForm if current line has branches configured', asy
     ),
   );
 
-  await user.click(screen.getByText('Bulk Editing'));
-  await user.click(screen.getByText('Set Headways'));
+  await act(async () => {
+    await user.click(screen.getByText('Bulk Editing'));
+    await user.click(screen.getByText('Set Headways'));
+  });
 
   expect(screen.getByRole('form')).toBeInTheDocument();
 });
 
-test('Doesn\t show ConfiguredHeadwaysForm if current line has no branches configured', () => {
+test('Doesn\t show ConfiguredHeadwaysForm if current line has no branches configured', async () => {
   const user = userEvent.setup();
   const now = Date.now();
   const signs = {};
@@ -419,7 +423,7 @@ test('Doesn\t show ConfiguredHeadwaysForm if current line has no branches config
     ),
   );
 
-  user.click(screen.getByText('Bulk Editing'));
+  await user.click(screen.getByText('Bulk Editing'));
 
   expect(screen.queryByText('Set Headways')).toBeNull();
 });
@@ -460,8 +464,10 @@ test('Shows ConfiguredHeadwaysForm if current line has branches configured in re
   );
 
   await user.click(screen.getByText('Bulk Editing'));
-  await user.click(screen.getByText('Set Headways'));
 
+  await act(async () => {
+    await user.click(screen.getByText('Set Headways'));
+  });
   expect(screen.getByRole('form')).toBeInTheDocument();
 });
 
