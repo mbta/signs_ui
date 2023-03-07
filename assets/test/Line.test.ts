@@ -620,7 +620,7 @@ test('can toggle chelsea bridge announcements on on Silver Line page', async () 
     ),
   );
 
-  await user.click(screen.getByTestId('chelsea_bridge_toggle'));
+  await user.click(screen.getByLabelText('Chelsea Drawbridge Announcements'));
   expect(setChelseaBridgeAnnouncements.mock.calls.length).toEqual(1);
   expect(setChelseaBridgeAnnouncements).toHaveBeenCalledWith('auto');
 });
@@ -650,7 +650,7 @@ test('can toggle chelsea bridge announcements off on Silver Line page', async ()
     ),
   );
 
-  await user.click(screen.getByTestId('chelsea_bridge_toggle'));
+  await user.click(screen.getByLabelText('Chelsea Drawbridge Announcements'));
   expect(setChelseaBridgeAnnouncements.mock.calls.length).toEqual(1);
   expect(setChelseaBridgeAnnouncements).toHaveBeenCalledWith('off');
 });
@@ -679,7 +679,9 @@ test('does not show chelsea bridge announcements toggle on non-Silver Line pages
     ),
   );
 
-  expect(screen.queryByTestId('chelsea_bridge_toggle')).toBeNull();
+  expect(
+    screen.queryByLabelText('Chelsea Drawbridge Announcements'),
+  ).toBeNull();
 });
 
 test('does not show chelsea bridge toggle if in read-only mode', () => {
@@ -705,7 +707,9 @@ test('does not show chelsea bridge toggle if in read-only mode', () => {
     screen.getByText('Chelsea Drawbridge Announcements:'),
   ).toBeInTheDocument();
   expect(screen.getByText('Auto')).toBeInTheDocument();
-  expect(screen.queryByTestId('chelsea_bridge_toggle')).toBeNull();
+  expect(
+    screen.queryByLabelText('Chelsea Drawbridge Announcements'),
+  ).toBeNull();
 });
 
 test('allows removing an individual sign from a group', async () => {
