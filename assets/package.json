@@ -54,7 +54,7 @@
     "formik": "^2.2.1",
     "lodash": "^4.17.20",
     "mini-css-extract-plugin": "^2.7.2",
-    "phoenix": "^1.6.16",
+    "phoenix": "^1.7.1",
     "phoenix_html": "^3.3.1",
     "rc-collapse": "^3.5.2",
     "react": "^16.4.1",
