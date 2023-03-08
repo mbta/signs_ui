@@ -133,6 +133,16 @@ class ViewerApp extends React.Component<
       this.setState({ signGroups: signGroupState });
     });
 
+    chelseaBridgeAnnouncementsChannel.on(
+      'new_chelsea_bridge_announcements_state',
+      (chelseaBridgeAnnouncementState) => {
+        this.setState({
+          chelseaBridgeAnnouncements:
+            chelseaBridgeAnnouncementState.chelsea_bridge_announcements,
+        });
+      },
+    );
+
     signsChannel.on('auth_expired', () => {
       window.location.reload();
     });

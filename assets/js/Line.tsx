@@ -280,7 +280,7 @@ function Line({
                   );
                 }}
               />
-              <span className="toggle_switch--label">Switch</span>
+              <span className="toggle_switch--label" />
             </div>
           )}
         </label>
