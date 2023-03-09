@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import ViewerApp from '../js/ViewerApp';
 import { SignConfigs, SignContent } from '../js/types';
 
@@ -42,7 +43,8 @@ beforeAll(() => {
   };
 });
 
-test('Shows all signs for a line', () => {
+test('Shows all signs for a line', async () => {
+  const user = userEvent.setup();
   const now = Date.now();
   const signs = someSignContent(now);
   const initialSignConfigs = {};
@@ -67,15 +69,17 @@ test('Shows all signs for a line', () => {
     ),
   );
 
-  fireEvent.click(screen.getByText('Red'));
+  await user.click(screen.getByText('Red'));
   expect(screen.getByText('Alewife')).toBeInTheDocument();
   expect(screen.queryByText('Oak Grove')).toBeNull();
-  expect(screen.getAllByTestId(/sign-panel-*/)).toHaveLength(63);
+  expect(screen.getAllByRole('heading')).toHaveLength(24);
+  expect(screen.getAllByRole('combobox')).toHaveLength(63);
 
-  fireEvent.click(screen.getByText('Orange'));
+  await user.click(screen.getByText('Orange'));
   expect(screen.getByText('Oak Grove')).toBeInTheDocument();
   expect(screen.queryByText('Alewife')).toBeNull();
-  expect(screen.getAllByTestId(/sign-panel-*/)).toHaveLength(62);
+  expect(screen.getAllByRole('heading')).toHaveLength(26);
+  expect(screen.getAllByRole('combobox')).toHaveLength(62);
 });
 
 test('Shows sign out link', () => {
