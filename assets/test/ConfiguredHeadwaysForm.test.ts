@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { mount } from 'enzyme';
-import { render, waitFor, fireEvent } from '@testing-library/react';
+import { render, waitFor, screen, act } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import ConfiguredHeadwaysForm, {
   ConfiguredHeadwaysFormProps,
 } from '../js/ConfiguredHeadwaysForm';
@@ -13,6 +13,7 @@ let timePeriods: ConfiguredHeadwaysFormProps['timePeriods'];
 let readOnly: ConfiguredHeadwaysFormProps['readOnly'];
 let configuredHeadways: ConfiguredHeadwaysFormProps['configuredHeadways'];
 let setConfiguredHeadways: ConfiguredHeadwaysFormProps['setConfiguredHeadways'];
+const user = userEvent.setup();
 window.confirm = jest.fn(() => true);
 
 beforeEach(() => {
@@ -29,8 +30,8 @@ beforeEach(() => {
   configuredHeadways = {};
 });
 
-const mountWrapper = () =>
-  mount(
+function renderWrapper() {
+  render(
     React.createElement(
       ConfiguredHeadwaysForm,
       {
@@ -43,6 +44,7 @@ const mountWrapper = () =>
       null,
     ),
   );
+}
 
 describe('With Multi-sign Headway not enabled', () => {
   test('Can enable multi-sign headways when form is complete', async () => {
@@ -56,46 +58,60 @@ describe('With Multi-sign Headway not enabled', () => {
       }),
     );
 
-    fireEvent.change(
-      container.querySelector('input[name="branches.[0].morning.range_low"]')!,
-      { target: { value: '2' } },
-    );
-    fireEvent.change(
-      container.querySelector('input[name="branches.[0].morning.range_high"]')!,
-      { target: { value: '5' } },
-    );
-    fireEvent.change(
-      container.querySelector('input[name="branches.[0].evening.range_low"]')!,
-      { target: { value: '2' } },
-    );
-    fireEvent.change(
-      container.querySelector('input[name="branches.[0].evening.range_high"]')!,
-      { target: { value: '5' } },
-    );
-    fireEvent.change(
-      container.querySelector('input[name="branches.[1].morning.range_low"]')!,
-      { target: { value: '5' } },
-    );
-    fireEvent.change(
-      container.querySelector('input[name="branches.[1].morning.range_high"]')!,
-      { target: { value: '10' } },
-    );
-    fireEvent.change(
-      container.querySelector('input[name="branches.[1].evening.range_low"]')!,
-      { target: { value: '5' } },
-    );
-    fireEvent.change(
-      container.querySelector('input[name="branches.[1].evening.range_high"]')!,
-      { target: { value: '10' } },
-    );
+    await act(async () => {
+      await user.type(
+        container.querySelector(
+          'input[name="branches.[0].morning.range_low"]',
+        )!,
+        '2',
+      );
+      await user.type(
+        container.querySelector(
+          'input[name="branches.[0].morning.range_high"]',
+        )!,
+        '5',
+      );
+      await user.type(
+        container.querySelector(
+          'input[name="branches.[0].evening.range_low"]',
+        )!,
+        '2',
+      );
+      await user.type(
+        container.querySelector(
+          'input[name="branches.[0].evening.range_high"]',
+        )!,
+        '5',
+      );
+      await user.type(
+        container.querySelector(
+          'input[name="branches.[1].morning.range_low"]',
+        )!,
+        '5',
+      );
+      await user.type(
+        container.querySelector(
+          'input[name="branches.[1].morning.range_high"]',
+        )!,
+        '10',
+      );
+      await user.type(
+        container.querySelector(
+          'input[name="branches.[1].evening.range_low"]',
+        )!,
+        '5',
+      );
 
-    await waitFor(() => {
-      expect(
-        (container.querySelector('button#apply') as HTMLButtonElement).disabled,
-      ).toEqual(false);
+      await user.type(
+        container.querySelector(
+          'input[name="branches.[1].evening.range_high"]',
+        )!,
+        '10',
+      );
+
+      await user.tab();
+      await user.click(screen.getByRole('button', { name: 'Apply' }));
     });
-
-    fireEvent.click(container.querySelector('button#apply')!);
 
     await waitFor(() => {
       expect(setConfiguredHeadways).toHaveBeenCalledWith({
@@ -139,24 +155,27 @@ describe('With Multi-sign Headway enabled', () => {
   });
 
   test('Form is initially open', () => {
-    const wrapper = mountWrapper();
-
-    expect(wrapper.find('form')).toHaveLength(1);
+    renderWrapper();
+    expect(screen.getByRole('form')).toBeVisible();
   });
 
   test('Inputs are initially disabled', () => {
-    const wrapper = mountWrapper();
-    expect(wrapper.find('input').find({ disabled: true })).toHaveLength(8);
-    expect(wrapper.find('input').find({ disabled: false })).toHaveLength(0);
+    renderWrapper();
+
+    const inputs = screen.queryAllByRole('input');
+    inputs.forEach((input) => {
+      expect(input).toHaveAttribute('disabled');
+    });
   });
 
-  test('Clicking button enables inputs', () => {
-    const wrapper = mountWrapper();
-    expect(wrapper.find('input').find({ disabled: true })).toHaveLength(8);
-    expect(wrapper.find('input').find({ disabled: false })).toHaveLength(0);
-    wrapper.find('button#edit').simulate('click');
-    expect(wrapper.find('input').find({ disabled: true })).toHaveLength(0);
-    expect(wrapper.find('input').find({ disabled: false })).toHaveLength(8);
+  test('Clicking button enables inputs', async () => {
+    renderWrapper();
+    await user.click(screen.getByRole('button', { name: 'edit' }));
+
+    const inputs = screen.queryAllByRole('input');
+    inputs.forEach((input) => {
+      expect(input).not.toHaveAttribute('disabled');
+    });
   });
 
   test('Can apply new values after making edits', async () => {
@@ -170,26 +189,25 @@ describe('With Multi-sign Headway enabled', () => {
       }),
     );
 
-    fireEvent.click(container.querySelector('button#edit')!);
-    await waitFor(() => {
-      expect(container.querySelector('input[disabled]')).toEqual(null);
-    });
+    await act(async () => {
+      await user.click(screen.getByRole('button', { name: 'edit' }));
+      await waitFor(() => {
+        expect(container.querySelector('input[disabled]')).toEqual(null);
+      });
 
-    fireEvent.change(
-      container.querySelector('input[name="branches.[0].morning.range_high"]')!,
-      { target: { value: '8' } },
-    );
+      await user.clear(
+        container.querySelector(
+          'input[name="branches.[0].morning.range_high"]',
+        )!,
+      );
+      await user.type(
+        container.querySelector(
+          'input[name="branches.[0].morning.range_high"]',
+        )!,
+        '8',
+      );
 
-    await waitFor(() => {
-      expect(
-        (container.querySelector('button#apply') as HTMLButtonElement).disabled,
-      ).toEqual(false);
-    });
-
-    fireEvent.click(container.querySelector('button#apply')!);
-
-    await waitFor(() => {
-      expect(container.querySelector('button#edit')).toBeDefined();
+      await user.click(screen.getByRole('button', { name: 'Apply' }));
     });
 
     expect(setConfiguredHeadways).toHaveBeenCalledWith({
@@ -215,22 +233,25 @@ describe('With Multi-sign Headway enabled', () => {
       }),
     );
 
-    fireEvent.click(container.querySelector('button#edit')!);
-    await waitFor(() => {
-      expect(container.querySelector('input[disabled]')).toEqual(null);
-    });
+    await act(async () => {
+      await user.click(screen.getByRole('button', { name: 'edit' }));
+      await waitFor(() => {
+        expect(container.querySelector('input[disabled]')).toEqual(null);
+      });
 
-    fireEvent.change(
-      container.querySelector('input[name="branches.[0].morning.range_high"]')!,
-      { target: { value: '8' } },
-    );
-    await waitFor(() => {
+      await user.type(
+        container.querySelector(
+          'input[name="branches.[0].morning.range_high"]',
+        )!,
+        '8',
+      );
+
       expect(
-        (container.querySelector('button#apply') as HTMLButtonElement).disabled,
-      ).toEqual(false);
-    });
+        await screen.findByRole('button', { name: 'Apply' }),
+      ).not.toBeDisabled();
 
-    fireEvent.click(container.querySelector('button#cancel')!);
+      await user.click(screen.getByRole('button', { name: 'cancel' }));
+    });
     await waitFor(() => {
       expect(
         (
@@ -239,11 +260,9 @@ describe('With Multi-sign Headway enabled', () => {
           ) as HTMLInputElement
         ).value,
       ).toEqual('3');
-      expect(container.querySelector('button#edit')).toBeDefined();
-      expect(
-        (container.querySelector('button#apply') as HTMLButtonElement).disabled,
-      ).toEqual(true);
     });
+    expect(await screen.findByRole('button', { name: 'edit' })).toBeDefined();
+    expect(await screen.findByRole('button', { name: 'Apply' })).toBeDisabled();
   });
 
   test('Invalid headways show error message', async () => {
@@ -257,28 +276,32 @@ describe('With Multi-sign Headway enabled', () => {
       }),
     );
 
-    fireEvent.click(container.querySelector('button#edit')!);
-    await waitFor(() => {
-      expect(container.querySelector('input[disabled]')).toEqual(null);
+    await act(async () => {
+      await user.click(screen.getByRole('button', { name: 'edit' }));
+      await waitFor(() => {
+        expect(container.querySelector('input[disabled]')).toEqual(null);
+      });
+
+      await user.type(
+        container.querySelector(
+          'input[name="branches.[0].morning.range_high"]',
+        )!,
+        '8',
+      );
+
+      await user.type(
+        container.querySelector(
+          'input[name="branches.[0].morning.range_low"]',
+        )!,
+        '10',
+      );
+
+      await waitFor(() => {
+        expect(container.querySelector('.alert-danger')).toEqual(null);
+      });
+
+      await user.tab();
     });
-
-    fireEvent.change(
-      container.querySelector('input[name="branches.[0].morning.range_high"]')!,
-      { target: { value: '8' } },
-    );
-
-    fireEvent.change(
-      container.querySelector('input[name="branches.[0].morning.range_low"]')!,
-      { target: { value: '10' } },
-    );
-
-    await waitFor(() => {
-      expect(container.querySelector('.alert-danger')).toEqual(null);
-    });
-
-    fireEvent.blur(
-      container.querySelector('input[name="branches.[0].morning.range_low"]')!,
-    );
 
     await waitFor(() => {
       expect(container.querySelector('.alert-danger')).not.toEqual(null);

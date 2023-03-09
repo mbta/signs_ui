@@ -139,6 +139,7 @@ function ConfiguredHeadwaysForm({
       >
         {({ dirty, isValid, resetForm }) => (
           <Form
+            name="configured-headways-form"
             className={`configured-headways-form ${
               !inEditMode ? 'disabled' : ''
             }`}

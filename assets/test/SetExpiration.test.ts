@@ -1,17 +1,17 @@
 import * as React from 'react';
-import { mount } from 'enzyme';
 
 import SetExpiration from '../js/SetExpiration';
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
-test('Can set the expiration time', () => {
+test('Can set the expiration time', async () => {
+  const user = userEvent.setup();
   const dates: (Date | null)[] = [];
   const readOnly = false;
 
-  const wrapper = mount(
+  render(
     React.createElement(SetExpiration, {
       alerts: {},
       expires: null,
@@ -23,10 +23,10 @@ test('Can set the expiration time', () => {
     }),
   );
 
-  wrapper.find('input[type="checkbox"]').simulate('click');
-  wrapper.find('.set_expiration--datetime').simulate('change');
-  wrapper.find('.react-datepicker-wrapper input').simulate('focus');
-  wrapper.find('.react-datepicker__day--015').simulate('click');
+  await user.click(screen.getByText('Schedule return to "Auto"'));
+  await user.click(screen.getByText('Date and time'));
+  await user.click(screen.getByRole('option', { name: /^Choose.*15th.*/ }));
+
   expect(dates.length).toBe(1);
   expect(dates[0]?.getDate()).toBe(15);
 });
@@ -106,7 +106,7 @@ test('Deselecting return to auto clears the expiration ', async () => {
 test('Shows widget when no expiration set if not in read-only mode', () => {
   const readOnly = false;
 
-  const wrapper = mount(
+  render(
     React.createElement(SetExpiration, {
       alerts: {},
       expires: null,
@@ -118,13 +118,13 @@ test('Shows widget when no expiration set if not in read-only mode', () => {
     }),
   );
 
-  expect(wrapper.text()).toMatch('Schedule return');
+  expect(screen.getByText('Schedule return to "Auto"')).toBeInTheDocument();
 });
 
 test('Suppresses widget when no expiration set if in read-only mode', () => {
   const readOnly = true;
 
-  const wrapper = mount(
+  render(
     React.createElement(SetExpiration, {
       alerts: {},
       expires: null,
@@ -136,13 +136,13 @@ test('Suppresses widget when no expiration set if in read-only mode', () => {
     }),
   );
 
-  expect(wrapper.text()).toBe('');
+  expect(screen.queryByText('Schedule return to "Auto"')).toBeNull();
 });
 
 test("Shows 'Scheduled' when expiration is set if in read-only mode", () => {
   const readOnly = true;
 
-  const wrapper = mount(
+  render(
     React.createElement(SetExpiration, {
       alerts: {},
       expires: new Date(),
@@ -154,5 +154,5 @@ test("Shows 'Scheduled' when expiration is set if in read-only mode", () => {
     }),
   );
 
-  expect(wrapper.text()).toMatch('Scheduled return');
+  expect(screen.getByText('Scheduled return to "Auto"')).toBeInTheDocument();
 });

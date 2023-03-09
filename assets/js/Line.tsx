@@ -271,6 +271,7 @@ function Line({
             <div className="toggle_switch--container">
               <input
                 name="chelsea_bridge"
+                aria-label="Chelsea Drawbridge Announcements"
                 type="checkbox"
                 className="toggle_switch--input"
                 checked={chelseaBridgeAnnouncements === 'auto'}
