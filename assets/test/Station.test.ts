@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { mount } from 'enzyme';
-
+import { render, screen } from '@testing-library/react';
 import Station from '../js/Station';
 import { StationConfig } from '../js/types';
 
@@ -30,7 +29,7 @@ test('shows the custom configuration information for a station', () => {
     },
   };
 
-  const wrapper = mount(
+  render(
     React.createElement(Station, {
       config,
       alerts: {},
@@ -46,7 +45,7 @@ test('shows the custom configuration information for a station', () => {
     }),
   );
 
-  expect(wrapper.text()).toMatch('Entire Station');
+  expect(screen.getByText('Entire Station')).toBeInTheDocument();
 });
 
 test('allows custom reordering of sign positions', () => {
@@ -70,7 +69,7 @@ test('allows custom reordering of sign positions', () => {
     },
   };
 
-  const wrapper = mount(
+  render(
     React.createElement(Station, {
       config,
       alerts: {},
@@ -86,5 +85,7 @@ test('allows custom reordering of sign positions', () => {
     }),
   );
 
-  expect(wrapper.text()).toMatch(/foo.*bar/);
+  const signs = screen.queryAllByRole('region');
+  expect(signs[1]).toHaveTextContent('foo');
+  expect(signs[2]).toHaveTextContent('bar');
 });

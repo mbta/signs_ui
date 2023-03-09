@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { mount } from 'enzyme';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
@@ -9,7 +8,6 @@ import {
   SignConfig,
   SignGroup,
   SingleSignContent,
-  SignConfigs,
 } from '../js/types';
 
 function customSignContent(): SingleSignContent {
@@ -51,6 +49,28 @@ function customModeSignProps(): SignPanelProps {
     currentTime: now + 2000,
     line: 'Red',
     signConfig: { mode: 'static_text' },
+    setConfig: () => true,
+    realtimeId: 'id',
+    readOnly: false,
+    modes: {
+      auto: true,
+      custom: true,
+      headway: true,
+      off: true,
+    },
+  };
+}
+
+function customModeSignPropsWithStaticContent(): SignPanelProps {
+  const now = new Date().valueOf();
+
+  return {
+    alerts: {},
+    signId: 'RDAV-n',
+    signContent: customSignContent(),
+    currentTime: now + 2000,
+    line: 'Red',
+    signConfig: { mode: 'static_text', line1: 'foo', line2: 'bar' },
     setConfig: () => true,
     realtimeId: 'id',
     readOnly: false,
@@ -111,7 +131,7 @@ test('does not show messages that have expired', () => {
     off: true,
   };
 
-  const wrapper = mount(
+  render(
     React.createElement(
       SignPanel,
       {
@@ -130,10 +150,14 @@ test('does not show messages that have expired', () => {
     ),
   );
 
-  expect(wrapper.text()).toMatch('Alewife 1 min      ');
-  expect(wrapper.text()).toMatch('3:15');
-
-  expect(wrapper.text()).not.toMatch('Alewife 3 min');
+  expect(
+    screen.getByText('Alewife 1 min       3:15', { collapseWhitespace: false }),
+  ).toBeInTheDocument();
+  expect(
+    screen.queryByText('Alewife 3 min       3:15', {
+      collapseWhitespace: false,
+    }),
+  ).toBeNull();
 });
 
 test('does not show select in read-only mode', () => {
@@ -157,7 +181,7 @@ test('does not show select in read-only mode', () => {
     off: true,
   };
 
-  const wrapper = mount(
+  render(
     React.createElement(
       SignPanel,
       {
@@ -176,7 +200,7 @@ test('does not show select in read-only mode', () => {
     ),
   );
 
-  expect(wrapper.html()).not.toMatch('select');
+  expect(screen.queryByRole('combobox')).toBeNull();
 });
 
 test('shows the mode the sign is in in read-only mode', () => {
@@ -200,7 +224,7 @@ test('shows the mode the sign is in in read-only mode', () => {
     custom: true,
   };
 
-  const wrapper = mount(
+  render(
     React.createElement(
       SignPanel,
       {
@@ -219,7 +243,8 @@ test('shows the mode the sign is in in read-only mode', () => {
     ),
   );
 
-  expect(wrapper.html()).toMatch('Auto');
+  expect(screen.getByText('Auto')).toBeInTheDocument();
+  expect(screen.queryByRole('combobox')).toBeNull();
 });
 
 test('does show select when not in read-only mode', () => {
@@ -240,7 +265,7 @@ test('does show select when not in read-only mode', () => {
     off: true,
   };
 
-  const wrapper = mount(
+  render(
     React.createElement(
       SignPanel,
       {
@@ -259,7 +284,7 @@ test('does show select when not in read-only mode', () => {
     ),
   );
 
-  expect(wrapper.html()).toMatch('select');
+  expect(screen.getByRole('combobox')).toBeInTheDocument();
 });
 
 test.each([
@@ -328,7 +353,7 @@ test.each([
       ...modesOverride,
     };
 
-    const wrapper = mount(
+    render(
       React.createElement(
         SignPanel,
         {
@@ -346,14 +371,81 @@ test.each([
         null,
       ),
     );
-    expect(wrapper.html()).toMatch('select');
-    (Object.keys(expected) as Array<SignModeOptions>).forEach((x) => {
-      expect(wrapper.find(`option[value="${x}"]`).exists()).toEqual(
-        expected[x],
-      );
+
+    expect(screen.getByRole('combobox')).toBeInTheDocument();
+
+    const options = screen
+      .getAllByRole('option')
+      .map((option) => option.getAttribute('value'));
+
+    (Object.keys(expected) as Array<SignModeOptions>).forEach((mode) => {
+      if (expected[mode] && expected[mode] === true) {
+        expect(options.includes(mode)).toBeTruthy();
+      } else {
+        expect(options.includes(mode)).toBeFalsy();
+      }
     });
   },
 );
+
+test('can enable/disable a sign', async () => {
+  const user = userEvent.setup();
+  const setConfig = jest.fn(() => true);
+
+  render(
+    React.createElement(
+      SignPanel,
+      { ...customModeSignProps(), setConfig },
+      null,
+    ),
+  );
+
+  await user.selectOptions(
+    screen.getByRole('combobox'),
+    screen.getByRole('option', { name: 'Off' }),
+  );
+  expect(setConfig).toHaveBeenCalledWith({ expires: null, mode: 'off' });
+
+  await user.selectOptions(
+    screen.getByRole('combobox'),
+    screen.getByRole('option', { name: 'Auto' }),
+  );
+  expect(setConfig).toHaveBeenCalledWith({ mode: 'auto' });
+});
+
+test('Disabling a sign clears any static text', async () => {
+  const user = userEvent.setup();
+  const setConfig = jest.fn(() => true);
+  render(
+    React.createElement(
+      SignPanel,
+      { ...customModeSignPropsWithStaticContent(), setConfig },
+      null,
+    ),
+  );
+
+  expect(
+    screen.getByAltText('Line one custom text input').getAttribute('value'),
+  ).toBe('foo');
+  expect(
+    screen.getByAltText('Line two custom text input').getAttribute('value'),
+  ).toBe('bar');
+
+  await user.selectOptions(
+    screen.getByRole('combobox'),
+    screen.getByRole('option', { name: 'Off' }),
+  );
+  await user.selectOptions(
+    screen.getByRole('combobox'),
+    screen.getByRole('option', { name: 'Custom' }),
+  );
+  expect(
+    screen.getByAltText('Line one custom text input').getAttribute('value'),
+  ).toBe('');
+  expect(
+    screen.getByAltText('Line two custom text input').getAttribute('value'),
+  ).toBe('');
+});
 
 test('shows the return to auto time field if sign can be set to auto', () => {
   const now = new Date('2019-01-15T20:15:00Z').valueOf();
@@ -373,7 +465,7 @@ test('shows the return to auto time field if sign can be set to auto', () => {
     off: true,
   };
 
-  const wrapper = mount(
+  render(
     React.createElement(
       SignPanel,
       {
@@ -392,7 +484,7 @@ test('shows the return to auto time field if sign can be set to auto', () => {
     ),
   );
 
-  expect(wrapper.html()).toMatch('Schedule return to "Auto"');
+  expect(screen.getByText('Schedule return to "Auto"')).toBeInTheDocument();
 });
 
 test('does not show the return to auto time field if sign can be set to auto', () => {
@@ -413,7 +505,7 @@ test('does not show the return to auto time field if sign can be set to auto', (
     off: true,
   };
 
-  const wrapper = mount(
+  render(
     React.createElement(
       SignPanel,
       {
@@ -432,7 +524,7 @@ test('does not show the return to auto time field if sign can be set to auto', (
     ),
   );
 
-  expect(wrapper.html()).not.toMatch('Schedule return to "Auto"');
+  expect(screen.queryByText('Schedule return to "Auto"')).toBeNull();
 });
 
 test('shows clock even when no other content is present', () => {
@@ -453,7 +545,7 @@ test('shows clock even when no other content is present', () => {
     off: true,
   };
 
-  const wrapper = mount(
+  render(
     React.createElement(
       SignPanel,
       {
@@ -472,7 +564,7 @@ test('shows clock even when no other content is present', () => {
     ),
   );
 
-  expect(wrapper.text()).toMatch('3:15');
+  expect(screen.getByText('3:15')).toBeInTheDocument();
 });
 
 test('does not show a group indicator if the sign is not grouped', () => {
@@ -578,9 +670,12 @@ test('does not save changes to backend until Apply is pressed', async () => {
     }),
   );
 
-  await user.selectOptions(screen.getByTestId('arincId'), 'Custom');
-  await user.type(screen.getByTestId('arincId-line1-input'), 'line1');
-  await user.type(screen.getByTestId('arincId-line2-input'), 'line2');
+  await user.selectOptions(
+    screen.getByRole('combobox'),
+    screen.getByRole('option', { name: 'Custom' }),
+  );
+  await user.type(screen.getByAltText('Line one custom text input'), 'line1');
+  await user.type(screen.getByAltText('Line two custom text input'), 'line2');
   await user.click(screen.getByLabelText('Schedule return to "Auto"'));
   await user.click(screen.getByLabelText('Date and time'));
   await user.click(
@@ -630,13 +725,16 @@ test("allows setting custom text for signs with no 'Auto' mode", async () => {
 
   expect(screen.queryByText('Set custom message')).toBeNull();
 
-  await user.selectOptions(screen.getByTestId('arincId'), 'Custom');
+  await user.selectOptions(
+    screen.getByRole('combobox'),
+    screen.getByRole('option', { name: 'Custom' }),
+  );
 
   expect(screen.queryByText('Set custom message')).not.toBeNull();
   expect(screen.queryByText('Schedule return to "Auto"')).toBeNull();
 
-  await user.type(screen.getByTestId('arincId-line1-input'), 'line1');
-  await user.type(screen.getByTestId('arincId-line2-input'), 'line2');
+  await user.type(screen.getByAltText('Line one custom text input'), 'line1');
+  await user.type(screen.getByAltText('Line two custom text input'), 'line2');
 
   await user.click(screen.getByRole('button', { name: 'Apply' }));
 

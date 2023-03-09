@@ -216,7 +216,6 @@ function SignPanel({
             <div>
               <select
                 id={realtimeId}
-                data-testid={realtimeId}
                 className="viewer--mode-select"
                 value={signConfig.mode}
                 onChange={handleModeSelect}
