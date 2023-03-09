@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import SignPanel, { SignModeOptions, SignPanelProps } from '../js/SignPanel';
@@ -200,7 +200,7 @@ test('does not show select in read-only mode', () => {
     ),
   );
 
-  expect(screen.queryByTestId(realtimeId)).toBeNull();
+  expect(screen.queryByRole('combobox')).toBeNull();
 });
 
 test('shows the mode the sign is in in read-only mode', () => {
@@ -388,7 +388,8 @@ test.each([
   },
 );
 
-test('can enable/disable a sign', () => {
+test('can enable/disable a sign', async () => {
+  const user = userEvent.setup();
   const setConfig = jest.fn(() => true);
 
   render(
@@ -399,14 +400,21 @@ test('can enable/disable a sign', () => {
     ),
   );
 
-  userEvent.selectOptions(screen.getByTestId('select-id'), 'off');
+  await user.selectOptions(
+    screen.getByRole('combobox'),
+    screen.getByRole('option', { name: 'Off' }),
+  );
   expect(setConfig).toHaveBeenCalledWith({ expires: null, mode: 'off' });
 
-  userEvent.selectOptions(screen.getByTestId('select-id'), 'auto');
+  await user.selectOptions(
+    screen.getByRole('combobox'),
+    screen.getByRole('option', { name: 'Auto' }),
+  );
   expect(setConfig).toHaveBeenCalledWith({ mode: 'auto' });
 });
 
-test('Disabling a sign clears any static text', () => {
+test('Disabling a sign clears any static text', async () => {
+  const user = userEvent.setup();
   const setConfig = jest.fn(() => true);
   render(
     React.createElement(
@@ -416,16 +424,27 @@ test('Disabling a sign clears any static text', () => {
     ),
   );
 
-  expect(screen.getByTestId('id-line1-input').getAttribute('value')).toBe(
-    'foo',
+  expect(
+    screen.getByAltText('Line one custom text input').getAttribute('value'),
+  ).toBe('foo');
+  expect(
+    screen.getByAltText('Line two custom text input').getAttribute('value'),
+  ).toBe('bar');
+
+  await user.selectOptions(
+    screen.getByRole('combobox'),
+    screen.getByRole('option', { name: 'Off' }),
   );
-  expect(screen.getByTestId('id-line2-input').getAttribute('value')).toBe(
-    'bar',
+  await user.selectOptions(
+    screen.getByRole('combobox'),
+    screen.getByRole('option', { name: 'Custom' }),
   );
-  userEvent.selectOptions(screen.getByTestId('select-id'), 'off');
-  userEvent.selectOptions(screen.getByTestId('select-id'), 'static_text');
-  expect(screen.getByTestId('id-line1-input').getAttribute('value')).toBe('');
-  expect(screen.getByTestId('id-line2-input').getAttribute('value')).toBe('');
+  expect(
+    screen.getByAltText('Line one custom text input').getAttribute('value'),
+  ).toBe('');
+  expect(
+    screen.getByAltText('Line two custom text input').getAttribute('value'),
+  ).toBe('');
 });
 
 test('shows the return to auto time field if sign can be set to auto', () => {
@@ -651,9 +670,12 @@ test('does not save changes to backend until Apply is pressed', async () => {
     }),
   );
 
-  await user.selectOptions(screen.getByTestId('arincId'), 'Custom');
-  await user.type(screen.getByTestId('arincId-line1-input'), 'line1');
-  await user.type(screen.getByTestId('arincId-line2-input'), 'line2');
+  await user.selectOptions(
+    screen.getByRole('combobox'),
+    screen.getByRole('option', { name: 'Custom' }),
+  );
+  await user.type(screen.getByAltText('Line one custom text input'), 'line1');
+  await user.type(screen.getByAltText('Line two custom text input'), 'line2');
   await user.click(screen.getByLabelText('Schedule return to "Auto"'));
   await user.click(screen.getByLabelText('Date and time'));
   await user.click(
@@ -703,13 +725,16 @@ test("allows setting custom text for signs with no 'Auto' mode", async () => {
 
   expect(screen.queryByText('Set custom message')).toBeNull();
 
-  await user.selectOptions(screen.getByTestId('arincId'), 'Custom');
+  await user.selectOptions(
+    screen.getByRole('combobox'),
+    screen.getByRole('option', { name: 'Custom' }),
+  );
 
   expect(screen.queryByText('Set custom message')).not.toBeNull();
   expect(screen.queryByText('Schedule return to "Auto"')).toBeNull();
 
-  await user.type(screen.getByTestId('arincId-line1-input'), 'line1');
-  await user.type(screen.getByTestId('arincId-line2-input'), 'line2');
+  await user.type(screen.getByAltText('Line one custom text input'), 'line1');
+  await user.type(screen.getByAltText('Line two custom text input'), 'line2');
 
   await user.click(screen.getByRole('button', { name: 'Apply' }));
 
