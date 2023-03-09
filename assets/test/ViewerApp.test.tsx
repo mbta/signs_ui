@@ -109,5 +109,7 @@ test('Shows sign out link', () => {
     ),
   );
 
-  expect(screen.getByRole('link')).toHaveAttribute('href', '/path');
+  expect(screen.getByText('refresh credentials').getAttribute('href')).toBe(
+    '/path',
+  );
 });
