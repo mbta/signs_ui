@@ -570,7 +570,8 @@ test('shows info about the group if the sign is grouped', () => {
   expect(groupInfo).toHaveTextContent('when alert 123456 closes');
 });
 
-test('allows ungrouping the sign if it is grouped', () => {
+test('allows ungrouping the sign if it is grouped', async () => {
+  const user = userEvent.setup();
   const signGroup: SignGroup = {
     sign_ids: ['id'],
     line1: 'custom',
@@ -586,15 +587,16 @@ test('allows ungrouping the sign if it is grouped', () => {
   };
   render(React.createElement(SignPanel, props, null));
 
-  userEvent.click(screen.getByRole('button', { name: 'Ungroup' }));
-  userEvent.click(
+  await user.click(screen.getByRole('button', { name: 'Ungroup' }));
+  await user.click(
     screen.getByRole('button', { name: 'Yes, ungroup this sign' }),
   );
 
   expect(ungroupFn).toHaveBeenCalled();
 });
 
-test('allows backing out of the ungrouping prompt', () => {
+test('allows backing out of the ungrouping prompt', async () => {
+  const user = userEvent.setup();
   const signGroup: SignGroup = {
     sign_ids: ['id'],
     line1: 'custom',
@@ -610,15 +612,16 @@ test('allows backing out of the ungrouping prompt', () => {
   };
   render(React.createElement(SignPanel, props, null));
 
-  userEvent.click(screen.getByRole('button', { name: 'Ungroup' }));
-  userEvent.click(screen.getByRole('button', { name: 'Cancel' }));
+  await user.click(screen.getByRole('button', { name: 'Ungroup' }));
+  await user.click(screen.getByRole('button', { name: 'Cancel' }));
 
   expect(ungroupFn).not.toHaveBeenCalled();
   expect(screen.getByRole('button', { name: 'Ungroup' })).not.toBeDisabled();
   expect(screen.queryByRole('button', { name: 'Cancel' })).toBeNull();
 });
 
-test('does not save changes to backend until Apply is pressed', () => {
+test('does not save changes to backend until Apply is pressed', async () => {
+  const user = userEvent.setup();
   const now = new Date('2019-01-15T20:15:00Z').valueOf();
   const fresh = new Date(now + 5000).toLocaleString();
   const currentTime = now + 2000;
@@ -648,19 +651,19 @@ test('does not save changes to backend until Apply is pressed', () => {
     }),
   );
 
-  userEvent.selectOptions(screen.getByTestId('select-arincId'), 'Custom');
-  userEvent.type(screen.getByTestId('arincId-line1-input'), 'line1');
-  userEvent.type(screen.getByTestId('arincId-line2-input'), 'line2');
-  userEvent.click(screen.getByLabelText('Schedule return to "Auto"'));
-  userEvent.click(screen.getByLabelText('Date and time'));
-  userEvent.click(
+  await user.selectOptions(screen.getByTestId('arincId'), 'Custom');
+  await user.type(screen.getByTestId('arincId-line1-input'), 'line1');
+  await user.type(screen.getByTestId('arincId-line2-input'), 'line2');
+  await user.click(screen.getByLabelText('Schedule return to "Auto"'));
+  await user.click(screen.getByLabelText('Date and time'));
+  await user.click(
     screen.getByLabelText('At the end of an alert effect period'),
   );
-  userEvent.click(screen.getByRole('button', { name: 'alert1' }));
+  await user.click(screen.getByRole('button', { name: 'alert1' }));
 
   expect(setConfigHistory).toEqual([]);
 
-  userEvent.click(screen.getByRole('button', { name: 'Apply' }));
+  await user.click(screen.getByRole('button', { name: 'Apply' }));
 
   expect(setConfigHistory).toEqual([
     {
@@ -673,7 +676,8 @@ test('does not save changes to backend until Apply is pressed', () => {
   ]);
 });
 
-test("allows setting custom text for signs with no 'Auto' mode", () => {
+test("allows setting custom text for signs with no 'Auto' mode", async () => {
+  const user = userEvent.setup();
   const now = new Date('2019-01-15T20:15:00Z').valueOf();
   const fresh = new Date(now + 5000).toLocaleString();
   const currentTime = now + 2000;
@@ -699,15 +703,15 @@ test("allows setting custom text for signs with no 'Auto' mode", () => {
 
   expect(screen.queryByText('Set custom message')).toBeNull();
 
-  userEvent.selectOptions(screen.getByTestId('select-arincId'), 'Custom');
+  await user.selectOptions(screen.getByTestId('arincId'), 'Custom');
 
   expect(screen.queryByText('Set custom message')).not.toBeNull();
   expect(screen.queryByText('Schedule return to "Auto"')).toBeNull();
 
-  userEvent.type(screen.getByTestId('arincId-line1-input'), 'line1');
-  userEvent.type(screen.getByTestId('arincId-line2-input'), 'line2');
+  await user.type(screen.getByTestId('arincId-line1-input'), 'line1');
+  await user.type(screen.getByTestId('arincId-line2-input'), 'line2');
 
-  userEvent.click(screen.getByRole('button', { name: 'Apply' }));
+  await user.click(screen.getByRole('button', { name: 'Apply' }));
 
   expect(setConfigHistory).toEqual([
     {

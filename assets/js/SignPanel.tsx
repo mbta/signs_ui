@@ -87,7 +87,11 @@ function lineDisplayText(
     lineContent !== undefined &&
     isNotExpired(lineContent.expiration, currentTime)
   ) {
-    return choosePage(lineContent.text, (currentTime - initialTime) / 1000);
+    // ARINC signs start paging on the second page, so we rearrange the content to emulate that behavior
+    return choosePage(
+      [...lineContent.text.slice(1), ...lineContent.text.slice(0, 1)],
+      Math.round((currentTime - initialTime) / 1000),
+    );
   }
   return '';
 }

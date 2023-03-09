@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { fireEvent, render, screen, within } from '@testing-library/react';
+import { render, screen, within, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import Line from '../js/Line';
@@ -10,20 +10,21 @@ import {
   SignContent,
   StationConfig,
 } from '../js/types';
+import { UserEvent } from '@testing-library/user-event/dist/types/setup/setup';
 
-function setAllToAuto() {
-  userEvent.click(screen.getByText('All to auto'));
+async function setAllToAuto(user: UserEvent) {
+  await user.click(screen.getByText('All to auto'));
 }
 
 function getModalPrompt(): HTMLElement {
   return screen.getByTestId('modal-prompt');
 }
 
-function acceptModalPrompt(modalPrompt: HTMLElement) {
+async function acceptModalPrompt(user: UserEvent, modalPrompt: HTMLElement) {
   const acceptButton = within(modalPrompt).getByRole('button', {
     name: 'Yes, set all signs to "auto"',
   });
-  userEvent.click(acceptButton);
+  await user.click(acceptButton);
 }
 
 beforeAll(() => {
@@ -71,7 +72,7 @@ test('Shows all signs for a line', () => {
     ),
   );
 
-  expect(screen.getByText('Alewife')).toBeInTheDocument();
+  expect(screen.getByText('Alewife')).toBeVisible();
   expect(screen.queryByText('Oak Grove')).toBeNull();
 });
 
@@ -285,7 +286,8 @@ type SignGroupCalls = {
   signGroups: RouteSignGroupsWithDeletions;
 };
 
-test('Batch mode buttons clear sign groups, too', () => {
+test('Batch mode buttons clear sign groups, too', async () => {
+  const user = userEvent.setup();
   const setSignGroupsCalls: SignGroupCalls[] = [];
 
   render(
@@ -331,17 +333,20 @@ test('Batch mode buttons clear sign groups, too', () => {
     ),
   );
 
-  setAllToAuto();
+  await act(async () => {
+    await setAllToAuto(user);
+  });
   const prompt = getModalPrompt();
   expect(prompt).toHaveTextContent('There are active sign groups at this time');
-  acceptModalPrompt(prompt);
+  await acceptModalPrompt(user, prompt);
 
   expect(setSignGroupsCalls).toEqual([
     { line: 'Red', signGroups: { group1: {}, group2: {} } },
   ]);
 });
 
-test('Shows ConfiguredHeadwaysForm if current line has branches configured', () => {
+test('Shows ConfiguredHeadwaysForm if current line has branches configured', async () => {
+  const user = userEvent.setup();
   const now = Date.now();
   const signs = {};
 
@@ -375,13 +380,16 @@ test('Shows ConfiguredHeadwaysForm if current line has branches configured', () 
     ),
   );
 
-  fireEvent.click(screen.getByText('Bulk Editing'));
-  fireEvent.click(screen.getByText('Set Headways'));
+  await act(async () => {
+    await user.click(screen.getByText('Bulk Editing'));
+    await user.click(screen.getByText('Set Headways'));
+  });
 
   expect(screen.getByRole('form')).toBeInTheDocument();
 });
 
-test('Doesn\t show ConfiguredHeadwaysForm if current line has no branches configured', () => {
+test('Doesn\t show ConfiguredHeadwaysForm if current line has no branches configured', async () => {
+  const user = userEvent.setup();
   const now = Date.now();
   const signs = {};
 
@@ -415,12 +423,13 @@ test('Doesn\t show ConfiguredHeadwaysForm if current line has no branches config
     ),
   );
 
-  fireEvent.click(screen.getByText('Bulk Editing'));
+  await user.click(screen.getByText('Bulk Editing'));
 
   expect(screen.queryByText('Set Headways')).toBeNull();
 });
 
-test('Shows ConfiguredHeadwaysForm if current line has branches configured in read-only mode', () => {
+test('Shows ConfiguredHeadwaysForm if current line has branches configured in read-only mode', async () => {
+  const user = userEvent.setup();
   const now = Date.now();
   const signs = {};
 
@@ -454,13 +463,16 @@ test('Shows ConfiguredHeadwaysForm if current line has branches configured in re
     ),
   );
 
-  fireEvent.click(screen.getByText('Bulk Editing'));
-  fireEvent.click(screen.getByText('Set Headways'));
+  await user.click(screen.getByText('Bulk Editing'));
 
+  await act(async () => {
+    await user.click(screen.getByText('Set Headways'));
+  });
   expect(screen.getByRole('form')).toBeInTheDocument();
 });
 
-test('Sign config is not affected by batch updates if sign does not support mode', () => {
+test('Sign config is not affected by batch updates if sign does not support mode', async () => {
+  const user = userEvent.setup();
   const now = Date.now();
   const signs = {};
 
@@ -556,7 +568,7 @@ test('Sign config is not affected by batch updates if sign does not support mode
     ),
   );
 
-  fireEvent.click(screen.getByText('All to off'));
+  await user.click(screen.getByText('All to off'));
   expect(setConfigs.mock.calls.length).toEqual(1);
   expect(setConfigs).toHaveBeenCalledWith({
     davis_mezzanine: {
@@ -565,7 +577,7 @@ test('Sign config is not affected by batch updates if sign does not support mode
     },
   });
 
-  fireEvent.click(screen.getByText('All to auto'));
+  await user.click(screen.getByText('All to auto'));
   expect(setConfigs.mock.calls.length).toEqual(2);
   expect(setConfigs).toHaveBeenCalledWith({
     davis_northbound: {
@@ -573,7 +585,7 @@ test('Sign config is not affected by batch updates if sign does not support mode
     },
   });
 
-  fireEvent.click(screen.getByText('All to headway'));
+  await user.click(screen.getByText('All to headway'));
   expect(setConfigs.mock.calls.length).toEqual(3);
   expect(setConfigs).toHaveBeenCalledWith({
     davis_southbound: {
@@ -583,7 +595,8 @@ test('Sign config is not affected by batch updates if sign does not support mode
   });
 });
 
-test('can toggle chelsea bridge announcements on on Silver Line page', () => {
+test('can toggle chelsea bridge announcements on on Silver Line page', async () => {
+  const user = userEvent.setup();
   const setChelseaBridgeAnnouncements = jest.fn(() => true);
   render(
     React.createElement(
@@ -607,12 +620,13 @@ test('can toggle chelsea bridge announcements on on Silver Line page', () => {
     ),
   );
 
-  fireEvent.click(screen.getByTestId('chelsea_bridge_toggle'));
+  await user.click(screen.getByLabelText('Chelsea Drawbridge Announcements'));
   expect(setChelseaBridgeAnnouncements.mock.calls.length).toEqual(1);
   expect(setChelseaBridgeAnnouncements).toHaveBeenCalledWith('auto');
 });
 
-test('can toggle chelsea bridge announcements off on Silver Line page', () => {
+test('can toggle chelsea bridge announcements off on Silver Line page', async () => {
+  const user = userEvent.setup();
   const setChelseaBridgeAnnouncements = jest.fn(() => true);
   render(
     React.createElement(
@@ -636,7 +650,7 @@ test('can toggle chelsea bridge announcements off on Silver Line page', () => {
     ),
   );
 
-  fireEvent.click(screen.getByTestId('chelsea_bridge_toggle'));
+  await user.click(screen.getByLabelText('Chelsea Drawbridge Announcements'));
   expect(setChelseaBridgeAnnouncements.mock.calls.length).toEqual(1);
   expect(setChelseaBridgeAnnouncements).toHaveBeenCalledWith('off');
 });
@@ -665,7 +679,9 @@ test('does not show chelsea bridge announcements toggle on non-Silver Line pages
     ),
   );
 
-  expect(screen.queryByTestId('chelsea_bridge_toggle')).toBeNull();
+  expect(
+    screen.queryByLabelText('Chelsea Drawbridge Announcements'),
+  ).toBeNull();
 });
 
 test('does not show chelsea bridge toggle if in read-only mode', () => {
@@ -691,10 +707,13 @@ test('does not show chelsea bridge toggle if in read-only mode', () => {
     screen.getByText('Chelsea Drawbridge Announcements:'),
   ).toBeInTheDocument();
   expect(screen.getByText('Auto')).toBeInTheDocument();
-  expect(screen.queryByTestId('chelsea_bridge_toggle')).toBeNull();
+  expect(
+    screen.queryByLabelText('Chelsea Drawbridge Announcements'),
+  ).toBeNull();
 });
 
-test('allows removing an individual sign from a group', () => {
+test('allows removing an individual sign from a group', async () => {
+  const user = userEvent.setup();
   const line = 'Red';
   const setSignGroups = jest.fn();
   const groupKey = '1625778000';
@@ -731,8 +750,8 @@ test('allows removing an individual sign from a group', () => {
 
   const central = within(screen.getByRole('region', { name: 'Central' }));
   const centralNB = within(central.getByRole('region', { name: 'NB' }));
-  userEvent.click(centralNB.getByRole('button', { name: 'Ungroup' }));
-  userEvent.click(centralNB.getByRole('button', { name: /Yes/ }));
+  await user.click(centralNB.getByRole('button', { name: 'Ungroup' }));
+  await user.click(centralNB.getByRole('button', { name: /Yes/ }));
 
   expect(centralNB.queryByRole('button', { name: /Yes/ })).toBeNull();
   expect(setSignGroups).toHaveBeenCalledWith(line, {

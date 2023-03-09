@@ -13,6 +13,7 @@
   padding: 10px 16px;
   text-transform: uppercase;
   user-select: none;
+  display: flex;
 }
 
 .rc-collapse-header .arrow {

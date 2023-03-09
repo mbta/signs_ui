@@ -29,13 +29,13 @@ interface ConfiguredHeadwaysFormProps {
   readOnly: boolean;
 }
 
-const ConfiguredHeadwaysForm = ({
+function ConfiguredHeadwaysForm({
   branches,
   configuredHeadways,
   setConfiguredHeadways,
   readOnly,
   timePeriods = timePeriodConfig,
-}: ConfiguredHeadwaysFormProps) => {
+}: ConfiguredHeadwaysFormProps) {
   const formSchema = React.useMemo(
     () =>
       object().shape({
@@ -238,7 +238,7 @@ const ConfiguredHeadwaysForm = ({
       </Formik>
     </div>
   );
-};
+}
 
 ConfiguredHeadwaysForm.defaultProps = {
   timePeriods: timePeriodConfig,

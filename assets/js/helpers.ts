@@ -12,7 +12,7 @@ function choosePage(
   let excessTime = elapsedSeconds % repeatTime;
 
   for (let i = 0; i < pages.length; i += 1) {
-    if (excessTime <= pages[i].duration) {
+    if (excessTime < pages[i].duration) {
       return pages[i].content;
     }
     excessTime -= pages[i].duration;
