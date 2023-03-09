@@ -150,7 +150,6 @@ function ConfiguredHeadwaysForm({
                   <button
                     type="button"
                     id="edit"
-                    data-testid="headways-edit-button"
                     className="btn p-0 bg-transparent d-flex align-items-center"
                     onClick={() => setInEditMode(true)}
                   >
