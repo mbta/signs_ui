@@ -45,7 +45,6 @@ function SignTextInput({
       <div>
         <input
           id={`${signID}-line1-input`}
-          data-testid={`${signID}-line1-input`}
           className="custom_text_input--line-input"
           type="text"
           maxLength={18}
@@ -58,7 +57,6 @@ function SignTextInput({
       <div>
         <input
           id={`${signID}-line2-input`}
-          data-testid={`${signID}-line2-input`}
           className="custom_text_input--line-input"
           type="text"
           maxLength={24}
