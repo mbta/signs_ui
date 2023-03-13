@@ -13,7 +13,6 @@ let timePeriods: ConfiguredHeadwaysFormProps['timePeriods'];
 let readOnly: ConfiguredHeadwaysFormProps['readOnly'];
 let configuredHeadways: ConfiguredHeadwaysFormProps['configuredHeadways'];
 let setConfiguredHeadways: ConfiguredHeadwaysFormProps['setConfiguredHeadways'];
-const user = userEvent.setup();
 window.confirm = jest.fn(() => true);
 
 beforeEach(() => {
@@ -48,6 +47,7 @@ function renderWrapper() {
 
 describe('With Multi-sign Headway not enabled', () => {
   test('Can enable multi-sign headways when form is complete', async () => {
+    const user = userEvent.setup();
     const { container } = render(
       React.createElement(ConfiguredHeadwaysForm, {
         branches,
@@ -154,13 +154,17 @@ describe('With Multi-sign Headway enabled', () => {
     };
   });
 
-  test('Form is initially open', () => {
-    renderWrapper();
+  test('Form is initially open', async () => {
+    await act(async () => {
+      renderWrapper();
+    });
     expect(screen.getByRole('form')).toBeVisible();
   });
 
-  test('Inputs are initially disabled', () => {
-    renderWrapper();
+  test('Inputs are initially disabled', async () => {
+    await act(async () => {
+      renderWrapper();
+    });
 
     const inputs = screen.queryAllByRole('input');
     inputs.forEach((input) => {
@@ -169,8 +173,11 @@ describe('With Multi-sign Headway enabled', () => {
   });
 
   test('Clicking button enables inputs', async () => {
+    const user = userEvent.setup();
     renderWrapper();
-    await user.click(screen.getByRole('button', { name: 'edit' }));
+    await act(async () => {
+      await user.click(screen.getByRole('button', { name: 'edit' }));
+    });
 
     const inputs = screen.queryAllByRole('input');
     inputs.forEach((input) => {
@@ -179,6 +186,7 @@ describe('With Multi-sign Headway enabled', () => {
   });
 
   test('Can apply new values after making edits', async () => {
+    const user = userEvent.setup();
     const { container } = render(
       React.createElement(ConfiguredHeadwaysForm, {
         branches,
@@ -223,6 +231,7 @@ describe('With Multi-sign Headway enabled', () => {
   });
 
   test('Can cancel edits', async () => {
+    const user = userEvent.setup();
     const { container } = render(
       React.createElement(ConfiguredHeadwaysForm, {
         branches,
@@ -266,6 +275,7 @@ describe('With Multi-sign Headway enabled', () => {
   });
 
   test('Invalid headways show error message', async () => {
+    const user = userEvent.setup();
     const { container } = render(
       React.createElement(ConfiguredHeadwaysForm, {
         branches,
@@ -284,27 +294,21 @@ describe('With Multi-sign Headway enabled', () => {
 
       await user.type(
         container.querySelector(
-          'input[name="branches.[0].morning.range_high"]',
-        )!,
-        '8',
-      );
-
-      await user.type(
-        container.querySelector(
           'input[name="branches.[0].morning.range_low"]',
         )!,
         '10',
       );
-
-      await waitFor(() => {
-        expect(container.querySelector('.alert-danger')).toEqual(null);
-      });
-
+      await user.type(
+        container.querySelector(
+          'input[name="branches.[0].morning.range_high"]',
+        )!,
+        '8',
+      );
       await user.tab();
     });
 
-    await waitFor(() => {
-      expect(container.querySelector('.alert-danger')).not.toEqual(null);
-    });
+    expect(
+      screen.getByText('Error: All headway ranges must be valid.'),
+    ).toBeVisible();
   });
 });
