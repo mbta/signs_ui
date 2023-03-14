@@ -104,7 +104,7 @@ function ConfiguredHeadwaysForm({
   const {
     register,
     handleSubmit,
-    formState: { errors, isDirty, isValid },
+    formState: { isDirty, isValid },
     reset,
   } = useForm<Inputs>({
     resolver: yupResolver(formSchema),
