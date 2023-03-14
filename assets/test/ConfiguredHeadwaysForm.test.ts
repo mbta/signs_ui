@@ -228,6 +228,8 @@ describe('With Multi-sign Headway enabled', () => {
         evening: { range_low: 1, range_high: 8 },
       },
     });
+
+    expect(screen.getByRole('button', { name: 'Apply' })).toBeDisabled();
   });
 
   test('Can cancel edits', async () => {
