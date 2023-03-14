@@ -126,6 +126,7 @@ function ConfiguredHeadwaysForm({
         {},
       );
       setConfiguredHeadways(newConfig);
+      reset({}, { keepValues: true });
     },
     [setConfiguredHeadways],
   );
@@ -172,7 +173,7 @@ function ConfiguredHeadwaysForm({
                 className="text-danger btn p-0 bg-transparent d-flex align-items-center"
                 onClick={() => {
                   setInEditMode(false);
-                  reset();
+                  reset(initialFormValues);
                 }}
               >
                 <FontAwesomeIcon className="mr-1" icon={faTimes} />
