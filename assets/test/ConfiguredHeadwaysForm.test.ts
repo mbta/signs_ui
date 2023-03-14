@@ -296,15 +296,15 @@ describe('With Multi-sign Headway enabled', () => {
 
       await user.type(
         container.querySelector(
-          'input[name="branches.[0].morning.range_low"]',
-        )!,
-        '10',
-      );
-      await user.type(
-        container.querySelector(
           'input[name="branches.[0].morning.range_high"]',
         )!,
         '8',
+      );
+      await user.type(
+        container.querySelector(
+          'input[name="branches.[0].morning.range_low"]',
+        )!,
+        '10',
       );
       await user.tab();
     });

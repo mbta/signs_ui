@@ -144,7 +144,7 @@ function ConfiguredHeadwaysForm({
   );
   return (
     <div className="mb-5">
-      {errors.branches ? (
+      {!isValid ? (
         <div className="alert alert-danger">
           Error: All headway ranges must be valid.
         </div>
