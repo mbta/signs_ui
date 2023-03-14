@@ -300,6 +300,11 @@ describe('With Multi-sign Headway enabled', () => {
         )!,
         '8',
       );
+
+      expect(
+        screen.queryByText('Error: All headway ranges must be valid.'),
+      ).toBeNull();
+
       await user.type(
         container.querySelector(
           'input[name="branches.[0].morning.range_low"]',
