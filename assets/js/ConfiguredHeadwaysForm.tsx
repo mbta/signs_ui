@@ -8,6 +8,7 @@ import { timePeriodConfig } from './mbta';
 import { ConfiguredHeadways } from './types';
 
 /* eslint-disable camelcase */
+/* eslint-disable react/jsx-props-no-spreading */
 
 type Inputs = {
   branches: {
@@ -100,6 +101,17 @@ function ConfiguredHeadwaysForm({
     setInEditMode(!isEnabled);
   }, [branches, configuredHeadways, isEnabled]);
 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isDirty, isValid },
+    reset,
+  } = useForm<Inputs>({
+    resolver: yupResolver(formSchema),
+    defaultValues: initialFormValues,
+    mode: 'onBlur',
+  });
+
   const onSumbit: SubmitHandler<Inputs> = React.useCallback(
     (values: {
       branches: {
@@ -130,18 +142,6 @@ function ConfiguredHeadwaysForm({
     },
     [setConfiguredHeadways],
   );
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isDirty, isValid },
-    reset,
-  } = useForm<Inputs>({
-    resolver: yupResolver(formSchema),
-    defaultValues: initialFormValues,
-    mode: 'onBlur',
-  });
-
   return (
     <div className="mb-5">
       {errors.branches ? (
