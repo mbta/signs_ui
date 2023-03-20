@@ -57,7 +57,7 @@
     "react": "^16.4.1",
     "react-datepicker": "^4.10.0",
     "react-dom": "^16.4.1",
-    "react-hook-form": "^7.43.5",
+    "react-hook-form": "^7.43.7",
     "source-map-loader": "^4.0.1",
     "ts-jest": "^29.0.5",
     "ts-loader": "^9.4.2",
