@@ -32,9 +32,9 @@ defmodule CountdownClockPlayback do
         String.contains?(row, "update_single_line:") or String.contains?(row, "update_sign:")
       end)
       |> Stream.map(fn row ->
-        [_, timestamp, _, _, update_type, message | _] = String.split(row, " ")
+        [_, timestamp, _, _, _, message | _] = String.split(row, " ")
         {:ok, timestamp, _} = DateTime.from_iso8601("#{timestamp}Z")
-        {timestamp, update_type, message}
+        {timestamp, message}
       end)
       |> Enum.reverse()
 
@@ -43,7 +43,7 @@ defmodule CountdownClockPlayback do
 
   @impl true
   def handle_info(:run_simulation_step, [current_message]) do
-    {_, _, message} = current_message
+    {_, message} = current_message
     update_signs_ui(message)
 
     Process.exit(self(), :normal)
@@ -52,14 +52,14 @@ defmodule CountdownClockPlayback do
 
   @impl true
   def handle_info(:run_simulation_step, [current_message | remaining_messages]) do
-    {timestamp, _, message} = current_message
+    {timestamp, message} = current_message
     update_signs_ui(message)
 
     IO.puts(
       "Sent message: #{message} from #{timestamp} (#{length(remaining_messages)} remaining)"
       )
 
-    {next_message_timestamp, _, _} = List.first(remaining_messages)
+    {next_message_timestamp, _} = List.first(remaining_messages)
     delay = DateTime.diff(next_message_timestamp, timestamp, :millisecond)
     Process.send_after(self(), :run_simulation_step, delay)
 
