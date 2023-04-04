@@ -55,7 +55,7 @@
     "phoenix_html": "^3.3.1",
     "rc-collapse": "^3.5.2",
     "react": "^16.4.1",
-    "react-datepicker": "^4.10.0",
+    "react-datepicker": "^4.11.0",
     "react-dom": "^16.4.1",
     "react-hook-form": "^7.43.8",
     "source-map-loader": "^4.0.1",
