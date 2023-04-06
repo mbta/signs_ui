@@ -1,12 +1,9 @@
-defmodule SignsUi.Mock.AwsRequest do
-  @moduledoc false
-
-  def request(%{http_method: :put} = put_object) do
-    {:ok, put_object}
+defmodule SignsUi.Mock.ConfigStore do
+  def write(_) do
   end
 
-  def request(%{http_method: :get}) do
-    config = %{
+  def read() do
+    %{
       "signs" => %{
         "ashmont_mezzanine" => %{"mode" => "auto"},
         "cedar_grove_outbound" => %{"mode" => "auto"},
@@ -50,7 +47,6 @@ defmodule SignsUi.Mock.AwsRequest do
       "chelsea_bridge_announcements" => "auto",
       "sign_groups" => %{}
     }
-
-    {:ok, %{body: Jason.encode!(config)}}
+    |> Jason.encode!()
   end
 end
