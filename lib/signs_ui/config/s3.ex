@@ -1,6 +1,6 @@
 defmodule SignsUi.Config.S3 do
   @moduledoc """
-  Serializes and uploads the SignsUi.Config.State to the S3 bucket.
+  Allows reading and writing sign configs in the S3 bucket.
   """
 
   def write(content) do

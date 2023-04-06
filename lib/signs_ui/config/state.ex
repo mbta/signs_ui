@@ -70,7 +70,7 @@ defmodule SignsUi.Config.State do
     GenServer.call(pid, {:update_sign_groups, changes})
   end
 
-  @spec init(any()) :: {:ok, t()} | {:stop, any()}
+  @spec init(any()) :: {:ok, t()}
   def init(_) do
     schedule_clean(self(), 60_000)
     config_store = Application.get_env(:signs_ui, :config_store)
@@ -78,13 +78,15 @@ defmodule SignsUi.Config.State do
 
     state = %{
       signs:
-        Map.get(response, "signs", %{})
+        response
+        |> Map.get("signs", %{})
         |> Map.new(fn {sign_id, config} -> {sign_id, Sign.from_json(sign_id, config)} end),
       configured_headways:
-        Map.get(response, "configured_headways", %{})
+        response
+        |> Map.get("configured_headways", %{})
         |> ConfiguredHeadways.parse_configured_headways_json(),
       chelsea_bridge_announcements: Map.get(response, "chelsea_bridge_announcements", "off"),
-      sign_groups: Map.get(response, "sign_groups", %{}) |> SignGroups.from_json()
+      sign_groups: response |> Map.get("sign_groups", %{}) |> SignGroups.from_json()
     }
 
     {:ok, state}
