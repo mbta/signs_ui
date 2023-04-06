@@ -1,10 +1,12 @@
 defmodule SignsUi.Config.Local do
   @moduledoc "Stores signs configs in a local file"
 
+  # sobelow_skip ["Traversal"]
   def write(content) do
     File.write!(path(), content)
   end
 
+  # sobelow_skip ["Traversal"]
   def read do
     case File.read(path()) do
       {:ok, content} -> content
