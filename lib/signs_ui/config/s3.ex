@@ -7,7 +7,7 @@ defmodule SignsUi.Config.S3 do
     {:ok, _} = ExAws.S3.put_object(bucket_name(), path_name(), content) |> ExAws.request()
   end
 
-  def read() do
+  def read do
     {:ok, %{body: content}} = ExAws.S3.get_object(bucket_name(), path_name()) |> ExAws.request()
     content
   end

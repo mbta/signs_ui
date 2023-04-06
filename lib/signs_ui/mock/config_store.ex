@@ -1,8 +1,10 @@
 defmodule SignsUi.Mock.ConfigStore do
+  @moduledoc "Mock config store for tests."
+
   def write(_) do
   end
 
-  def read() do
+  def read do
     %{
       "signs" => %{
         "ashmont_mezzanine" => %{"mode" => "auto"},

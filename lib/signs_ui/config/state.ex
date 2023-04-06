@@ -7,8 +7,8 @@ defmodule SignsUi.Config.State do
 
   alias SignsUi.Config
   alias SignsUi.Config.ConfiguredHeadways
-  alias SignsUi.Config.SignGroups
   alias SignsUi.Config.Sign
+  alias SignsUi.Config.SignGroups
   alias SignsUi.Config.Utilities
 
   @type t :: %{
