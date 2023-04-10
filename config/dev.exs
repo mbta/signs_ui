@@ -42,9 +42,7 @@ config :signs_ui, SignsUiWeb.Endpoint,
   ]
 
 config :signs_ui,
-  signs_external_post_mod: SignsUi.Mock.Write,
-  aws_requestor: SignsUi.Mock.AwsRequest,
-  local_write_path: "test/mock_write.json"
+  config_store: SignsUi.Config.Local
 
 config :signs_ui, SignsUiWeb.AuthManager,
   issuer: "signs_ui",

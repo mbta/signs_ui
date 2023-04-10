@@ -9,8 +9,7 @@ config :signs_ui, SignsUiWeb.Endpoint,
 
 # Internal configuration
 config :signs_ui,
-  signs_external_post_mod: SignsUi.Config.S3,
-  aws_requestor: ExAws,
+  config_store: SignsUi.Config.S3,
   refresh_token_store: SignsUi.RefreshTokenStore,
   alert_producer: ServerSentEventStage,
   alert_consumer_opts: [

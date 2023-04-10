@@ -20,9 +20,6 @@ defmodule SignsUi.Messages.SignContent do
           pages: [page()]
         }
 
-  # credo:disable-for-this-file Credo.Check.Refactor.PipeChainStart
-  # since the DSL is more comprehensible this way
-
   page_text =
     ignore(string("-"))
     |> ignore(string("\""))

@@ -7,6 +7,7 @@ defmodule SignsUi.Config.State do
 
   alias SignsUi.Config
   alias SignsUi.Config.ConfiguredHeadways
+  alias SignsUi.Config.Sign
   alias SignsUi.Config.SignGroups
   alias SignsUi.Config.Utilities
 
@@ -69,18 +70,26 @@ defmodule SignsUi.Config.State do
     GenServer.call(pid, {:update_sign_groups, changes})
   end
 
-  @spec init(any()) :: {:ok, t()} | {:stop, any()}
+  @spec init(any()) :: {:ok, t()}
   def init(_) do
-    case Config.Request.get_state() do
-      {:ok, config} ->
-        # re-save state, since format was updated
-        save_state(config)
-        schedule_clean(self(), 60_000)
-        {:ok, config}
+    schedule_clean(self(), 60_000)
+    config_store = Application.get_env(:signs_ui, :config_store)
+    response = config_store.read() |> Jason.decode!()
 
-      {:error, reason} ->
-        {:stop, reason}
-    end
+    state = %{
+      signs:
+        response
+        |> Map.get("signs", %{})
+        |> Map.new(fn {sign_id, config} -> {sign_id, Sign.from_json(sign_id, config)} end),
+      configured_headways:
+        response
+        |> Map.get("configured_headways", %{})
+        |> ConfiguredHeadways.parse_configured_headways_json(),
+      chelsea_bridge_announcements: Map.get(response, "chelsea_bridge_announcements", "off"),
+      sign_groups: response |> Map.get("sign_groups", %{}) |> SignGroups.from_json()
+    }
+
+    {:ok, state}
   end
 
   def handle_call(:get_all, _from, signs) do
@@ -119,7 +128,7 @@ defmodule SignsUi.Config.State do
   @spec save_sign_config_changes(%{Config.Sign.id() => Config.Sign.t()}, t()) :: t()
   defp save_sign_config_changes(changes, %{signs: old_signs} = old_state) do
     signs = Map.merge(old_signs, changes)
-    {:ok, _} = save_state(%{old_state | signs: signs})
+    save_state(%{old_state | signs: signs})
 
     broadcast_data =
       signs
@@ -139,7 +148,7 @@ defmodule SignsUi.Config.State do
        ) do
     new_state = %{old_state | configured_headways: new_configured_headways}
 
-    {:ok, _} = save_state(new_state)
+    save_state(new_state)
 
     SignsUiWeb.Endpoint.broadcast!(
       "headways:all",
@@ -153,7 +162,7 @@ defmodule SignsUi.Config.State do
   @spec save_chelsea_bridge_announcements(String.t(), t()) :: t()
   defp save_chelsea_bridge_announcements(value, old_state) do
     new_state = Map.put(old_state, :chelsea_bridge_announcements, value)
-    {:ok, _} = save_state(new_state)
+    save_state(new_state)
 
     SignsUiWeb.Endpoint.broadcast!(
       "chelseaBridgeAnnouncements:all",
@@ -170,7 +179,7 @@ defmodule SignsUi.Config.State do
 
     new_state = %{old_state | sign_groups: new_groups}
 
-    {:ok, _} = save_state(new_state)
+    save_state(new_state)
 
     SignsUiWeb.Endpoint.broadcast!(
       "signGroups:all",
@@ -181,9 +190,25 @@ defmodule SignsUi.Config.State do
     new_state
   end
 
-  defp save_state(new_state) do
-    external_post_mod = Application.get_env(:signs_ui, :signs_external_post_mod)
-    {:ok, _} = external_post_mod.update(new_state)
+  defp save_state(%{
+         signs: signs,
+         configured_headways: configured_headways,
+         chelsea_bridge_announcements: chelsea_bridge_announcements,
+         sign_groups: sign_groups
+       }) do
+    config_store = Application.get_env(:signs_ui, :config_store)
+
+    Jason.encode!(
+      %{
+        "signs" => Config.Signs.format_signs_for_json(signs),
+        "configured_headways" =>
+          Config.ConfiguredHeadways.format_configured_headways_for_json(configured_headways),
+        "chelsea_bridge_announcements" => chelsea_bridge_announcements,
+        "sign_groups" => sign_groups
+      },
+      pretty: true
+    )
+    |> config_store.write()
   end
 
   defp schedule_clean(pid, ms) do
