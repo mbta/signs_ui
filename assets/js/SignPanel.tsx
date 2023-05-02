@@ -220,7 +220,9 @@ function SignPanel({
                 value={signConfig.mode}
                 onChange={handleModeSelect}
               >
-                {modes.auto && <option value="auto">Auto</option>}
+                {(modes.auto || signConfig.mode === 'auto') && (
+                  <option value="auto">Auto</option>
+                )}
                 {modes.headway && <option value="headway">Headways</option>}
                 {modes.custom && <option value="static_text">Custom</option>}
                 {modes.off && <option value="off">Off</option>}

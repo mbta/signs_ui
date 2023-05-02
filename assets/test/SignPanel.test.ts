@@ -288,105 +288,57 @@ test('does show select when not in read-only mode', () => {
 });
 
 test.each([
-  [
-    { auto: true },
-    {
-      auto: true,
-      static_text: false,
-      headway: false,
-      off: false,
-    },
-  ],
-  [
-    { auto: true, headway: true },
-    {
-      auto: true,
-      static_text: false,
-      headway: true,
-      off: false,
-    },
-  ],
-  [
-    { custom: true },
-    {
-      auto: false,
-      static_text: true,
-      headway: false,
-      off: false,
-    },
-  ],
-  [
-    { off: true },
-    {
-      auto: false,
-      static_text: false,
-      headway: false,
-      off: true,
-    },
-  ],
-])(
-  'shows configured mode select options',
-  (
-    modesOverride,
-    expected: {
-      auto: boolean;
-      static_text: boolean;
-      headway: boolean;
-      off: boolean;
-    },
-  ) => {
-    const now = new Date('2019-01-15T20:15:00Z').valueOf();
-    const fresh = new Date(now + 5000).toLocaleString();
-    const currentTime = now + 2000;
-    const signId = 'RDAV-n';
-    const line = 'Red';
-    const signConfig: SignConfig = { mode: 'auto' };
-    const signContent = signContentWithExpirations(fresh, fresh);
-    const setConfig = () => true;
-    const realtimeId = 'id';
-    const readOnly = false;
-    const modes: ZoneConfig['modes'] = {
-      auto: false,
-      headway: false,
-      custom: false,
-      off: false,
-      ...modesOverride,
-    };
+  ['auto', { auto: true }, ['auto']],
+  ['auto', { auto: true, headway: true }, ['auto', 'headway']],
+  ['static_text', { custom: true }, ['static_text']],
+  ['off', { off: true }, ['off']],
+  ['auto', { off: true }, ['auto', 'off']],
+])('shows configured mode select options', (mode, modesOverride, expected) => {
+  const now = new Date('2019-01-15T20:15:00Z').valueOf();
+  const fresh = new Date(now + 5000).toLocaleString();
+  const currentTime = now + 2000;
+  const signId = 'RDAV-n';
+  const line = 'Red';
+  const signConfig: SignConfig = { mode: mode as SignConfig['mode'] };
+  const signContent = signContentWithExpirations(fresh, fresh);
+  const setConfig = () => true;
+  const realtimeId = 'id';
+  const readOnly = false;
+  const modes: ZoneConfig['modes'] = {
+    auto: false,
+    headway: false,
+    custom: false,
+    off: false,
+    ...modesOverride,
+  };
 
-    render(
-      React.createElement(
-        SignPanel,
-        {
-          alerts: {},
-          signId,
-          signContent,
-          currentTime,
-          line,
-          signConfig,
-          setConfig,
-          realtimeId,
-          readOnly,
-          modes,
-        },
-        null,
-      ),
-    );
+  render(
+    React.createElement(
+      SignPanel,
+      {
+        alerts: {},
+        signId,
+        signContent,
+        currentTime,
+        line,
+        signConfig,
+        setConfig,
+        realtimeId,
+        readOnly,
+        modes,
+      },
+      null,
+    ),
+  );
 
-    expect(screen.getByRole('combobox')).toBeInTheDocument();
+  expect(screen.getByRole('combobox')).toBeInTheDocument();
 
-    const options = screen
-      .getAllByRole('option')
-      .map((option) => option.getAttribute('value'));
+  const options = screen
+    .getAllByRole('option')
+    .map((option) => option.getAttribute('value'));
 
-    (Object.keys(expected) as Array<SignModeOptions>).forEach((mode) => {
-      if (expected[mode] && expected[mode] === true) {
-        expect(options.includes(mode)).toBeTruthy();
-      } else {
-        expect(options.includes(mode)).toBeFalsy();
-      }
-    });
-  },
-);
+  expect(options).toEqual(expected);
+});
 
 test('can enable/disable a sign', async () => {
   const user = userEvent.setup();

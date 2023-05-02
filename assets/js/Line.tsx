@@ -15,7 +15,7 @@ import {
   SignContent,
   StationConfig,
 } from './types';
-import { arincToRealtimeId } from './helpers';
+import { arincToRealtimeId, getSignConfig } from './helpers';
 
 /* eslint-disable camelcase */
 
@@ -146,24 +146,14 @@ function Line({
   const batchModes =
     (stationConfig[line] && stationConfig[line].batchModes) || {};
 
-  const batchMode = React.useMemo(() => {
-    const uniqueModes: { [key: string]: string } = {};
-    const isMixed = stations.some((station) =>
-      Object.keys(station.zones).some((zone) => {
-        if (station.zones[zone]) {
-          const realtimeId = arincToRealtimeId(`${station.id}-${zone}`);
-          const mode = signConfigs[realtimeId] && signConfigs[realtimeId].mode;
-          if (mode) {
-            uniqueModes[mode] = mode;
-          }
-          return Object.keys(uniqueModes).length > 1;
-        }
-        return false;
-      }),
-    );
-
-    return isMixed ? 'mixed' : Object.keys(uniqueModes)[0];
-  }, [signConfigs, stations, arincToRealtimeId]);
+  const uniqueModes = new Set(
+    stations.flatMap((station) =>
+      Object.keys(station.zones).map(
+        (zone) => getSignConfig(signConfigs, station.id, zone).mode,
+      ),
+    ),
+  );
+  const batchMode = uniqueModes.size > 1 ? 'mixed' : [...uniqueModes][0];
 
   const [promptChangeAllMode, setPromptChangeAllMode] = React.useState<
     string | null

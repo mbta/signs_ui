@@ -205,10 +205,7 @@ test('Does not show "Mixed" batch mode buttons when one mode is chosen', () => {
 
   const currentTime = now + 2000;
   const line = 'Red';
-  const signConfigs: SignConfigs = {
-    red_south_station_northbound: { expires: null, mode: 'headway' },
-    central_southbound: { expires: null, mode: 'headway' },
-  };
+  const signConfigs: SignConfigs = {}; // default all to auto
   const setConfigs = () => true;
   const readOnly = false;
   const configuredHeadways = {};
@@ -299,7 +296,7 @@ test('Batch mode buttons clear sign groups, too', async () => {
         currentTime: Date.now() + 2000,
         line: 'Red',
         signConfigs: {
-          alewife_center_southbound: {
+          davis_northbound: {
             mode: 'off',
           },
         },
@@ -478,7 +475,10 @@ test('Sign config is not affected by batch updates if sign does not support mode
 
   const currentTime = now + 2000;
   const line = 'Red';
-  const signConfigs: SignConfigs = {};
+  const signConfigs: SignConfigs = {
+    davis_northbound: { mode: 'auto' },
+    davis_southbound: { mode: 'off', expires: null },
+  };
   const setConfigs = jest.fn(() => true);
   const setConfiguredHeadways = () => true;
   const readOnly = false;
@@ -706,7 +706,6 @@ test('does not show chelsea bridge toggle if in read-only mode', () => {
   expect(
     screen.getByText('Chelsea Drawbridge Announcements:'),
   ).toBeInTheDocument();
-  expect(screen.getByText('Auto')).toBeInTheDocument();
   expect(
     screen.queryByLabelText('Chelsea Drawbridge Announcements'),
   ).toBeNull();

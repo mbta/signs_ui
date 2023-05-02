@@ -10,7 +10,7 @@ import {
   StationConfig,
   Zone,
 } from './types';
-import { defaultZoneLabel, arincToRealtimeId } from './helpers';
+import { defaultZoneLabel, arincToRealtimeId, getSignConfig } from './helpers';
 
 /* eslint-disable camelcase */
 
@@ -62,7 +62,7 @@ function makeSign(
     const key = `${config.id}-${zone}`;
     const signContent = signs[key] || { sign_id: key, lines: {} };
     const realtimeId = arincToRealtimeId(key);
-    const signConfig = signConfigs[realtimeId] || { mode: 'off' };
+    const signConfig = getSignConfig(signConfigs, config.id, zone);
     const signGroupKey = signsToGroups[realtimeId];
     const signGroup = signGroupKey ? signGroups[signGroupKey] : undefined;
     const ungroupMe = signGroupKey ? () => ungroupSign(realtimeId) : undefined;

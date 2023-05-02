@@ -1,4 +1,4 @@
-import { RouteAlerts, Alerts, Zone } from './types';
+import { RouteAlerts, Alerts, Zone, SignConfigs } from './types';
 
 function choosePage(
   pages: { content: string; duration: number }[],
@@ -108,10 +108,21 @@ function arincToRealtimeId(stationZone: string): string {
   return window.arincToRealtimeIdMap[stationZone];
 }
 
+function getSignConfig(
+  signConfigs: SignConfigs,
+  stationId: string,
+  zone: string,
+) {
+  return (
+    signConfigs[arincToRealtimeId(`${stationId}-${zone}`)] || { mode: 'auto' }
+  );
+}
+
 export {
   choosePage,
   alertsForLine,
   formatTime,
   defaultZoneLabel,
   arincToRealtimeId,
+  getSignConfig,
 };
