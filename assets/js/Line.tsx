@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Collapse, { Panel } from 'rc-collapse';
-import Tabs, { TabPane } from 'rc-tabs';
+import Tabs from 'rc-tabs';
 import ConfiguredHeadwaysForm from './ConfiguredHeadwaysForm';
 import Station from './Station';
 import { stationConfig, branchConfig } from './mbta';
@@ -232,28 +232,43 @@ function Line({
       <h1>{name(line)}</h1>
       <Collapse destroyInactivePanel>
         <Panel header="Bulk Editing">
-          <Tabs defaultActiveKey="0" tabBarStyle={{}} id="tab-panel-container">
-            <TabPane tab="Sign Groups">
-              <SignGroups
-                line={line}
-                currentTime={currentTime}
-                alerts={alerts}
-                signGroups={signGroups}
-                setSignGroups={setSignGroups}
-                readOnly={readOnly}
-              />
-            </TabPane>
-            {branches.length > 0 && (
-              <TabPane tab="Set Headways" key="1">
-                <ConfiguredHeadwaysForm
-                  branches={branches}
-                  configuredHeadways={configuredHeadways}
-                  setConfiguredHeadways={setConfiguredHeadways}
-                  readOnly={readOnly}
-                />
-              </TabPane>
-            )}
-          </Tabs>
+          <Tabs
+            defaultActiveKey="groups"
+            tabBarStyle={{}}
+            id="tab-panel-container"
+            items={[
+              {
+                key: 'groups',
+                label: 'Sign Groups',
+                children: (
+                  <SignGroups
+                    line={line}
+                    currentTime={currentTime}
+                    alerts={alerts}
+                    signGroups={signGroups}
+                    setSignGroups={setSignGroups}
+                    readOnly={readOnly}
+                  />
+                ),
+              },
+              ...(branches.length > 0
+                ? [
+                    {
+                      key: 'headways',
+                      label: 'Set Headways',
+                      children: (
+                        <ConfiguredHeadwaysForm
+                          branches={branches}
+                          configuredHeadways={configuredHeadways}
+                          setConfiguredHeadways={setConfiguredHeadways}
+                          readOnly={readOnly}
+                        />
+                      ),
+                    },
+                  ]
+                : []),
+            ]}
+          />
         </Panel>
       </Collapse>
 
