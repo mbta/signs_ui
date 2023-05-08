@@ -29,3 +29,7 @@
 .rc-tabs-nav-operations {
   display: none;
 }
+
+.rc-tabs-tabpane-hidden {
+  display: none;
+}
