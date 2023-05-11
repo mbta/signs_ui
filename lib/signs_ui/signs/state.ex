@@ -6,9 +6,9 @@ defmodule SignsUi.Signs.State do
 
   use GenServer
 
-  alias SignsUi.Messages.SignContent
-  alias SignsUi.Messages.Canned
   alias SignsUi.Messages.AdHoc
+  alias SignsUi.Messages.Canned
+  alias SignsUi.Messages.SignContent
   alias SignsUi.Signs.Sign
 
   @type sign_id :: String.t()

@@ -4,9 +4,9 @@ defmodule SignsUiWeb.MessagesController do
 
   alias SignsUi.Config.SignGroups
   alias SignsUi.Config.Utilities
-  alias SignsUi.Messages.SignContent
-  alias SignsUi.Messages.Canned
   alias SignsUi.Messages.AdHoc
+  alias SignsUi.Messages.Canned
+  alias SignsUi.Messages.SignContent
   alias SignsUi.Signs.State
 
   plug(:laboratory_features)
