@@ -3,28 +3,20 @@ defmodule SignsUi.Signs.Sign do
   Represents a sign (ARINC zone) on the countdown viewer.
   """
 
-  @enforce_keys [:station, :zone]
-  defstruct [:station, :zone, lines: %{}]
+  @enforce_keys [:station, :zone, :lines, :audios]
+  defstruct @enforce_keys
 
+  alias SignsUi.Messages.AdHoc
+  alias SignsUi.Messages.Canned
   alias SignsUi.Messages.SignContent
   alias SignsUi.Signs.SignLine
 
   @type t :: %__MODULE__{
           station: String.t(),
           zone: String.t(),
-          lines: %{integer() => SignLine.t()}
+          lines: %{integer() => SignLine.t()},
+          audios: [Canned.t() | AdHoc.t()]
         }
-
-  @spec new_from_message(SignContent.t()) :: t()
-  def new_from_message(%SignContent{} = msg) do
-    %__MODULE__{
-      station: msg.station,
-      zone: msg.zone,
-      lines: %{
-        msg.line_number => SignLine.new_from_message(msg)
-      }
-    }
-  end
 
   @spec update_from_message(t(), SignContent.t()) :: t()
   def update_from_message(sign, %SignContent{} = msg) do
@@ -35,13 +27,18 @@ defmodule SignsUi.Signs.Sign do
     )
   end
 
-  @spec to_json(t()) :: %{sign_id: String.t(), lines: map()}
+  @spec to_json(t()) :: %{sign_id: String.t(), lines: map(), audios: list()}
   def to_json(sign) do
     %{
       sign_id: "#{sign.station}-#{sign.zone}",
       lines:
         Map.new(sign.lines, fn {line_number, line} ->
           {line_number, SignLine.to_json(line)}
+        end),
+      audios:
+        Enum.map(sign.audios, fn
+          %Canned{} = audio -> Map.from_struct(audio) |> Map.put(:type, "canned")
+          %AdHoc{} = audio -> Map.from_struct(audio) |> Map.put(:type, "ad_hoc")
         end)
     }
   end
