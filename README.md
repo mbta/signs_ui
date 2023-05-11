@@ -2,14 +2,18 @@
 
 Web interface for MBTA countdown signs. Acts as an emulator for the physical hardware, providing real-time feedback on the current sign content. Also provides controls for modifying the sign configuration file, which can be used to override their behavior.
 
+## Prerequisites
+
+* [asdf](https://asdf-vm.com/)
+* [direnv](https://direnv.net/)
+
 ## Development
 
-  * Install languages with `asdf install`
-  * Install Elixir dependencies with `mix deps.get`
-  * Install JS dependencies with `pushd assets && npm install && popd`
-  * Install [direnv](https://direnv.net/docs/installation.html)
-  * Copy .envrc.template into .envrc, and fill in `API_V3_ORIGIN` and `API_V3_KEY` with the desired origin (e.g. https://api-v3.mbta.com) and desired key (e.g. a key from https://api-v3.mbta.com)
-  * Start the server with `NODE_ENV=development mix run --no-halt`
+* Run `asdf install` from the repository root.
+* Install Elixir dependencies with `mix deps.get`
+* Install JS dependencies with `pushd assets && npm install && popd`
+* Copy `.envrc.template` to `.envrc`, then edit `.envrc` and make sure all required environment variables are set. When finished, run `direnv allow` to activate them.
+* Start the server with `mix run --no-halt`
 
 Now you can visit [`localhost:5000`](http://localhost:5000) from your browser.
 
