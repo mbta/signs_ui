@@ -1,4 +1,5 @@
 defmodule SignsUiWeb.MessagesControllerTest do
+  use SignsUiWeb.ChannelCase
   use SignsUiWeb.ConnCase
   import ExUnit.CaptureLog
 
@@ -104,6 +105,23 @@ defmodule SignsUiWeb.MessagesControllerTest do
         |> post(messages_path(conn, :create), @update_attrs)
 
       assert response(conn, 401)
+    end
+
+    test "creates audio messages", %{conn: conn} do
+      subscribe_and_join!(socket(), SignsUiWeb.SignsChannel, "signs:all", %{})
+
+      conn
+      |> add_api_req_header()
+      |> post(messages_path(conn, :create), %{
+        "MsgType" => "Canned",
+        "mid" => "1",
+        "var" => "2,3",
+        "typ" => "0",
+        "sta" => "RDAV000100",
+        "tim" => "500"
+      })
+
+      assert_broadcast("sign_update", %{audios: [%{station: "RDAV", zones: ["s"]}]})
     end
   end
 

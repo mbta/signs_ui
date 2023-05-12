@@ -15,7 +15,8 @@ defmodule SignsUi.Signs.SignTest do
         expiration: @now,
         text: [{"a page", 5}]
       }
-    }
+    },
+    audios: []
   }
 
   @message %SignContent{
@@ -25,21 +26,6 @@ defmodule SignsUi.Signs.SignTest do
     expiration: @now,
     pages: ["a page"]
   }
-
-  describe "new_from_message/1" do
-    test "creates a new sign from a SignContent message" do
-      assert %Sign{
-               station: "XYZ",
-               zone: "w",
-               lines: %{
-                 1 => %SignLine{
-                   expiration: @now,
-                   text: [{"a page", 5}]
-                 }
-               }
-             } = Sign.new_from_message(@message)
-    end
-  end
 
   describe "update_from_message" do
     test "adds a new line to a sign without one" do
@@ -57,7 +43,8 @@ defmodule SignsUi.Signs.SignTest do
                    expiration: @now,
                    text: [{"2nd page", 5}]
                  }
-               }
+               },
+               audios: []
              } = Sign.update_from_message(@sign, message2)
     end
   end
@@ -71,7 +58,8 @@ defmodule SignsUi.Signs.SignTest do
                    expiration: @now,
                    text: [%{content: "a page", duration: 5}]
                  }
-               }
+               },
+               audios: []
              } = Sign.to_json(@sign)
     end
   end

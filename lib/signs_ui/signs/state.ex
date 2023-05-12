@@ -6,6 +6,8 @@ defmodule SignsUi.Signs.State do
 
   use GenServer
 
+  alias SignsUi.Messages.AdHoc
+  alias SignsUi.Messages.Canned
   alias SignsUi.Messages.SignContent
   alias SignsUi.Signs.Sign
 
@@ -33,8 +35,8 @@ defmodule SignsUi.Signs.State do
     GenServer.call(pid, {:get_single_sign, sign_id})
   end
 
-  @spec process_message(GenServer.server(), SignContent.t()) :: :ok
-  def process_message(pid \\ __MODULE__, %SignContent{} = message) do
+  @spec process_message(GenServer.server(), SignContent.t() | Canned.t() | AdHoc.t()) :: :ok
+  def process_message(pid \\ __MODULE__, message) do
     GenServer.call(pid, {:process_message, message})
   end
 
@@ -57,16 +59,24 @@ defmodule SignsUi.Signs.State do
     end
   end
 
-  def handle_call({:process_message, message}, _from, state) do
-    sign_id = "#{message.station}-#{message.zone}"
+  def handle_call({:process_message, %SignContent{} = message}, _from, state) do
+    %{station: station, zone: zone} = message
 
-    sign =
-      state
-      |> Map.get(sign_id, Sign.new_from_message(message))
-      |> Sign.update_from_message(message)
+    new_state =
+      update_sign(state, station, zone, fn sign ->
+        Sign.update_from_message(sign, message)
+        |> tap(&broadcast_update/1)
+      end)
 
-    broadcast_update(sign)
-    {:reply, :ok, Map.put(state, sign_id, sign)}
+    {:reply, :ok, new_state}
+  end
+
+  def handle_call({:process_message, %Canned{} = message}, _from, state) do
+    {:reply, :ok, insert_audio(state, message)}
+  end
+
+  def handle_call({:process_message, %AdHoc{} = message}, _from, state) do
+    {:reply, :ok, insert_audio(state, message)}
   end
 
   @spec broadcast_update(Sign.t()) :: :ok
@@ -74,5 +84,32 @@ defmodule SignsUi.Signs.State do
     sign = Sign.to_json(sign)
     SignsUiWeb.Endpoint.broadcast!("signs:all", "sign_update", sign)
     SignsUiWeb.Endpoint.broadcast!("sign:" <> sign.sign_id, "sign_update", sign)
+  end
+
+  defp update_sign(state, station, zone, update_fn) do
+    sign_id = "#{station}-#{zone}"
+
+    sign =
+      state
+      |> Map.get(sign_id, %Sign{station: station, zone: zone, lines: %{}, audios: []})
+      |> update_fn.()
+
+    Map.put(state, sign_id, sign)
+  end
+
+  defp insert_audio(state, audio) do
+    now = DateTime.utc_now() |> DateTime.to_unix(:millisecond)
+
+    Enum.reduce(audio.zones, state, fn zone, acc ->
+      update_sign(acc, audio.station, zone, fn sign ->
+        Map.update!(sign, :audios, fn audios ->
+          # Filter out expired audios. Note that this only happens when a new audio is being
+          # added, so the front-end is expected to do its own filtering of stale audios.
+          Enum.concat(audios, [audio])
+          |> Enum.reject(&(now > &1.timestamp + &1.timeout))
+        end)
+        |> tap(&broadcast_update/1)
+      end)
+    end)
   end
 end

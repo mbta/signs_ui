@@ -44,7 +44,8 @@ defmodule SignsUi.Signs.StateTest do
             text: [{"Alewife 1 min", 5}],
             expiration: DateTime.utc_now()
           }
-        }
+        },
+        audios: []
       }
     }
 
@@ -79,7 +80,8 @@ defmodule SignsUi.Signs.StateTest do
             text: "Alewife 1 min",
             expiration: DateTime.utc_now()
           }
-        }
+        },
+        audios: []
       }
     }
 
@@ -98,7 +100,8 @@ defmodule SignsUi.Signs.StateTest do
                 zone: "w",
                 lines: %{
                   1 => %SignLine{text: [{"2 stops", 2}, {"away", 2}, {"Stopped", 5}]}
-                }
+                },
+                audios: []
               }
             }} = State.handle_call({:process_message, msg}, self(), state)
   end
@@ -113,7 +116,8 @@ defmodule SignsUi.Signs.StateTest do
             text: [{"Alewife 1 min", 5}],
             expiration: DateTime.utc_now()
           }
-        }
+        },
+        audios: []
       },
       "ABCD-m" => %Sign{
         station: "ABCD",
@@ -123,7 +127,8 @@ defmodule SignsUi.Signs.StateTest do
             text: [{"Alewife 2 min", 5}],
             expiration: DateTime.utc_now()
           }
-        }
+        },
+        audios: []
       },
       "ABCD-e" => %Sign{
         station: "ABCD",
@@ -133,7 +138,8 @@ defmodule SignsUi.Signs.StateTest do
             text: [{"Alewife 3 min", 5}],
             expiration: DateTime.utc_now()
           }
-        }
+        },
+        audios: []
       }
     }
 

@@ -4,6 +4,8 @@ defmodule SignsUiWeb.MessagesController do
 
   alias SignsUi.Config.SignGroups
   alias SignsUi.Config.Utilities
+  alias SignsUi.Messages.AdHoc
+  alias SignsUi.Messages.Canned
   alias SignsUi.Messages.SignContent
   alias SignsUi.Signs.State
 
@@ -69,6 +71,16 @@ defmodule SignsUiWeb.MessagesController do
       end
     end)
 
+    send_resp(conn, 201, "")
+  end
+
+  def create(conn, %{"MsgType" => "Canned"} = params) do
+    State.process_message(Canned.parse(params))
+    send_resp(conn, 201, "")
+  end
+
+  def create(conn, %{"MsgType" => "AdHoc"} = params) do
+    State.process_message(AdHoc.parse(params))
     send_resp(conn, 201, "")
   end
 
