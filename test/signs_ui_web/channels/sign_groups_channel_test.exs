@@ -36,7 +36,7 @@ defmodule SignsUiWeb.SignGroupsChannelTest do
                    SignsUiWeb.SignGroupsChannel.handle_in("changeSignGroups", changes, socket)
         end)
 
-      assert log =~ "changeSignGroups"
+      assert log =~ "sign_groups_changed"
       assert log =~ "foo@mbta.com"
 
       assert_broadcast(

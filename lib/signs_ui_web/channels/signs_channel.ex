@@ -4,7 +4,6 @@ defmodule SignsUiWeb.SignsChannel do
   """
 
   use Phoenix.Channel
-  require Logger
   alias SignsUi.Config.Sign
   import SignsUiWeb.SocketAuth
 
@@ -18,10 +17,22 @@ defmodule SignsUiWeb.SignsChannel do
       new_signs = Map.new(changes, fn {id, config} -> {id, Sign.from_json(id, config)} end)
 
       {:ok, _new_state} = SignsUi.Config.State.update_sign_configs(new_signs)
+      entry = Map.values(changes) |> List.first(%{})
 
-      username = Guardian.Phoenix.Socket.current_resource(socket)
-
-      Logger.info("sign_changed: user=#{username} changes=#{inspect(changes)}")
+      Utilities.Common.log(
+        "sign_changed",
+        user: Guardian.Phoenix.Socket.current_resource(socket),
+        sign_id:
+          case Map.keys(changes) do
+            [id] -> id
+            _ -> nil
+          end,
+        mode: entry["mode"],
+        expires: entry["expires"],
+        line1: entry["line1"] && inspect(entry["line1"]),
+        line2: entry["line2"] && inspect(entry["line2"]),
+        changes: inspect(changes)
+      )
     end)
   end
 
