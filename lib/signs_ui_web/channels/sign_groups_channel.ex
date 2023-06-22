@@ -14,7 +14,17 @@ defmodule SignsUiWeb.SignGroupsChannel do
   @impl Phoenix.Channel
   def handle_in("changeSignGroups", %{"data" => changes}, socket) do
     with_admin_access(socket, fn ->
-      Logger.info(["changeSignGroups: ", inspect(changes), ", from: ", inspect(socket)])
+      entry = Map.values(changes) |> List.first(%{})
+
+      Utilities.Common.log(
+        "sign_groups_changed",
+        user: Guardian.Phoenix.Socket.current_resource(socket),
+        sign_ids: entry["sign_ids"] && inspect(entry["sign_ids"]),
+        line1: entry["line1"] && inspect(entry["line1"]),
+        line2: entry["line2"] && inspect(entry["line2"]),
+        expires: entry["expires"],
+        changes: inspect(changes)
+      )
 
       {:ok, _} =
         changes
