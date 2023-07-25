@@ -331,16 +331,18 @@ function SignPanel({
                 <SignGroupExpirationDetails group={signGroup} />
               </div>
 
-              <div>
-                <button
-                  type="button"
-                  className="btn btn-primary"
-                  onClick={() => setConfirmingUngroup(true)}
-                  disabled={confirmingUngroup}
-                >
-                  Ungroup
-                </button>
-              </div>
+              {!readOnly && (
+                <div>
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={() => setConfirmingUngroup(true)}
+                    disabled={confirmingUngroup}
+                  >
+                    Ungroup
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         )}

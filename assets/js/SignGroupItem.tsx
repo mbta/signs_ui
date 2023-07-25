@@ -39,6 +39,7 @@ export default function SignGroupItem({
           Edit
         </button>
         <button
+          disabled={readOnly}
           onClick={() => setSignGroups(line, { [groupKey]: {} })}
           type="button"
           className="btn btn-primary"
