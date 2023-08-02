@@ -57,6 +57,14 @@ const branchConfig: { [key: string]: { id: string; name: string }[] } = {
       id: 'green_e',
       name: 'Green - E',
     },
+    {
+      id: 'glx_union',
+      name: 'GLX - Union',
+    },
+    {
+      id: 'glx_medford',
+      name: 'GLX - Medford',
+    },
   ],
   Mattapan: [
     {
