@@ -9,7 +9,7 @@ end
 screenplay_base_url =
   if System.get_env("ENVIRONMENT_NAME") == "prod",
     do: "https://screenplay.mbta.com/",
-    else: "localhost:4000/ https://screenplay-dev.mbtace.com/"
+    else: "localhost:4000/ https://screenplay-dev.mbtace.com/ https://screenplay-dev-green.mbtace.com"
 
 config :signs_ui, SignsUiWeb.Endpoint,
     screenplay_base_url: screenplay_base_url
