@@ -1,0 +1,42 @@
+name: Deploy to Dev-green
+
+on:
+  workflow_dispatch:
+  push:
+    branches: master
+
+concurrency:
+  group: dev-green
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Deploy to Dev-green
+    runs-on: ubuntu-20.04
+    environment: dev-green
+    env:
+      ECS_CLUSTER: signs-ui
+      ECS_SERVICE: signs-ui-dev-green
+
+    steps:
+      - uses: actions/checkout@v2
+      - id: metadata
+        uses: mbta/actions/commit-metadata@v1
+      - uses: mbta/actions/build-push-ecr@v1
+        id: build-push
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          docker-repo: ${{ secrets.DOCKER_REPO }}
+      - uses: mbta/actions/deploy-ecs@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          ecs-cluster: ${{ env.ECS_CLUSTER }}
+          ecs-service: ${{ env.ECS_SERVICE }}
+          docker-tag: ${{ steps.build-push.outputs.docker-tag }}
+      - uses: mbta/actions/notify-slack-deploy@v1
+        if: ${{ !cancelled() }}
+        with:
+          webhook-url: ${{ secrets.SLACK_WEBHOOK }}
+          job-status: ${{ job.status }}
