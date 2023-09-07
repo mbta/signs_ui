@@ -21,7 +21,14 @@ defmodule SignsUiWeb.HeadwaysChannel do
 
       username = Guardian.Phoenix.Socket.current_resource(socket)
 
-      Logger.info("headway_changed: user=#{username} changes=#{inspect(changes)}")
+      change_log =
+        for {group, period_map} <- changes,
+            {period, bound_map} <- period_map,
+            {bound, value} <- bound_map do
+          "#{group}.#{period}.#{bound}=#{value}"
+        end
+
+      Logger.info("headway_changed: user=#{username} #{Enum.join(change_log, " ")}}")
     end)
   end
 end
