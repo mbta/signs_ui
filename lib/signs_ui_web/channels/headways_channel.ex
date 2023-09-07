@@ -28,7 +28,7 @@ defmodule SignsUiWeb.HeadwaysChannel do
           "#{group}.#{period}.#{bound}=#{value}"
         end
 
-      Logger.info("headway_changed: user=#{username} #{Enum.join(change_log, " ")}}")
+      Logger.info("headway_changed: user=#{username} #{Enum.join(change_log, " ")}")
     end)
   end
 end
