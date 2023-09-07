@@ -13,7 +13,7 @@ jobs:
   deploy:
     name: Deploy to Dev-green
     runs-on: ubuntu-20.04
-    environment: dev-green
+    environment: dev
     env:
       ECS_CLUSTER: signs-ui
       ECS_SERVICE: signs-ui-dev-green
