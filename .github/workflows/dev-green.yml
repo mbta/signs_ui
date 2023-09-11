@@ -2,8 +2,6 @@ name: Deploy to Dev-green
 
 on:
   workflow_dispatch:
-  push:
-    branches: master
 
 concurrency:
   group: dev-green
