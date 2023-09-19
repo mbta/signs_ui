@@ -2180,7 +2180,7 @@ const stationConfig: {
           e: {
             label: 'Track 1',
             modes: {
-              auto: false,
+              auto: true,
               custom: true,
               headway: true,
               off: true,
@@ -2189,7 +2189,7 @@ const stationConfig: {
           w: {
             label: 'Track 2',
             modes: {
-              auto: false,
+              auto: true,
               custom: true,
               headway: true,
               off: true,
@@ -2197,7 +2197,7 @@ const stationConfig: {
           },
           m: {
             modes: {
-              auto: false,
+              auto: true,
               custom: true,
               headway: true,
               off: true,
