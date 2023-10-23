@@ -11,6 +11,9 @@ jobs:
   deploy:
     name: Deploy to Dev-green
     runs-on: ubuntu-20.04
+    permissions:
+      id-token: write
+      contents: read
     environment: dev
     env:
       ECS_CLUSTER: signs-ui
@@ -20,16 +23,14 @@ jobs:
       - uses: actions/checkout@v2
       - id: metadata
         uses: mbta/actions/commit-metadata@v1
-      - uses: mbta/actions/build-push-ecr@v1
+      - uses: mbta/actions/build-push-ecr@v2
         id: build-push
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
           docker-repo: ${{ secrets.DOCKER_REPO }}
-      - uses: mbta/actions/deploy-ecs@v1
+      - uses: mbta/actions/deploy-ecs@v2
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
           ecs-cluster: ${{ env.ECS_CLUSTER }}
           ecs-service: ${{ env.ECS_SERVICE }}
           docker-tag: ${{ steps.build-push.outputs.docker-tag }}
