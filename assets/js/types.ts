@@ -9,6 +9,7 @@ type ZoneConfig = {
     off: boolean;
     headway: boolean;
     custom: boolean;
+    temporary_terminal: boolean;
   };
 };
 
@@ -35,7 +36,7 @@ type StationConfig = {
 
 type SignConfig = {
   id?: string;
-  mode: 'auto' | 'headway' | 'off' | 'static_text';
+  mode: 'auto' | 'headway' | 'off' | 'static_text' | 'temporary_terminal';
   expires?: string | null;
   alert_id?: string | null;
   line1?: string;

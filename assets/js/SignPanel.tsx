@@ -7,7 +7,12 @@ import SignTextInput from './SignTextInput';
 import SetExpiration from './SetExpiration';
 import SignText from './SignText';
 
-type SignModeOptions = 'auto' | 'headway' | 'off' | 'static_text';
+type SignModeOptions =
+  | 'auto'
+  | 'headway'
+  | 'off'
+  | 'static_text'
+  | 'temporary_terminal';
 
 function isNotExpired(expiration: string, currentTime: number) {
   return Date.parse(expiration) - currentTime > 0;
@@ -44,6 +49,13 @@ function makeConfig(mode: SignModeOptions): SignConfig {
   if (mode === 'headway') {
     return {
       mode: 'headway',
+      expires: null,
+    };
+  }
+
+  if (mode === 'temporary_terminal') {
+    return {
+      mode: 'temporary_terminal',
       expires: null,
     };
   }
@@ -123,6 +135,7 @@ interface SignPanelProps {
     auto: boolean;
     custom: boolean;
     headway: boolean;
+    temporary_terminal: boolean;
     off: boolean;
   };
   signContent: SingleSignContent;
@@ -143,6 +156,7 @@ function SignPanel({
     auto: true,
     custom: true,
     headway: true,
+    temporary_terminal: true,
     off: true,
   },
   signContent,
@@ -199,6 +213,7 @@ function SignPanel({
     }
   }
 
+  console.log(modes);
   return (
     <section aria-label={signId}>
       <div className="viewer--sign">
@@ -223,6 +238,9 @@ function SignPanel({
                 {modes.auto && <option value="auto">Auto</option>}
                 {modes.headway && <option value="headway">Headways</option>}
                 {modes.custom && <option value="static_text">Custom</option>}
+                {modes.temporary_terminal && (
+                  <option value="temporary_terminal">Temporary Terminal</option>
+                )}
                 {modes.off && <option value="off">Off</option>}
               </select>
             </div>

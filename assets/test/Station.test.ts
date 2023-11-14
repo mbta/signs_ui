@@ -15,6 +15,7 @@ test('shows the custom configuration information for a station', () => {
     custom: true,
     off: true,
     headway: true,
+    temporary_terminal: true,
   };
   const config: StationConfig = {
     id: 'OMAL',
@@ -54,6 +55,7 @@ test('allows custom reordering of sign positions', () => {
     custom: true,
     off: true,
     headway: true,
+    temporary_terminal: true,
   };
   const config: StationConfig = {
     id: 'OGRE',

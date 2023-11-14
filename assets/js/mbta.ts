@@ -85,7 +85,11 @@ const stationConfig: {
   };
 } = {
   Orange: {
-    batchModes: { auto: true, headway: true, off: true },
+    batchModes: {
+      auto: true,
+      headway: true,
+      off: true,
+    },
     stations: [
       {
         id: 'OOAK',
@@ -98,6 +102,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           e: {
@@ -107,6 +112,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           m: {
@@ -115,6 +121,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -130,6 +137,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           m: {
@@ -139,6 +147,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -153,6 +162,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           s: {
@@ -161,6 +171,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           m: {
@@ -169,6 +180,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -183,6 +195,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           s: {
@@ -191,6 +204,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           m: {
@@ -199,6 +213,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -213,6 +228,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           s: {
@@ -221,6 +237,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           m: {
@@ -229,6 +246,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -243,6 +261,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           s: {
@@ -251,6 +270,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           m: {
@@ -259,6 +279,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -273,6 +294,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           s: {
@@ -281,6 +303,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           c: {
@@ -289,6 +312,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           m: {
@@ -298,6 +322,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -312,6 +337,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           s: {
@@ -320,6 +346,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           m: {
@@ -328,6 +355,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -342,6 +370,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           m: {
@@ -350,6 +379,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -364,6 +394,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -378,6 +409,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -392,6 +424,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -406,6 +439,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           m: {
@@ -415,6 +449,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -429,6 +464,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           m: {
@@ -438,6 +474,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -452,6 +489,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           s: {
@@ -460,6 +498,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           m: {
@@ -468,6 +507,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -482,6 +522,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           s: {
@@ -490,6 +531,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           m: {
@@ -498,6 +540,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -512,6 +555,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           s: {
@@ -520,6 +564,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           m: {
@@ -528,6 +573,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -542,6 +588,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           s: {
@@ -550,6 +597,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           c: {
@@ -558,6 +606,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           m: {
@@ -566,6 +615,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -580,6 +630,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -594,6 +645,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           s: {
@@ -602,6 +654,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           m: {
@@ -610,6 +663,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -624,6 +678,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           s: {
@@ -632,6 +687,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           m: {
@@ -640,6 +696,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -654,6 +711,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           s: {
@@ -662,6 +720,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           m: {
@@ -670,6 +729,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -684,6 +744,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           s: {
@@ -692,6 +753,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           m: {
@@ -700,6 +762,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -715,6 +778,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           m: {
@@ -724,6 +788,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -738,6 +803,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -745,7 +811,11 @@ const stationConfig: {
     ],
   },
   Red: {
-    batchModes: { auto: true, headway: true, off: true },
+    batchModes: {
+      auto: true,
+      headway: true,
+      off: true,
+    },
     stations: [
       {
         id: 'RALE',
@@ -757,6 +827,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           m: {
@@ -765,6 +836,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -779,6 +851,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           s: {
@@ -787,6 +860,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           m: {
@@ -795,6 +869,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -809,6 +884,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           s: {
@@ -817,6 +893,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           m: {
@@ -825,6 +902,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -839,6 +917,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           s: {
@@ -847,6 +926,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           m: {
@@ -855,6 +935,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -869,6 +950,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           s: {
@@ -877,6 +959,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -891,6 +974,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           s: {
@@ -899,6 +983,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -913,6 +998,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           s: {
@@ -921,6 +1007,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -935,6 +1022,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           s: {
@@ -943,6 +1031,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           c: {
@@ -951,6 +1040,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -965,6 +1055,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           s: {
@@ -973,6 +1064,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -987,6 +1079,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           s: {
@@ -995,6 +1088,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           m: {
@@ -1003,6 +1097,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -1018,6 +1113,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -1032,6 +1128,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           s: {
@@ -1040,6 +1137,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           m: {
@@ -1048,6 +1146,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -1062,6 +1161,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           s: {
@@ -1070,6 +1170,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           m: {
@@ -1078,6 +1179,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -1093,6 +1195,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           s: {
@@ -1102,6 +1205,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           e: {
@@ -1111,6 +1215,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           w: {
@@ -1120,6 +1225,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           m: {
@@ -1128,6 +1234,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -1142,6 +1249,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           s: {
@@ -1150,6 +1258,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           m: {
@@ -1158,6 +1267,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -1172,6 +1282,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           s: {
@@ -1180,6 +1291,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           m: {
@@ -1188,6 +1300,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -1202,6 +1315,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           s: {
@@ -1210,6 +1324,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           m: {
@@ -1218,6 +1333,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -1232,6 +1348,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           m: {
@@ -1240,6 +1357,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           s: {
@@ -1249,6 +1367,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -1263,6 +1382,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           s: {
@@ -1271,6 +1391,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           m: {
@@ -1279,6 +1400,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -1293,6 +1415,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           s: {
@@ -1301,6 +1424,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           m: {
@@ -1309,6 +1433,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -1323,6 +1448,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           s: {
@@ -1331,6 +1457,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           m: {
@@ -1339,6 +1466,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -1353,6 +1481,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           s: {
@@ -1361,6 +1490,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           m: {
@@ -1369,6 +1499,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -1383,6 +1514,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           m: {
@@ -1391,6 +1523,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -1398,7 +1531,11 @@ const stationConfig: {
     ],
   },
   Blue: {
-    batchModes: { auto: true, headway: true, off: true },
+    batchModes: {
+      auto: true,
+      headway: true,
+      off: true,
+    },
     stations: [
       {
         id: 'BWON',
@@ -1410,6 +1547,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           m: {
@@ -1418,6 +1556,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -1432,6 +1571,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           w: {
@@ -1440,6 +1580,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           m: {
@@ -1448,6 +1589,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -1462,6 +1604,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           w: {
@@ -1470,6 +1613,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -1484,6 +1628,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           w: {
@@ -1492,6 +1637,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -1506,6 +1652,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           w: {
@@ -1514,6 +1661,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           m: {
@@ -1522,6 +1670,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -1536,6 +1685,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           w: {
@@ -1544,6 +1694,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           m: {
@@ -1552,6 +1703,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -1566,6 +1718,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           w: {
@@ -1574,6 +1727,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -1588,6 +1742,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           w: {
@@ -1596,6 +1751,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -1610,6 +1766,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           w: {
@@ -1618,6 +1775,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           m: {
@@ -1626,6 +1784,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -1640,6 +1799,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           w: {
@@ -1648,6 +1808,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           m: {
@@ -1656,6 +1817,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -1670,6 +1832,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           w: {
@@ -1678,6 +1841,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           m: {
@@ -1686,6 +1850,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -1700,6 +1865,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           m: {
@@ -1708,6 +1874,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           w: {
@@ -1717,6 +1884,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -1724,7 +1892,11 @@ const stationConfig: {
     ],
   },
   Mattapan: {
-    batchModes: { auto: true, headway: true, off: true },
+    batchModes: {
+      auto: true,
+      headway: true,
+      off: true,
+    },
     stations: [
       {
         id: 'MCED',
@@ -1736,6 +1908,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           s: {
@@ -1744,6 +1917,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -1758,6 +1932,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -1772,6 +1947,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           s: {
@@ -1780,6 +1956,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -1794,6 +1971,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           s: {
@@ -1802,6 +1980,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -1816,6 +1995,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           s: {
@@ -1824,6 +2004,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -1838,6 +2019,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -1845,7 +2027,11 @@ const stationConfig: {
     ],
   },
   Silver: {
-    batchModes: { auto: true, headway: false, off: true },
+    batchModes: {
+      auto: true,
+      headway: false,
+      off: true,
+    },
     stations: [
       {
         id: 'SSOU',
@@ -1857,6 +2043,7 @@ const stationConfig: {
               custom: true,
               headway: false,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -1871,6 +2058,7 @@ const stationConfig: {
               custom: true,
               headway: false,
               off: true,
+              temporary_terminal: true,
             },
           },
           w: {
@@ -1879,6 +2067,7 @@ const stationConfig: {
               custom: true,
               headway: false,
               off: true,
+              temporary_terminal: true,
             },
           },
           m: {
@@ -1887,6 +2076,7 @@ const stationConfig: {
               custom: true,
               headway: false,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -1901,6 +2091,7 @@ const stationConfig: {
               custom: true,
               headway: false,
               off: true,
+              temporary_terminal: true,
             },
           },
           w: {
@@ -1909,6 +2100,7 @@ const stationConfig: {
               custom: true,
               headway: false,
               off: true,
+              temporary_terminal: true,
             },
           },
           m: {
@@ -1917,6 +2109,7 @@ const stationConfig: {
               custom: true,
               headway: false,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -1932,6 +2125,7 @@ const stationConfig: {
               custom: true,
               headway: false,
               off: true,
+              temporary_terminal: true,
             },
           },
           w: {
@@ -1941,6 +2135,7 @@ const stationConfig: {
               custom: true,
               headway: false,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -1956,6 +2151,7 @@ const stationConfig: {
               custom: true,
               headway: false,
               off: true,
+              temporary_terminal: true,
             },
           },
           w: {
@@ -1965,6 +2161,7 @@ const stationConfig: {
               custom: true,
               headway: false,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -1980,6 +2177,7 @@ const stationConfig: {
               custom: true,
               headway: false,
               off: true,
+              temporary_terminal: true,
             },
           },
           w: {
@@ -1989,6 +2187,7 @@ const stationConfig: {
               custom: true,
               headway: false,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -2004,6 +2203,7 @@ const stationConfig: {
               custom: true,
               headway: false,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -2011,7 +2211,11 @@ const stationConfig: {
     ],
   },
   Green: {
-    batchModes: { auto: true, headway: true, off: true },
+    batchModes: {
+      auto: true,
+      headway: true,
+      off: true,
+    },
     stations: [
       {
         id: 'GCOS',
@@ -2024,6 +2228,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           w: {
@@ -2033,6 +2238,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           m: {
@@ -2041,6 +2247,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -2056,6 +2263,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           w: {
@@ -2065,6 +2273,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           m: {
@@ -2073,6 +2282,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -2088,6 +2298,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           w: {
@@ -2097,6 +2308,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           m: {
@@ -2105,6 +2317,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -2120,6 +2333,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           w: {
@@ -2129,6 +2343,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           m: {
@@ -2137,6 +2352,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -2152,6 +2368,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           w: {
@@ -2161,6 +2378,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           m: {
@@ -2169,6 +2387,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -2184,6 +2403,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           w: {
@@ -2193,6 +2413,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           m: {
@@ -2201,6 +2422,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -2215,6 +2437,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           w: {
@@ -2224,6 +2447,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           m: {
@@ -2232,6 +2456,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -2246,6 +2471,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           w: {
@@ -2254,6 +2480,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           m: {
@@ -2262,6 +2489,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -2275,6 +2503,7 @@ const stationConfig: {
               auto: true,
               custom: true,
               headway: true,
+              temporary_terminal: true,
               off: true,
             },
           },
@@ -2283,6 +2512,7 @@ const stationConfig: {
               auto: true,
               custom: true,
               headway: true,
+              temporary_terminal: true,
               off: true,
             },
           },
@@ -2292,6 +2522,7 @@ const stationConfig: {
               auto: true,
               custom: true,
               headway: true,
+              temporary_terminal: true,
               off: true,
             },
           },
@@ -2307,6 +2538,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           w: {
@@ -2315,6 +2547,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -2329,6 +2562,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           w: {
@@ -2337,6 +2571,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           m: {
@@ -2345,6 +2580,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -2359,6 +2595,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           m: {
@@ -2368,6 +2605,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -2383,6 +2621,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           w: {
@@ -2392,6 +2631,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -2406,6 +2646,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           w: {
@@ -2414,6 +2655,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -2428,6 +2670,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           w: {
@@ -2436,6 +2679,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           m: {
@@ -2444,6 +2688,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -2458,6 +2703,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           w: {
@@ -2466,6 +2712,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -2480,6 +2727,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           w: {
@@ -2488,6 +2736,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           m: {
@@ -2496,6 +2745,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -2510,6 +2760,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           w: {
@@ -2518,6 +2769,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -2532,6 +2784,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           w: {
@@ -2540,6 +2793,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           m: {
@@ -2548,6 +2802,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -2563,6 +2818,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           s: {
@@ -2572,6 +2828,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           e: {
@@ -2581,6 +2838,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           w: {
@@ -2590,6 +2848,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           m: {
@@ -2598,6 +2857,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -2612,6 +2872,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           w: {
@@ -2620,6 +2881,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -2634,6 +2896,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           w: {
@@ -2642,6 +2905,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -2656,6 +2920,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           w: {
@@ -2664,6 +2929,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -2678,6 +2944,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           w: {
@@ -2686,6 +2953,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -2700,6 +2968,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           w: {
@@ -2708,6 +2977,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -2722,6 +2992,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           w: {
@@ -2730,6 +3001,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -2744,6 +3016,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           w: {
@@ -2752,6 +3025,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -2766,6 +3040,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           w: {
@@ -2774,6 +3049,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -2788,6 +3064,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           w: {
@@ -2796,6 +3073,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -2810,6 +3088,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           w: {
@@ -2818,6 +3097,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -2832,6 +3112,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           w: {
@@ -2840,6 +3121,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -2854,6 +3136,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           w: {
@@ -2862,6 +3145,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -2876,6 +3160,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           w: {
@@ -2884,6 +3169,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -2898,6 +3184,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
           w: {
@@ -2906,6 +3193,7 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -2921,12 +3209,14 @@ const stationConfig: {
               custom: true,
               headway: true,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
       },
     ],
   },
+
   Busway: {
     batchModes: { auto: true, headway: false, off: true },
     stations: [
@@ -2946,6 +3236,7 @@ const stationConfig: {
               custom: true,
               headway: false,
               off: true,
+              temporary_terminal: true,
             },
           },
           s: {
@@ -2955,6 +3246,7 @@ const stationConfig: {
               custom: true,
               headway: false,
               off: true,
+              temporary_terminal: true,
             },
           },
           e: {
@@ -2964,6 +3256,7 @@ const stationConfig: {
               custom: true,
               headway: false,
               off: true,
+              temporary_terminal: true,
             },
           },
           w: {
@@ -2973,6 +3266,7 @@ const stationConfig: {
               custom: true,
               headway: false,
               off: true,
+              temporary_terminal: true,
             },
           },
           c: {
@@ -2982,6 +3276,7 @@ const stationConfig: {
               custom: true,
               headway: false,
               off: true,
+              temporary_terminal: true,
             },
           },
           m: {
@@ -2991,6 +3286,7 @@ const stationConfig: {
               custom: true,
               headway: false,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -3006,6 +3302,7 @@ const stationConfig: {
               custom: true,
               headway: false,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -3026,6 +3323,7 @@ const stationConfig: {
               custom: true,
               headway: false,
               off: true,
+              temporary_terminal: true,
             },
           },
           m: {
@@ -3035,6 +3333,7 @@ const stationConfig: {
               custom: true,
               headway: false,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -3050,6 +3349,7 @@ const stationConfig: {
               custom: true,
               headway: false,
               off: true,
+              temporary_terminal: true,
             },
           },
           s: {
@@ -3059,6 +3359,7 @@ const stationConfig: {
               custom: true,
               headway: false,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -3074,6 +3375,7 @@ const stationConfig: {
               custom: true,
               headway: false,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -3094,6 +3396,7 @@ const stationConfig: {
               custom: true,
               headway: false,
               off: true,
+              temporary_terminal: true,
             },
           },
           s: {
@@ -3103,6 +3406,7 @@ const stationConfig: {
               custom: true,
               headway: false,
               off: true,
+              temporary_terminal: true,
             },
           },
         },
@@ -3123,6 +3427,7 @@ const stationConfig: {
               custom: true,
               headway: false,
               off: true,
+              temporary_terminal: true,
             },
           },
         },

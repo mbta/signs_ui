@@ -499,6 +499,7 @@ test('Sign config is not affected by batch updates if sign does not support mode
             custom: true,
             headway: false,
             off: false,
+            temporary_terminal: true,
           },
         },
         s: {
@@ -507,6 +508,7 @@ test('Sign config is not affected by batch updates if sign does not support mode
             custom: true,
             headway: true,
             off: false,
+            temporary_terminal: true,
           },
         },
         m: {
@@ -515,6 +517,7 @@ test('Sign config is not affected by batch updates if sign does not support mode
             custom: true,
             headway: false,
             off: true,
+            temporary_terminal: true,
           },
         },
         e: {
@@ -523,6 +526,7 @@ test('Sign config is not affected by batch updates if sign does not support mode
             custom: true,
             headway: false,
             off: true,
+            temporary_terminal: true,
           },
         },
         w: {
@@ -531,6 +535,7 @@ test('Sign config is not affected by batch updates if sign does not support mode
             custom: true,
             headway: false,
             off: false,
+            temporary_terminal: true,
           },
         },
         c: {
@@ -539,6 +544,7 @@ test('Sign config is not affected by batch updates if sign does not support mode
             custom: true,
             headway: false,
             off: false,
+            temporary_terminal: true,
           },
         },
       },
