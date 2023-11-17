@@ -3294,9 +3294,23 @@ const stationConfig: {
       {
         id: 'SLEC',
         name: 'Lechmere',
+        zonePositions: {
+          left: ['w', 'm'],
+          center: ['s', 'n'],
+          right: ['e', 'c'],
+        },
         zones: {
           m: {
-            label: 'Busway',
+            label: 'Inner Platform',
+            modes: {
+              auto: true,
+              custom: true,
+              headway: false,
+              off: true,
+            },
+          },
+          c: {
+            label: 'Outer Platform',
             modes: {
               auto: true,
               custom: true,
