@@ -3307,6 +3307,7 @@ const stationConfig: {
               custom: true,
               headway: false,
               off: true,
+              temporary_terminal: true,
             },
           },
           c: {
