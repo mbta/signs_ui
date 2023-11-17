@@ -115,6 +115,17 @@ defmodule SignsUi.Config.Sign do
     }
   end
 
+  def from_json(sign_id, %{"mode" => "temporary_terminal"} = config) do
+    %__MODULE__{
+      id: sign_id,
+      config: %{
+        mode: :temporary_terminal,
+        expires: expiration_from_string(config["expires"]),
+        alert_id: config["alert_id"]
+      }
+    }
+  end
+
   @spec expiration_to_iso8601(expires_on()) :: String.t() | nil
   defp expiration_to_iso8601(%DateTime{} = dt), do: DateTime.to_iso8601(dt)
   defp expiration_to_iso8601(nil), do: nil
@@ -151,6 +162,15 @@ defmodule SignsUi.Config.Sign do
       "mode" => "static_text",
       "line1" => sign.config.line1,
       "line2" => sign.config.line2,
+      "expires" => expiration_to_iso8601(sign.config.expires),
+      "alert_id" => sign.config.alert_id
+    }
+  end
+
+  def to_json(%__MODULE__{config: %{mode: :temporary_terminal}} = sign) do
+    %{
+      "id" => sign.id,
+      "mode" => "temporary_terminal",
       "expires" => expiration_to_iso8601(sign.config.expires),
       "alert_id" => sign.config.alert_id
     }

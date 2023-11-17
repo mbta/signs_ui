@@ -213,7 +213,6 @@ function SignPanel({
     }
   }
 
-  console.log(modes);
   return (
     <section aria-label={signId}>
       <div className="viewer--sign">
