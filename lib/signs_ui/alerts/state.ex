@@ -80,17 +80,17 @@ defmodule SignsUi.Alerts.State do
     url = "#{Application.get_env(:signs_ui, :api_v3_url)}/alerts"
     headers = [{"x-api-key", Application.get_env(:signs_ui, :api_v3_key)}]
 
-    with {:ok, %HTTPoison.Response{body: body}} <-
-           http_client.get(
-             url,
-             headers,
-             params: %{
-               "filter[datetime]" => "NOW",
-               "filter[route_type]" => "0,1"
-             }
-           ) do
-      {:ok, body}
-    else
+    case http_client.get(
+           url,
+           headers,
+           params: %{
+             "filter[datetime]" => "NOW",
+             "filter[route_type]" => "0,1"
+           }
+         ) do
+      {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
+        {:ok, body}
+
       error ->
         {:error, error}
     end
