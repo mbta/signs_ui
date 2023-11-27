@@ -1,25 +1,7 @@
 defmodule SignsUi.Alerts.StateTest do
   use ExUnit.Case, async: true
-  use SignsUiWeb.ChannelCase
-  alias ServerSentEventStage.Event
   alias SignsUi.Alerts.Alert
-  import Test.Support.AlertEvents
-
-  defp clear_state(), do: %Event{data: "[]", event: "reset"}
-
-  describe "start_link" do
-    test "GenServer runs without crashing" do
-      @endpoint.subscribe("alerts:all")
-
-      {:ok, pid} = SignsUi.Alerts.State.start_link()
-
-      {:ok, producer} = GenStage.from_enumerable([clear_state()])
-
-      GenStage.sync_subscribe(pid, to: producer)
-
-      assert_broadcast("new_alert_state", %{}, 300)
-    end
-  end
+  import ExUnit.CaptureLog
 
   describe "handle_call :active_alert_ids" do
     test "returns the alert_ids out of the state" do
@@ -30,169 +12,47 @@ defmodule SignsUi.Alerts.StateTest do
       }
 
       assert SignsUi.Alerts.State.handle_call(:active_alert_ids, self(), state) ==
-               {:reply, MapSet.new(["alert_id1", "alert_id2", "alert_id3"]), [], state}
+               {:reply, MapSet.new(["alert_id1", "alert_id2", "alert_id3"]), state}
     end
 
     test "safely returns an empty map set if there are no alerts" do
       state = %{}
 
       assert SignsUi.Alerts.State.handle_call(:active_alert_ids, self(), state) ==
-               {:reply, MapSet.new(), [], state}
+               {:reply, MapSet.new(), state}
     end
   end
 
-  describe "handle_events" do
-    test "handles a reset" do
-      expected = %{
-        "Blue" => %{
-          "126976" => %Alert{
-            created_at: ~U[2021-05-05 00:41:37Z],
-            id: "126976",
-            route: "Blue",
-            service_effect: "Blue Line delay"
-          }
-        }
-      }
+  describe "parse/1" do
+    test "handles a bad created_at" do
+      event_data = """
+      {"data": {"attributes":{"active_period":[{"end":"2021-05-05T02:30:00-04:00","start":"2021-05-04T20:41:36-04:00"}],"banner":null,"cause":"UNKNOWN_CAUSE","created_at":"INVALID_CREATED_AT","description":null,"effect":"DELAY","header":"Blue Line experiencing delays of up to 10 minutes today","informed_entity":[{"activities":["BOARD","EXIT","RIDE"],"route":"Blue","route_type":1}],"lifecycle":"NEW","service_effect":"Blue Line delay","severity":3,"short_header":"Blue Line experiencing delays of up to 10 minutes today","timeframe":null,"updated_at":"2021-05-04T20:41:37-04:00","url":null},"id":"126976","links":{"self":"/alerts/126976"},"type":"alert"}}
+      """
 
-      @endpoint.subscribe("alerts:all")
+      assert capture_log(fn -> SignsUi.Alerts.State.parse(event_data) end) =~
+               "[error] Failed to parse created_at, reason=:invalid_format"
 
-      {:ok, pid} = SignsUi.Alerts.State.start_link()
-
-      {:ok, producer} = GenStage.from_enumerable([initial_state()])
-
-      GenStage.sync_subscribe(pid, to: producer)
-
-      assert_broadcast("new_alert_state", ^expected, 500)
+      assert SignsUi.Alerts.State.parse(event_data) ==
+               %{
+                 affected_routes: MapSet.new(["Blue"]),
+                 created_at: nil,
+                 id: "126976",
+                 service_effect: "Blue Line delay"
+               }
     end
 
-    test "handles an add" do
-      expected = %{
-        "Blue" => %{
-          "126976" => %Alert{
-            created_at: ~U[2021-05-05 00:41:37Z],
-            id: "126976",
-            route: "Blue",
-            service_effect: "Blue Line delay"
-          }
-        },
-        "Orange" => %{
-          "126977" => %Alert{
-            created_at: ~U[2021-05-05 00:43:09Z],
-            id: "126977",
-            route: "Orange",
-            service_effect: "Orange Line and Red Line delay"
-          }
-        },
-        "Red" => %{
-          "126977" => %Alert{
-            created_at: ~U[2021-05-05 00:43:09Z],
-            id: "126977",
-            route: "Red",
-            service_effect: "Orange Line and Red Line delay"
-          }
-        }
-      }
+    test "parses an alerts data payload" do
+      event_data = """
+      {"data": {"attributes":{"active_period":[{"end":"2021-05-05T02:30:00-04:00","start":"2021-05-04T20:41:36-04:00"}],"banner":null,"cause":"UNKNOWN_CAUSE","created_at":"2021-05-04T20:41:37-04:00","description":null,"effect":"DELAY","header":"Blue Line experiencing delays of up to 10 minutes today","informed_entity":[{"activities":["BOARD","EXIT","RIDE"],"route":"Blue","route_type":1}],"lifecycle":"NEW","service_effect":"Blue Line delay","severity":3,"short_header":"Blue Line experiencing delays of up to 10 minutes today","timeframe":null,"updated_at":"2021-05-04T20:41:37-04:00","url":null},"id":"126976","links":{"self":"/alerts/126976"},"type":"alert"}}
+      """
 
-      @endpoint.subscribe("alerts:all")
-
-      {:ok, pid} = SignsUi.Alerts.State.start_link()
-
-      {:ok, producer} = GenStage.from_enumerable([initial_state(), add_red_orange()])
-
-      GenStage.sync_subscribe(pid, to: producer)
-
-      assert_broadcast("new_alert_state", ^expected, 500)
-    end
-
-    test "handles an update" do
-      expected = %{
-        "Blue" => %{
-          "126976" => %Alert{
-            created_at: ~U[2021-05-05 00:41:37Z],
-            id: "126976",
-            route: "Blue",
-            service_effect: "Blue Line delay"
-          }
-        },
-        "Red" => %{
-          "126977" => %Alert{
-            created_at: ~U[2021-05-05 00:43:09Z],
-            id: "126977",
-            route: "Red",
-            service_effect: "Red Line delay"
-          }
-        }
-      }
-
-      @endpoint.subscribe("alerts:all")
-
-      {:ok, pid} = SignsUi.Alerts.State.start_link()
-
-      {:ok, producer} =
-        GenStage.from_enumerable([
-          initial_state(),
-          add_red_orange(),
-          update_red_orange()
-        ])
-
-      GenStage.sync_subscribe(pid, to: producer)
-
-      assert_broadcast("new_alert_state", ^expected, 500)
-    end
-
-    test "handles a removal" do
-      expected = %{
-        "Blue" => %{
-          "126976" => %Alert{
-            created_at: ~U[2021-05-05 00:41:37Z],
-            id: "126976",
-            route: "Blue",
-            service_effect: "Blue Line delay"
-          }
-        }
-      }
-
-      @endpoint.subscribe("alerts:all")
-
-      {:ok, pid} = SignsUi.Alerts.State.start_link()
-
-      {:ok, producer} =
-        GenStage.from_enumerable([
-          initial_state(),
-          add_red_orange(),
-          update_red_orange(),
-          remove_red()
-        ])
-
-      GenStage.sync_subscribe(pid, to: producer)
-
-      assert_broadcast("new_alert_state", ^expected, 500)
-    end
-
-    test "handles two removals" do
-      @endpoint.subscribe("alerts:all")
-
-      {:ok, pid} = SignsUi.Alerts.State.start_link()
-
-      {:ok, producer} =
-        GenStage.from_enumerable([
-          initial_state(),
-          add_red_orange(),
-          update_red_orange(),
-          remove_red(),
-          remove_blue()
-        ])
-
-      GenStage.sync_subscribe(pid, to: producer)
-
-      assert_broadcast("new_alert_state", %{}, 500)
-    end
-  end
-
-  describe "active_alert_ids/0" do
-    test "returns a result without crashing" do
-      {:ok, pid} = SignsUi.Alerts.State.start_link(name: :alerts_state_ids_test)
-      assert SignsUi.Alerts.State.active_alert_ids(pid) == MapSet.new()
+      assert SignsUi.Alerts.State.parse(event_data) ==
+               %{
+                 affected_routes: MapSet.new(["Blue"]),
+                 created_at: ~U[2021-05-05 00:41:37Z],
+                 id: "126976",
+                 service_effect: "Blue Line delay"
+               }
     end
   end
 end
