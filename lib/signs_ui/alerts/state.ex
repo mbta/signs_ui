@@ -74,7 +74,7 @@ defmodule SignsUi.Alerts.State do
     {:noreply, state}
   end
 
-  defp fetch_alerts() do
+  defp fetch_alerts do
     http_client = Application.get_env(:signs_ui, :http_client)
     url = "#{Application.get_env(:signs_ui, :api_v3_url)}/alerts"
     headers = [{"x-api-key", Application.get_env(:signs_ui, :api_v3_key)}]
