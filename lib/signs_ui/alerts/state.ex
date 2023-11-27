@@ -42,7 +42,6 @@ defmodule SignsUi.Alerts.State do
 
   @impl GenServer
   def handle_call(:all, _from, state) do
-    Display.format_state(state)
     {:reply, Display.format_state(state), state}
   end
 
