@@ -29,7 +29,7 @@ defmodule SignsUi.Alerts.State do
 
   @impl GenServer
   def init(_) do
-    Process.send(self(), :update, [])
+    send(self(), :update)
     {:ok, %{}}
   end
 
@@ -50,7 +50,7 @@ defmodule SignsUi.Alerts.State do
     state =
       case fetch_alerts() do
         {:ok, response} ->
-          new_state = Enum.into(parse(response), %{}, &{&1.id, &1})
+          new_state = Enum.into(parse_response(response), %{}, &{&1.id, &1})
 
           SignsUiWeb.Endpoint.broadcast!(
             "alerts:all",
@@ -95,18 +95,14 @@ defmodule SignsUi.Alerts.State do
     end
   end
 
-  def parse(payload) when is_binary(payload) do
-    payload |> Jason.decode!() |> Map.get("data", []) |> parse()
+  def parse_response(payload) when is_binary(payload) do
+    payload |> Jason.decode!() |> Map.get("data", []) |> Enum.map(&parse_alert/1)
   end
 
-  def parse(payload) when is_list(payload) do
-    Enum.map(payload, &parse/1)
-  end
+  def parse_alert(alert) when is_map(alert) do
+    id = alert["id"]
 
-  def parse(payload) when is_map(payload) do
-    id = payload["id"]
-
-    {created_at, service_effect, routes} = parse_attributes(payload["attributes"])
+    {created_at, service_effect, routes} = parse_attributes(alert["attributes"])
 
     %{
       id: id,
