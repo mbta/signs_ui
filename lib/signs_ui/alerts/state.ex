@@ -95,11 +95,11 @@ defmodule SignsUi.Alerts.State do
     end
   end
 
-  def parse_response(payload) when is_binary(payload) do
-    payload |> Jason.decode!() |> Map.get("data", []) |> Enum.map(&parse_alert/1)
+  def parse_response(response) do
+    response |> Jason.decode!() |> Map.get("data", []) |> Enum.map(&parse_alert/1)
   end
 
-  def parse_alert(alert) when is_map(alert) do
+  def parse_alert(alert) do
     id = alert["id"]
 
     {created_at, service_effect, routes} = parse_attributes(alert["attributes"])
