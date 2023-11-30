@@ -30,36 +30,39 @@ defmodule SignsUi.Alerts.State do
   @impl GenServer
   def init(_) do
     send(self(), :update)
-    {:ok, %{}}
+    {:ok, %{alerts: %{}, last_modified: nil}}
   end
 
   @impl GenServer
   def handle_call(:active_alert_ids, _from, state) do
-    alert_ids = state |> Map.keys() |> MapSet.new()
+    alert_ids = state.alerts |> Map.keys() |> MapSet.new()
 
     {:reply, alert_ids, state}
   end
 
   @impl GenServer
   def handle_call(:all, _from, state) do
-    {:reply, Display.format_state(state), state}
+    {:reply, Display.format_state(state.alerts), state}
   end
 
   @impl GenServer
   def handle_info(:update, state) do
     state =
-      case fetch_alerts() do
-        {:ok, response} ->
-          new_state = Enum.into(parse_response(response), %{}, &{&1.id, &1})
+      case fetch_alerts(state.last_modified) do
+        {:ok, response, last_modified} ->
+          alerts = Enum.into(parse_response(response), %{}, &{&1.id, &1})
 
           SignsUiWeb.Endpoint.broadcast!(
             "alerts:all",
             "new_alert_state",
-            Display.format_state(new_state)
+            Display.format_state(alerts)
           )
 
-          Logger.info(["alert_state_updated ", inspect(new_state)])
-          new_state
+          Logger.info(["alert_state_updated ", inspect(alerts)])
+          %{alerts: alerts, last_modified: last_modified}
+
+        {:ok, :unchanged} ->
+          state
 
         {:error, error} ->
           Logger.error([
@@ -74,10 +77,16 @@ defmodule SignsUi.Alerts.State do
     {:noreply, state}
   end
 
-  defp fetch_alerts do
+  defp fetch_alerts(last_modified) do
     http_client = Application.get_env(:signs_ui, :http_client)
     url = "#{Application.get_env(:signs_ui, :api_v3_url)}/alerts"
-    headers = [{"x-api-key", Application.get_env(:signs_ui, :api_v3_key)}]
+
+    headers =
+      if last_modified do
+        [{"If-Modified-Since", last_modified}]
+      else
+        []
+      end ++ [{"x-api-key", Application.get_env(:signs_ui, :api_v3_key)}]
 
     case http_client.get(
            url,
@@ -87,8 +96,14 @@ defmodule SignsUi.Alerts.State do
              "filter[route_type]" => "0,1"
            }
          ) do
-      {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
-        {:ok, body}
+      {:ok, %HTTPoison.Response{status_code: 200, body: body, headers: headers}} ->
+        case Enum.find(headers, fn {header, _value} -> header == "last-modified" end) do
+          {"last-modified", new_last_modified} -> {:ok, body, new_last_modified}
+          _ -> {:ok, body, nil}
+        end
+
+      {:ok, %HTTPoison.Response{status_code: 304}} ->
+        {:ok, :unchanged}
 
       error ->
         {:error, error}
