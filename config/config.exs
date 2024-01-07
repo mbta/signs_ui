@@ -11,7 +11,11 @@ config :signs_ui, SignsUiWeb.Endpoint,
 config :signs_ui,
   config_store: SignsUi.Config.S3,
   refresh_token_store: SignsUi.RefreshTokenStore,
-  http_client: HTTPoison
+  alert_producer: ServerSentEventStage,
+  alert_consumer_opts: [
+    name: SignsUi.Alerts.State,
+    subscribe_to: [AlertProducer]
+  ]
 
 # HTTP config
 config :signs_ui, :redirect_http?, false
