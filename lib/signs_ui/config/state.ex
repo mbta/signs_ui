@@ -237,7 +237,7 @@ defmodule SignsUi.Config.State do
   end
 
   # sobelow_skip ["Traversal"]
-  defp parse_signs_json() do
+  defp parse_signs_json do
     signs_json =
       :code.priv_dir(:signs_ui)
       |> Path.join("signs.json")
