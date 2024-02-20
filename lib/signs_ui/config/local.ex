@@ -7,6 +7,11 @@ defmodule SignsUi.Config.Local do
   end
 
   # sobelow_skip ["Traversal"]
+  def write_stops(content) do
+    :code.priv_dir(:signs_ui) |> Path.join("stops-config.json") |> File.write!(content)
+  end
+
+  # sobelow_skip ["Traversal"]
   def read do
     case File.read(path()) do
       {:ok, content} -> content
