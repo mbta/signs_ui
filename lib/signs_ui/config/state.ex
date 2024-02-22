@@ -15,7 +15,8 @@ defmodule SignsUi.Config.State do
           signs: %{Config.Sign.id() => Config.Sign.t()},
           configured_headways: ConfiguredHeadways.t(),
           chelsea_bridge_announcements: String.t(),
-          sign_groups: SignGroups.t()
+          sign_groups: SignGroups.t(),
+          sign_stops: map()
         }
 
   def start_link(opts \\ []) do
@@ -86,7 +87,8 @@ defmodule SignsUi.Config.State do
         |> Map.get("configured_headways", %{})
         |> ConfiguredHeadways.parse_configured_headways_json(),
       chelsea_bridge_announcements: Map.get(response, "chelsea_bridge_announcements", "off"),
-      sign_groups: response |> Map.get("sign_groups", %{}) |> SignGroups.from_json()
+      sign_groups: response |> Map.get("sign_groups", %{}) |> SignGroups.from_json(),
+      sign_stops: parse_signs_json()
     }
 
     {:ok, state}
@@ -194,7 +196,8 @@ defmodule SignsUi.Config.State do
          signs: signs,
          configured_headways: configured_headways,
          chelsea_bridge_announcements: chelsea_bridge_announcements,
-         sign_groups: sign_groups
+         sign_groups: sign_groups,
+         sign_stops: sign_stops
        }) do
     config_store = Application.get_env(:signs_ui, :config_store)
 
@@ -209,6 +212,50 @@ defmodule SignsUi.Config.State do
       pretty: true
     )
     |> config_store.write()
+
+    for {%{stop_id: stop_id, route_id: route_id, direction_id: direction_id}, ids} <- sign_stops do
+      %{
+        stop_id: stop_id,
+        route_id: route_id,
+        direction_id: direction_id,
+        predictions:
+          if Enum.any?(ids, fn id ->
+               case signs[id] do
+                 nil -> false
+                 sign -> sign.config.mode == :headway
+               end
+             end) do
+            "flagged"
+          else
+            "normal"
+          end
+      }
+    end
+    |> then(&%{"stops" => &1})
+    |> Jason.encode!(pretty: true)
+    |> config_store.write_stops()
+  end
+
+  # sobelow_skip ["Traversal"]
+  defp parse_signs_json do
+    signs_json =
+      :code.priv_dir(:signs_ui)
+      |> Path.join("signs.json")
+      |> File.read!()
+      |> Jason.decode!(keys: :atoms)
+
+    for %{id: id, source_config: %{sources: sources}} <- signs_json,
+        %{stop_id: stop_id, routes: routes, direction_id: direction_id} <- sources,
+        route_id <- routes,
+        reduce: %{} do
+      acc ->
+        Map.update(
+          acc,
+          %{stop_id: stop_id, route_id: route_id, direction_id: direction_id},
+          [id],
+          &[id | &1]
+        )
+    end
   end
 
   defp schedule_clean(pid, ms) do
