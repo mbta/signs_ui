@@ -1,0 +1,37 @@
+<div class="container">
+  <h1>SCU configuration</h1>
+  <p>
+    Controls which SCU application the system will use, on a per-station basis.
+    <strong>Caution:</strong> setting these values incorrectly will cause signs to stop working.
+    Do not change any values here unless instructed by someone conducting an in-station SCU upgrade.
+  </p>
+  <table class="table table-sm table-striped">
+    <thead>
+      <tr>
+        <th>SCU</th>
+        <th>Application</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= for {scu_id, migrated} <- @scus do %>
+        <tr>
+          <td><%= scu_id %></td>
+          <td><%= if migrated do %>New<% else %>Legacy<% end %></td>
+          <td>
+            <%= if !assigns[:read_only_view] do %>
+              <% new_text = if(migrated, do: "legacy", else: "new") %>
+              <form action="" method="post" data-scu-form data-prompt="Change <%= scu_id %> to <%= new_text %> application?">
+                <input type="hidden" name="_csrf_token" value="<%= Phoenix.Controller.get_csrf_token() %>" />
+                <input type="hidden" name="scu_id" value="<%= scu_id %>" />
+                <button class="btn btn-sm btn-outline-secondary" name="migrated" value="<%= if migrated do %>false<% else %>true<% end %>">
+                  Change to <%= new_text %> application
+                </button>
+              </form>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

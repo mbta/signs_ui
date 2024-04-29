@@ -16,7 +16,8 @@ defmodule SignsUi.Config.State do
           configured_headways: ConfiguredHeadways.t(),
           chelsea_bridge_announcements: String.t(),
           sign_groups: SignGroups.t(),
-          sign_stops: map()
+          sign_stops: map(),
+          scus_migrated: %{String.t() => boolean()}
         }
 
   def start_link(opts \\ []) do
@@ -71,11 +72,19 @@ defmodule SignsUi.Config.State do
     GenServer.call(pid, {:update_sign_groups, changes})
   end
 
+  @spec update_scu(GenServer.server(), String.t(), boolean()) :: :ok
+  def update_scu(pid \\ __MODULE__, id, migrated) do
+    GenServer.call(pid, {:update_scu, id, migrated})
+  end
+
   @spec init(any()) :: {:ok, t()}
   def init(_) do
     schedule_clean(self(), 60_000)
     config_store = Application.get_env(:signs_ui, :config_store)
     response = config_store.read() |> Jason.decode!()
+
+    {sign_stops, scu_ids} = parse_signs_json()
+    scu_lookup = Map.get(response, "scus_migrated", %{})
 
     state = %{
       signs:
@@ -88,7 +97,8 @@ defmodule SignsUi.Config.State do
         |> ConfiguredHeadways.parse_configured_headways_json(),
       chelsea_bridge_announcements: Map.get(response, "chelsea_bridge_announcements", "off"),
       sign_groups: response |> Map.get("sign_groups", %{}) |> SignGroups.from_json(),
-      sign_stops: parse_signs_json()
+      sign_stops: sign_stops,
+      scus_migrated: Map.new(scu_ids, &{&1, Map.get(scu_lookup, &1, false)})
     }
 
     {:ok, state}
@@ -118,6 +128,12 @@ defmodule SignsUi.Config.State do
     new_sign_group_state = save_sign_group_changes(changes, old_state)
     new_state = save_sign_config_changes(sign_config_changes, new_sign_group_state)
     {:reply, {:ok, new_state}, new_state}
+  end
+
+  def handle_call({:update_scu, id, migrated}, _from, state) do
+    state = update_in(state, [:scus_migrated], &Map.replace(&1, id, migrated))
+    save_state(state)
+    {:reply, :ok, state}
   end
 
   def handle_info(:clean, %{signs: sign_configs} = state) do
@@ -197,7 +213,8 @@ defmodule SignsUi.Config.State do
          configured_headways: configured_headways,
          chelsea_bridge_announcements: chelsea_bridge_announcements,
          sign_groups: sign_groups,
-         sign_stops: sign_stops
+         sign_stops: sign_stops,
+         scus_migrated: scus_migrated
        }) do
     config_store = Application.get_env(:signs_ui, :config_store)
 
@@ -207,7 +224,8 @@ defmodule SignsUi.Config.State do
         "configured_headways" =>
           Config.ConfiguredHeadways.format_configured_headways_for_json(configured_headways),
         "chelsea_bridge_announcements" => chelsea_bridge_announcements,
-        "sign_groups" => sign_groups
+        "sign_groups" => sign_groups,
+        "scus_migrated" => scus_migrated
       },
       pretty: true
     )
@@ -244,18 +262,27 @@ defmodule SignsUi.Config.State do
       |> File.read!()
       |> Jason.decode!(keys: :atoms)
 
-    for %{id: id, source_config: %{sources: sources}} <- signs_json,
-        %{stop_id: stop_id, routes: routes, direction_id: direction_id} <- sources,
-        route_id <- routes,
-        reduce: %{} do
-      acc ->
-        Map.update(
-          acc,
-          %{stop_id: stop_id, route_id: route_id, direction_id: direction_id},
-          [id],
-          &[id | &1]
-        )
-    end
+    sign_stops =
+      for %{id: id, source_config: %{sources: sources}} <- signs_json,
+          %{stop_id: stop_id, routes: routes, direction_id: direction_id} <- sources,
+          route_id <- routes,
+          reduce: %{} do
+        acc ->
+          Map.update(
+            acc,
+            %{stop_id: stop_id, route_id: route_id, direction_id: direction_id},
+            [id],
+            &[id | &1]
+          )
+      end
+
+    scu_ids =
+      for %{scu_id: scu_id} <- signs_json,
+          uniq: true do
+        scu_id
+      end
+
+    {sign_stops, scu_ids}
   end
 
   defp schedule_clean(pid, ms) do
