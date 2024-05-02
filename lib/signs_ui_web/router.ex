@@ -63,6 +63,8 @@ defmodule SignsUiWeb.Router do
     ])
 
     get("/viewer", MessagesController, :index)
+    get("/scu", ScuController, :index)
+    post("/scu", ScuController, :update)
   end
 
   scope "/", SignsUiWeb do
