@@ -70,6 +70,11 @@
   font-weight: 600;
 }
 
+.sign_groups--select_signs_row-disabled {
+  color: grey;
+  background-color: lightgray;
+}
+
 .sign_groups--zone_selector:hover {
   background-color: rgb(213, 213, 213);
 }

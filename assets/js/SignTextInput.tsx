@@ -35,6 +35,16 @@ function SignTextInput({
     }
   };
 
+  const shorterWidthSigns = [
+    'amory_st_eastbound',
+    'amory_st_westbound',
+    'babcock_st_eastbound',
+    'babcock_st_westbound',
+  ];
+
+  const maxLengthLine1 = shorterWidthSigns.includes(signID) ? 16 : 18;
+  const maxLengthLine2 = shorterWidthSigns.includes(signID) ? 16 : 24;
+
   return (
     <div>
       {showTipText && (
@@ -47,8 +57,8 @@ function SignTextInput({
           id={`${signID}-line1-input`}
           className="custom_text_input--line-input"
           type="text"
-          maxLength={18}
-          size={18}
+          maxLength={maxLengthLine1}
+          size={maxLengthLine1}
           value={line1}
           onChange={(evt) => handleInput(evt, onValidLine1Change)}
           alt="Line one custom text input"
@@ -59,8 +69,8 @@ function SignTextInput({
           id={`${signID}-line2-input`}
           className="custom_text_input--line-input"
           type="text"
-          maxLength={24}
-          size={24}
+          maxLength={maxLengthLine2}
+          size={maxLengthLine2}
           value={line2}
           onChange={(evt) => handleInput(evt, onValidLine2Change)}
           alt="Line two custom text input"

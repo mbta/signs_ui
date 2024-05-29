@@ -1,4 +1,5 @@
 import * as React from 'react';
+import classNames from 'classnames';
 import { stationConfig } from './mbta';
 import SignText from './SignText';
 import SignTextInput from './SignTextInput';
@@ -81,6 +82,7 @@ function ZoneSelector({
           onChange={(evt) =>
             onSignChange([config.id, zone], evt.target.checked)
           }
+          disabled={['GAMO', 'GBAB'].includes(config.id)}
         />
         {zoneLabel}
       </label>
@@ -202,7 +204,20 @@ function SignGroupsForm({
             </div>
 
             {stations.map((station) => (
-              <div key={station.id} className="sign_groups--select_signs-row">
+              <div
+                key={station.id}
+                className={classNames('sign_groups--select_signs-row', {
+                  'sign_groups--select_signs_row-disabled': [
+                    'GAMO',
+                    'GBAB',
+                  ].includes(station.id),
+                })}
+                title={
+                  ['GAMO', 'GBAB'].includes(station.id)
+                    ? 'Station cannot be grouped due to signs having a lower character limit'
+                    : ''
+                }
+              >
                 <div className="sign_groups--select_signs-left_col sign_groups--select_signs-station">
                   {station.name} ({station.id})
                 </div>
