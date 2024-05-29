@@ -1,4 +1,5 @@
 import * as React from 'react';
+import classNames from 'classnames';
 import { stationConfig } from './mbta';
 import SignText from './SignText';
 import SignTextInput from './SignTextInput';
@@ -14,7 +15,6 @@ import {
 import { defaultZoneLabel, arincToRealtimeId } from './helpers';
 import SignGroupItem from './SignGroupItem';
 import SetExpiration from './SetExpiration';
-import classNames from 'classnames';
 
 function changeGroupSignText([station, zone]: [string, Zone], line: string) {
   const stationConfigs = stationConfig[line]?.stations || [];
