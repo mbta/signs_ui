@@ -64,7 +64,8 @@ defmodule SignsUi.Mixfile do
       {:tzdata, "~> 1.1"},
       {:ueberauth_cognito, "~> 0.1"},
       {:ueberauth, "~> 0.1"},
-      {:laboratory, github: "paulswartz/laboratory", ref: "cookie_opts"}
+      {:laboratory, github: "paulswartz/laboratory", ref: "cookie_opts"},
+      {:remote_ip, "~> 1.2"}
     ]
   end
 end
