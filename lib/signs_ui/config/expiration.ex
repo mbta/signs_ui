@@ -41,11 +41,13 @@ defmodule SignsUi.Config.Expiration do
 
   @spec handle_info(:process_expired, state()) :: {:noreply, state()}
   def handle_info(:process_expired, state) do
-    config_state = Config.State.get_all(state.sign_state_server)
-    sign_updates = expire_signs(config_state, state.time_fetcher, state.alert_fetcher)
+    current_dt = state.time_fetcher.()
+    alert_ids = state.alert_fetcher.()
 
-    group_updates =
-      SignGroups.expired(config_state.sign_groups, state.time_fetcher.(), state.alert_fetcher.())
+    config_state = Config.State.get_all(state.sign_state_server)
+    sign_updates = expire_signs(config_state, current_dt, alert_ids)
+
+    group_updates = SignGroups.expired(config_state.sign_groups, current_dt, alert_ids)
 
     if group_updates != %{} do
       Logger.info(["expired_sign_groups: ", inspect(Map.keys(group_updates))])
@@ -66,15 +68,12 @@ defmodule SignsUi.Config.Expiration do
 
   @spec expire_signs(
           SignsUi.Config.State.t(),
-          (() -> DateTime.t()),
-          (() -> MapSet.t(SignsUi.Alerts.Alert.id()))
+          DateTime.t(),
+          MapSet.t(SignsUi.Alerts.Alert.id())
         ) :: %{
           Sign.id() => Sign.t()
         }
-  def expire_signs(state, time_fetcher, alert_fetcher) do
-    current_dt = time_fetcher.()
-    alert_ids = alert_fetcher.()
-
+  def expire_signs(state, current_dt, alert_ids) do
     state
     |> Map.get(:signs)
     |> Enum.flat_map(fn sign -> expire_single_sign(sign, current_dt, alert_ids) end)
