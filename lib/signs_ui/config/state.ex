@@ -79,7 +79,6 @@ defmodule SignsUi.Config.State do
 
   @spec init(any()) :: {:ok, t()}
   def init(_) do
-    schedule_clean(self(), 60_000)
     config_store = Application.get_env(:signs_ui, :config_store)
     response = config_store.read() |> Jason.decode!()
 
@@ -100,6 +99,8 @@ defmodule SignsUi.Config.State do
       sign_stops: sign_stops,
       scus_migrated: Map.new(scu_ids, &{&1, Map.get(scu_lookup, &1, false)})
     }
+
+    schedule_clean()
 
     {:ok, state}
   end
@@ -137,9 +138,9 @@ defmodule SignsUi.Config.State do
   end
 
   def handle_info(:clean, %{signs: sign_configs} = state) do
-    schedule_clean(self(), 60_000)
     new_state = %{state | signs: Utilities.clean_configs(sign_configs)}
     save_state(new_state)
+    schedule_clean()
     {:noreply, new_state}
   end
 
@@ -285,7 +286,9 @@ defmodule SignsUi.Config.State do
     {sign_stops, scu_ids}
   end
 
-  defp schedule_clean(pid, ms) do
-    Process.send_after(pid, :clean, ms)
+  @clean_interval_ms :timer.minutes(1)
+
+  defp schedule_clean do
+    Process.send_after(self(), :clean, @clean_interval_ms)
   end
 end
