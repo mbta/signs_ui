@@ -76,7 +76,7 @@ defmodule SignsUi.Config.Expiration do
   def expire_signs(state, current_dt, alert_ids) do
     state
     |> Map.get(:signs)
-    |> Enum.flat_map(fn sign -> expire_single_sign(sign, current_dt, alert_ids) end)
+    |> Enum.flat_map(&expire_single_sign(&1, current_dt, alert_ids))
     |> Enum.into(%{})
   end
 
