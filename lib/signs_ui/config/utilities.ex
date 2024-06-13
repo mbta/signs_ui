@@ -6,12 +6,7 @@ defmodule SignsUi.Config.Utilities do
   def clean_configs(sign_configs) do
     registered_ids = get_realtime_ids()
 
-    :maps.filter(
-      fn key, _ ->
-        key in registered_ids
-      end,
-      sign_configs
-    )
+    Map.take(sign_configs, registered_ids)
   end
 
   def get_realtime_ids do
