@@ -16,7 +16,7 @@ defmodule SignsUiWeb.SignsChannel do
     with_admin_access(socket, fn ->
       new_signs = Map.new(changes, fn {id, config} -> {id, Sign.from_json(id, config)} end)
 
-      {:ok, _new_state} = SignsUi.Config.State.update_sign_configs(new_signs)
+      {:ok, _new_state} = SignsUi.Config.update_sign_configs(new_signs)
       entry = Map.values(changes) |> List.first(%{})
 
       Utilities.Common.log(

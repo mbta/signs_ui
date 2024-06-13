@@ -29,7 +29,7 @@ defmodule SignsUiWeb.SignGroupsChannel do
       {:ok, _} =
         changes
         |> SignsUi.Config.SignGroups.from_json()
-        |> SignsUi.Config.State.update_sign_groups()
+        |> SignsUi.Config.update_sign_groups()
 
       {:noreply, socket}
     end)

@@ -2,7 +2,7 @@ defmodule SignsUiWeb.ScuControllerTest do
   use SignsUiWeb.ConnCase
 
   setup do
-    SignsUi.Config.State.update_scu("BAIRSCU001", false)
+    SignsUi.Config.update_scu("BAIRSCU001", false)
   end
 
   @tag :authenticated
@@ -15,7 +15,7 @@ defmodule SignsUiWeb.ScuControllerTest do
   test "can update SCUs", %{conn: conn} do
     conn = post(conn, "/scu", %{"migrated" => "true", "scu_id" => "BAIRSCU001"})
     assert redirected_to(conn) =~ "/scu"
-    assert %{"BAIRSCU001" => true} = SignsUi.Config.State.get_all().scus_migrated
+    assert %{"BAIRSCU001" => true} = SignsUi.Config.get_all().scus_migrated
   end
 
   @tag :authenticated_read_only
@@ -28,6 +28,6 @@ defmodule SignsUiWeb.ScuControllerTest do
   test "cannot update SCUs as non-admin", %{conn: conn} do
     conn = post(conn, "/scu", %{"migrated" => "true", "scu_id" => "BAIRSCU001"})
     assert response(conn, 403)
-    assert %{"BAIRSCU001" => false} = SignsUi.Config.State.get_all().scus_migrated
+    assert %{"BAIRSCU001" => false} = SignsUi.Config.get_all().scus_migrated
   end
 end

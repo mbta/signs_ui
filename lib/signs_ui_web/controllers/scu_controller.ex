@@ -3,7 +3,7 @@ defmodule SignsUiWeb.ScuController do
 
   def index(conn, _params) do
     scus =
-      SignsUi.Config.State.get_all().scus_migrated
+      SignsUi.Config.get_all().scus_migrated
       |> Enum.sort_by(&elem(&1, 0))
 
     render(conn, "index.html", layout: {SignsUiWeb.LayoutView, "scu.html"}, scus: scus)
@@ -18,7 +18,7 @@ defmodule SignsUiWeb.ScuController do
             _ -> false
           end
 
-        SignsUi.Config.State.update_scu(scu_id, value)
+        SignsUi.Config.update_scu(scu_id, value)
         redirect(conn, to: "/scu")
 
       _ ->

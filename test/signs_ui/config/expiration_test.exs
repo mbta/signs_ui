@@ -178,7 +178,7 @@ defmodule SignsUi.Config.ExpirationTest do
       Logger.configure(level: :info)
       on_exit(fn -> Logger.configure(level: old_level) end)
 
-      {:ok, _state_pid} = SignsUi.Config.State.start_link(name: :sign_state_test)
+      {:ok, _state_pid} = SignsUi.Config.start_link(name: :sign_state_test)
 
       state = %{
         time_fetcher: fn ->
@@ -196,7 +196,7 @@ defmodule SignsUi.Config.ExpirationTest do
 
       assert log =~ "Cleaning expired settings for sign IDs: [\"harvard_northbound\"]"
 
-      new_state = SignsUi.Config.State.get_all(:sign_state_test)
+      new_state = SignsUi.Config.get_all(:sign_state_test)
 
       assert new_state.signs["harvard_northbound"].config.mode == :auto
       assert new_state.signs["harvard_southbound"].config.mode == :static_text
@@ -204,9 +204,9 @@ defmodule SignsUi.Config.ExpirationTest do
     end
 
     test "only removes expired sign groups" do
-      {:ok, pid} = SignsUi.Config.State.start_link(name: :sign_state_test)
+      {:ok, pid} = SignsUi.Config.start_link(name: :sign_state_test)
 
-      SignsUi.Config.State.update_sign_groups(pid, %{
+      SignsUi.Config.update_sign_groups(pid, %{
         "1111" => %SignsUi.Config.SignGroup{alert_id: "inactive_alert", route_id: "Red"},
         "2222" => %SignsUi.Config.SignGroup{
           route_id: "Red",
@@ -238,7 +238,7 @@ defmodule SignsUi.Config.ExpirationTest do
 
       assert log =~ "expired_sign_groups"
 
-      new_state = SignsUi.Config.State.get_all(:sign_state_test)
+      new_state = SignsUi.Config.get_all(:sign_state_test)
 
       assert new_state.sign_groups == %{
                "3333" => %SignsUi.Config.SignGroup{

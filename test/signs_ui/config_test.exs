@@ -1,6 +1,6 @@
-defmodule SignsUi.Config.StateTest do
+defmodule SignsUi.ConfigTest do
   use SignsUiWeb.ChannelCase
-  import SignsUi.Config.State
+  import SignsUi.Config
   alias SignsUi.Config
   alias SignsUi.Config.Sign
   alias SignsUi.Config.ConfiguredHeadway
@@ -8,7 +8,7 @@ defmodule SignsUi.Config.StateTest do
 
   describe "get_all/1" do
     test "Returns all signs" do
-      {:ok, signs_server} = start_supervised({Config.State, [name: :sign_test]})
+      {:ok, signs_server} = start_supervised({Config, [name: :sign_test]})
       signs = %{"sign1" => Sign.new("sign1", true), "sign2" => Sign.new("sign2", true)}
       :sys.replace_state(signs_server, fn _state -> signs end)
       assert get_all(signs_server) == signs
@@ -17,7 +17,7 @@ defmodule SignsUi.Config.StateTest do
 
   describe "update_sign_configs" do
     test "updates some values and leaves others alone" do
-      {:ok, pid} = GenServer.start_link(SignsUi.Config.State, [], [])
+      {:ok, pid} = GenServer.start_link(SignsUi.Config, [], [])
 
       @endpoint.subscribe("signs:all")
 
@@ -64,7 +64,7 @@ defmodule SignsUi.Config.StateTest do
 
   describe "update_configured_headways" do
     test "updates values properly" do
-      {:ok, pid} = GenServer.start_link(SignsUi.Config.State, [], [])
+      {:ok, pid} = GenServer.start_link(SignsUi.Config, [], [])
 
       @endpoint.subscribe("headways:all")
 
@@ -96,7 +96,7 @@ defmodule SignsUi.Config.StateTest do
     end
 
     test "adds new values properly" do
-      {:ok, pid} = GenServer.start_link(SignsUi.Config.State, [], [])
+      {:ok, pid} = GenServer.start_link(SignsUi.Config, [], [])
 
       @endpoint.subscribe("headways:all")
 
@@ -121,7 +121,7 @@ defmodule SignsUi.Config.StateTest do
     end
 
     test "removes values properly" do
-      {:ok, pid} = GenServer.start_link(SignsUi.Config.State, [], [])
+      {:ok, pid} = GenServer.start_link(SignsUi.Config, [], [])
 
       @endpoint.subscribe("headways:all")
 
@@ -140,7 +140,7 @@ defmodule SignsUi.Config.StateTest do
 
   describe "update_chelsea_bridge_announcements" do
     test "updates values properly" do
-      {:ok, pid} = GenServer.start_link(SignsUi.Config.State, [], [])
+      {:ok, pid} = GenServer.start_link(SignsUi.Config, [], [])
 
       @endpoint.subscribe("chelseaBridgeAnnouncements:all")
 
@@ -166,7 +166,7 @@ defmodule SignsUi.Config.StateTest do
 
   describe "update_sign_groups/2" do
     test "broadcasts updated sign groups after expiration" do
-      {:ok, pid} = GenServer.start_link(SignsUi.Config.State, [], [])
+      {:ok, pid} = GenServer.start_link(SignsUi.Config, [], [])
 
       @endpoint.subscribe("signGroups:all")
 
@@ -206,7 +206,7 @@ defmodule SignsUi.Config.StateTest do
     end
 
     test "handles sequential updates" do
-      {:ok, pid} = GenServer.start_link(SignsUi.Config.State, [], [])
+      {:ok, pid} = GenServer.start_link(SignsUi.Config, [], [])
 
       @endpoint.subscribe("signGroups:all")
 
@@ -265,7 +265,7 @@ defmodule SignsUi.Config.StateTest do
     end
 
     test "updates sign configs, too" do
-      {:ok, pid} = GenServer.start_link(SignsUi.Config.State, [], [])
+      {:ok, pid} = GenServer.start_link(SignsUi.Config, [], [])
       @endpoint.subscribe("signGroups:all")
       @endpoint.subscribe("signs:all")
 

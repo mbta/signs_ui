@@ -1,4 +1,4 @@
-defmodule SignsUi.Config.State do
+defmodule SignsUi.Config do
   @moduledoc """
     Keeps an internal state of all the signs
   """

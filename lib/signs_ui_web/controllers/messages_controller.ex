@@ -16,7 +16,7 @@ defmodule SignsUiWeb.MessagesController do
     signs = State.list_signs()
     alerts = SignsUi.Alerts.State.all()
 
-    config = SignsUi.Config.State.get_all()
+    config = SignsUi.Config.get_all()
 
     sign_configs =
       config

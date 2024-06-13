@@ -17,7 +17,7 @@ defmodule SignsUiWeb.HeadwaysChannel do
     with_admin_access(socket, fn ->
       new_signs = ConfiguredHeadways.parse_configured_headways_json(changes)
 
-      {:ok, _new_state} = SignsUi.Config.State.update_configured_headways(new_signs)
+      {:ok, _new_state} = SignsUi.Config.update_configured_headways(new_signs)
 
       username = Guardian.Phoenix.Socket.current_resource(socket)
 

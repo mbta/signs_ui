@@ -26,7 +26,7 @@ defmodule SignsUi.Config.Expiration do
   def init(opts) do
     time_fetcher = Keyword.get(opts, :time_fetcher, fn -> DateTime.utc_now() end)
     loop_ms = Keyword.get(opts, :loop_ms, 5_000)
-    sign_state_server = Keyword.get(opts, :sign_state_server, SignsUi.Config.State)
+    sign_state_server = Keyword.get(opts, :sign_state_server, SignsUi.Config)
     alert_fetcher = Keyword.get(opts, :alert_fetcher, &SignsUi.Alerts.State.active_alert_ids/0)
     schedule_loop(self(), loop_ms)
 
@@ -44,21 +44,21 @@ defmodule SignsUi.Config.Expiration do
     current_dt = state.time_fetcher.()
     alert_ids = state.alert_fetcher.()
 
-    config_state = Config.State.get_all(state.sign_state_server)
+    config_state = Config.get_all(state.sign_state_server)
     sign_updates = expire_signs(config_state, current_dt, alert_ids)
 
     group_updates = SignGroups.expired(config_state.sign_groups, current_dt, alert_ids)
 
     if group_updates != %{} do
       Logger.info(["expired_sign_groups: ", inspect(Map.keys(group_updates))])
-      {:ok, _new_state} = Config.State.update_sign_groups(state.sign_state_server, group_updates)
+      {:ok, _new_state} = Config.update_sign_groups(state.sign_state_server, group_updates)
     end
 
     if sign_updates != %{} do
       Logger.info("Cleaning expired settings for sign IDs: #{inspect(Map.keys(sign_updates))}")
 
       {:ok, _new_state} =
-        SignsUi.Config.State.update_sign_configs(state.sign_state_server, sign_updates)
+        SignsUi.Config.update_sign_configs(state.sign_state_server, sign_updates)
     end
 
     schedule_loop(self(), state.loop_ms)
@@ -67,7 +67,7 @@ defmodule SignsUi.Config.Expiration do
   end
 
   @spec expire_signs(
-          SignsUi.Config.State.t(),
+          SignsUi.Config.t(),
           DateTime.t(),
           MapSet.t(SignsUi.Alerts.Alert.id())
         ) :: %{
