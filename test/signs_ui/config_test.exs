@@ -6,19 +6,15 @@ defmodule SignsUi.ConfigTest do
   alias SignsUi.Config.ConfiguredHeadway
   alias SignsUi.Config.ConfiguredHeadways
 
-  describe "get_all/1" do
-    test "Returns all signs" do
-      {:ok, signs_server} = start_supervised({Config, [name: :sign_test]})
-      signs = %{"sign1" => Sign.new("sign1", true), "sign2" => Sign.new("sign2", true)}
-      :sys.replace_state(signs_server, fn _state -> signs end)
-      assert get_all(signs_server) == signs
-    end
+  setup do
+    config = __MODULE__
+    start_link_supervised!({SignsUi.Config, name: config})
+
+    %{config: config}
   end
 
   describe "update_sign_configs" do
-    test "updates some values and leaves others alone" do
-      {:ok, pid} = GenServer.start_link(SignsUi.Config, [], [])
-
+    test "updates some values and leaves others alone", %{config: config} do
       @endpoint.subscribe("signs:all")
 
       assert %{
@@ -27,10 +23,10 @@ defmodule SignsUi.ConfigTest do
                  "maverick_eastbound" => %Config.Sign{config: %{mode: :auto}},
                  "forest_hills_southbound" => %Config.Sign{config: %{mode: :auto}}
                }
-             } = get_all(pid)
+             } = get_all(config)
 
       {:ok, new_state} =
-        update_sign_configs(pid, %{
+        update_sign_configs(config, %{
           "maverick_eastbound" => Sign.new("maverick_eastbound", false),
           "maverick_westbound" => Sign.new("maverick_westbound", false)
         })
@@ -44,7 +40,7 @@ defmodule SignsUi.ConfigTest do
              } = new_state
 
       expected_broadcast =
-        pid
+        config
         |> get_all()
         |> Map.get(:signs)
         |> Enum.map(fn {_id, sign} -> {sign.id, sign.config} end)
@@ -58,17 +54,15 @@ defmodule SignsUi.ConfigTest do
                  "maverick_eastbound" => %Config.Sign{config: %{mode: :off}},
                  "forest_hills_southbound" => %Config.Sign{config: %{mode: :auto}}
                }
-             } = get_all(pid)
+             } = get_all(config)
     end
   end
 
   describe "update_configured_headways" do
-    test "updates values properly" do
-      {:ok, pid} = GenServer.start_link(SignsUi.Config, [], [])
-
+    test "updates values properly", %{config: config} do
       @endpoint.subscribe("headways:all")
 
-      assert get_all(pid).configured_headways == %{
+      assert get_all(config).configured_headways == %{
                "red_trunk" => %{
                  "peak" => %ConfiguredHeadway{
                    range_low: 8,
@@ -78,7 +72,7 @@ defmodule SignsUi.ConfigTest do
              }
 
       {:ok, new_state} =
-        update_configured_headways(pid, %{
+        update_configured_headways(config, %{
           "red_trunk" => %{"peak" => %ConfiguredHeadway{range_low: 13, range_high: 15}}
         })
 
@@ -87,7 +81,7 @@ defmodule SignsUi.ConfigTest do
              }
 
       expected_broadcast =
-        pid
+        config
         |> get_all()
         |> Map.get(:configured_headways)
         |> ConfiguredHeadways.format_configured_headways_for_json()
@@ -95,13 +89,11 @@ defmodule SignsUi.ConfigTest do
       assert_broadcast("new_configured_headways_state", ^expected_broadcast)
     end
 
-    test "adds new values properly" do
-      {:ok, pid} = GenServer.start_link(SignsUi.Config, [], [])
-
+    test "adds new values properly", %{config: config} do
       @endpoint.subscribe("headways:all")
 
       {:ok, new_state} =
-        update_configured_headways(pid, %{
+        update_configured_headways(config, %{
           "red_trunk" => %{"peak" => %ConfiguredHeadway{range_low: 13, range_high: 15}},
           "red_ashmont" => %{"peak" => %ConfiguredHeadway{range_low: 27, range_high: 30}}
         })
@@ -112,7 +104,7 @@ defmodule SignsUi.ConfigTest do
              }
 
       expected_broadcast =
-        pid
+        config
         |> get_all()
         |> Map.get(:configured_headways)
         |> ConfiguredHeadways.format_configured_headways_for_json()
@@ -120,17 +112,15 @@ defmodule SignsUi.ConfigTest do
       assert_broadcast("new_configured_headways_state", ^expected_broadcast)
     end
 
-    test "removes values properly" do
-      {:ok, pid} = GenServer.start_link(SignsUi.Config, [], [])
-
+    test "removes values properly", %{config: config} do
       @endpoint.subscribe("headways:all")
 
-      {:ok, new_state} = update_configured_headways(pid, %{})
+      {:ok, new_state} = update_configured_headways(config, %{})
 
       assert new_state.configured_headways == %{}
 
       expected_broadcast =
-        pid
+        config
         |> get_all()
         |> Map.get(:configured_headways)
 
@@ -139,14 +129,12 @@ defmodule SignsUi.ConfigTest do
   end
 
   describe "update_chelsea_bridge_announcements" do
-    test "updates values properly" do
-      {:ok, pid} = GenServer.start_link(SignsUi.Config, [], [])
-
+    test "updates values properly", %{config: config} do
       @endpoint.subscribe("chelseaBridgeAnnouncements:all")
 
-      assert get_all(pid).chelsea_bridge_announcements == "auto"
+      assert get_all(config).chelsea_bridge_announcements == "auto"
 
-      {:ok, new_state} = update_chelsea_bridge_announcements(pid, "off")
+      {:ok, new_state} = update_chelsea_bridge_announcements(config, "off")
 
       assert new_state.chelsea_bridge_announcements == "off"
 
@@ -154,7 +142,7 @@ defmodule SignsUi.ConfigTest do
         chelsea_bridge_announcements: "off"
       })
 
-      {:ok, new_state} = update_chelsea_bridge_announcements(pid, "auto")
+      {:ok, new_state} = update_chelsea_bridge_announcements(config, "auto")
 
       assert new_state.chelsea_bridge_announcements == "auto"
 
@@ -165,9 +153,7 @@ defmodule SignsUi.ConfigTest do
   end
 
   describe "update_sign_groups/2" do
-    test "broadcasts updated sign groups after expiration" do
-      {:ok, pid} = GenServer.start_link(SignsUi.Config, [], [])
-
+    test "broadcasts updated sign groups after expiration", %{config: config} do
       @endpoint.subscribe("signGroups:all")
 
       initial_state = %{
@@ -178,11 +164,11 @@ defmodule SignsUi.ConfigTest do
         }
       }
 
-      {:ok, _new_state} = update_sign_groups(pid, initial_state)
+      {:ok, _new_state} = update_sign_groups(config, initial_state)
 
       expired = %{"1111" => %{}}
 
-      {:ok, new_state} = update_sign_groups(pid, expired)
+      {:ok, new_state} = update_sign_groups(config, expired)
 
       updated_state = %{
         "2222" => %SignsUi.Config.SignGroup{
@@ -205,9 +191,7 @@ defmodule SignsUi.ConfigTest do
       assert_broadcast("new_sign_groups_state", ^display_state)
     end
 
-    test "handles sequential updates" do
-      {:ok, pid} = GenServer.start_link(SignsUi.Config, [], [])
-
+    test "handles sequential updates", %{config: config} do
       @endpoint.subscribe("signGroups:all")
 
       initial_state = %{
@@ -221,7 +205,7 @@ defmodule SignsUi.ConfigTest do
         }
       }
 
-      {:ok, _new_state} = update_sign_groups(pid, initial_state)
+      {:ok, _new_state} = update_sign_groups(config, initial_state)
 
       updates = %{
         "1111" => %{},
@@ -231,7 +215,7 @@ defmodule SignsUi.ConfigTest do
         }
       }
 
-      {:ok, new_state} = update_sign_groups(pid, updates)
+      {:ok, new_state} = update_sign_groups(config, updates)
 
       updated_state = %{
         "2222" => %SignsUi.Config.SignGroup{
@@ -264,8 +248,7 @@ defmodule SignsUi.ConfigTest do
       assert_broadcast("new_sign_groups_state", ^display_state)
     end
 
-    test "updates sign configs, too" do
-      {:ok, pid} = GenServer.start_link(SignsUi.Config, [], [])
+    test "updates sign configs, too", %{config: config} do
       @endpoint.subscribe("signGroups:all")
       @endpoint.subscribe("signs:all")
 
@@ -279,7 +262,7 @@ defmodule SignsUi.ConfigTest do
         }
       }
 
-      {:ok, new_state} = update_sign_groups(pid, updates)
+      {:ok, new_state} = update_sign_groups(config, updates)
 
       assert %{"new_sign_group" => %{}} = new_state.sign_groups
       assert %{"sign_one" => %{}} = new_state.signs

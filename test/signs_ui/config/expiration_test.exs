@@ -204,9 +204,10 @@ defmodule SignsUi.Config.ExpirationTest do
     end
 
     test "only removes expired sign groups" do
-      {:ok, pid} = SignsUi.Config.start_link(name: :sign_state_test)
+      config = :sign_state_test
+      start_link_supervised!({SignsUi.Config, name: config})
 
-      SignsUi.Config.update_sign_groups(pid, %{
+      SignsUi.Config.update_sign_groups(config, %{
         "1111" => %SignsUi.Config.SignGroup{alert_id: "inactive_alert", route_id: "Red"},
         "2222" => %SignsUi.Config.SignGroup{
           route_id: "Red",
