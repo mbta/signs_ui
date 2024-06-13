@@ -77,6 +77,7 @@ defmodule SignsUi.Config.State do
     GenServer.call(pid, {:update_scu, id, migrated})
   end
 
+  @impl true
   @spec init(any()) :: {:ok, t()}
   def init(_) do
     config_store = Application.get_env(:signs_ui, :config_store)
@@ -105,6 +106,7 @@ defmodule SignsUi.Config.State do
     {:ok, state}
   end
 
+  @impl true
   def handle_call(:get_all, _from, signs) do
     {:reply, signs, signs}
   end
@@ -137,6 +139,7 @@ defmodule SignsUi.Config.State do
     {:reply, :ok, state}
   end
 
+  @impl true
   def handle_info(:clean, %{signs: sign_configs} = state) do
     new_state = %{state | signs: Utilities.clean_configs(sign_configs)}
     save_state(new_state)
