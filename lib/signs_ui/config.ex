@@ -22,6 +22,7 @@ defmodule SignsUi.Config do
           sign_stops: map(),
           scus_migrated: %{String.t() => boolean()}
         }
+  @type cache() :: atom()
 
   @cache __MODULE__
 
@@ -77,7 +78,7 @@ defmodule SignsUi.Config do
   @doc """
   Gets all the current state.
   """
-  @spec get_all(atom()) :: t()
+  @spec get_all(cache()) :: t()
   def get_all(cache \\ @cache) do
     cache
     |> Cachex.stream!()
@@ -87,7 +88,7 @@ defmodule SignsUi.Config do
   @doc """
   Updates the state with new sign configurations by merging them in.
   """
-  @spec update_sign_configs(atom(), %{Config.Sign.id() => Config.Sign.t()}) ::
+  @spec update_sign_configs(cache(), %{Config.Sign.id() => Config.Sign.t()}) ::
           {:ok, t()}
   def update_sign_configs(cache \\ @cache, changes) do
     old_state = get_all(cache)
@@ -100,7 +101,7 @@ defmodule SignsUi.Config do
   @doc """
   Sets configured headways to the provided value.
   """
-  @spec update_configured_headways(atom(), %{
+  @spec update_configured_headways(cache(), %{
           String.t() => Config.ConfiguredHeadway.t()
         }) ::
           {:ok, t()}
@@ -115,9 +116,7 @@ defmodule SignsUi.Config do
   @doc """
   Sets Chelsea Bridge announcements to the provided value.
   """
-  @spec update_chelsea_bridge_announcements(atom(), %{
-          String.t() => String.t()
-        }) ::
+  @spec update_chelsea_bridge_announcements(cache(), String.t()) ::
           {:ok, t()}
   def update_chelsea_bridge_announcements(cache \\ @cache, changes) do
     old_state = get_all(cache)
@@ -130,7 +129,7 @@ defmodule SignsUi.Config do
   @doc """
   Applies the given SignGroups changes (inserts, updates, and deletes).
   """
-  @spec update_sign_groups(atom(), SignGroups.t()) :: {:ok, t()}
+  @spec update_sign_groups(cache(), SignGroups.t()) :: {:ok, t()}
   def update_sign_groups(cache \\ @cache, changes) do
     old_state = get_all(cache)
 
@@ -141,7 +140,7 @@ defmodule SignsUi.Config do
     {:ok, new_state}
   end
 
-  @spec update_scu(atom(), String.t(), boolean()) :: :ok
+  @spec update_scu(cache(), String.t(), boolean()) :: :ok
   def update_scu(cache \\ @cache, id, migrated) do
     state = get_all(cache)
 
@@ -151,7 +150,7 @@ defmodule SignsUi.Config do
     :ok
   end
 
-  @spec clean_configs(atom()) :: :ok
+  @spec clean_configs(cache()) :: :ok
   def clean_configs(cache \\ @cache) do
     state = get_all(cache)
     %{signs: sign_configs} = state
@@ -160,7 +159,7 @@ defmodule SignsUi.Config do
     :ok
   end
 
-  @spec save_sign_config_changes(atom(), %{Config.Sign.id() => Config.Sign.t()}, t()) :: t()
+  @spec save_sign_config_changes(cache(), %{Config.Sign.id() => Config.Sign.t()}, t()) :: t()
   defp save_sign_config_changes(cache, changes, %{signs: old_signs} = old_state) do
     signs = Map.merge(old_signs, changes)
     save_state(cache, %{old_state | signs: signs})
@@ -176,7 +175,7 @@ defmodule SignsUi.Config do
   end
 
   @spec save_configured_headways_changes(
-          atom(),
+          cache(),
           %{String.t() => Config.ConfiguredHeadway.t()},
           t()
         ) ::
@@ -199,7 +198,7 @@ defmodule SignsUi.Config do
     new_state
   end
 
-  @spec save_chelsea_bridge_announcements(atom(), String.t(), t()) :: t()
+  @spec save_chelsea_bridge_announcements(cache(), String.t(), t()) :: t()
   defp save_chelsea_bridge_announcements(cache, value, old_state) do
     new_state = Map.put(old_state, :chelsea_bridge_announcements, value)
     save_state(cache, new_state)
@@ -213,7 +212,7 @@ defmodule SignsUi.Config do
     new_state
   end
 
-  @spec save_sign_group_changes(atom(), SignGroups.t(), t()) :: t()
+  @spec save_sign_group_changes(cache(), SignGroups.t(), t()) :: t()
   defp save_sign_group_changes(cache, changes, old_state) do
     new_groups = Enum.reduce(changes, old_state.sign_groups, &SignGroups.update/2)
 
