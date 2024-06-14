@@ -178,7 +178,7 @@ defmodule SignsUi.Config.ExpirationTest do
       Logger.configure(level: :info)
       on_exit(fn -> Logger.configure(level: old_level) end)
 
-      {:ok, _state_pid} = SignsUi.Config.start_link(name: :sign_state_test)
+      start_link_supervised!({SignsUi.Config, name: :sign_state_test})
 
       state = %{
         time_fetcher: fn ->

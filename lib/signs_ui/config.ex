@@ -6,11 +6,13 @@ defmodule SignsUi.Config do
   require Logger
 
   alias SignsUi.Config
+  alias SignsUi.Config.Cleaner
   alias SignsUi.Config.ConfiguredHeadways
   alias SignsUi.Config.Sign
   alias SignsUi.Config.SignGroups
+  alias SignsUi.Config.Utilities
+  alias SignsUi.Config.Writer
   alias SignsUi.Setup
-  # alias SignsUi.Config.Utilities
 
   @type t :: %{
           signs: %{Config.Sign.id() => Config.Sign.t()},
@@ -30,11 +32,15 @@ defmodule SignsUi.Config do
 
   @impl true
   def init(opts) do
-    name = opts[:name] || __MODULE__
+    cache = opts[:name] || __MODULE__
+    task_supervisor = Module.concat(cache, TaskSupervisor)
 
     children = [
-      {Cachex, name: name},
-      {Setup, fn -> setup(name) end}
+      {Cachex, name: cache},
+      {Task.Supervisor, name: task_supervisor},
+      {Setup, fn -> setup(cache) end},
+      {Cleaner, cache: cache},
+      {Writer, cache: cache, task_supervisor: task_supervisor, name: writer_name(cache)}
     ]
 
     Supervisor.init(children, strategy: :one_for_one)
@@ -145,13 +151,14 @@ defmodule SignsUi.Config do
     :ok
   end
 
-  # @impl true
-  # def handle_info(:clean, %{signs: sign_configs} = state) do
-  #   new_state = %{state | signs: Utilities.clean_configs(sign_configs)}
-  #   save_state(new_state)
-  #   schedule_clean()
-  #   {:noreply, new_state}
-  # end
+  @spec clean_configs(atom()) :: :ok
+  def clean_configs(cache \\ @cache) do
+    state = get_all(cache)
+    %{signs: sign_configs} = state
+    new_state = %{state | signs: Utilities.clean_configs(sign_configs)}
+    save_state(cache, new_state)
+    :ok
+  end
 
   @spec save_sign_config_changes(atom(), %{Config.Sign.id() => Config.Sign.t()}, t()) :: t()
   defp save_sign_config_changes(cache, changes, %{signs: old_signs} = old_state) do
@@ -223,56 +230,15 @@ defmodule SignsUi.Config do
     new_state
   end
 
-  defp save_state(
-         cache,
-         %{
-           signs: signs,
-           configured_headways: configured_headways,
-           chelsea_bridge_announcements: chelsea_bridge_announcements,
-           sign_groups: sign_groups,
-           sign_stops: sign_stops,
-           scus_migrated: scus_migrated
-         } = state
-       ) do
-    config_store = Application.get_env(:signs_ui, :config_store)
-
-    Jason.encode!(
-      %{
-        "signs" => Config.Signs.format_signs_for_json(signs),
-        "configured_headways" =>
-          Config.ConfiguredHeadways.format_configured_headways_for_json(configured_headways),
-        "chelsea_bridge_announcements" => chelsea_bridge_announcements,
-        "sign_groups" => sign_groups,
-        "scus_migrated" => scus_migrated
-      },
-      pretty: true
-    )
-    |> config_store.write()
-
-    for {%{stop_id: stop_id, route_id: route_id, direction_id: direction_id}, ids} <- sign_stops do
-      %{
-        stop_id: stop_id,
-        route_id: route_id,
-        direction_id: direction_id,
-        predictions:
-          if Enum.any?(ids, fn id ->
-               case signs[id] do
-                 nil -> false
-                 sign -> sign.config.mode == :headway
-               end
-             end) do
-            "flagged"
-          else
-            "normal"
-          end
-      }
-    end
-    |> then(&%{"stops" => &1})
-    |> Jason.encode!(pretty: true)
-    |> config_store.write_stops()
+  defp save_state(cache, state) do
+    Logger.info("[SignsUi.Config] saving state")
 
     entries = Enum.map(state, &to_cachex_entry/1)
     Cachex.import(cache, entries)
+
+    cache
+    |> writer_name()
+    |> Writer.queue_write()
   end
 
   # sobelow_skip ["Traversal"]
@@ -310,4 +276,6 @@ defmodule SignsUi.Config do
 
   defp to_cachex_entry({key, value}, touched \\ System.os_time()),
     do: {:entry, key, touched, nil, value}
+
+  defp writer_name(cache), do: Module.concat(cache, Writer)
 end
