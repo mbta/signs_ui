@@ -91,9 +91,7 @@ defmodule SignsUi.Config do
   @spec update_sign_configs(cache(), %{Config.Sign.id() => Config.Sign.t()}) ::
           {:ok, t()}
   def update_sign_configs(cache \\ @cache, changes) do
-    old_state = get_all(cache)
-
-    new_state = save_sign_config_changes(cache, changes, old_state)
+    new_state = save_sign_config_changes(cache, changes)
 
     {:ok, new_state}
   end
@@ -135,7 +133,8 @@ defmodule SignsUi.Config do
 
     sign_config_changes = SignsUi.Config.SignGroupToSignConfigs.apply(changes, old_state)
     new_sign_group_state = save_sign_group_changes(cache, changes, old_state)
-    new_state = save_sign_config_changes(cache, sign_config_changes, new_sign_group_state)
+    # TODO: Make sure this works right
+    new_state = save_sign_config_changes(cache, sign_config_changes)
 
     {:ok, new_state}
   end
@@ -159,10 +158,9 @@ defmodule SignsUi.Config do
     :ok
   end
 
-  @spec save_sign_config_changes(cache(), %{Config.Sign.id() => Config.Sign.t()}, t()) :: t()
-  defp save_sign_config_changes(cache, changes, %{signs: old_signs} = old_state) do
-    signs = Map.merge(old_signs, changes)
-    save_state(cache, %{old_state | signs: signs})
+  @spec save_sign_config_changes(cache(), %{Config.Sign.id() => Config.Sign.t()}) :: t()
+  defp save_sign_config_changes(cache, changes) do
+    signs = merge(cache, :signs, changes)
 
     broadcast_data =
       signs
@@ -171,7 +169,7 @@ defmodule SignsUi.Config do
 
     SignsUiWeb.Endpoint.broadcast!("signs:all", "new_sign_configs_state", broadcast_data)
 
-    %{old_state | signs: signs}
+    get_all(cache)
   end
 
   @spec save_configured_headways_changes(
@@ -275,6 +273,16 @@ defmodule SignsUi.Config do
 
   defp to_cachex_entry({key, value}, touched \\ System.os_time()),
     do: {:entry, key, touched, nil, value}
+
+  defp merge(cache, key, value) do
+    {_, updated} =
+      Cachex.get_and_update(cache, key, fn
+        nil -> {:commit, value}
+        current -> {:commit, Map.merge(current, value)}
+      end)
+
+    updated
+  end
 
   defp writer_name(cache), do: Module.concat(cache, Writer)
 end
