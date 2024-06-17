@@ -115,9 +115,7 @@ defmodule SignsUi.Config do
   @spec update_chelsea_bridge_announcements(cache(), String.t()) ::
           {:ok, t()}
   def update_chelsea_bridge_announcements(cache \\ @cache, changes) do
-    old_state = get_all(cache)
-
-    new_state = save_chelsea_bridge_announcements(cache, changes, old_state)
+    new_state = save_chelsea_bridge_announcements(cache, changes)
 
     {:ok, new_state}
   end
@@ -181,8 +179,7 @@ defmodule SignsUi.Config do
        ) do
     put(cache, :configured_headways, new_configured_headways)
 
-    # TODO: Save state
-    # save_state(cache, new_state)
+    # TODO: save_state(cache, new_state)
 
     SignsUiWeb.Endpoint.broadcast!(
       "headways:all",
@@ -193,10 +190,10 @@ defmodule SignsUi.Config do
     get_all(cache)
   end
 
-  @spec save_chelsea_bridge_announcements(cache(), String.t(), t()) :: t()
-  defp save_chelsea_bridge_announcements(cache, value, old_state) do
-    new_state = Map.put(old_state, :chelsea_bridge_announcements, value)
-    save_state(cache, new_state)
+  @spec save_chelsea_bridge_announcements(cache(), String.t()) :: t()
+  defp save_chelsea_bridge_announcements(cache, value) do
+    put(cache, :chelsea_bridge_announcements, value)
+    # TODO: save_state(cache, new_state)
 
     SignsUiWeb.Endpoint.broadcast!(
       "chelseaBridgeAnnouncements:all",
@@ -204,7 +201,7 @@ defmodule SignsUi.Config do
       %{chelsea_bridge_announcements: value}
     )
 
-    new_state
+    get_all(cache)
   end
 
   @spec save_sign_group_changes(cache(), SignGroups.t(), t()) :: t()
