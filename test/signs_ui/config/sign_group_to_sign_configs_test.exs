@@ -46,7 +46,7 @@ defmodule SignsUi.Config.SignGroupToSignConfigsTest do
                    alert_id: "alert_id"
                  }
                }
-             } = SignGroupToSignConfigs.apply(sign_group_changes, @state)
+             } = SignGroupToSignConfigs.apply(sign_group_changes, @state.sign_groups)
     end
 
     test "Removing a sign group sets its signs to Auto" do
@@ -90,7 +90,7 @@ defmodule SignsUi.Config.SignGroupToSignConfigsTest do
       assert %{
                "sign1" => %Sign{id: "sign1", config: %{mode: :auto}},
                "sign2" => %Sign{id: "sign2", config: %{mode: :auto}}
-             } = SignGroupToSignConfigs.apply(sign_group_changes, state)
+             } = SignGroupToSignConfigs.apply(sign_group_changes, state.sign_groups)
     end
 
     test "Updating a sign group sets removed signs to Auto" do
@@ -163,7 +163,7 @@ defmodule SignsUi.Config.SignGroupToSignConfigsTest do
                  }
                },
                "sign2" => %Sign{id: "sign2", config: %{mode: :auto}}
-             } = SignGroupToSignConfigs.apply(sign_group_changes, state)
+             } = SignGroupToSignConfigs.apply(sign_group_changes, state.sign_groups)
     end
   end
 end

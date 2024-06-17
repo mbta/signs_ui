@@ -11,7 +11,6 @@ defmodule SignsUi.Config.SignGroupToSignConfigs do
     Auto.
   """
 
-  alias SignsUi.Config
   alias SignsUi.Config.Sign
   alias SignsUi.Config.SignGroup
   alias SignsUi.Config.SignGroups
@@ -19,10 +18,10 @@ defmodule SignsUi.Config.SignGroupToSignConfigs do
   @doc """
   Transforms the Sign Group changes into a map of Sign Config updates.
   """
-  @spec apply(SignGroups.t(), Config.t()) :: %{Sign.id() => Sign.t()}
-  def apply(sign_group_changes, config_state) do
+  @spec apply(SignGroups.t(), SignGroups.t()) :: %{Sign.id() => Sign.t()}
+  def apply(sign_group_changes, sign_groups) do
     Enum.reduce(sign_group_changes, %{}, fn {changed_sign_group_id, changed_sign_group}, acc ->
-      config_state.sign_groups
+      sign_groups
       |> Map.get(changed_sign_group_id)
       |> process_sign_group(normalize(changed_sign_group))
       |> Map.merge(acc)

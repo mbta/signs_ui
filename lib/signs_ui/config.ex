@@ -127,7 +127,9 @@ defmodule SignsUi.Config do
   def update_sign_groups(cache \\ @cache, changes) do
     old_state = get_all(cache)
 
-    sign_config_changes = SignsUi.Config.SignGroupToSignConfigs.apply(changes, old_state)
+    sign_config_changes =
+      SignsUi.Config.SignGroupToSignConfigs.apply(changes, old_state.sign_groups)
+
     _new_sign_group_state = save_sign_group_changes(cache, changes, old_state)
     # TODO: Make sure this works right
     new_state = save_sign_config_changes(cache, sign_config_changes)
