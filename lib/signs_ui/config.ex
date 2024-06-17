@@ -138,7 +138,8 @@ defmodule SignsUi.Config do
   @spec update_scu(cache(), String.t(), boolean()) :: :ok
   def update_scu(cache \\ @cache, id, migrated) do
     replace(cache, :scus_migrated, id, migrated)
-    # TODO: save_state(cache, state)
+
+    schedule_save_state(cache)
 
     :ok
   end
@@ -147,7 +148,8 @@ defmodule SignsUi.Config do
   def clean_configs(cache \\ @cache) do
     update(cache, :signs, &Utilities.clean_configs/1)
 
-    # TODO: save_state(cache, new_state)
+    schedule_save_state(cache)
+
     :ok
   end
 
@@ -176,7 +178,7 @@ defmodule SignsUi.Config do
        ) do
     put(cache, :configured_headways, new_configured_headways)
 
-    # TODO: save_state(cache, new_state)
+    schedule_save_state(cache)
 
     SignsUiWeb.Endpoint.broadcast!(
       "headways:all",
@@ -190,7 +192,7 @@ defmodule SignsUi.Config do
   @spec save_chelsea_bridge_announcements(cache(), String.t()) :: t()
   defp save_chelsea_bridge_announcements(cache, value) do
     put(cache, :chelsea_bridge_announcements, value)
-    # TODO: save_state(cache, new_state)
+    schedule_save_state(cache)
 
     SignsUiWeb.Endpoint.broadcast!(
       "chelseaBridgeAnnouncements:all",
@@ -208,7 +210,7 @@ defmodule SignsUi.Config do
         Enum.reduce(changes, sign_groups, &SignGroups.update/2)
       end)
 
-    # TODO: save_state(cache, new_state)
+    schedule_save_state(cache)
 
     SignsUiWeb.Endpoint.broadcast!(
       "signGroups:all",
@@ -219,11 +221,8 @@ defmodule SignsUi.Config do
     get_all(cache)
   end
 
-  defp save_state(cache, state) do
+  defp schedule_save_state(cache) do
     Logger.info("[SignsUi.Config] saving state")
-
-    entries = Enum.map(state, &to_cachex_entry/1)
-    Cachex.import(cache, entries)
 
     cache
     |> writer_name()
