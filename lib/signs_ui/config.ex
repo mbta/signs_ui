@@ -137,10 +137,8 @@ defmodule SignsUi.Config do
 
   @spec update_scu(cache(), String.t(), boolean()) :: :ok
   def update_scu(cache \\ @cache, id, migrated) do
-    state = get_all(cache)
-
-    state = update_in(state, [:scus_migrated], &Map.replace(&1, id, migrated))
-    save_state(cache, state)
+    replace(cache, :scus_migrated, id, migrated)
+    # TODO: save_state(cache, state)
 
     :ok
   end
@@ -268,18 +266,27 @@ defmodule SignsUi.Config do
   defp to_cachex_entry({key, value}, touched \\ System.os_time()),
     do: {:entry, key, touched, nil, value}
 
-  defp merge(cache, key, value) do
-    {_, updated} =
-      Cachex.get_and_update(cache, key, fn
-        nil -> {:commit, value}
-        current -> {:commit, Map.merge(current, value)}
-      end)
+  defp put(cache, key, value) do
+    {:ok, _} = Cachex.put(cache, key, value)
+  end
 
+  defp get_and_update(cache, key, fun) do
+    {_, updated} = Cachex.get_and_update(cache, key, fun)
     updated
   end
 
-  defp put(cache, key, value) do
-    {:ok, _} = Cachex.put(cache, key, value)
+  defp merge(cache, key, value) do
+    get_and_update(cache, key, fn
+      nil -> {:commit, value}
+      current -> {:commit, Map.merge(current, value)}
+    end)
+  end
+
+  defp replace(cache, key, id, value) do
+    get_and_update(cache, key, fn
+      nil -> {:ignore, nil}
+      current -> {:commit, Map.replace(current, id, value)}
+    end)
   end
 
   defp writer_name(cache), do: Module.concat(cache, Writer)
