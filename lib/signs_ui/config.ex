@@ -145,10 +145,9 @@ defmodule SignsUi.Config do
 
   @spec clean_configs(cache()) :: :ok
   def clean_configs(cache \\ @cache) do
-    state = get_all(cache)
-    %{signs: sign_configs} = state
-    new_state = %{state | signs: Utilities.clean_configs(sign_configs)}
-    save_state(cache, new_state)
+    update(cache, :signs, &Utilities.clean_configs/1)
+
+    # TODO: save_state(cache, new_state)
     :ok
   end
 
@@ -275,18 +274,26 @@ defmodule SignsUi.Config do
     updated
   end
 
-  defp merge(cache, key, value) do
+  defp update(cache, key, fun) do
     get_and_update(cache, key, fn
-      nil -> {:commit, value}
-      current -> {:commit, Map.merge(current, value)}
+      nil -> {:ignore, nil}
+      current -> {:commit, fun.(current)}
     end)
   end
 
-  defp replace(cache, key, id, value) do
+  defp update(cache, key, default, fun) do
     get_and_update(cache, key, fn
-      nil -> {:ignore, nil}
-      current -> {:commit, Map.replace(current, id, value)}
+      nil -> {:commit, default}
+      current -> {:commit, fun.(current)}
     end)
+  end
+
+  defp merge(cache, key, value) do
+    update(cache, key, value, &Map.merge(&1, value))
+  end
+
+  defp replace(cache, key, id, value) do
+    update(cache, key, &Map.replace(&1, id, value))
   end
 
   defp writer_name(cache), do: Module.concat(cache, Writer)
