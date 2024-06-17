@@ -104,9 +104,7 @@ defmodule SignsUi.Config do
         }) ::
           {:ok, t()}
   def update_configured_headways(cache \\ @cache, changes) do
-    old_state = get_all(cache)
-
-    new_state = save_configured_headways_changes(cache, changes, old_state)
+    new_state = save_configured_headways_changes(cache, changes)
 
     {:ok, new_state}
   end
@@ -132,7 +130,7 @@ defmodule SignsUi.Config do
     old_state = get_all(cache)
 
     sign_config_changes = SignsUi.Config.SignGroupToSignConfigs.apply(changes, old_state)
-    new_sign_group_state = save_sign_group_changes(cache, changes, old_state)
+    _new_sign_group_state = save_sign_group_changes(cache, changes, old_state)
     # TODO: Make sure this works right
     new_state = save_sign_config_changes(cache, sign_config_changes)
 
@@ -174,18 +172,17 @@ defmodule SignsUi.Config do
 
   @spec save_configured_headways_changes(
           cache(),
-          %{String.t() => Config.ConfiguredHeadway.t()},
-          t()
+          %{String.t() => Config.ConfiguredHeadway.t()}
         ) ::
           t()
   defp save_configured_headways_changes(
          cache,
-         new_configured_headways,
-         old_state
+         new_configured_headways
        ) do
-    new_state = %{old_state | configured_headways: new_configured_headways}
+    put(cache, :configured_headways, new_configured_headways)
 
-    save_state(cache, new_state)
+    # TODO: Save state
+    # save_state(cache, new_state)
 
     SignsUiWeb.Endpoint.broadcast!(
       "headways:all",
@@ -193,7 +190,7 @@ defmodule SignsUi.Config do
       Config.ConfiguredHeadways.format_configured_headways_for_json(new_configured_headways)
     )
 
-    new_state
+    get_all(cache)
   end
 
   @spec save_chelsea_bridge_announcements(cache(), String.t(), t()) :: t()
@@ -282,6 +279,10 @@ defmodule SignsUi.Config do
       end)
 
     updated
+  end
+
+  defp put(cache, key, value) do
+    {:ok, _} = Cachex.put(cache, key, value)
   end
 
   defp writer_name(cache), do: Module.concat(cache, Writer)
