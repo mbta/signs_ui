@@ -192,6 +192,7 @@ defmodule SignsUi.Config do
   @spec save_chelsea_bridge_announcements(cache(), String.t()) :: t()
   defp save_chelsea_bridge_announcements(cache, value) do
     put(cache, :chelsea_bridge_announcements, value)
+
     schedule_save_state(cache)
 
     SignsUiWeb.Endpoint.broadcast!(
@@ -222,8 +223,6 @@ defmodule SignsUi.Config do
   end
 
   defp schedule_save_state(cache) do
-    Logger.info("[SignsUi.Config] saving state")
-
     cache
     |> writer_name()
     |> Writer.queue_write()

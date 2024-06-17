@@ -9,6 +9,7 @@ defmodule SignsUi.Config.Writer do
   completes.
   """
   use GenServer
+  require Logger
 
   alias SignsUi.Config
 
@@ -61,6 +62,8 @@ defmodule SignsUi.Config.Writer do
 
   @doc false
   def do_write(cache) do
+    Logger.info("[SignsUi.Config.Writer] writing state")
+
     config_store = Application.get_env(:signs_ui, :config_store)
 
     %{
