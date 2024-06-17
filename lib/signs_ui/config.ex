@@ -125,13 +125,11 @@ defmodule SignsUi.Config do
   """
   @spec update_sign_groups(cache(), SignGroups.t()) :: {:ok, t()}
   def update_sign_groups(cache \\ @cache, changes) do
-    old_state = get_all(cache)
+    old_sign_groups = get(cache, :sign_groups)
 
-    sign_config_changes =
-      SignsUi.Config.SignGroupToSignConfigs.apply(changes, old_state.sign_groups)
+    sign_config_changes = SignsUi.Config.SignGroupToSignConfigs.apply(changes, old_sign_groups)
 
-    _new_sign_group_state = save_sign_group_changes(cache, changes, old_state)
-    # TODO: Make sure this works right
+    _new_sign_group_state = save_sign_group_changes(cache, changes)
     new_state = save_sign_config_changes(cache, sign_config_changes)
 
     {:ok, new_state}
@@ -203,13 +201,14 @@ defmodule SignsUi.Config do
     get_all(cache)
   end
 
-  @spec save_sign_group_changes(cache(), SignGroups.t(), t()) :: t()
-  defp save_sign_group_changes(cache, changes, old_state) do
-    new_groups = Enum.reduce(changes, old_state.sign_groups, &SignGroups.update/2)
+  @spec save_sign_group_changes(cache(), SignGroups.t()) :: t()
+  defp save_sign_group_changes(cache, changes) do
+    new_groups =
+      update(cache, :sign_groups, fn sign_groups ->
+        Enum.reduce(changes, sign_groups, &SignGroups.update/2)
+      end)
 
-    new_state = %{old_state | sign_groups: new_groups}
-
-    save_state(cache, new_state)
+    # TODO: save_state(cache, new_state)
 
     SignsUiWeb.Endpoint.broadcast!(
       "signGroups:all",
@@ -217,7 +216,7 @@ defmodule SignsUi.Config do
       SignGroups.by_route(new_groups)
     )
 
-    new_state
+    get_all(cache)
   end
 
   defp save_state(cache, state) do
@@ -269,6 +268,13 @@ defmodule SignsUi.Config do
 
   defp put(cache, key, value) do
     {:ok, _} = Cachex.put(cache, key, value)
+  end
+
+  defp get(cache, key, default \\ nil) do
+    case Cachex.get(cache, key) do
+      {:ok, nil} -> default
+      {:ok, value} -> value
+    end
   end
 
   defp get_and_update(cache, key, fun) do
