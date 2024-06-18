@@ -157,6 +157,8 @@ defmodule SignsUi.Config do
   defp save_sign_config_changes(cache, changes) do
     signs = merge(cache, :signs, changes)
 
+    schedule_save_state(cache)
+
     broadcast_data =
       signs
       |> Enum.map(fn {_id, sign} -> {sign.id, sign.config} end)
