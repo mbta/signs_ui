@@ -262,11 +262,27 @@ defmodule SignsUi.Config.State do
       |> File.read!()
       |> Jason.decode!(keys: :atoms)
 
-    sign_stops =
+    sl_sign_stops =
+      for %{id: "Silver_Line." <> _ = id} = sign <- signs_json,
+          config_list <- [sign[:configs], sign[:top_configs], sign[:bottom_configs]],
+          config_list,
+          %{sources: sources} <- config_list,
+          %{stop_id: stop_id, route_id: route_id, direction_id: direction_id} <- sources,
+          reduce: %{} do
+        acc ->
+          Map.update(
+            acc,
+            %{stop_id: stop_id, route_id: route_id, direction_id: direction_id},
+            [id],
+            &[id | &1]
+          )
+      end
+
+    subway_sign_stops =
       for %{id: id, source_config: %{sources: sources}} <- signs_json,
           %{stop_id: stop_id, routes: routes, direction_id: direction_id} <- sources,
           route_id <- routes,
-          reduce: %{} do
+          reduce: sl_sign_stops do
         acc ->
           Map.update(
             acc,
@@ -282,7 +298,7 @@ defmodule SignsUi.Config.State do
         scu_id
       end
 
-    {sign_stops, scu_ids}
+    {subway_sign_stops, scu_ids}
   end
 
   defp schedule_clean(pid, ms) do
