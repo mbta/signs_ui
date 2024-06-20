@@ -115,46 +115,81 @@ test('Shows batch mode buttons when not read-only', () => {
   expect(screen.getByText('All to off')).toBeInTheDocument();
 });
 
-test.each([['Silver'], ['Busway']])(
-  'Does not show headway batch mode button',
-  (line) => {
-    const now = Date.now();
-    const signs = {};
+test('Does not show headway batch mode button', () => {
+  const now = Date.now();
+  const signs = {};
 
-    const currentTime = now + 2000;
-    const signConfigs = {};
-    const setConfigs = () => true;
-    const readOnly = false;
-    const configuredHeadways = {};
-    const setConfiguredHeadways = () => true;
+  const currentTime = now + 2000;
+  const signConfigs = {};
+  const setConfigs = () => true;
+  const readOnly = false;
+  const configuredHeadways = {};
+  const setConfiguredHeadways = () => true;
 
-    render(
-      React.createElement(
-        Line,
-        {
-          alerts: {},
-          signs,
-          currentTime,
-          line,
-          signConfigs,
-          setConfigs,
-          readOnly,
-          configuredHeadways,
-          setConfiguredHeadways,
-          chelseaBridgeAnnouncements: 'off',
-          setChelseaBridgeAnnouncements: () => {},
-          signGroups: {},
-          setSignGroups: () => {},
-        },
-        null,
-      ),
-    );
+  render(
+    React.createElement(
+      Line,
+      {
+        alerts: {},
+        signs,
+        currentTime,
+        line: 'Busway',
+        signConfigs,
+        setConfigs,
+        readOnly,
+        configuredHeadways,
+        setConfiguredHeadways,
+        chelseaBridgeAnnouncements: 'off',
+        setChelseaBridgeAnnouncements: () => {},
+        signGroups: {},
+        setSignGroups: () => {},
+      },
+      null,
+    ),
+  );
 
-    expect(screen.getByText('All to auto')).toBeInTheDocument();
-    expect(screen.queryByText('All to headway')).toBeNull();
-    expect(screen.getByText('All to off')).toBeInTheDocument();
-  },
-);
+  expect(screen.getByText('All to auto')).toBeInTheDocument();
+  expect(screen.queryByText('All to headway')).toBeNull();
+  expect(screen.getByText('All to off')).toBeInTheDocument();
+});
+
+test('Shows headway batch mode button', () => {
+  const now = Date.now();
+  const signs = {};
+
+  const currentTime = now + 2000;
+  const signConfigs = {};
+  const setConfigs = () => true;
+  const readOnly = false;
+  const configuredHeadways = {};
+  const setConfiguredHeadways = () => true;
+
+  render(
+    React.createElement(
+      Line,
+      {
+        alerts: {},
+        signs,
+        currentTime,
+        line: 'Silver',
+        signConfigs,
+        setConfigs,
+        readOnly,
+        configuredHeadways,
+        setConfiguredHeadways,
+        chelseaBridgeAnnouncements: 'off',
+        setChelseaBridgeAnnouncements: () => {},
+        signGroups: {},
+        setSignGroups: () => {},
+      },
+      null,
+    ),
+  );
+
+  expect(screen.getByText('All to auto')).toBeInTheDocument();
+  expect(screen.queryByText('All to headway')).toBeInTheDocument();
+  expect(screen.getByText('All to off')).toBeInTheDocument();
+});
 
 test('Shows "Mixed" batch mode buttons when multiple modes are chosen', () => {
   const now = Date.now();
