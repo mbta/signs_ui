@@ -133,7 +133,6 @@ defmodule SignsUi.Config.State do
 
   def handle_call({:update_scu, id, migrated}, _from, state) do
     state = update_in(state, [:scus_migrated], &Map.replace(&1, id, migrated))
-    save_state(state)
     {:reply, :ok, [state], state}
   end
 
@@ -141,14 +140,17 @@ defmodule SignsUi.Config.State do
   def handle_info(:clean, %{signs: sign_configs} = state) do
     schedule_clean(self(), 60_000)
     new_state = %{state | signs: Utilities.clean_configs(sign_configs)}
-    save_state(new_state)
     {:noreply, [new_state], new_state}
+  end
+
+  @impl true
+  def handle_demand(_, state) do
+    {:noreply, [], state}
   end
 
   @spec save_sign_config_changes(%{Config.Sign.id() => Config.Sign.t()}, t()) :: t()
   defp save_sign_config_changes(changes, %{signs: old_signs} = old_state) do
     signs = Map.merge(old_signs, changes)
-    save_state(%{old_state | signs: signs})
 
     broadcast_data =
       signs
@@ -168,8 +170,6 @@ defmodule SignsUi.Config.State do
        ) do
     new_state = %{old_state | configured_headways: new_configured_headways}
 
-    save_state(new_state)
-
     SignsUiWeb.Endpoint.broadcast!(
       "headways:all",
       "new_configured_headways_state",
@@ -182,7 +182,6 @@ defmodule SignsUi.Config.State do
   @spec save_chelsea_bridge_announcements(String.t(), t()) :: t()
   defp save_chelsea_bridge_announcements(value, old_state) do
     new_state = Map.put(old_state, :chelsea_bridge_announcements, value)
-    save_state(new_state)
 
     SignsUiWeb.Endpoint.broadcast!(
       "chelseaBridgeAnnouncements:all",
@@ -199,8 +198,6 @@ defmodule SignsUi.Config.State do
 
     new_state = %{old_state | sign_groups: new_groups}
 
-    save_state(new_state)
-
     SignsUiWeb.Endpoint.broadcast!(
       "signGroups:all",
       "new_sign_groups_state",
@@ -208,52 +205,6 @@ defmodule SignsUi.Config.State do
     )
 
     new_state
-  end
-
-  defp save_state(%{
-         signs: signs,
-         configured_headways: configured_headways,
-         chelsea_bridge_announcements: chelsea_bridge_announcements,
-         sign_groups: sign_groups,
-         sign_stops: sign_stops,
-         scus_migrated: scus_migrated
-       }) do
-    config_store = Application.get_env(:signs_ui, :config_store)
-
-    Jason.encode!(
-      %{
-        "signs" => Config.Signs.format_signs_for_json(signs),
-        "configured_headways" =>
-          Config.ConfiguredHeadways.format_configured_headways_for_json(configured_headways),
-        "chelsea_bridge_announcements" => chelsea_bridge_announcements,
-        "sign_groups" => sign_groups,
-        "scus_migrated" => scus_migrated
-      },
-      pretty: true
-    )
-    |> config_store.write()
-
-    for {%{stop_id: stop_id, route_id: route_id, direction_id: direction_id}, ids} <- sign_stops do
-      %{
-        stop_id: stop_id,
-        route_id: route_id,
-        direction_id: direction_id,
-        predictions:
-          if Enum.any?(ids, fn id ->
-               case signs[id] do
-                 nil -> false
-                 sign -> sign.config.mode == :headway
-               end
-             end) do
-            "flagged"
-          else
-            "normal"
-          end
-      }
-    end
-    |> then(&%{"stops" => &1})
-    |> Jason.encode!(pretty: true)
-    |> config_store.write_stops()
   end
 
   # sobelow_skip ["Traversal"]
