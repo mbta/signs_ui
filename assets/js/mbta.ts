@@ -2074,7 +2074,7 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
+              headway: false,
               off: true,
               temporary_terminal: true,
             },
@@ -2107,7 +2107,7 @@ const stationConfig: {
             modes: {
               auto: false,
               custom: true,
-              headway: true,
+              headway: false,
               off: true,
               temporary_terminal: false,
             },

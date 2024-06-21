@@ -265,13 +265,8 @@ defmodule SignsUi.Config.State do
       |> Jason.decode!(keys: :atoms)
 
     sl_sign_stops =
-      for %{id: id} = sign <- signs_json,
-          config_list when is_list(config_list) <- [
-            sign[:configs],
-            sign[:top_configs],
-            sign[:bottom_configs]
-          ],
-          %{sources: sources} <- config_list,
+      for %{id: id, configs: configs} <- signs_json,
+          %{sources: sources} <- configs,
           %{stop_id: stop_id, route_id: route_id, direction_id: direction_id}
           when route_id in @sl_waterfront_route_ids <- sources,
           reduce: %{} do
