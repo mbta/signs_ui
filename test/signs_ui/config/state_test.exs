@@ -6,19 +6,27 @@ defmodule SignsUi.Config.StateTest do
   alias SignsUi.Config.ConfiguredHeadway
   alias SignsUi.Config.ConfiguredHeadways
 
+  setup do
+    pid = start_link_supervised!({Config.State, name: __MODULE__})
+
+    %{pid: pid}
+  end
+
   describe "get_all/1" do
-    test "Returns all signs" do
-      {:ok, signs_server} = start_supervised({Config.State, [name: :sign_test]})
-      signs = %{"sign1" => Sign.new("sign1", true), "sign2" => Sign.new("sign2", true)}
-      :sys.replace_state(signs_server, fn _state -> signs end)
-      assert get_all(signs_server) == signs
+    test "Returns entire state object", %{pid: signs_server} do
+      assert %{
+               chelsea_bridge_announcements: _,
+               configured_headways: _,
+               scus_migrated: _,
+               sign_groups: _,
+               sign_stops: _,
+               signs: _
+             } = get_all(signs_server)
     end
   end
 
   describe "update_sign_configs" do
-    test "updates some values and leaves others alone" do
-      {:ok, pid} = GenServer.start_link(SignsUi.Config.State, [], [])
-
+    test "updates some values and leaves others alone", %{pid: pid} do
       @endpoint.subscribe("signs:all")
 
       assert %{
@@ -63,9 +71,7 @@ defmodule SignsUi.Config.StateTest do
   end
 
   describe "update_configured_headways" do
-    test "updates values properly" do
-      {:ok, pid} = GenServer.start_link(SignsUi.Config.State, [], [])
-
+    test "updates values properly", %{pid: pid} do
       @endpoint.subscribe("headways:all")
 
       assert get_all(pid).configured_headways == %{
@@ -95,9 +101,7 @@ defmodule SignsUi.Config.StateTest do
       assert_broadcast("new_configured_headways_state", ^expected_broadcast)
     end
 
-    test "adds new values properly" do
-      {:ok, pid} = GenServer.start_link(SignsUi.Config.State, [], [])
-
+    test "adds new values properly", %{pid: pid} do
       @endpoint.subscribe("headways:all")
 
       {:ok, new_state} =
@@ -120,9 +124,7 @@ defmodule SignsUi.Config.StateTest do
       assert_broadcast("new_configured_headways_state", ^expected_broadcast)
     end
 
-    test "removes values properly" do
-      {:ok, pid} = GenServer.start_link(SignsUi.Config.State, [], [])
-
+    test "removes values properly", %{pid: pid} do
       @endpoint.subscribe("headways:all")
 
       {:ok, new_state} = update_configured_headways(pid, %{})
@@ -139,9 +141,7 @@ defmodule SignsUi.Config.StateTest do
   end
 
   describe "update_chelsea_bridge_announcements" do
-    test "updates values properly" do
-      {:ok, pid} = GenServer.start_link(SignsUi.Config.State, [], [])
-
+    test "updates values properly", %{pid: pid} do
       @endpoint.subscribe("chelseaBridgeAnnouncements:all")
 
       assert get_all(pid).chelsea_bridge_announcements == "auto"
@@ -165,9 +165,7 @@ defmodule SignsUi.Config.StateTest do
   end
 
   describe "update_sign_groups/2" do
-    test "broadcasts updated sign groups after expiration" do
-      {:ok, pid} = GenServer.start_link(SignsUi.Config.State, [], [])
-
+    test "broadcasts updated sign groups after expiration", %{pid: pid} do
       @endpoint.subscribe("signGroups:all")
 
       initial_state = %{
@@ -205,9 +203,7 @@ defmodule SignsUi.Config.StateTest do
       assert_broadcast("new_sign_groups_state", ^display_state)
     end
 
-    test "handles sequential updates" do
-      {:ok, pid} = GenServer.start_link(SignsUi.Config.State, [], [])
-
+    test "handles sequential updates", %{pid: pid} do
       @endpoint.subscribe("signGroups:all")
 
       initial_state = %{
@@ -264,8 +260,7 @@ defmodule SignsUi.Config.StateTest do
       assert_broadcast("new_sign_groups_state", ^display_state)
     end
 
-    test "updates sign configs, too" do
-      {:ok, pid} = GenServer.start_link(SignsUi.Config.State, [], [])
+    test "updates sign configs, too", %{pid: pid} do
       @endpoint.subscribe("signGroups:all")
       @endpoint.subscribe("signs:all")
 
