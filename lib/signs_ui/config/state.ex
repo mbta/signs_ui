@@ -11,6 +11,8 @@ defmodule SignsUi.Config.State do
   alias SignsUi.Config.SignGroups
   alias SignsUi.Config.Utilities
 
+  @sl_waterfront_route_ids ["741", "742", "743", "746"]
+
   @type t :: %{
           signs: %{Config.Sign.id() => Config.Sign.t()},
           configured_headways: ConfiguredHeadways.t(),
@@ -263,11 +265,12 @@ defmodule SignsUi.Config.State do
       |> Jason.decode!(keys: :atoms)
 
     sl_sign_stops =
-      for %{id: "Silver_Line." <> _ = id} = sign <- signs_json,
+      for %{id: id} = sign <- signs_json,
           config_list <- [sign[:configs], sign[:top_configs], sign[:bottom_configs]],
           config_list,
           %{sources: sources} <- config_list,
-          %{stop_id: stop_id, route_id: route_id, direction_id: direction_id} <- sources,
+          %{stop_id: stop_id, route_id: route_id, direction_id: direction_id}
+          when route_id in @sl_waterfront_route_ids <- sources,
           reduce: %{} do
         acc ->
           Map.update(
