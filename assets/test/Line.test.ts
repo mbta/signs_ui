@@ -115,7 +115,7 @@ test('Shows batch mode buttons when not read-only', () => {
   expect(screen.getByText('All to off')).toBeInTheDocument();
 });
 
-test('Does not show headway batch mode button', () => {
+test('Does not show headway batch mode button for busways', () => {
   const now = Date.now();
   const signs = {};
 
@@ -153,7 +153,7 @@ test('Does not show headway batch mode button', () => {
   expect(screen.getByText('All to off')).toBeInTheDocument();
 });
 
-test('Shows headway batch mode button', () => {
+test('Shows headway batch mode button for Silver Line', () => {
   const now = Date.now();
   const signs = {};
 
