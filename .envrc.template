@@ -1,6 +1,6 @@
 # URL and access key for the V3 API. Required. Leaving the key unset will work, but access will be
 # subject to strict rate limits, so it is recommended to request a proper key.
-export API_V3_URL=https://api-dev-green.mbtace.com
+export API_V3_ORIGIN=https://api-dev-green.mbtace.com
 #export API_V3_KEY=
 
 # Access key for allowing updates from external applications, e.g. realtime_signs. Optional.
