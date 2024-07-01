@@ -59,7 +59,7 @@ defmodule SignsUi.Mixfile do
       {:phoenix, "~> 1.7.1"},
       {:phoenix_view, "~> 2.0"},
       {:plug_cowboy, "~> 2.3"},
-      {:sentry, "~> 8.0"},
+      {:sentry, "~> 10.6"},
       {:sobelow, "~> 0.8", only: :dev},
       {:tzdata, "~> 1.1"},
       {:ueberauth_cognito, "~> 0.1"},
