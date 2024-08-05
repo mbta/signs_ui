@@ -87,4 +87,93 @@ defmodule SignsUiWeb.MessagesController do
   def create(conn, _params) do
     send_resp(conn, 201, "Ignoring unknown message.")
   end
+
+  def background(conn, _params) do
+    with {:ok, visual_zones} <- parse_zones(conn, "visual_zones"),
+         {:ok, visual_data} <- parse_visual_data(conn),
+         {:ok, expiration} <- parse_expiration(conn) do
+      [scu_id] = Plug.Conn.get_req_header(conn, "x-scu-id")
+      zone = Enum.at(visual_zones, 0)
+      station = SignsUi.Signs.Lookup.lookup_station_code(scu_id, zone)
+      expiration_time = DateTime.utc_now() |> DateTime.add(expiration)
+
+      Enum.each([{:top, 1}, {:bottom, 2}], fn {key, line} ->
+        :ok =
+          %SignContent{
+            station: station,
+            zone: zone,
+            line_number: line,
+            expiration: expiration_time,
+            pages: Enum.map(visual_data.pages, &{&1[key], &1.duration})
+          }
+          |> State.process_message()
+      end)
+
+      send_resp(conn, 200, "")
+    else
+      # sobelow_skip ["XSS"]
+      {:error, message} -> send_resp(conn, 400, message)
+    end
+  end
+
+  def play(conn, _params) do
+    # Ignore active messages for now
+    send_resp(conn, 200, "")
+  end
+
+  defp parse_zones(conn, key) do
+    case Map.get(conn.params, key, []) do
+      nil ->
+        {:ok, MapSet.new()}
+
+      zones when is_list(zones) ->
+        if Enum.all?(zones, &is_binary/1) do
+          {:ok, MapSet.new(zones)}
+        else
+          {:error, "invalid #{key}"}
+        end
+
+      _ ->
+        {:error, "invalid #{key}"}
+    end
+  end
+
+  defp parse_visual_data(conn) do
+    case conn.params["visual_data"] do
+      nil ->
+        {:ok, nil}
+
+      %{"pages" => pages} when is_list(pages) ->
+        with {:ok, pages} <-
+               Enum.reduce_while(pages, {:ok, []}, fn page, {:ok, pages} ->
+                 case parse_page(page) do
+                   {:ok, page} -> {:cont, {:ok, pages ++ [page]}}
+                   {:error, message} -> {:halt, {:error, message}}
+                 end
+               end) do
+          {:ok, %{pages: pages}}
+        end
+
+      _ ->
+        {:error, "invalid visual_data"}
+    end
+  end
+
+  defp parse_page(page) do
+    case page do
+      %{"top" => top, "bottom" => bottom, "duration" => duration}
+      when is_binary(top) and is_binary(bottom) and is_integer(duration) ->
+        {:ok, %{top: top, bottom: bottom, duration: duration}}
+
+      _ ->
+        {:error, "invalid page"}
+    end
+  end
+
+  defp parse_expiration(conn) do
+    case conn.params["expiration"] do
+      num when is_integer(num) -> {:ok, num}
+      _ -> {:error, "invalid expiration"}
+    end
+  end
 end

@@ -12,6 +12,7 @@ defmodule SignsUi.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: SignsUi.PubSub},
       SignsUiWeb.Endpoint,
+      SignsUi.Signs.Lookup,
       SignsUi.Config.State,
       SignsUi.Config.Writer,
       {SignsUi.Signs.State, [name: SignsUi.Signs.State]},

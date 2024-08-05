@@ -123,6 +123,24 @@ defmodule SignsUiWeb.MessagesControllerTest do
 
       assert_broadcast("sign_update", %{audios: [%{station: "RDAV", zones: ["s"]}]})
     end
+
+    test "background", %{conn: conn} do
+      subscribe_and_join!(socket(), SignsUiWeb.SignsChannel, "signs:all", %{})
+
+      conn
+      |> add_api_req_header()
+      |> put_req_header("x-scu-id", "BAIRSCU001")
+      |> post(messages_path(conn, :background), %{
+        "visual_zones" => ["e"],
+        "visual_data" => %{"pages" => [%{"top" => "top", "bottom" => "bottom", "duration" => 6}]},
+        "expiration" => 180
+      })
+
+      assert_broadcast("sign_update", %{
+        lines: %{1 => %{text: [%{content: "top"}]}, 2 => %{text: [%{content: "bottom"}]}},
+        sign_id: "BAIR-e"
+      })
+    end
   end
 
   defp add_api_req_header(conn) do
