@@ -92,12 +92,8 @@ defmodule SignsUiWeb.MessagesController do
     with {:ok, visual_zones} <- parse_zones(conn, "visual_zones"),
          {:ok, visual_data} <- parse_visual_data(conn),
          {:ok, expiration} <- parse_expiration(conn) do
-      scu_id =
-        Enum.find_value(conn.req_headers, fn {key, value} ->
-          if(key == "x-scu-id", do: value)
-        end)
-
-      zone = MapSet.to_list(visual_zones) |> hd()
+      [scu_id] = Plug.Conn.get_req_header(conn, "x-scu-id")
+      zone = Enum.at(visual_zones, 0)
       station = SignsUi.Signs.Lookup.lookup_station_code(scu_id, zone)
       expiration_time = DateTime.utc_now() |> DateTime.add(expiration)
 
