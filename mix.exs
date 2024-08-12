@@ -48,7 +48,7 @@ defmodule SignsUi.Mixfile do
       {:gettext, "~> 0.11"},
       {:gen_stage, "~> 1.0"},
       {:server_sent_event_stage, "~> 1.2.1"},
-      {:castore, "~> 0.1"},
+      {:castore, "~> 1.0"},
       {:guardian_phoenix, "~> 2.0"},
       {:guardian, "~> 2.0"},
       {:jason, "~> 1.4.0"},
