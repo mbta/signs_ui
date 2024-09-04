@@ -32,7 +32,16 @@ config :logger,
 
 config :ueberauth, Ueberauth,
   providers: [
-    cognito: {SignsUi.Ueberauth.Strategy.Fake, []}
+    keycloak: {SignsUi.Ueberauth.Strategy.Fake, []}
+  ]
+
+config :ueberauth_oidcc,
+  providers: [
+    keycloak: [
+      issuer: :keycloak_issuer,
+      client_id: "dev-client",
+      client_secret: "fake-secret"
+    ]
   ]
 
 config :phoenix, :json_library, Jason
