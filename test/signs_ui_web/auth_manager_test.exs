@@ -19,27 +19,27 @@ defmodule SignsUiWeb.AuthManagerTest do
   end
 
   describe "claims_access_level" do
-    test "works with no group information" do
+    test "works with no role information" do
       assert SignsUiWeb.AuthManager.claims_access_level(%{}) == :none
     end
 
-    test "works with nil groups" do
-      assert SignsUiWeb.AuthManager.claims_access_level(%{"groups" => nil}) == :none
+    test "works with nil roles" do
+      assert SignsUiWeb.AuthManager.claims_access_level(%{"roles" => nil}) == :none
     end
 
     test "read-only access" do
-      assert SignsUiWeb.AuthManager.claims_access_level(%{"groups" => ["signs-ui-read-only"]}) ==
+      assert SignsUiWeb.AuthManager.claims_access_level(%{"roles" => ["signs-ui-read-only"]}) ==
                :read_only
     end
 
     test "admin access" do
-      assert SignsUiWeb.AuthManager.claims_access_level(%{"groups" => ["signs-ui-admin"]}) ==
+      assert SignsUiWeb.AuthManager.claims_access_level(%{"roles" => ["signs-ui-admin"]}) ==
                :admin
     end
 
-    test "read-only access when both groups present" do
+    test "read-only access when both roles present" do
       assert SignsUiWeb.AuthManager.claims_access_level(%{
-               "groups" => ["signs-ui-admin", "signs-ui-read-only"]
+               "roles" => ["signs-ui-admin", "signs-ui-read-only"]
              }) == :read_only
     end
   end

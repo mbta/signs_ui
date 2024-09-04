@@ -19,7 +19,7 @@ defmodule SignsUiWeb.ChelseaBridgeAnnouncementsChannelTest do
     test "allows changing chelsea bridge announcements when socket is authenticated", %{
       socket: socket
     } do
-      socket = Helpers.sign_in_with_groups(socket, "foo@mbta.com", ["signs-ui-admin"])
+      socket = Helpers.sign_in_with_roles(socket, "foo@mbta.com", ["signs-ui-admin"])
 
       log =
         capture_log([level: :info], fn ->
@@ -38,7 +38,7 @@ defmodule SignsUiWeb.ChelseaBridgeAnnouncementsChannelTest do
          %{
            socket: socket
          } do
-      socket = Helpers.sign_in_with_groups(socket, "foo@mbta.com", ["signs-ui-read-only"])
+      socket = Helpers.sign_in_with_roles(socket, "foo@mbta.com", ["signs-ui-read-only"])
 
       log =
         capture_log([level: :info], fn ->

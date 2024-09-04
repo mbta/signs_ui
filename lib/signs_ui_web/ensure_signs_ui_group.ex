@@ -1,6 +1,6 @@
 defmodule SignsUiWeb.EnsureSignsUiGroup do
   @moduledoc """
-  Ensure the Cognito user is in the correct group for authorization.
+  Ensure the Keycloak user is in the correct group for authorization.
   """
 
   import Plug.Conn
