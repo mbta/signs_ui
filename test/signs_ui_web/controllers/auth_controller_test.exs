@@ -20,7 +20,7 @@ defmodule SignsUiWeb.AuthControllerTest do
             id_token: "FAKE ID TOKEN"
           }
         },
-        strategy: Ueberauth.Strategy.Oidcc,
+        strategy: SignsUi.Ueberauth.Strategy.Fake,
         extra: %Ueberauth.Auth.Extra{
           raw_info: %UeberauthOidcc.RawInfo{
             userinfo: %{
@@ -29,7 +29,7 @@ defmodule SignsUiWeb.AuthControllerTest do
               }
             },
             opts: %{
-              module: __MODULE__.FakeOidcc,
+              module: SignsUi.Ueberauth.Strategy.Fake,
               issuer: :keycloak_issuer,
               client_id: "fake_client",
               client_secret: "fake_client_secret"
@@ -37,6 +37,8 @@ defmodule SignsUiWeb.AuthControllerTest do
           }
         }
       }
+
+      reassign_env(:refresh_token_store, SignsUiWeb.AuthControllerTest.FakeRefreshTokenStore)
 
       log =
         capture_log([level: :info], fn ->
@@ -117,17 +119,52 @@ defmodule SignsUiWeb.AuthControllerTest do
   describe "logout" do
     @tag :authenticated
     test "clears refresh token, logs user out, and redirects to keycloak logout", %{conn: conn} do
+      current_time = System.system_time(:second)
+
+      auth = %Ueberauth.Auth{
+        provider: :keycloak,
+        uid: "foo@mbta.com",
+        credentials: %Ueberauth.Auth.Credentials{
+          token: "FAKE TOKEN",
+          refresh_token: "bar",
+          expires_at: current_time + 1_000,
+          other: %{
+            id_token: "FAKE ID TOKEN"
+          }
+        },
+        strategy: SignsUi.Ueberauth.Strategy.Fake,
+        extra: %Ueberauth.Auth.Extra{
+          raw_info: %UeberauthOidcc.RawInfo{
+            userinfo: %{
+              "resource_access" => %{
+                "test-client" => %{"roles" => ["test1"]}
+              }
+            },
+            opts: %{
+              module: SignsUi.Ueberauth.Strategy.Fake,
+              issuer: :keycloak_issuer,
+              client_id: "fake_client",
+              client_secret: "fake_client_secret"
+            }
+          }
+        }
+      }
+
       reassign_env(:refresh_token_store, SignsUiWeb.AuthControllerTest.FakeRefreshTokenStore)
 
       log =
         capture_log([level: :info], fn ->
+          conn =
+            conn
+            |> assign(:ueberauth_auth, auth)
+            |> get(SignsUiWeb.Router.Helpers.auth_path(conn, :callback, "keycloak"))
+
+          assert Guardian.Plug.authenticated?(conn)
           conn = get(conn, SignsUiWeb.Router.Helpers.auth_path(conn, :logout, "keycloak"))
 
-          response = response(conn, 302)
+          refute Guardian.Plug.authenticated?(conn)
 
-          assert is_nil(Guardian.Plug.current_claims(conn))
-
-          assert response =~ "/auth/keycloak/logout"
+          assert redirected_to(conn) == "/"
         end)
 
       assert log =~ "cleared_refresh_token"
@@ -145,10 +182,4 @@ defmodule SignsUiWeb.AuthControllerTest do
   end
 
   def id(x), do: x
-
-  defmodule FakeOidcc do
-    def initiate_logout_url("FAKE ID TOKEN", :keycloak_issuer, "fake_client", opts) do
-      {:ok, "/end_session?#{URI.encode_query(opts)}"}
-    end
-  end
 end
