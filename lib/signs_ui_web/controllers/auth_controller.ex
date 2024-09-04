@@ -106,8 +106,4 @@ defmodule SignsUiWeb.AuthController do
     logout_params = %{post_logout_redirect_uri: "/"}
     UeberauthOidcc.initiate_logout_url(auth, logout_params)
   end
-
-  # @spec config_value(binary() | {module(), atom(), [any()]}) :: any()
-  # defp config_value(value) when is_binary(value), do: value
-  # defp config_value({m, f, a}), do: apply(m, f, a)
 end
