@@ -22,7 +22,7 @@ defmodule SignsUiWeb do
       use Phoenix.Controller, namespace: SignsUiWeb
       import Plug.Conn
       import SignsUiWeb.Router.Helpers
-      import SignsUiWeb.Gettext
+      use Gettext, backend: SignsUiWeb.Gettext
     end
   end
 
@@ -40,7 +40,7 @@ defmodule SignsUiWeb do
 
       import SignsUiWeb.Router.Helpers
       import SignsUiWeb.ErrorHelpers
-      import SignsUiWeb.Gettext
+      use Gettext, backend: SignsUiWeb.Gettext
     end
   end
 
@@ -55,7 +55,7 @@ defmodule SignsUiWeb do
   def channel do
     quote do
       use Phoenix.Channel
-      import SignsUiWeb.Gettext
+      use Gettext, backend: SignsUiWeb.Gettext
     end
   end
 

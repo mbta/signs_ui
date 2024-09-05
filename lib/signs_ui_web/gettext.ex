@@ -5,7 +5,7 @@ defmodule SignsUiWeb.Gettext do
   By using [Gettext](https://hexdocs.pm/gettext),
   your module gains a set of macros for translations, for example:
 
-      import SignsUiWeb.Gettext
+      use Gettext, backend: SignsUiWeb.Gettext
 
       # Simple translation
       gettext "Here is the string to translate"
@@ -20,5 +20,5 @@ defmodule SignsUiWeb.Gettext do
 
   See the [Gettext Docs](https://hexdocs.pm/gettext) for detailed usage.
   """
-  use Gettext, otp_app: :signs_ui
+  use Gettext.Backend, otp_app: :signs_ui
 end
