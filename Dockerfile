@@ -36,7 +36,7 @@ RUN mix do compile --force, phx.digest, release
 FROM debian:buster
 
 RUN apt-get update --allow-releaseinfo-change && \
-  apt-get install -y --no-install-recommends libssl1.1 libsctp1 curl && \
+  apt-get install -y --no-install-recommends libssl1.1 libsctp1 curl ca-certificates && \
   rm -rf /var/lib/apt/lists/*
 
 WORKDIR /root
