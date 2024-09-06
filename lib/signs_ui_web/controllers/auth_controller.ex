@@ -24,7 +24,7 @@ defmodule SignsUiWeb.AuthController do
       refresh_token_store.put_refresh_token(username, credentials.refresh_token)
     end
 
-    {:ok, logout_uri} = logout_uri(auth)
+    {:ok, logout_uri} = logout_uri(conn, auth)
 
     conn
     |> put_session("logout_uri", logout_uri)
@@ -66,7 +66,7 @@ defmodule SignsUiWeb.AuthController do
 
     redirect_to =
       if is_nil(logout_uri),
-        do: [to: "/"],
+        do: [to: SignsUiWeb.Router.Helpers.page_path(conn, :index)],
         else: [external: logout_uri]
 
     conn
@@ -97,13 +97,13 @@ defmodule SignsUiWeb.AuthController do
     )
   end
 
-  @spec logout_uri(map()) :: {:ok, String.t()}
-  defp logout_uri(%Ueberauth.Auth{strategy: SignsUi.Ueberauth.Strategy.Fake}) do
-    {:ok, "/"}
+  @spec logout_uri(Plug.Conn.t(), map()) :: {:ok, String.t()}
+  defp logout_uri(conn, %Ueberauth.Auth{strategy: SignsUi.Ueberauth.Strategy.Fake}) do
+    {:ok, SignsUiWeb.Router.Helpers.page_path(conn, :index)}
   end
 
-  defp logout_uri(%Ueberauth.Auth{strategy: Ueberauth.Strategy.Oidcc} = auth) do
-    logout_params = %{post_logout_redirect_uri: "/"}
+  defp logout_uri(conn, %Ueberauth.Auth{strategy: Ueberauth.Strategy.Oidcc} = auth) do
+    logout_params = %{post_logout_redirect_uri: SignsUiWeb.Router.Helpers.page_path(conn, :index)}
     UeberauthOidcc.initiate_logout_url(auth, logout_params)
   end
 end
