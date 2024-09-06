@@ -1,5 +1,5 @@
 # first, get the elixir dependencies within an elixir container
-FROM hexpm/elixir:1.14.0-erlang-25.0.2-debian-buster-20210902-slim as elixir-builder
+FROM hexpm/elixir:1.14.5-erlang-26.0.2-debian-buster-20240513-slim as elixir-builder
 ENV LANG="C.UTF-8" MIX_ENV="prod"
 
 WORKDIR /root
