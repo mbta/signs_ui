@@ -4,9 +4,8 @@ defmodule SignsUiWeb.AuthManager do
   use Guardian, otp_app: :signs_ui
 
   @type t :: String.t()
-  @type access_level :: :none | :read_only | :admin
+  @type access_level :: :read_only | :admin
 
-  @signs_ui_read_only_group "signs-ui-read-only"
   @signs_ui_admin_group "signs-ui-admin"
 
   def subject_for_token(resource, _claims) do
@@ -21,10 +20,10 @@ defmodule SignsUiWeb.AuthManager do
 
   @spec claims_access_level(Guardian.Token.claims()) :: access_level()
   def claims_access_level(%{"roles" => roles}) when not is_nil(roles) do
-    cond do
-      @signs_ui_read_only_group in roles -> :read_only
-      @signs_ui_admin_group in roles -> :admin
-      true -> :none
+    if @signs_ui_admin_group in roles do
+      :admin
+    else
+      :read_only
     end
   end
 

@@ -37,7 +37,7 @@ defmodule SignsUiWeb.ConnCase do
           if tags[:authenticated] do
             ["signs-ui-admin"]
           else
-            ["signs-ui-read-only"]
+            []
           end
 
         conn =

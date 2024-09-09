@@ -28,19 +28,12 @@ defmodule SignsUiWeb.AuthManagerTest do
     end
 
     test "read-only access" do
-      assert SignsUiWeb.AuthManager.claims_access_level(%{"roles" => ["signs-ui-read-only"]}) ==
-               :read_only
+      assert SignsUiWeb.AuthManager.claims_access_level(%{"roles" => []}) == :read_only
     end
 
     test "admin access" do
       assert SignsUiWeb.AuthManager.claims_access_level(%{"roles" => ["signs-ui-admin"]}) ==
                :admin
-    end
-
-    test "read-only access when both roles present" do
-      assert SignsUiWeb.AuthManager.claims_access_level(%{
-               "roles" => ["signs-ui-admin", "signs-ui-read-only"]
-             }) == :read_only
     end
   end
 end

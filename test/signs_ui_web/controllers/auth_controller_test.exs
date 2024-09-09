@@ -1,6 +1,5 @@
 defmodule SignsUiWeb.AuthControllerTest do
   use SignsUiWeb.ConnCase
-  import Test.Support.Helpers
   require Logger
   import ExUnit.CaptureLog
 
@@ -37,18 +36,15 @@ defmodule SignsUiWeb.AuthControllerTest do
         }
       }
 
-      log =
-        capture_log([level: :info], fn ->
-          conn =
-            conn
-            |> assign(:ueberauth_auth, auth)
-            |> get(SignsUiWeb.Router.Helpers.auth_path(conn, :callback, "keycloak"))
+      conn =
+        conn
+        |> assign(:ueberauth_auth, auth)
+        |> get(SignsUiWeb.Router.Helpers.auth_path(conn, :callback, "keycloak"))
 
-          response = html_response(conn, 302)
+      response = html_response(conn, 302)
 
-          assert response =~ SignsUiWeb.Router.Helpers.messages_path(conn, :index)
-          assert Guardian.Plug.current_claims(conn)["roles"] == ["test1"]
-        end)
+      assert response =~ SignsUiWeb.Router.Helpers.messages_path(conn, :index)
+      assert Guardian.Plug.current_claims(conn)["roles"] == ["test1"]
     end
 
     test "handles generic failure", %{conn: conn} do
@@ -124,20 +120,17 @@ defmodule SignsUiWeb.AuthControllerTest do
         }
       }
 
-      log =
-        capture_log([level: :info], fn ->
-          conn =
-            conn
-            |> assign(:ueberauth_auth, auth)
-            |> get(SignsUiWeb.Router.Helpers.auth_path(conn, :callback, "keycloak"))
+      conn =
+        conn
+        |> assign(:ueberauth_auth, auth)
+        |> get(SignsUiWeb.Router.Helpers.auth_path(conn, :callback, "keycloak"))
 
-          assert Guardian.Plug.authenticated?(conn)
-          conn = get(conn, SignsUiWeb.Router.Helpers.auth_path(conn, :logout, "keycloak"))
+      assert Guardian.Plug.authenticated?(conn)
+      conn = get(conn, SignsUiWeb.Router.Helpers.auth_path(conn, :logout, "keycloak"))
 
-          refute Guardian.Plug.authenticated?(conn)
+      refute Guardian.Plug.authenticated?(conn)
 
-          assert redirected_to(conn) == "/"
-        end)
+      assert redirected_to(conn) == "/"
     end
   end
 
