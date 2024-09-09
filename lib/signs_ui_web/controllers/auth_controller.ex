@@ -24,10 +24,7 @@ defmodule SignsUiWeb.AuthController do
       refresh_token_store.put_refresh_token(username, credentials.refresh_token)
     end
 
-    {:ok, logout_uri} = logout_uri(conn, auth)
-
     conn
-    |> put_session("logout_uri", logout_uri)
     |> Guardian.Plug.sign_in(
       SignsUiWeb.AuthManager,
       username,
@@ -62,17 +59,10 @@ defmodule SignsUiWeb.AuthController do
   def logout(conn, _params) do
     refresh_token_cleanup(conn)
 
-    logout_uri = Conn.get_session(conn, "logout_uri")
-
-    redirect_to =
-      if is_nil(logout_uri),
-        do: [to: SignsUiWeb.Router.Helpers.page_path(conn, :index)],
-        else: [external: logout_uri]
-
     conn
     |> Guardian.Plug.sign_out(SignsUiWeb.AuthManager)
     |> Conn.clear_session()
-    |> redirect(redirect_to)
+    |> redirect(to: SignsUiWeb.Router.Helpers.page_path(conn, :index))
   end
 
   defp refresh_token_cleanup(conn) do
@@ -95,15 +85,5 @@ defmodule SignsUiWeb.AuthController do
       conn,
       to: SignsUiWeb.Router.Helpers.auth_path(conn, :request, "keycloak")
     )
-  end
-
-  @spec logout_uri(Plug.Conn.t(), map()) :: {:ok, String.t()}
-  defp logout_uri(conn, %Ueberauth.Auth{strategy: SignsUi.Ueberauth.Strategy.Fake}) do
-    {:ok, SignsUiWeb.Router.Helpers.page_path(conn, :index)}
-  end
-
-  defp logout_uri(conn, %Ueberauth.Auth{strategy: Ueberauth.Strategy.Oidcc} = auth) do
-    logout_params = %{post_logout_redirect_uri: SignsUiWeb.Router.Helpers.page_path(conn, :index)}
-    UeberauthOidcc.initiate_logout_url(auth, logout_params)
   end
 end
