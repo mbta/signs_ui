@@ -9,7 +9,6 @@ defmodule SignsUiWeb.AuthController do
   def callback(%{assigns: %{ueberauth_auth: auth}} = conn, _params) do
     username = auth.uid
     expiration = auth.credentials.expires_at
-    credentials = conn.assigns.ueberauth_auth.credentials
 
     current_time = System.system_time(:second)
 
@@ -18,11 +17,6 @@ defmodule SignsUiWeb.AuthController do
 
     roles =
       get_in(auth.extra.raw_info.userinfo, ["resource_access", keycloak_client_id, "roles"]) || []
-
-    if credentials.refresh_token do
-      refresh_token_store = Application.get_env(:signs_ui, :refresh_token_store)
-      refresh_token_store.put_refresh_token(username, credentials.refresh_token)
-    end
 
     conn
     |> Guardian.Plug.sign_in(
@@ -42,11 +36,6 @@ defmodule SignsUiWeb.AuthController do
     Logger.error("ueberauth_failure #{inspect(errors)}")
 
     cond do
-      error?(errors, "refresh_token_failure") ->
-        refresh_token_cleanup(conn)
-
-        reauthenticate(conn)
-
       error?(errors, "bad_state") ->
         reauthenticate(conn)
 
@@ -57,21 +46,10 @@ defmodule SignsUiWeb.AuthController do
 
   @spec logout(Conn.t(), map()) :: Conn.t()
   def logout(conn, _params) do
-    refresh_token_cleanup(conn)
-
     conn
     |> Guardian.Plug.sign_out(SignsUiWeb.AuthManager)
     |> Conn.clear_session()
     |> redirect(to: SignsUiWeb.Router.Helpers.page_path(conn, :index))
-  end
-
-  defp refresh_token_cleanup(conn) do
-    refresh_token_store = Application.get_env(:signs_ui, :refresh_token_store)
-
-    conn
-    |> Conn.fetch_session()
-    |> Conn.get_session(:signs_ui_username)
-    |> refresh_token_store.clear_refresh_token()
   end
 
   @spec error?([Ueberauth.Failure.t(), ...], String.t()) :: boolean
