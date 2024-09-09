@@ -35,12 +35,10 @@ defmodule SignsUiWeb.AuthController do
       ) do
     Logger.error("ueberauth_failure #{inspect(errors)}")
 
-    cond do
-      error?(errors, "bad_state") ->
-        reauthenticate(conn)
-
-      true ->
-        send_resp(conn, 403, "unauthenticated")
+    if error?(errors, "bad_state") do
+      reauthenticate(conn)
+    else
+      send_resp(conn, 403, "unauthenticated")
     end
   end
 
