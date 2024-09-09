@@ -38,7 +38,7 @@ defmodule SignsUiWeb.ChelseaBridgeAnnouncementsChannelTest do
          %{
            socket: socket
          } do
-      socket = Helpers.sign_in_with_roles(socket, "foo@mbta.com", ["signs-ui-read-only"])
+      socket = Helpers.sign_in_with_roles(socket, "foo@mbta.com", [])
 
       log =
         capture_log([level: :info], fn ->

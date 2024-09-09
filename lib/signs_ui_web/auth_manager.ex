@@ -4,7 +4,7 @@ defmodule SignsUiWeb.AuthManager do
   use Guardian, otp_app: :signs_ui
 
   @type t :: String.t()
-  @type access_level :: :read_only | :admin
+  @type access_level :: :none | :read_only | :admin
 
   @signs_ui_admin_group "signs-ui-admin"
 
