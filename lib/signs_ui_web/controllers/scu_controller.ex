@@ -10,19 +10,13 @@ defmodule SignsUiWeb.ScuController do
   end
 
   def update(conn, %{"migrated" => migrated, "scu_id" => scu_id}) do
-    case Guardian.Plug.current_claims(conn) |> SignsUiWeb.AuthManager.claims_access_level() do
-      :admin ->
-        value =
-          case migrated do
-            "true" -> true
-            _ -> false
-          end
+    value =
+      case migrated do
+        "true" -> true
+        _ -> false
+      end
 
-        SignsUi.Config.State.update_scu(scu_id, value)
-        redirect(conn, to: "/scu")
-
-      _ ->
-        send_resp(conn, 403, "Admin only")
-    end
+    SignsUi.Config.State.update_scu(scu_id, value)
+    redirect(conn, to: "/scu")
   end
 end

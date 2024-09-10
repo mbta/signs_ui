@@ -11,7 +11,7 @@ defmodule SignsUiWeb.SignGroupsChannelTest do
   describe "handle_in/3" do
     test "allows changing sign groups when admin", %{socket: socket} do
       @endpoint.subscribe("signGroups:all")
-      socket = Helpers.sign_in_with_groups(socket, "foo@mbta.com", ["signs-ui-admin"])
+      socket = Helpers.sign_in_with_roles(socket, "foo@mbta.com", ["signs-ui-admin"])
 
       changes = %{
         "data" => %{

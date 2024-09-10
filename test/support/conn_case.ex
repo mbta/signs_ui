@@ -33,17 +33,17 @@ defmodule SignsUiWeb.ConnCase do
       if tags[:authenticated] || tags[:authenticated_read_only] do
         user = "test_user"
 
-        groups =
+        roles =
           if tags[:authenticated] do
             ["signs-ui-admin"]
           else
-            ["signs-ui-read-only"]
+            []
           end
 
         conn =
           Phoenix.ConnTest.build_conn()
           |> init_test_session(%{})
-          |> Guardian.Plug.sign_in(SignsUiWeb.AuthManager, user, %{groups: groups})
+          |> Guardian.Plug.sign_in(SignsUiWeb.AuthManager, user, %{roles: roles})
 
         {conn, user}
       else

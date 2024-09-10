@@ -10,7 +10,6 @@ config :signs_ui, SignsUiWeb.Endpoint,
 # Internal configuration
 config :signs_ui,
   config_store: SignsUi.Config.S3,
-  refresh_token_store: SignsUi.RefreshTokenStore,
   alert_producer: ServerSentEventStage,
   alert_consumer_opts: [
     name: SignsUi.Alerts.State,
@@ -32,7 +31,16 @@ config :logger,
 
 config :ueberauth, Ueberauth,
   providers: [
-    cognito: {SignsUi.Ueberauth.Strategy.Fake, []}
+    keycloak: {SignsUi.Ueberauth.Strategy.Fake, []}
+  ]
+
+config :ueberauth_oidcc,
+  providers: [
+    keycloak: [
+      issuer: :keycloak_issuer,
+      client_id: "dev-client",
+      client_secret: "fake-secret"
+    ]
   ]
 
 config :phoenix, :json_library, Jason

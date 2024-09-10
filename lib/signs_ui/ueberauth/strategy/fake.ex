@@ -1,15 +1,15 @@
 defmodule SignsUi.Ueberauth.Strategy.Fake do
   @moduledoc """
   Fake Ueberauth strategy that allows the app to run locally without using
-  Cognito.
+  Keycloak.
   """
 
-  use Ueberauth.Strategy
+  use Ueberauth.Strategy, ignores_csrf_attack: true
 
   @impl Ueberauth.Strategy
   def handle_request!(conn) do
     conn
-    |> redirect!("/auth/cognito/callback")
+    |> redirect!("/auth/keycloak/callback")
     |> halt()
   end
 
@@ -29,8 +29,7 @@ defmodule SignsUi.Ueberauth.Strategy.Fake do
       token: "fake_access_token",
       refresh_token: "fake_refresh_token",
       expires: true,
-      expires_at: System.system_time(:second) + 60 * 60,
-      other: %{groups: ["signs-ui-admin"]}
+      expires_at: System.system_time(:second) + 60 * 60
     }
   end
 
@@ -41,7 +40,15 @@ defmodule SignsUi.Ueberauth.Strategy.Fake do
 
   @impl Ueberauth.Strategy
   def extra(_conn) do
-    %Ueberauth.Auth.Extra{raw_info: %{}}
+    %Ueberauth.Auth.Extra{
+      raw_info: %UeberauthOidcc.RawInfo{
+        userinfo: %{
+          "resource_access" => %{
+            "dev-client" => %{"roles" => ["signs-ui-admin"]}
+          }
+        }
+      }
+    }
   end
 
   @impl Ueberauth.Strategy

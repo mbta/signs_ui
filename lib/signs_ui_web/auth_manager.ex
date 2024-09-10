@@ -6,7 +6,6 @@ defmodule SignsUiWeb.AuthManager do
   @type t :: String.t()
   @type access_level :: :none | :read_only | :admin
 
-  @signs_ui_read_only_group "signs-ui-read-only"
   @signs_ui_admin_group "signs-ui-admin"
 
   def subject_for_token(resource, _claims) do
@@ -20,12 +19,11 @@ defmodule SignsUiWeb.AuthManager do
   def resource_from_claims(_), do: {:error, :invalid_claims}
 
   @spec claims_access_level(Guardian.Token.claims()) :: access_level()
-  def claims_access_level(%{"groups" => groups}) do
-    cond do
-      is_nil(groups) -> :none
-      @signs_ui_read_only_group in groups -> :read_only
-      @signs_ui_admin_group in groups -> :admin
-      true -> :none
+  def claims_access_level(%{"roles" => roles}) when not is_nil(roles) do
+    if @signs_ui_admin_group in roles do
+      :admin
+    else
+      :read_only
     end
   end
 

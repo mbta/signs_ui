@@ -7,7 +7,7 @@ defmodule SignsUiWeb.AuthManager.ErrorHandler do
   def auth_error(conn, {_type, _reason}, _opts) do
     Phoenix.Controller.redirect(
       conn,
-      to: SignsUiWeb.Router.Helpers.auth_path(conn, :request, "cognito")
+      to: SignsUiWeb.Router.Helpers.auth_path(conn, :request, "keycloak")
     )
   end
 end

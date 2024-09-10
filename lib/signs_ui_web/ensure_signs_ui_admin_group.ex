@@ -1,6 +1,6 @@
-defmodule SignsUiWeb.EnsureSignsUiGroup do
+defmodule SignsUiWeb.EnsureSignsUiAdminGroup do
   @moduledoc """
-  Ensure the Cognito user is in the correct group for authorization.
+  Ensure the Keycloak user is a SignsUI Admin.
   """
 
   import Plug.Conn
@@ -10,7 +10,7 @@ defmodule SignsUiWeb.EnsureSignsUiGroup do
   def call(conn, _opts) do
     claims = Guardian.Plug.current_claims(conn)
 
-    if SignsUiWeb.AuthManager.claims_access_level(claims) in [:read_only, :admin] do
+    if SignsUiWeb.AuthManager.claims_access_level(claims) == :admin do
       conn
     else
       conn

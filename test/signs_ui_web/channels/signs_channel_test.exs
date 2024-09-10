@@ -10,7 +10,7 @@ defmodule SignsUiWeb.SignsChannelTest do
 
   describe "handle_in" do
     test "allows changing signs when socket is authenticated", %{socket: socket} do
-      socket = Helpers.sign_in_with_groups(socket, "foo@mbta.com", ["signs-ui-admin"])
+      socket = Helpers.sign_in_with_roles(socket, "foo@mbta.com", ["signs-ui-admin"])
 
       log =
         capture_log([level: :info], fn ->
@@ -24,7 +24,7 @@ defmodule SignsUiWeb.SignsChannelTest do
     test "rejects changing signs when socket is authenticated with read-only view", %{
       socket: socket
     } do
-      socket = Helpers.sign_in_with_groups(socket, "foo@mbta.com", ["signs-ui-read-only"])
+      socket = Helpers.sign_in_with_roles(socket, "foo@mbta.com", [])
 
       log =
         capture_log([level: :info], fn ->
@@ -52,7 +52,7 @@ defmodule SignsUiWeb.SignsChannelTest do
 
   describe "handle_out" do
     test "allows sending sign updates when socket is authenticated", %{socket: socket} do
-      socket = Helpers.sign_in_with_groups(socket, "foo@mbta.com", ["signs-ui-admin"])
+      socket = Helpers.sign_in_with_roles(socket, "foo@mbta.com", ["signs-ui-admin"])
 
       assert {:noreply, _socket} = SignsUiWeb.SignsChannel.handle_out("sign_update", %{}, socket)
     end
@@ -60,7 +60,7 @@ defmodule SignsUiWeb.SignsChannelTest do
     test "allows sending sign updates when socket is authenticated with read-only view", %{
       socket: socket
     } do
-      socket = Helpers.sign_in_with_groups(socket, "foo@mbta.com", ["signs-ui-read-only"])
+      socket = Helpers.sign_in_with_roles(socket, "foo@mbta.com", [])
 
       assert {:noreply, _socket} = SignsUiWeb.SignsChannel.handle_out("sign_update", %{}, socket)
     end

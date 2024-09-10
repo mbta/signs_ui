@@ -17,7 +17,6 @@ defmodule SignsUi.Application do
       SignsUi.Config.Writer,
       {SignsUi.Signs.State, [name: SignsUi.Signs.State]},
       SignsUi.Config.Expiration,
-      SignsUi.RefreshTokenStore,
       {Application.get_env(:signs_ui, :alert_producer),
        name: AlertProducer,
        url:

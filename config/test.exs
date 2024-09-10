@@ -16,9 +16,19 @@ config :signs_ui, SignsUiWeb.AuthManager,
   issuer: "signs_ui",
   secret_key: "test key"
 
-config :ueberauth, Ueberauth.Strategy.Cognito,
-  auth_domain: "test_auth_domain",
-  client_id: "test_client_secret"
+config :ueberauth, Ueberauth,
+  providers: [
+    keycloak: {SignsUi.Ueberauth.Strategy.Fake, [roles: []]}
+  ]
+
+config :ueberauth_oidcc,
+  providers: [
+    keycloak: [
+      issuer: :keycloak_issuer,
+      client_id: "test-client",
+      client_secret: "fake-secret"
+    ]
+  ]
 
 # Print only warnings, errors, and info during test
 config :logger, level: :info

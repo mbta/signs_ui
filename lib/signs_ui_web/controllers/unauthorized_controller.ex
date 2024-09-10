@@ -3,7 +3,7 @@ defmodule SignsUiWeb.UnauthorizedController do
 
   @spec index(Plug.Conn.t(), map()) :: Plug.Conn.t()
   def index(conn, _params) do
-    sign_out_path = SignsUiWeb.Router.Helpers.auth_path(conn, :logout, "cognito")
+    sign_out_path = SignsUiWeb.Router.Helpers.auth_path(conn, :logout, "keycloak")
 
     conn
     |> put_status(403)

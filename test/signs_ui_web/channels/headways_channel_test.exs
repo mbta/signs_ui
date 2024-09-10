@@ -10,7 +10,7 @@ defmodule SignsUiWeb.HeadwaysChannelTest do
 
   describe "handle_in/3" do
     test "allows changing multi-sign headways when socket is authenticated", %{socket: socket} do
-      socket = Helpers.sign_in_with_groups(socket, "foo@mbta.com", ["signs-ui-admin"])
+      socket = Helpers.sign_in_with_roles(socket, "foo@mbta.com", ["signs-ui-admin"])
 
       log =
         capture_log([level: :info], fn ->
@@ -25,7 +25,7 @@ defmodule SignsUiWeb.HeadwaysChannelTest do
          %{
            socket: socket
          } do
-      socket = Helpers.sign_in_with_groups(socket, "foo@mbta.com", ["signs-ui-read-only"])
+      socket = Helpers.sign_in_with_roles(socket, "foo@mbta.com", [])
 
       log =
         capture_log([level: :info], fn ->
