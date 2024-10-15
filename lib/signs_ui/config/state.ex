@@ -12,6 +12,7 @@ defmodule SignsUi.Config.State do
   alias SignsUi.Config.Utilities
 
   @sl_waterfront_route_ids ["741", "742", "743", "746"]
+  @singular_bidirectional_signs ~w(malden_center_platform butler_center)
 
   @type t :: %{
           signs: %{Config.Sign.id() => Config.Sign.t()},
@@ -232,11 +233,30 @@ defmodule SignsUi.Config.State do
           )
       end
 
+    singular_bidirectional_stops =
+      for %{id: id, source_config: [_ | _] = source_config} <- signs_json,
+          %{sources: sources} <- source_config,
+          %{stop_id: stop_id, routes: routes, direction_id: direction_id} <- sources,
+          route_id <- routes,
+          reduce: sl_sign_stops do
+        acc ->
+          if id in @singular_bidirectional_signs do
+            Map.update(
+              acc,
+              %{stop_id: stop_id, route_id: route_id, direction_id: direction_id},
+              [id],
+              &[id | &1]
+            )
+          else
+            acc
+          end
+      end
+
     subway_sign_stops =
       for %{id: id, source_config: %{sources: sources}} <- signs_json,
           %{stop_id: stop_id, routes: routes, direction_id: direction_id} <- sources,
           route_id <- routes,
-          reduce: sl_sign_stops do
+          reduce: singular_bidirectional_stops do
         acc ->
           Map.update(
             acc,
