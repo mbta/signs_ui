@@ -12,7 +12,6 @@ defmodule SignsUi.Config.State do
   alias SignsUi.Config.Utilities
 
   @sl_waterfront_route_ids ["741", "742", "743", "746"]
-  @singular_bidirectional_signs ~w(malden_center_platform butler_center)
 
   @type t :: %{
           signs: %{Config.Sign.id() => Config.Sign.t()},
@@ -233,30 +232,11 @@ defmodule SignsUi.Config.State do
           )
       end
 
-    singular_bidirectional_stops =
-      for %{id: id, source_config: [_ | _] = source_config} <- signs_json,
-          %{sources: sources} <- source_config,
-          %{stop_id: stop_id, routes: routes, direction_id: direction_id} <- sources,
-          route_id <- routes,
-          reduce: sl_sign_stops do
-        acc ->
-          if id in @singular_bidirectional_signs do
-            Map.update(
-              acc,
-              %{stop_id: stop_id, route_id: route_id, direction_id: direction_id},
-              [id],
-              &[id | &1]
-            )
-          else
-            acc
-          end
-      end
-
     subway_sign_stops =
       for %{id: id, source_config: %{sources: sources}} <- signs_json,
           %{stop_id: stop_id, routes: routes, direction_id: direction_id} <- sources,
           route_id <- routes,
-          reduce: singular_bidirectional_stops do
+          reduce: sl_sign_stops do
         acc ->
           Map.update(
             acc,
@@ -266,13 +246,41 @@ defmodule SignsUi.Config.State do
           )
       end
 
+    include_all_bidirectional_signs =
+      for %{id: id, source_config: [_ | _] = source_config} <- signs_json,
+          %{sources: sources} <- source_config,
+          %{stop_id: stop_id, routes: routes, direction_id: direction_id} <- sources,
+          route_id <- routes,
+          reduce: subway_sign_stops do
+        acc ->
+          Map.update(
+            acc,
+            %{stop_id: stop_id, route_id: route_id, direction_id: direction_id},
+            [id],
+            &[id | &1]
+          )
+      end
+
+    singular_bidirectionals =
+      Enum.group_by(
+        include_all_bidirectional_signs,
+        fn {stop, signs} -> {stop.route_id, signs} end,
+        &elem(&1, 0)
+      )
+      |> Enum.filter(fn {_, stops} ->
+        Enum.uniq_by(stops, & &1.direction_id) |> length() > 1
+      end)
+      |> Enum.reduce(%{}, fn {{_, signs}, stops}, acc ->
+        Enum.into(stops, acc, fn stop -> {stop, signs} end)
+      end)
+
     scu_ids =
       for %{scu_id: scu_id} <- signs_json,
           uniq: true do
         scu_id
       end
 
-    {subway_sign_stops, scu_ids}
+    {Map.merge(subway_sign_stops, singular_bidirectionals), scu_ids}
   end
 
   defp schedule_clean(pid, ms) do
