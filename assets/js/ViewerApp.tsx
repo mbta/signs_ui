@@ -1,4 +1,5 @@
 import * as React from 'react';
+import fp from 'lodash/fp';
 import * as Sentry from '@sentry/browser';
 import { Channel, Socket } from 'phoenix';
 import Viewer from './Viewer';
@@ -183,7 +184,8 @@ class ViewerApp extends React.Component<
     const { headwaysChannel: channel, configuredHeadways } = this.state;
 
     if (channel) {
-      const newConfigsState = { ...configuredHeadways, ...newConfigs };
+      // deep merge to preserve old values during transition
+      const newConfigsState = fp.merge(configuredHeadways, newConfigs);
       channel.push('changeHeadways', newConfigsState);
       this.setState((oldState) => ({
         ...oldState,

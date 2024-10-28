@@ -2,14 +2,19 @@ import { StationConfig } from './types';
 
 const timePeriodConfig = [
   {
-    id: 'peak',
-    name: 'Peak Hours',
-    description: 'weekdays 7-9 AM, 4-6:30 PM',
+    id: 'weekday',
+    name: 'Weekday',
+    description: 'Mon-Fri',
   },
   {
-    id: 'off_peak',
-    name: 'Off Peak Hours',
-    description: 'weekends and weekdays, excluding peak hours',
+    id: 'saturday',
+    name: 'Saturday',
+    description: 'Saturday',
+  },
+  {
+    id: 'sunday',
+    name: 'Sunday',
+    description: 'Sunday',
   },
 ];
 
