@@ -9,7 +9,17 @@ const timePeriodConfig = [
   {
     id: 'off_peak',
     name: 'Off Peak Hours',
-    description: 'weekends and weekdays, excluding peak hours',
+    description: 'weekdays, excluding peak hours',
+  },
+  {
+    id: 'saturday',
+    name: 'Saturday',
+    description: 'all day Saturday',
+  },
+  {
+    id: 'sunday',
+    name: 'Sunday',
+    description: 'all day Sunday',
   },
 ];
 
