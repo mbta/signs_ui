@@ -26,7 +26,7 @@ defmodule SignsUiWeb.ScuControllerTest do
 
   @tag :authenticated_read_only
   test "cannot update SCUs as non-admin", %{conn: conn} do
-    conn = post(conn, "/scu", %{"migrated" => "true", "scu_id" => "BAIRSCU001"}) |> IO.inspect()
+    conn = post(conn, "/scu", %{"migrated" => "true", "scu_id" => "BAIRSCU001"})
     response = response(conn, 302)
     assert %{"BAIRSCU001" => false} = SignsUi.Config.State.get_all().scus_migrated
     assert response =~ "unauthorized"
