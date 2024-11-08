@@ -7,6 +7,7 @@ defmodule SignsUiWeb.MessagesController do
   alias SignsUi.Messages.AdHoc
   alias SignsUi.Messages.Canned
   alias SignsUi.Messages.SignContent
+  alias SignsUi.Signs
   alias SignsUi.Signs.State
 
   plug(:laboratory_features)
@@ -94,7 +95,7 @@ defmodule SignsUiWeb.MessagesController do
          {:ok, expiration} <- parse_expiration(conn) do
       [scu_id] = Plug.Conn.get_req_header(conn, "x-scu-id")
       zone = Enum.at(visual_zones, 0)
-      station = SignsUi.Signs.Lookup.lookup_station_code(scu_id, zone)
+      station = Signs.Config.station_code(scu_id, zone)
       expiration_time = DateTime.utc_now() |> DateTime.add(expiration)
 
       Enum.each([{:top, 1}, {:bottom, 2}], fn {key, line} ->

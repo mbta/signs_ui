@@ -65,7 +65,15 @@ defmodule SignsUi.Mixfile do
       {:ueberauth, "~> 0.10"},
       {:ueberauth_oidcc, "~> 0.4"},
       {:laboratory, github: "paulswartz/laboratory", ref: "cookie_opts"},
-      {:remote_ip, "~> 1.2"}
+      {:remote_ip, "~> 1.2"},
+      {
+        :realtime_signs,
+        github: "mbta/realtime_signs",
+        ref: "54a4f196c577a62f59cefaa7b1974bc7a800e578",
+        sparse: "priv",
+        app: false,
+        compile: false
+      }
     ]
   end
 end
