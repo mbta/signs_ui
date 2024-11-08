@@ -10,6 +10,7 @@ defmodule SignsUi.Config.State do
   alias SignsUi.Config.Sign
   alias SignsUi.Config.SignGroups
   alias SignsUi.Config.Utilities
+  alias SignsUi.Signs
 
   @sl_waterfront_route_ids ["741", "742", "743", "746"]
 
@@ -85,7 +86,7 @@ defmodule SignsUi.Config.State do
     config_store = Application.get_env(:signs_ui, :config_store)
     response = config_store.read() |> Jason.decode!()
 
-    {sign_stops, scu_ids} = parse_signs_json()
+    {sign_stops, scu_ids} = Signs.Config.get() |> parse_signs_config()
     scu_lookup = Map.get(response, "scus_migrated", %{})
 
     state = %{
@@ -209,14 +210,7 @@ defmodule SignsUi.Config.State do
     new_state
   end
 
-  # sobelow_skip ["Traversal"]
-  defp parse_signs_json do
-    signs_json =
-      :code.priv_dir(:signs_ui)
-      |> Path.join("signs.json")
-      |> File.read!()
-      |> Jason.decode!(keys: :atoms)
-
+  defp parse_signs_config(signs_json) do
     sl_sign_stops =
       for %{id: id, configs: configs} <- signs_json,
           %{sources: sources} <- configs,
