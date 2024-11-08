@@ -60,7 +60,7 @@ jobs:
       - name: Credo
         run: mix credo --strict
       - name: Security checks
-        run: mix sobelow mix sobelow --skip --exit
+        run: mix sobelow --skip --exit
       - name: Run tests
         run: mix test
       - name: JS checks
