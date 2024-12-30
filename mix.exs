@@ -53,7 +53,7 @@ defmodule SignsUi.Mixfile do
       {:guardian, "~> 2.0"},
       {:jason, "~> 1.4.0"},
       {:nimble_parsec, "~> 1.0"},
-      {:phoenix_html, "~> 3.0"},
+      {:phoenix_html, "~> 4.2"},
       {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:phoenix_pubsub, "~> 2.0"},
       {:phoenix, "~> 1.7.1"},
