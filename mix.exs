@@ -69,7 +69,7 @@ defmodule SignsUi.Mixfile do
       {
         :realtime_signs,
         github: "mbta/realtime_signs",
-        ref: "54a4f196c577a62f59cefaa7b1974bc7a800e578",
+        ref: "4d2b45c7effb5422b26e2e0f729a3de66350b947",
         sparse: "priv",
         app: false,
         compile: false
