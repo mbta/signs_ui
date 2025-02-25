@@ -317,6 +317,7 @@ const stationConfig: {
             },
           },
           c: {
+            label: 'MZ',
             modes: {
               auto: true,
               custom: true,
