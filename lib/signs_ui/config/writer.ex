@@ -64,7 +64,7 @@ defmodule SignsUi.Config.Writer do
           if Enum.any?(ids, fn id ->
                case signs[id] do
                  nil -> false
-                 sign -> sign.config.mode == :headway
+                 sign -> sign.config.mode in [:headway, :static_text]
                end
              end) do
             "flagged"
