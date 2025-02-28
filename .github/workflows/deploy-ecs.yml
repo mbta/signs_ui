@@ -10,6 +10,10 @@ on:
   push:
     branches: ["master"]
 
+concurrency:
+  group: ${{ github.event.inputs.environment || 'dev'}}
+  cancel-in-progress: true
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
