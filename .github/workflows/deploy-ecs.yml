@@ -1,23 +1,29 @@
-name: Deploy to Prod
+name: Deploy to ECS
 
 on:
   workflow_dispatch:
+    inputs:
+      environment:
+        type: environment
+        required: true
+        default: dev
+  push:
+    branches: ["master"]
 
 concurrency:
-  group: prod
+  group: ${{ github.event.inputs.environment || 'dev'}}
   cancel-in-progress: true
 
 jobs:
   deploy:
-    name: Deploy to Prod
     runs-on: ubuntu-latest
     permissions:
       id-token: write
       contents: read
-    environment: prod
+    environment: ${{ github.event.inputs.environment || 'dev'}}
     env:
       ECS_CLUSTER: signs-ui
-      ECS_SERVICE: signs-ui-prod
+      ECS_SERVICE: signs-ui-${{ github.event.inputs.environment || 'dev'}}
 
     steps:
       - uses: actions/checkout@v2
