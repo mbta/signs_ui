@@ -6,9 +6,9 @@ on:
       environment:
         type: environment
         required: true
-        default: dev-green
+        default: dev
   push:
-    branches: ["pk/combine-deploy-workflows"]
+    branches: ["master"]
 
 jobs:
   deploy:
@@ -16,10 +16,10 @@ jobs:
     permissions:
       id-token: write
       contents: read
-    environment: ${{ github.event.inputs.environment || 'dev-green'}}
+    environment: ${{ github.event.inputs.environment || 'dev'}}
     env:
       ECS_CLUSTER: signs-ui
-      ECS_SERVICE: signs-ui-${{ github.event.inputs.environment || 'dev-green'}}
+      ECS_SERVICE: signs-ui-${{ github.event.inputs.environment || 'dev'}}
 
     steps:
       - uses: actions/checkout@v2
