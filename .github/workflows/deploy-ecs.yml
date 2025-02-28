@@ -6,9 +6,9 @@ on:
       environment:
         type: environment
         required: true
-        default: dev
+        default: dev-green
   push:
-    branches: ["master"]
+    branches: ["pk/combine-deploy-workflows"]
 
 jobs:
   deploy:
