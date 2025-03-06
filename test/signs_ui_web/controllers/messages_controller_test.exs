@@ -113,15 +113,16 @@ defmodule SignsUiWeb.MessagesControllerTest do
       conn
       |> add_api_req_header()
       |> post(messages_path(conn, :create), %{
-        "MsgType" => "Canned",
-        "mid" => "1",
-        "var" => "2,3",
+        "MsgType" => "AdHoc",
+        "msg" => "This is a message",
         "typ" => "0",
         "sta" => "RDAV000100",
         "tim" => "500"
       })
 
-      assert_broadcast("sign_update", %{audios: [%{station: "RDAV", zones: ["s"]}]})
+      assert_broadcast("sign_update", %{
+        audios: [%{station: "RDAV", visual_data: %{pages: [%{top: "This is a message"}]}}]
+      })
     end
 
     test "background", %{conn: conn} do

@@ -21,6 +21,36 @@ function choosePage(
   return '';
 }
 
+function isNotExpired(expiration: string, currentTime: number) {
+  return Date.parse(expiration) - currentTime > 0;
+}
+
+function lineDisplayText(
+  lineContent:
+    | {
+        text: {
+          content: string;
+          duration: number;
+        }[];
+        expiration: string;
+      }
+    | undefined,
+  currentTime: number,
+  initialTime: number,
+): string {
+  if (
+    lineContent !== undefined &&
+    isNotExpired(lineContent.expiration, currentTime)
+  ) {
+    // ARINC signs start paging on the second page, so we rearrange the content to emulate that behavior
+    return choosePage(
+      [...lineContent.text.slice(1), ...lineContent.text.slice(0, 1)],
+      Math.round((currentTime - initialTime) / 1000),
+    );
+  }
+  return '';
+}
+
 function alertsForLine(alerts: Alerts, line: string): RouteAlerts {
   if (['Red', 'Orange', 'Blue', 'Mattapan'].includes(line)) {
     return alerts[line] || {};
@@ -110,6 +140,7 @@ function arincToRealtimeId(stationZone: string): string {
 
 export {
   choosePage,
+  lineDisplayText,
   alertsForLine,
   formatTime,
   defaultZoneLabel,

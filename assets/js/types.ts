@@ -45,6 +45,11 @@ type SignConfig = {
 
 type SignConfigs = { [id: string]: SignConfig };
 
+type Audio = {
+  timestamp: number;
+  visual_data: { pages: { top: string; bottom: string; duration: number }[] };
+};
+
 type SingleSignContent = {
   sign_id: string;
   lines: {
@@ -56,6 +61,7 @@ type SingleSignContent = {
       expiration: string;
     };
   };
+  audios: Audio[];
 };
 
 type SignContent = {

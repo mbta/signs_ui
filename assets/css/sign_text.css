@@ -11,3 +11,7 @@
   white-space: pre;
   width: 24ch;
 }
+
+.sign_text--line.centered {
+  text-align: center;
+}

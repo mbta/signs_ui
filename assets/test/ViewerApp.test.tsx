@@ -19,6 +19,7 @@ function someSignContent(now: number): SignContent {
           text: [{ content: 'Alewife 3 min', duration: 5 }],
         },
       },
+      audios: [],
     },
     'OGRE-m': {
       sign_id: 'OGRE-m',
@@ -32,6 +33,7 @@ function someSignContent(now: number): SignContent {
           text: [{ content: 'Forest Hills 3 min', duration: 5 }],
         },
       },
+      audios: [],
     },
   };
 }

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import dateFormat from 'dateformat';
+import cx from 'classnames';
 
 function timeString(currentTime: number) {
   const date = new Date(currentTime);
@@ -14,13 +15,23 @@ interface SignTextProps {
   time: number;
   line1: string;
   line2: string;
+  announcement?: boolean;
 }
 
-function SignText({ time, line1, line2 }: SignTextProps): JSX.Element | null {
+function SignText({
+  time,
+  line1,
+  line2,
+  announcement,
+}: SignTextProps): JSX.Element | null {
   return (
     <div className="sign_text--container">
-      <div className="sign_text--line">{padToClock(line1, time)}</div>
-      <div className="sign_text--line">{line2}</div>
+      <div className={cx('sign_text--line', { centered: !!announcement })}>
+        {announcement ? line1 : padToClock(line1, time)}
+      </div>
+      <div className={cx('sign_text--line', { centered: !!announcement })}>
+        {line2}
+      </div>
     </div>
   );
 }
