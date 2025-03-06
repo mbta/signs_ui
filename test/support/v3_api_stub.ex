@@ -12,7 +12,7 @@ defmodule SignsUi.V3ApiStub do
   end
 
   @doc """
-  Configure the stub to return a specific alerts data.
+  Configure the stub to return specific alerts data.
   """
   def will_return(alerts_data) do
     Process.put(:v3_api_stub_response, {:ok, alerts_data})
