@@ -1,8 +1,12 @@
 defmodule SignsUi.V3Api do
+  @moduledoc """
+  Provides a lightweight interface to the V3 API.
+  """
+
   require Logger
 
-  @spec fetch_alerts() :: {:ok, [map()]} | :error
-  def fetch_alerts() do
+  @spec fetch_alerts :: {:ok, [map()]} | :error
+  def fetch_alerts do
     url = "#{Application.get_env(:signs_ui, :api_v3_url)}/alerts"
     headers = [{"x-api-key", Application.get_env(:signs_ui, :api_v3_key)}]
     params = [params: %{"filter[datetime]" => "NOW"}]
