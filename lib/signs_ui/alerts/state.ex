@@ -4,87 +4,138 @@ defmodule SignsUi.Alerts.State do
   them with signs to auto-expire.
   """
 
-  use GenStage
+  use GenServer
 
   require Logger
-  alias ServerSentEventStage.Event
   alias SignsUi.Alerts.Alert
   alias SignsUi.Alerts.Display
-  alias SignsUi.Alerts.Events
 
   @type t :: %{Alert.id() => Alert.multi_route()}
 
+  @valid_route_types [0, 1]
+
   @spec start_link(keyword) :: :ignore | {:error, any} | {:ok, pid}
   def start_link(opts \\ []) do
-    {start_opts, init_opts} = Keyword.split(opts, [:name])
-    GenStage.start_link(__MODULE__, init_opts, start_opts)
+    GenServer.start_link(__MODULE__, [], opts)
   end
 
-  @spec active_alert_ids(GenStage.stage()) :: MapSet.t(Alert.id())
+  @spec active_alert_ids(SignsUi.Alerts.State) :: MapSet.t(Alert.id())
   def active_alert_ids(pid \\ __MODULE__) do
-    GenStage.call(pid, :active_alert_ids)
+    GenServer.call(pid, :active_alert_ids)
   end
 
-  @spec all(GenStage.stage()) :: Display.t()
+  @spec all(SignsUi.Alerts.State) :: Display.t()
   def all(pid \\ __MODULE__) do
-    GenStage.call(pid, :all)
+    GenServer.call(pid, :all)
   end
 
-  @impl GenStage
-  def init(opts) do
-    {:consumer, %{}, opts}
+  @impl GenServer
+  def init(_) do
+    send(self(), :update)
+    {:ok, %{}}
   end
 
-  @impl GenStage
+  @impl GenServer
   def handle_call(:active_alert_ids, _from, state) do
     alert_ids = state |> Map.keys() |> MapSet.new()
 
-    {:reply, alert_ids, [], state}
+    {:reply, alert_ids, state}
   end
 
-  @impl GenStage
+  @impl GenServer
   def handle_call(:all, _from, state) do
-    {:reply, Display.format_state(state), [], state}
+    {:reply, Display.format_state(state), state}
   end
 
-  @impl GenStage
-  @spec handle_events([Event.t()], GenStage.from(), t()) :: {:noreply, [], t()}
-  def handle_events(events, _from, state) do
-    # Works in two primary phases. First, we generate fresh t using the
-    # provided events:
-    new_state = update_state(events, state)
-    Logger.info(["alert_state_updated ", inspect(new_state)])
+  @impl GenServer
+  def handle_info(:update, state) do
+    v3_api = Application.get_env(:signs_ui, :v3_api)
 
-    # Next, we convert our internal model to the specified format:
-    display_state = Display.format_state(new_state)
-    SignsUiWeb.Endpoint.broadcast!("alerts:all", "new_alert_state", display_state)
-    {:noreply, [], new_state}
+    state =
+      case v3_api.fetch_alerts() do
+        {:ok, alerts} ->
+          if Enum.empty?(alerts) do
+            Logger.info("empty_alerts_response: keeping current state.")
+            state
+          else
+            new_state =
+              alerts
+              |> Enum.filter(&valid_route_type?/1)
+              |> Enum.map(&parse_alert/1)
+              |> Enum.into(%{}, &{&1.id, &1})
+
+            SignsUiWeb.Endpoint.broadcast!(
+              "alerts:all",
+              "new_alert_state",
+              Display.format_state(new_state)
+            )
+
+            Logger.info(["alert_state_updated ", inspect(new_state)])
+            new_state
+          end
+
+        :error ->
+          state
+      end
+
+    schedule_update(self(), 5_000)
+    {:noreply, state}
   end
 
-  @spec update_state(Event.t() | [Event.t()], t()) :: t()
-  defp update_state(events, state) when is_list(events) do
-    # This reduce combines the effects of a  set of operations into a single new
-    # state.
-    Enum.reduce(events, state, &update_state(&1, &2))
+  defp valid_route_type?(alert) do
+    case get_route_types(alert) do
+      [] -> false
+      route_types -> Enum.any?(route_types, &(&1 in @valid_route_types))
+    end
   end
 
-  defp update_state(%Event{event: "reset", data: data}, _) do
-    alerts = Events.parse(data)
-    Map.new(alerts, &{&1.id, &1})
+  defp get_route_types(alert) do
+    alert
+    |> get_in(["attributes", Access.key("informed_entity", []), Access.all(), "route_type"])
+    |> Enum.uniq()
   end
 
-  defp update_state(%Event{event: "update", data: data}, state) do
-    alert = Events.parse(data)
-    Map.put(state, alert.id, alert)
+  @spec parse_alert(map()) :: Alert.multi_route()
+  defp parse_alert(alert) do
+    {created_at, service_effect, routes} = parse_attributes(alert["attributes"])
+
+    %{
+      id: alert["id"],
+      created_at: created_at,
+      service_effect: service_effect,
+      affected_routes: routes
+    }
   end
 
-  defp update_state(%Event{event: "add", data: data}, state) do
-    alert = Events.parse(data)
-    Map.put(state, alert.id, alert)
+  @spec parse_attributes(nil | map()) ::
+          {DateTime.t() | nil, String.t() | nil, MapSet.t(Alert.route_id()) | nil}
+  defp parse_attributes(nil), do: {nil, nil, nil}
+
+  defp parse_attributes(attributes) do
+    case DateTime.from_iso8601(attributes["created_at"]) do
+      {:ok, created_at, _} ->
+        {created_at, attributes["service_effect"], parse_routes(attributes)}
+
+      {:error, reason} ->
+        Logger.error([
+          "Failed to parse created_at, reason=",
+          inspect(reason),
+          " attributes=",
+          inspect(attributes)
+        ])
+
+        {nil, attributes["service_effect"], parse_routes(attributes)}
+    end
   end
 
-  defp update_state(%Event{event: "remove", data: data}, state) do
-    alert = Events.parse(data)
-    Map.delete(state, alert.id)
+  @spec parse_routes(map()) :: MapSet.t(Alert.route_id())
+  defp parse_routes(attributes) do
+    attributes
+    |> get_in([Access.key("informed_entity", []), Access.all(), "route"])
+    |> MapSet.new()
+  end
+
+  defp schedule_update(pid, ms) do
+    Process.send_after(pid, :update, ms)
   end
 end
