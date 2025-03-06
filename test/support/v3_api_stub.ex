@@ -1,6 +1,6 @@
 defmodule SignsUi.V3ApiStub do
   @moduledoc """
-  Stub implementation of the V3Api for testing.
+  Stub implementation of V3Api for testing.
   Configurable to return different responses.
   """
 

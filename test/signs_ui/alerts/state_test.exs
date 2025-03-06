@@ -1,7 +1,6 @@
 defmodule SignsUi.Alerts.StateTest do
   alias SignsUi.Alerts.Display
   use ExUnit.Case, async: true
-  use ExUnit.Case
   use SignsUiWeb.ChannelCase
 
   setup do
