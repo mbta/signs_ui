@@ -53,26 +53,25 @@ defmodule SignsUi.Alerts.State do
 
     state =
       case v3_api.fetch_alerts() do
+        {:ok, []} ->
+          Logger.info("empty_alerts_response: keeping current state.")
+          state
+
         {:ok, alerts} ->
-          if Enum.empty?(alerts) do
-            Logger.info("empty_alerts_response: keeping current state.")
-            state
-          else
-            new_state =
-              alerts
-              |> Enum.filter(&valid_route_type?/1)
-              |> Enum.map(&parse_alert/1)
-              |> Enum.into(%{}, &{&1.id, &1})
+          new_state =
+            alerts
+            |> Enum.filter(&valid_route_type?/1)
+            |> Enum.map(&parse_alert/1)
+            |> Enum.into(%{}, &{&1.id, &1})
 
-            SignsUiWeb.Endpoint.broadcast!(
-              "alerts:all",
-              "new_alert_state",
-              Display.format_state(new_state)
-            )
+          SignsUiWeb.Endpoint.broadcast!(
+            "alerts:all",
+            "new_alert_state",
+            Display.format_state(new_state)
+          )
 
-            Logger.info(["alert_state_updated ", inspect(new_state)])
-            new_state
-          end
+          Logger.info(["alert_state_updated ", inspect(new_state)])
+          new_state
 
         :error ->
           state
