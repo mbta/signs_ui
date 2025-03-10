@@ -59,10 +59,12 @@ defmodule SignsUi.Alerts.State do
 
         {:ok, alerts} ->
           new_state =
-            alerts
-            |> Enum.filter(&valid_route_type?/1)
-            |> Enum.map(&parse_alert/1)
-            |> Enum.into(%{}, &{&1.id, &1})
+            for alert <- alerts,
+                valid_route_type?(alert),
+                parsed_alert = parse_alert(alert),
+                into: %{} do
+              {parsed_alert.id, parsed_alert}
+            end
 
           SignsUiWeb.Endpoint.broadcast!(
             "alerts:all",
@@ -82,10 +84,7 @@ defmodule SignsUi.Alerts.State do
   end
 
   defp valid_route_type?(alert) do
-    case get_route_types(alert) do
-      [] -> false
-      route_types -> Enum.any?(route_types, &(&1 in @valid_route_types))
-    end
+    Enum.any?(get_route_types(alert), &(&1 in @valid_route_types))
   end
 
   defp get_route_types(alert) do
@@ -111,9 +110,14 @@ defmodule SignsUi.Alerts.State do
   defp parse_attributes(nil), do: {nil, nil, nil}
 
   defp parse_attributes(attributes) do
+    {get_created_at(attributes), attributes["service_effect"], parse_routes(attributes)}
+  end
+
+  @spec get_created_at(map()) :: DateTime.t() | nil
+  defp get_created_at(attributes) do
     case DateTime.from_iso8601(attributes["created_at"]) do
       {:ok, created_at, _} ->
-        {created_at, attributes["service_effect"], parse_routes(attributes)}
+        created_at
 
       {:error, reason} ->
         Logger.error([
@@ -123,7 +127,7 @@ defmodule SignsUi.Alerts.State do
           inspect(attributes)
         ])
 
-        {nil, attributes["service_effect"], parse_routes(attributes)}
+        nil
     end
   end
 
