@@ -10,11 +10,7 @@ config :signs_ui, SignsUiWeb.Endpoint,
 # Internal configuration
 config :signs_ui,
   config_store: SignsUi.Config.S3,
-  alert_producer: ServerSentEventStage,
-  alert_consumer_opts: [
-    name: SignsUi.Alerts.State,
-    subscribe_to: [AlertProducer]
-  ]
+  v3_api: SignsUi.V3Api
 
 # HTTP config
 config :signs_ui, :redirect_http?, false

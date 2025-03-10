@@ -28,4 +28,8 @@ screenplay_base_url =
     else:
       "localhost:4000/ https://screenplay-dev.mbtace.com/ https://screenplay-dev-green.mbtace.com/"
 
+config :signs_ui,
+  api_v3_url: System.get_env("API_V3_ORIGIN"),
+  api_v3_key: System.get_env("API_V3_KEY")
+
 config :signs_ui, SignsUiWeb.Endpoint, screenplay_base_url: screenplay_base_url
