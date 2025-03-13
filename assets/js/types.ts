@@ -121,6 +121,7 @@ export {
   SignConfig,
   SignConfigs,
   SingleSignContent,
+  Audio,
   SignContent,
   ConfiguredHeadways,
   Zone,
