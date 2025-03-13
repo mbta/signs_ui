@@ -32,22 +32,7 @@ function makeSign(
   alerts: RouteAlerts,
   config: StationConfig,
   zone: Zone,
-  signs: {
-    [x: string]:
-      | SingleSignContent
-      | {
-          sign_id: string;
-          lines: {
-            [key: string]: {
-              text: {
-                content: string;
-                duration: number;
-              }[];
-              expiration: string;
-            };
-          };
-        };
-  },
+  signs: { [x: string]: SingleSignContent },
   currentTime: number,
   line: string,
   signConfigs: { [x: string]: SignConfig },
@@ -60,7 +45,7 @@ function makeSign(
   const zoneConfig = config.zones[zone];
   if (zone && zoneConfig) {
     const key = `${config.id}-${zone}`;
-    const signContent = signs[key] || { sign_id: key, lines: {} };
+    const signContent = signs[key] || { sign_id: key, lines: {}, audios: [] };
     const realtimeId = arincToRealtimeId(key);
     const signConfig = signConfigs[realtimeId] || { mode: 'off' };
     const signGroupKey = signsToGroups[realtimeId];

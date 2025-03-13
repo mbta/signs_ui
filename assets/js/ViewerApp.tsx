@@ -43,6 +43,7 @@ class ViewerApp extends React.Component<
     configuredHeadways: ConfiguredHeadways;
     signGroups: SignGroupMap;
     currentTime: number;
+    serverTimeOffset: number;
     signsChannel: null | Channel;
     headwaysChannel: null | Channel;
     chelseaBridgeAnnouncementsChannel: null | Channel;
@@ -73,6 +74,7 @@ class ViewerApp extends React.Component<
       configuredHeadways: props.initialConfiguredHeadways,
       signGroups: props.initialSignGroups,
       currentTime: Date.now(),
+      serverTimeOffset: 0,
       signsChannel: null,
       headwaysChannel: null,
       chelseaBridgeAnnouncementsChannel: null,
@@ -99,6 +101,7 @@ class ViewerApp extends React.Component<
     );
     const signGroupsChannel = socket.channel('signGroups:all', {});
     const alertsChannel = socket.channel('alerts:all', {});
+    const timeChannel = socket.channel('time:all', {});
 
     [
       signsChannel,
@@ -106,7 +109,12 @@ class ViewerApp extends React.Component<
       chelseaBridgeAnnouncementsChannel,
       signGroupsChannel,
       alertsChannel,
+      timeChannel,
     ].forEach((channel) => channel.join().receive('ok', () => true));
+
+    timeChannel.on('current_time', ({ value }) => {
+      this.setState({ serverTimeOffset: value - Date.now() });
+    });
 
     signsChannel.on('sign_update', (sign) => {
       this.setState((prevState) => ({
@@ -242,6 +250,7 @@ class ViewerApp extends React.Component<
       alerts,
       signs,
       currentTime,
+      serverTimeOffset,
       line,
       signConfigs,
       readOnly,
@@ -321,7 +330,7 @@ class ViewerApp extends React.Component<
             setConfiguredHeadways={this.setConfiguredHeadways}
             signGroups={signGroups}
             setSignGroups={this.setSignGroups}
-            currentTime={currentTime}
+            currentTime={currentTime + serverTimeOffset}
             line={line}
             chelseaBridgeAnnouncements={chelseaBridgeAnnouncements}
             setChelseaBridgeAnnouncements={this.setChelseaBridgeAnnouncements}

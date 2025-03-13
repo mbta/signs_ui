@@ -6,8 +6,6 @@ defmodule SignsUi.Signs.Sign do
   @enforce_keys [:station, :zone, :lines, :audios]
   defstruct @enforce_keys
 
-  alias SignsUi.Messages.AdHoc
-  alias SignsUi.Messages.Canned
   alias SignsUi.Messages.SignContent
   alias SignsUi.Signs.SignLine
 
@@ -15,7 +13,7 @@ defmodule SignsUi.Signs.Sign do
           station: String.t(),
           zone: String.t(),
           lines: %{integer() => SignLine.t()},
-          audios: [Canned.t() | AdHoc.t()]
+          audios: [SignsUi.Messages.Audio.t()]
         }
 
   @spec update_from_message(t(), SignContent.t()) :: t()
@@ -36,9 +34,8 @@ defmodule SignsUi.Signs.Sign do
           {line_number, SignLine.to_json(line)}
         end),
       audios:
-        Enum.map(sign.audios, fn
-          %Canned{} = audio -> Map.from_struct(audio) |> Map.put(:type, "canned")
-          %AdHoc{} = audio -> Map.from_struct(audio) |> Map.put(:type, "ad_hoc")
+        Enum.map(sign.audios, fn audio ->
+          Map.from_struct(audio) |> Map.update!(:visual_zones, &MapSet.to_list/1)
         end)
     }
   end

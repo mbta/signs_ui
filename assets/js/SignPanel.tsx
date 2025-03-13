@@ -1,11 +1,10 @@
 import * as React from 'react';
 import lineToColor from './colors';
 import { RouteAlerts, SignConfig, SignGroup, SingleSignContent } from './types';
-import { choosePage } from './helpers';
 import SignGroupExpirationDetails from './SignGroupExpirationDetails';
 import SignTextInput from './SignTextInput';
 import SetExpiration from './SetExpiration';
-import SignText from './SignText';
+import SignDisplay from './SignDisplay';
 
 type SignModeOptions =
   | 'auto'
@@ -13,10 +12,6 @@ type SignModeOptions =
   | 'off'
   | 'static_text'
   | 'temporary_terminal';
-
-function isNotExpired(expiration: string, currentTime: number) {
-  return Date.parse(expiration) - currentTime > 0;
-}
 
 function fontSize(signId: string) {
   if (
@@ -82,32 +77,6 @@ function shouldShowAlertSelector(line: string): boolean {
   );
 }
 
-function lineDisplayText(
-  lineContent:
-    | {
-        text: {
-          content: string;
-          duration: number;
-        }[];
-        expiration: string;
-      }
-    | undefined,
-  currentTime: number,
-  initialTime: number,
-): string {
-  if (
-    lineContent !== undefined &&
-    isNotExpired(lineContent.expiration, currentTime)
-  ) {
-    // ARINC signs start paging on the second page, so we rearrange the content to emulate that behavior
-    return choosePage(
-      [...lineContent.text.slice(1), ...lineContent.text.slice(0, 1)],
-      Math.round((currentTime - initialTime) / 1000),
-    );
-  }
-  return '';
-}
-
 function stringify(expires: Date | null) {
   if (expires) {
     return expires.toISOString();
@@ -171,7 +140,6 @@ function SignPanel({
 }: SignPanelProps): JSX.Element {
   const [signConfig, setSignConfig] = React.useState(initialSignConfig);
   const [hasCustomChanges, setHasCustomChanges] = React.useState(false);
-  const [initialTime] = React.useState(currentTime);
   const [confirmingUngroup, setConfirmingUngroup] = React.useState(false);
 
   React.useEffect(() => {
@@ -246,19 +214,7 @@ function SignPanel({
           )}
         </div>
         <div className="viewer--sign_text">
-          <SignText
-            line1={lineDisplayText(
-              signContent.lines['1'],
-              currentTime,
-              initialTime,
-            )}
-            line2={lineDisplayText(
-              signContent.lines['2'],
-              currentTime,
-              initialTime,
-            )}
-            time={currentTime}
-          />
+          <SignDisplay content={signContent} currentTime={currentTime} />
         </div>
       </div>
 
@@ -369,4 +325,4 @@ function SignPanel({
 }
 
 export default SignPanel;
-export { SignModeOptions, SignPanelProps, lineDisplayText };
+export { SignModeOptions, SignPanelProps };

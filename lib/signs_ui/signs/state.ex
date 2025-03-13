@@ -6,8 +6,6 @@ defmodule SignsUi.Signs.State do
 
   use GenServer
 
-  alias SignsUi.Messages.AdHoc
-  alias SignsUi.Messages.Canned
   alias SignsUi.Messages.SignContent
   alias SignsUi.Signs.Sign
 
@@ -35,7 +33,7 @@ defmodule SignsUi.Signs.State do
     GenServer.call(pid, {:get_single_sign, sign_id})
   end
 
-  @spec process_message(GenServer.server(), SignContent.t() | Canned.t() | AdHoc.t()) :: :ok
+  @spec process_message(GenServer.server(), SignContent.t() | SignsUi.Messages.Audio.t()) :: :ok
   def process_message(pid \\ __MODULE__, message) do
     GenServer.call(pid, {:process_message, message})
   end
@@ -71,11 +69,7 @@ defmodule SignsUi.Signs.State do
     {:reply, :ok, new_state}
   end
 
-  def handle_call({:process_message, %Canned{} = message}, _from, state) do
-    {:reply, :ok, insert_audio(state, message)}
-  end
-
-  def handle_call({:process_message, %AdHoc{} = message}, _from, state) do
+  def handle_call({:process_message, %SignsUi.Messages.Audio{} = message}, _, state) do
     {:reply, :ok, insert_audio(state, message)}
   end
 
@@ -100,13 +94,13 @@ defmodule SignsUi.Signs.State do
   defp insert_audio(state, audio) do
     now = DateTime.utc_now() |> DateTime.to_unix(:millisecond)
 
-    Enum.reduce(audio.zones, state, fn zone, acc ->
+    Enum.reduce(audio.visual_zones, state, fn zone, acc ->
       update_sign(acc, audio.station, zone, fn sign ->
         Map.update!(sign, :audios, fn audios ->
           # Filter out expired audios. Note that this only happens when a new audio is being
           # added, so the front-end is expected to do its own filtering of stale audios.
           Enum.concat(audios, [audio])
-          |> Enum.reject(&(now > &1.timestamp + &1.timeout))
+          |> Enum.reject(&(now > &1.timestamp + &1.expiration))
         end)
         |> tap(&broadcast_update/1)
       end)

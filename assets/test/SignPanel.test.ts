@@ -36,6 +36,7 @@ function customSignContent(): SingleSignContent {
         expiration: soon,
       },
     },
+    audios: [],
   };
 }
 
@@ -111,6 +112,7 @@ function signContentWithExpirations(
         expiration: time2,
       },
     },
+    audios: [],
   };
 }
 
