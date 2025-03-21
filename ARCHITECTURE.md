@@ -1,62 +1,47 @@
 # Architecture
 
-This document describes high-level architecture of signs-ui. The goal of this document is to
+This document describes the high-level architecture of Signs UI. The goal of this document is to
 provide a useful orientation to a new contributor to the codebase.
 
 ## Application description
 
-Signs UI is a web app used in primarily two ways:
+Signs UI is a web app used in a few ways:
 
-1. To monitor the current state of countdown signs throughout the system. (The "viewer")
-2. To control the signs in certain ways. (The "configuration")
+1. To emulate the current state of countdown signs throughout the system.
+2. To configure what "mode" a sign is in
+3. To tie sign content to the expiration of an alert or a datetime
+4. To manage headway configurations
+5. To manage SCU migration status
 
 Like Realtime Signs, throughout this app when we talk about a "sign" it could actually represent
 multiple physical signs in the field, all behaving identically. In ARINC terminology a sign is a
 "zone" at a station and is the minimally granular unit that we have control over.
 
-## Architecture of the "viewer"
+## Architecture overview
+### Emulating sign state
+When a browser loads Signs UI, the frontend subscribes to a Phoenix channel ([`SignsUiWeb.SignsChannel`](/lib//signs_ui_web/channels/signs_channel.ex)) which is kept open and is the primary way the client receives updates from the server.
 
-The applications that drive the signs throughout the system, Realtime Signs for subway and
-TransitwayEngine for bus, do so by sending HTTP POST requests to the ARINC head-end server. The
-two apps, upon a successful post to ARINC, also send the exact same request to signs-ui, which is
-handled by the `SignsUiWeb.MessagesController`.
+When Realtime Signs successfully sends a message to a given sign, it subsequently sends the same message to Signs UI. These messages are received by [`SignsUiWeb.MessagesController`](/lib/signs_ui_web/controllers/messages_controller.ex).
+Signs UI will then parse the messages and store them in memory in the [`SignsUi.Signs.State`](/lib/signs_ui/signs/state.ex) GenServer. The message is then broadcasted via the `SignsChannel` to all connected clients.
 
-Signs-UI tries to simulate the behavior of the ARINC head end server. The
-`SignsUi.Messages.SignContent` module is a parser that handles the particular format of
-`MsgType=SignContent` messages that ARINC can receive. It does not handle `AdHoc` or `Canned`
-messages, which are generally used for audio.
+When the frontend receives updates to state, it applies its own logic to determine exactly what content to render (see [`SignDisplay.tsx`](/assets/js/SignDisplay.tsx)). It makes a best attempt to emulate what should be displayed on real-world signs at any given time, but note that there are cases where it may not be an exact reflection.
 
-The received messages get stored in memory in the `SignsUi.Signs.State` GenServer. This means when
-signs-ui starts up, the known contents of every sign is blank. However, since message expirations
-are generally set at 2-3 minutes, our Realtime Signs and Transitway Engine will send a POST to
-every sign in the system relatively quickly, and within 2-3 minutes signs-ui will know what's on
+When Signs UI starts up, the known contents of every sign are blank. However, since message expirations are generally set at 2-3 minutes, Realtime Signs will send a POST to
+every sign in the system relatively quickly, and within 2-3 minutes Signs UI will know what's on
 all the signs.
 
-When a browser loads signs-ui to look at the viewer, a Phoenix channel is kept open. Whenever
-`SignsUi.Signs.State` is updated, the entire new state is broadcast to all connected browsers. The
-main signs-ui app on the frontend is a React app, which takes the signs' state at the top of the
-component tree.
+### Config
 
-## Architecture of the "configuration"
+When the application starts up, it reads a JSON file saved in S3 at `mbta-signs/config.json` (or `mbta-signs-dev`) to initialize `SignsUi.Config.State`. When users
+of Signs UI make configuration changes, such as changing a sign mode (e.g., from "auto" to "off"), the internal state is updated, and the updated state is written back to the JSON file in S3. (see [`SignsUi.Config.Writer`](/lib/signs_ui/config/writer.ex)). The same occurs when a sign is configured to expire in association with the expiration of an alert or datetime, headway values or groups are updated, or an SCU is migrated.
 
-The way signs-ui interacts with Realtime Signs and TransitwayEngine is via a JSON file saved in S3
-at `mbta-signs/config.json` (or `mbta-signs-dev`). Signs-UI writes to the file, and the clients
-poll the file for changes. Depending on configuration values in that file, the two clients may
-consider certain signs turned off, displaying particular custom text values, etc.
+The primary way Signs UI interacts with Realtime Signs and other clients is via the aforementioned JSON file saved in S3. Clients typically poll the file for changes.
 
-The JSON file is a serialized version of the state that Signs-UI keeps in `SignsUi.Config.State`.
-When the application starts up, it reads the S3 file itself to initialize that state. When users
-of Signs-UI make any configuration changes, the state is updated, and the new state is then
-written to S3.
+### Frontend
 
-## Architecture of the frontend
-
-Signs-UI is a react app. There's only one page, but it's not really a "SPA" in that there's no
+Signs UI is a react app. There's only one page, but it's not really a "SPA" in that there's no
 router or API requests. Instead, when the page is first loaded and rendered, the initial signs and
 configuration state are serialized onto the page as global variables on `window`. The react app
 uses this data to initialize the page with all the relevant data. There are handlers that listen
 on the Phoenix channels for sign and configuration updates, and update the top-level state when
 there are changes.
-
-## Diagram
-![Signs UI Architecture Diagram](/signs_ui_architecture.jpg)
