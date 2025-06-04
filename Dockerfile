@@ -1,5 +1,5 @@
 # first, get the elixir dependencies within an elixir container
-FROM hexpm/elixir:1.14.5-erlang-26.0.2-debian-buster-20240513-slim as elixir-builder
+FROM hexpm/elixir:1.17.3-erlang-27.3.4-debian-buster-20240612-slim as elixir-builder
 ENV LANG="C.UTF-8" MIX_ENV="prod"
 
 WORKDIR /root
@@ -33,11 +33,7 @@ COPY --from=assets-builder /root/priv/static ./priv/static
 RUN mix do compile --force, phx.digest, release
 
 # the one the elixir image was built with
-FROM debian:buster
-
-RUN apt-get update --allow-releaseinfo-change && \
-  apt-get install -y --no-install-recommends libssl1.1 libsctp1 curl ca-certificates && \
-  rm -rf /var/lib/apt/lists/*
+FROM hexpm/erlang:27.3.4-debian-buster-20240612-slim
 
 WORKDIR /root
 EXPOSE 4000

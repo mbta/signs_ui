@@ -68,7 +68,7 @@ defmodule SignsUi.Config.Sign do
         expiration_dt
 
       _ ->
-        Logger.warn("Invalid expiration time #{inspect(expiration_string)} received.")
+        Logger.warning("Invalid expiration time #{inspect(expiration_string)} received.")
         nil
     end
   end
