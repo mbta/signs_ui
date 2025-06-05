@@ -9,10 +9,10 @@ defmodule SignsUi.Config.Expiration do
   alias SignsUi.Config.SignGroups
 
   @type state :: %{
-          time_fetcher: (() -> DateTime.t()),
+          time_fetcher: (-> DateTime.t()),
           loop_ms: integer(),
           sign_state_server: GenServer.server(),
-          alert_fetcher: (() -> MapSet.t(SignsUi.Alerts.Alert.id()))
+          alert_fetcher: (-> MapSet.t(SignsUi.Alerts.Alert.id()))
         }
 
   @spec start_link(Keyword.t()) :: GenServer.on_start()
@@ -66,8 +66,8 @@ defmodule SignsUi.Config.Expiration do
 
   @spec expire_signs(
           SignsUi.Config.State.t(),
-          (() -> DateTime.t()),
-          (() -> MapSet.t(SignsUi.Alerts.Alert.id()))
+          (-> DateTime.t()),
+          (-> MapSet.t(SignsUi.Alerts.Alert.id()))
         ) :: %{
           Sign.id() => Sign.t()
         }

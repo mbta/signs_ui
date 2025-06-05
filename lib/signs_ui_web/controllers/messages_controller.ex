@@ -65,7 +65,7 @@ defmodule SignsUiWeb.MessagesController do
         :ok
       else
         _err ->
-          Logger.warn("could_not_process command #{inspect(command_string)}")
+          Logger.warning("could_not_process command #{inspect(command_string)}")
       end
     end)
 
