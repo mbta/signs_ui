@@ -82,6 +82,16 @@ const branchConfig: { [key: string]: { id: string; name: string }[] } = {
       name: 'Mattapan Line',
     },
   ],
+  Silver: [
+    {
+      id: 'silver_chelsea',
+      name: 'Chelsea',
+    },
+    {
+      id: "silver_seaport",
+      name: "Seaport"
+    }
+  ]
 };
 
 const stationConfig: {
