@@ -88,10 +88,10 @@ const branchConfig: { [key: string]: { id: string; name: string }[] } = {
       name: 'Chelsea',
     },
     {
-      id: "silver_seaport",
-      name: "Seaport"
-    }
-  ]
+      id: 'silver_seaport',
+      name: 'Seaport',
+    },
+  ],
 };
 
 const stationConfig: {
