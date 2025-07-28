@@ -4,7 +4,6 @@ defmodule SignsUiWeb.MessagesController do
 
   alias SignsUi.Config.SignGroups
   alias SignsUi.Messages.SignContent
-  alias SignsUi.Signs
   alias SignsUi.Signs.State
 
   plug(:laboratory_features)
@@ -94,7 +93,7 @@ defmodule SignsUiWeb.MessagesController do
         if Utilities.Common.parse_av_type(av_type_code) == :audio_visual do
           paginate_text(message) |> format_pages()
         end,
-      visual_zones: MapSet.new(zones),
+      zones: MapSet.new(zones),
       station: station,
       expiration: String.to_integer(timeout)
     }
@@ -108,12 +107,10 @@ defmodule SignsUiWeb.MessagesController do
   end
 
   def background(conn, _params) do
-    with {:ok, visual_zones} <- parse_zones(conn, "visual_zones"),
+    with {:ok, zones} <- parse_zones(conn, "zones"),
          {:ok, visual_data} <- parse_visual_data(conn),
          {:ok, expiration} <- parse_expiration(conn) do
-      [scu_id] = Plug.Conn.get_req_header(conn, "x-scu-id")
-      zone = Enum.at(visual_zones, 0)
-      station = Signs.Config.station_code(scu_id, zone)
+      [station, zone] = Enum.at(zones, 0) |> String.split("-")
       expiration_time = DateTime.utc_now() |> DateTime.add(expiration)
 
       Enum.each([{:top, 1}, {:bottom, 2}], fn {key, line} ->
@@ -136,16 +133,14 @@ defmodule SignsUiWeb.MessagesController do
   end
 
   def play(conn, _params) do
-    with {:ok, visual_zones} <- parse_zones(conn, "visual_zones"),
+    with {:ok, zones} <- parse_zones(conn, "zones"),
          {:ok, visual_data} <- parse_visual_data(conn),
          {:ok, expiration} <- parse_expiration(conn) do
-      [scu_id] = Plug.Conn.get_req_header(conn, "x-scu-id")
-
       %SignsUi.Messages.Audio{
         timestamp: DateTime.utc_now() |> DateTime.to_unix(:millisecond),
         visual_data: visual_data,
-        visual_zones: visual_zones,
-        station: Signs.Config.station_code(scu_id, Enum.at(visual_zones, 0)),
+        zones: MapSet.new(zones, &(String.split(&1, "-") |> List.last())),
+        station: Enum.at(zones, 0) |> String.split("-") |> List.first(),
         expiration: expiration
       }
       |> State.process_message()
