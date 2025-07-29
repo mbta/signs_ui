@@ -108,16 +108,16 @@ defmodule SignsUiWeb.MessagesController do
 
   def background(conn, _params) do
     with {:ok, zones} <- parse_zones(conn, "zones"),
+         {station, zones} = decode_zones(zones),
          {:ok, visual_data} <- parse_visual_data(conn),
          {:ok, expiration} <- parse_expiration(conn) do
-      [station, zone] = Enum.at(zones, 0) |> String.split("-")
       expiration_time = DateTime.utc_now() |> DateTime.add(expiration)
 
       Enum.each([{:top, 1}, {:bottom, 2}], fn {key, line} ->
         :ok =
           %SignContent{
             station: station,
-            zone: zone,
+            zone: Enum.at(zones, 0),
             line_number: line,
             expiration: expiration_time,
             pages: Enum.map(visual_data.pages, &{&1[key], &1.duration})
@@ -134,13 +134,14 @@ defmodule SignsUiWeb.MessagesController do
 
   def play(conn, _params) do
     with {:ok, zones} <- parse_zones(conn, "zones"),
+         {station, zones} = decode_zones(zones),
          {:ok, visual_data} <- parse_visual_data(conn),
          {:ok, expiration} <- parse_expiration(conn) do
       %SignsUi.Messages.Audio{
         timestamp: DateTime.utc_now() |> DateTime.to_unix(:millisecond),
         visual_data: visual_data,
-        zones: MapSet.new(zones, &(String.split(&1, "-") |> List.last())),
-        station: Enum.at(zones, 0) |> String.split("-") |> List.first(),
+        zones: zones,
+        station: station,
         expiration: expiration
       }
       |> State.process_message()
@@ -166,6 +167,11 @@ defmodule SignsUiWeb.MessagesController do
       _ ->
         {:error, "invalid #{key}"}
     end
+  end
+
+  defp decode_zones(zones) do
+    {Enum.at(zones, 0) |> String.split("-") |> List.first(),
+     MapSet.new(zones, &(String.split(&1, "-") |> List.last()))}
   end
 
   defp parse_visual_data(conn) do
