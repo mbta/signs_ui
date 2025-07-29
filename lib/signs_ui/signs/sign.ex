@@ -35,7 +35,7 @@ defmodule SignsUi.Signs.Sign do
         end),
       audios:
         Enum.map(sign.audios, fn audio ->
-          Map.from_struct(audio) |> Map.update!(:visual_zones, &MapSet.to_list/1)
+          Map.from_struct(audio) |> Map.update!(:zones, &MapSet.to_list/1)
         end)
     }
   end

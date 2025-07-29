@@ -9,16 +9,5 @@ defmodule SignsUi.Signs.Config do
   @config @config_path |> File.read!() |> Jason.decode!(keys: :atoms)
   @external_resource @config_path
 
-  @station_codes Map.new(@config, fn %{
-                                       scu_id: scu_id,
-                                       text_zone: text_zone,
-                                       pa_ess_loc: pa_ess_loc
-                                     } ->
-                   {{scu_id, text_zone}, pa_ess_loc}
-                 end)
-
   def get, do: @config
-
-  @spec station_code(String.t(), String.t()) :: String.t() | nil
-  def station_code(scu_id, zone), do: Map.get(@station_codes, {scu_id, zone})
 end

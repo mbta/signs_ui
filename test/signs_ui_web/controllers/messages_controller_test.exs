@@ -130,9 +130,8 @@ defmodule SignsUiWeb.MessagesControllerTest do
 
       conn
       |> add_api_req_header()
-      |> put_req_header("x-scu-id", "BAIRSCU001")
       |> post(messages_path(conn, :background), %{
-        "visual_zones" => ["e"],
+        "zones" => ["BAIR-e"],
         "visual_data" => %{"pages" => [%{"top" => "top", "bottom" => "bottom", "duration" => 6}]},
         "expiration" => 180
       })

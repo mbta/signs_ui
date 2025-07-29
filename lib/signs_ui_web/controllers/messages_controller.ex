@@ -4,7 +4,6 @@ defmodule SignsUiWeb.MessagesController do
 
   alias SignsUi.Config.SignGroups
   alias SignsUi.Messages.SignContent
-  alias SignsUi.Signs
   alias SignsUi.Signs.State
 
   plug(:laboratory_features)
@@ -94,7 +93,7 @@ defmodule SignsUiWeb.MessagesController do
         if Utilities.Common.parse_av_type(av_type_code) == :audio_visual do
           paginate_text(message) |> format_pages()
         end,
-      visual_zones: MapSet.new(zones),
+      zones: MapSet.new(zones),
       station: station,
       expiration: String.to_integer(timeout)
     }
@@ -108,19 +107,17 @@ defmodule SignsUiWeb.MessagesController do
   end
 
   def background(conn, _params) do
-    with {:ok, visual_zones} <- parse_zones(conn, "visual_zones"),
+    with {:ok, zones} <- parse_zones(conn, "zones"),
+         {station, zones} = decode_zones(zones),
          {:ok, visual_data} <- parse_visual_data(conn),
          {:ok, expiration} <- parse_expiration(conn) do
-      [scu_id] = Plug.Conn.get_req_header(conn, "x-scu-id")
-      zone = Enum.at(visual_zones, 0)
-      station = Signs.Config.station_code(scu_id, zone)
       expiration_time = DateTime.utc_now() |> DateTime.add(expiration)
 
       Enum.each([{:top, 1}, {:bottom, 2}], fn {key, line} ->
         :ok =
           %SignContent{
             station: station,
-            zone: zone,
+            zone: Enum.at(zones, 0),
             line_number: line,
             expiration: expiration_time,
             pages: Enum.map(visual_data.pages, &{&1[key], &1.duration})
@@ -136,16 +133,15 @@ defmodule SignsUiWeb.MessagesController do
   end
 
   def play(conn, _params) do
-    with {:ok, visual_zones} <- parse_zones(conn, "visual_zones"),
+    with {:ok, zones} <- parse_zones(conn, "zones"),
+         {station, zones} = decode_zones(zones),
          {:ok, visual_data} <- parse_visual_data(conn),
          {:ok, expiration} <- parse_expiration(conn) do
-      [scu_id] = Plug.Conn.get_req_header(conn, "x-scu-id")
-
       %SignsUi.Messages.Audio{
         timestamp: DateTime.utc_now() |> DateTime.to_unix(:millisecond),
         visual_data: visual_data,
-        visual_zones: visual_zones,
-        station: Signs.Config.station_code(scu_id, Enum.at(visual_zones, 0)),
+        zones: zones,
+        station: station,
         expiration: expiration
       }
       |> State.process_message()
@@ -171,6 +167,11 @@ defmodule SignsUiWeb.MessagesController do
       _ ->
         {:error, "invalid #{key}"}
     end
+  end
+
+  defp decode_zones(zones) do
+    {Enum.at(zones, 0) |> String.split("-") |> List.first(),
+     MapSet.new(zones, &(String.split(&1, "-") |> List.last()))}
   end
 
   defp parse_visual_data(conn) do

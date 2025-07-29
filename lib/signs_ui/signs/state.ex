@@ -94,7 +94,7 @@ defmodule SignsUi.Signs.State do
   defp insert_audio(state, audio) do
     now = DateTime.utc_now() |> DateTime.to_unix(:millisecond)
 
-    Enum.reduce(audio.visual_zones, state, fn zone, acc ->
+    Enum.reduce(audio.zones, state, fn zone, acc ->
       update_sign(acc, audio.station, zone, fn sign ->
         Map.update!(sign, :audios, fn audios ->
           # Filter out expired audios. Note that this only happens when a new audio is being
