@@ -12,7 +12,7 @@ RUN apt-get update && \
 RUN mix do local.hex --force, local.rebar --force, deps.get --only prod
 
 # next, build the frontend assets within a node.js container
-FROM node:18.12.1 AS assets-builder
+FROM node:22.18.0 AS assets-builder
 
 WORKDIR /root
 ADD . .
