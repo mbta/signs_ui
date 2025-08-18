@@ -7,11 +7,6 @@ defmodule SignsUi.Config.S3 do
     {:ok, _} = ExAws.S3.put_object(bucket_name(), path_name(), content) |> ExAws.request()
   end
 
-  def write_stops(content) do
-    path = Application.get_env(:signs_ui, :aws_signs_stops_path)
-    {:ok, _} = ExAws.S3.put_object(bucket_name(), path, content) |> ExAws.request()
-  end
-
   def read do
     {:ok, %{body: content}} = ExAws.S3.get_object(bucket_name(), path_name()) |> ExAws.request()
     content

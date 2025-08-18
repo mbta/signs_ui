@@ -14,7 +14,6 @@ test('shows the custom configuration information for a station', () => {
     auto: true,
     custom: true,
     off: true,
-    headway: true,
     temporary_terminal: true,
   };
   const config: StationConfig = {
@@ -54,7 +53,6 @@ test('allows custom reordering of sign positions', () => {
     auto: true,
     custom: true,
     off: true,
-    headway: true,
     temporary_terminal: true,
   };
   const config: StationConfig = {

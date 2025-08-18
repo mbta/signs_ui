@@ -111,83 +111,6 @@ test('Shows batch mode buttons when not read-only', () => {
   );
 
   expect(screen.getByText('All to auto')).toBeInTheDocument();
-  expect(screen.getByText('All to headway')).toBeInTheDocument();
-  expect(screen.getByText('All to off')).toBeInTheDocument();
-});
-
-test('Does not show headway batch mode button for busways', () => {
-  const now = Date.now();
-  const signs = {};
-
-  const currentTime = now + 2000;
-  const signConfigs = {};
-  const setConfigs = () => true;
-  const readOnly = false;
-  const configuredHeadways = {};
-  const setConfiguredHeadways = () => true;
-
-  render(
-    React.createElement(
-      Line,
-      {
-        alerts: {},
-        signs,
-        currentTime,
-        line: 'Busway',
-        signConfigs,
-        setConfigs,
-        readOnly,
-        configuredHeadways,
-        setConfiguredHeadways,
-        chelseaBridgeAnnouncements: 'off',
-        setChelseaBridgeAnnouncements: () => {},
-        signGroups: {},
-        setSignGroups: () => {},
-      },
-      null,
-    ),
-  );
-
-  expect(screen.getByText('All to auto')).toBeInTheDocument();
-  expect(screen.queryByText('All to headway')).toBeNull();
-  expect(screen.getByText('All to off')).toBeInTheDocument();
-});
-
-test('Shows headway batch mode button for Silver Line', () => {
-  const now = Date.now();
-  const signs = {};
-
-  const currentTime = now + 2000;
-  const signConfigs = {};
-  const setConfigs = () => true;
-  const readOnly = false;
-  const configuredHeadways = {};
-  const setConfiguredHeadways = () => true;
-
-  render(
-    React.createElement(
-      Line,
-      {
-        alerts: {},
-        signs,
-        currentTime,
-        line: 'Silver',
-        signConfigs,
-        setConfigs,
-        readOnly,
-        configuredHeadways,
-        setConfiguredHeadways,
-        chelseaBridgeAnnouncements: 'off',
-        setChelseaBridgeAnnouncements: () => {},
-        signGroups: {},
-        setSignGroups: () => {},
-      },
-      null,
-    ),
-  );
-
-  expect(screen.getByText('All to auto')).toBeInTheDocument();
-  expect(screen.queryByText('All to headway')).toBeInTheDocument();
   expect(screen.getByText('All to off')).toBeInTheDocument();
 });
 
@@ -198,7 +121,7 @@ test('Shows "Mixed" batch mode buttons when multiple modes are chosen', () => {
   const currentTime = now + 2000;
   const line = 'Red';
   const signConfigs: SignConfigs = {
-    red_south_station_northbound: { expires: null, mode: 'headway' },
+    red_south_station_northbound: { expires: null, mode: 'off' },
     central_southbound: { expires: null, mode: 'auto' },
   };
   const setConfigs = () => true;
@@ -229,7 +152,6 @@ test('Shows "Mixed" batch mode buttons when multiple modes are chosen', () => {
   );
 
   expect(screen.getByText('All to auto')).toBeInTheDocument();
-  expect(screen.getByText('All to headway')).toBeInTheDocument();
   expect(screen.getByText('All to off')).toBeInTheDocument();
   expect(screen.getByText('Mixed')).toBeInTheDocument();
 });
@@ -241,8 +163,8 @@ test('Does not show "Mixed" batch mode buttons when one mode is chosen', () => {
   const currentTime = now + 2000;
   const line = 'Red';
   const signConfigs: SignConfigs = {
-    red_south_station_northbound: { expires: null, mode: 'headway' },
-    central_southbound: { expires: null, mode: 'headway' },
+    red_south_station_northbound: { expires: null, mode: 'auto' },
+    central_southbound: { expires: null, mode: 'auto' },
   };
   const setConfigs = () => true;
   const readOnly = false;
@@ -272,7 +194,6 @@ test('Does not show "Mixed" batch mode buttons when one mode is chosen', () => {
   );
 
   expect(screen.getByText('All to auto')).toBeInTheDocument();
-  expect(screen.getByText('All to headway')).toBeInTheDocument();
   expect(screen.getByText('All to off')).toBeInTheDocument();
   expect(screen.queryByText('Mixed')).toBeNull();
 });
@@ -312,7 +233,6 @@ test("Doesn't show batch mode buttons when read-only", () => {
   );
 
   expect(screen.queryByText('All to auto')).toBeNull();
-  expect(screen.queryByText('Set all to headway')).toBeNull();
   expect(screen.queryByText('All to off')).toBeNull();
 });
 
@@ -532,7 +452,6 @@ test('Sign config is not affected by batch updates if sign does not support mode
           modes: {
             auto: true,
             custom: true,
-            headway: false,
             off: false,
             temporary_terminal: true,
           },
@@ -541,7 +460,6 @@ test('Sign config is not affected by batch updates if sign does not support mode
           modes: {
             auto: false,
             custom: true,
-            headway: true,
             off: false,
             temporary_terminal: true,
           },
@@ -550,7 +468,6 @@ test('Sign config is not affected by batch updates if sign does not support mode
           modes: {
             auto: false,
             custom: true,
-            headway: false,
             off: true,
             temporary_terminal: true,
           },
@@ -559,7 +476,6 @@ test('Sign config is not affected by batch updates if sign does not support mode
           modes: {
             auto: false,
             custom: true,
-            headway: false,
             off: true,
             temporary_terminal: true,
           },
@@ -568,7 +484,6 @@ test('Sign config is not affected by batch updates if sign does not support mode
           modes: {
             auto: false,
             custom: true,
-            headway: false,
             off: false,
             temporary_terminal: true,
           },
@@ -577,7 +492,6 @@ test('Sign config is not affected by batch updates if sign does not support mode
           modes: {
             auto: false,
             custom: true,
-            headway: false,
             off: false,
             temporary_terminal: true,
           },
@@ -623,15 +537,6 @@ test('Sign config is not affected by batch updates if sign does not support mode
   expect(setConfigs).toHaveBeenCalledWith({
     davis_northbound: {
       mode: 'auto',
-    },
-  });
-
-  await user.click(screen.getByText('All to headway'));
-  expect(setConfigs.mock.calls.length).toEqual(3);
-  expect(setConfigs).toHaveBeenCalledWith({
-    davis_southbound: {
-      expires: null,
-      mode: 'headway',
     },
   });
 });

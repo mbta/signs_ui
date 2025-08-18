@@ -52,7 +52,7 @@ function setAllStationsMode(
   mode: string,
 ) {
   const statuses: {
-    [key: string]: { mode: 'auto' | 'off' | 'headway'; expires?: null };
+    [key: string]: { mode: 'auto' | 'off'; expires?: null };
   } = {};
 
   stations.forEach((station: StationConfig) => {
@@ -64,7 +64,7 @@ function setAllStationsMode(
         if (realtimeId) {
           if (mode === 'auto' && modes.auto) {
             statuses[realtimeId] = { mode: 'auto' };
-          } else if ((mode === 'off' || mode === 'headway') && modes[mode]) {
+          } else if (mode === 'off' && modes[mode]) {
             statuses[realtimeId] = { mode, expires: null };
           }
         }
@@ -142,9 +142,6 @@ function Line({
     },
     [line, signGroups, signsToGroups, setSignGroups],
   );
-
-  const batchModes =
-    (stationConfig[line] && stationConfig[line].batchModes) || {};
 
   const batchMode = React.useMemo(() => {
     const uniqueModes: { [key: string]: string } = {};
@@ -303,54 +300,36 @@ function Line({
       )}
       {!readOnly && (
         <div className="viewer--toggle-all">
-          {batchModes.auto && (
-            <label
-              className={`btn ${batchMode === 'auto' ? 'active' : ''}`}
-              htmlFor="auto"
-            >
-              All to auto
-              <input
-                className="sr-only"
-                type="radio"
-                id="auto"
-                value="auto"
-                checked={batchMode === 'auto'}
-                onChange={() => setAllMode('auto')}
-              />
-            </label>
-          )}
-          {batchModes.headway && (
-            <label
-              className={`btn ${batchMode === 'headway' ? 'active' : ''}`}
-              htmlFor="headway"
-            >
-              All to headway
-              <input
-                className="sr-only"
-                type="radio"
-                id="headway"
-                value="headway"
-                checked={batchMode === 'headway'}
-                onChange={() => setAllMode('headway')}
-              />
-            </label>
-          )}
-          {batchModes.off && (
-            <label
-              className={`btn ${batchMode === 'off' ? 'active' : ''}`}
-              htmlFor="off"
-            >
-              All to off
-              <input
-                className="sr-only"
-                type="radio"
-                id="off"
-                value="off"
-                checked={batchMode === 'off'}
-                onChange={() => setAllMode('off')}
-              />
-            </label>
-          )}
+          <label
+            className={`btn ${batchMode === 'auto' ? 'active' : ''}`}
+            htmlFor="auto"
+          >
+            All to auto
+            <input
+              className="sr-only"
+              type="radio"
+              id="auto"
+              value="auto"
+              checked={batchMode === 'auto'}
+              onChange={() => setAllMode('auto')}
+            />
+          </label>
+
+          <label
+            className={`btn ${batchMode === 'off' ? 'active' : ''}`}
+            htmlFor="off"
+          >
+            All to off
+            <input
+              className="sr-only"
+              type="radio"
+              id="off"
+              value="off"
+              checked={batchMode === 'off'}
+              onChange={() => setAllMode('off')}
+            />
+          </label>
+
           {batchMode === 'mixed' && (
             <label
               className={`btn ${batchMode === 'mixed' ? 'active' : ''}`}

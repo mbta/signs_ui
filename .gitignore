@@ -28,7 +28,6 @@ yarn-error.log
 /config/*.secret.exs
 test/mock_write.json
 /priv/config.json
-/priv/stops-config.json
 
 # local direnv configuration
 /.envrc

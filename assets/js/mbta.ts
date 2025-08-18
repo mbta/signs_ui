@@ -94,22 +94,8 @@ const branchConfig: { [key: string]: { id: string; name: string }[] } = {
   ],
 };
 
-const stationConfig: {
-  [key: string]: {
-    batchModes: {
-      auto: boolean;
-      headway: boolean;
-      off: boolean;
-    };
-    stations: StationConfig[];
-  };
-} = {
+const stationConfig: { [key: string]: { stations: StationConfig[] } } = {
   Orange: {
-    batchModes: {
-      auto: true,
-      headway: true,
-      off: true,
-    },
     stations: [
       {
         id: 'OOAK',
@@ -120,7 +106,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -130,7 +115,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -139,7 +123,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -155,7 +138,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -165,7 +147,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -180,7 +161,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -189,7 +169,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -198,7 +177,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: false,
               off: true,
               temporary_terminal: true,
             },
@@ -213,7 +191,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -222,7 +199,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -231,7 +207,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: false,
               off: true,
               temporary_terminal: true,
             },
@@ -246,7 +221,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -255,7 +229,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -264,7 +237,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: false,
               off: true,
               temporary_terminal: true,
             },
@@ -279,7 +251,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -288,7 +259,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -297,7 +267,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: false,
               off: true,
               temporary_terminal: true,
             },
@@ -312,7 +281,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -321,7 +289,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -331,7 +298,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: false,
               off: true,
               temporary_terminal: true,
             },
@@ -341,7 +307,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: false,
               off: true,
               temporary_terminal: true,
             },
@@ -356,7 +321,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -365,7 +329,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -374,7 +337,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: false,
               off: true,
               temporary_terminal: true,
             },
@@ -389,7 +351,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -398,7 +359,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: false,
               off: true,
               temporary_terminal: true,
             },
@@ -413,7 +373,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -428,7 +387,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -443,7 +401,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -458,7 +415,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -468,7 +424,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -483,7 +438,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -493,7 +447,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -508,7 +461,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -517,7 +469,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -526,7 +477,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: false,
               off: true,
               temporary_terminal: true,
             },
@@ -541,7 +491,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -550,7 +499,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -559,7 +507,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: false,
               off: true,
               temporary_terminal: true,
             },
@@ -574,7 +521,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -583,7 +529,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -592,7 +537,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: false,
               off: true,
               temporary_terminal: true,
             },
@@ -607,7 +551,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -616,7 +559,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -625,7 +567,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: false,
               off: true,
               temporary_terminal: true,
             },
@@ -634,7 +575,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: false,
               off: true,
               temporary_terminal: true,
             },
@@ -649,7 +589,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: false,
               off: true,
               temporary_terminal: true,
             },
@@ -664,7 +603,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -673,7 +611,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -682,7 +619,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: false,
               off: true,
               temporary_terminal: true,
             },
@@ -697,7 +633,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -706,7 +641,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -715,7 +649,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: false,
               off: true,
               temporary_terminal: true,
             },
@@ -730,7 +663,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -739,7 +671,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -748,7 +679,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: false,
               off: true,
               temporary_terminal: true,
             },
@@ -763,7 +693,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -772,7 +701,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -781,7 +709,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: false,
               off: true,
               temporary_terminal: true,
             },
@@ -797,7 +724,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -807,7 +733,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -822,7 +747,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -832,11 +756,6 @@ const stationConfig: {
     ],
   },
   Red: {
-    batchModes: {
-      auto: true,
-      headway: true,
-      off: true,
-    },
     stations: [
       {
         id: 'RALE',
@@ -846,7 +765,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -855,7 +773,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -870,7 +787,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -879,7 +795,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -888,7 +803,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: false,
               off: true,
               temporary_terminal: true,
             },
@@ -903,7 +817,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -912,7 +825,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -921,7 +833,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: false,
               off: true,
               temporary_terminal: true,
             },
@@ -936,7 +847,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -945,7 +855,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -954,7 +863,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: false,
               off: true,
               temporary_terminal: true,
             },
@@ -969,7 +877,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -978,7 +885,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -993,7 +899,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -1002,7 +907,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -1017,7 +921,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -1026,7 +929,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -1041,7 +943,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -1050,7 +951,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -1059,7 +959,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: false,
               off: true,
               temporary_terminal: true,
             },
@@ -1074,7 +973,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -1083,7 +981,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -1098,7 +995,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -1107,7 +1003,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -1116,7 +1011,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: false,
               off: true,
               temporary_terminal: true,
             },
@@ -1132,7 +1026,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: false,
               off: true,
               temporary_terminal: true,
             },
@@ -1147,7 +1040,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -1156,7 +1048,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -1165,7 +1056,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: false,
               off: true,
               temporary_terminal: true,
             },
@@ -1180,7 +1070,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -1189,7 +1078,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -1198,7 +1086,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: false,
               off: true,
               temporary_terminal: true,
             },
@@ -1214,7 +1101,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -1224,7 +1110,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -1234,7 +1119,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -1244,7 +1128,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -1253,7 +1136,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: false,
               off: true,
               temporary_terminal: true,
             },
@@ -1268,7 +1150,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -1277,7 +1158,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -1286,7 +1166,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: false,
               off: true,
               temporary_terminal: true,
             },
@@ -1301,7 +1180,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -1310,7 +1188,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -1319,7 +1196,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: false,
               off: true,
               temporary_terminal: true,
             },
@@ -1334,7 +1210,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -1343,7 +1218,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -1352,7 +1226,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: false,
               off: true,
               temporary_terminal: true,
             },
@@ -1367,7 +1240,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -1376,7 +1248,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: false,
               off: true,
               temporary_terminal: true,
             },
@@ -1386,7 +1257,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -1401,7 +1271,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -1410,7 +1279,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -1419,7 +1287,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: false,
               off: true,
               temporary_terminal: true,
             },
@@ -1434,7 +1301,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -1443,7 +1309,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -1452,7 +1317,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: false,
               off: true,
               temporary_terminal: true,
             },
@@ -1467,7 +1331,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -1476,7 +1339,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -1485,7 +1347,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: false,
               off: true,
               temporary_terminal: true,
             },
@@ -1500,7 +1361,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -1509,7 +1369,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -1518,7 +1377,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: false,
               off: true,
               temporary_terminal: true,
             },
@@ -1533,7 +1391,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -1542,7 +1399,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -1552,11 +1408,6 @@ const stationConfig: {
     ],
   },
   Blue: {
-    batchModes: {
-      auto: true,
-      headway: true,
-      off: true,
-    },
     stations: [
       {
         id: 'BWON',
@@ -1566,7 +1417,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -1575,7 +1425,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -1590,7 +1439,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -1599,7 +1447,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -1608,7 +1455,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: false,
               off: true,
               temporary_terminal: true,
             },
@@ -1623,7 +1469,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -1632,7 +1477,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -1647,7 +1491,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -1656,7 +1499,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -1671,7 +1513,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -1680,7 +1521,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -1689,7 +1529,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: false,
               off: true,
               temporary_terminal: true,
             },
@@ -1704,7 +1543,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -1713,7 +1551,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -1722,7 +1559,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: false,
               off: true,
               temporary_terminal: true,
             },
@@ -1737,7 +1573,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -1746,7 +1581,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -1761,7 +1595,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -1770,7 +1603,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -1785,7 +1617,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -1794,7 +1625,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -1803,7 +1633,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: false,
               off: true,
               temporary_terminal: true,
             },
@@ -1818,7 +1647,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -1827,7 +1655,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -1836,7 +1663,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: false,
               off: true,
               temporary_terminal: true,
             },
@@ -1851,7 +1677,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -1860,7 +1685,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -1869,7 +1693,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: false,
               off: true,
               temporary_terminal: true,
             },
@@ -1884,7 +1707,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -1893,7 +1715,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -1903,7 +1724,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -1913,11 +1733,6 @@ const stationConfig: {
     ],
   },
   Mattapan: {
-    batchModes: {
-      auto: true,
-      headway: true,
-      off: true,
-    },
     stations: [
       {
         id: 'MCED',
@@ -1927,7 +1742,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -1936,7 +1750,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -1951,7 +1764,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -1966,7 +1778,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -1975,7 +1786,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -1990,7 +1800,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -1999,7 +1808,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -2014,7 +1822,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -2023,7 +1830,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -2038,7 +1844,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -2048,11 +1853,6 @@ const stationConfig: {
     ],
   },
   Silver: {
-    batchModes: {
-      auto: true,
-      headway: true,
-      off: true,
-    },
     stations: [
       {
         id: 'SSOU',
@@ -2062,7 +1862,6 @@ const stationConfig: {
             modes: {
               auto: false,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: false,
             },
@@ -2077,7 +1876,6 @@ const stationConfig: {
             modes: {
               auto: false,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: false,
             },
@@ -2086,7 +1884,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -2095,7 +1892,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -2110,7 +1906,6 @@ const stationConfig: {
             modes: {
               auto: false,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: false,
             },
@@ -2119,7 +1914,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -2128,7 +1922,6 @@ const stationConfig: {
             modes: {
               auto: false,
               custom: true,
-              headway: false,
               off: true,
               temporary_terminal: false,
             },
@@ -2144,7 +1937,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -2154,7 +1946,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -2170,7 +1961,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -2180,7 +1970,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -2196,7 +1985,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -2206,7 +1994,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -2222,7 +2009,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -2232,11 +2018,6 @@ const stationConfig: {
     ],
   },
   Green: {
-    batchModes: {
-      auto: true,
-      headway: true,
-      off: true,
-    },
     stations: [
       {
         id: 'GCOS',
@@ -2247,7 +2028,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -2257,7 +2037,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -2266,7 +2045,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -2282,7 +2060,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -2292,7 +2069,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -2301,7 +2077,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: false,
               off: true,
               temporary_terminal: true,
             },
@@ -2317,7 +2092,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -2327,7 +2101,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -2336,7 +2109,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: false,
               off: true,
               temporary_terminal: true,
             },
@@ -2352,7 +2124,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -2362,7 +2133,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -2371,7 +2141,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: false,
               off: true,
               temporary_terminal: true,
             },
@@ -2387,7 +2156,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -2397,7 +2165,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -2406,7 +2173,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: false,
               off: true,
               temporary_terminal: true,
             },
@@ -2422,7 +2188,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -2432,7 +2197,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -2441,7 +2205,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -2456,7 +2219,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -2466,7 +2228,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -2475,7 +2236,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: false,
               off: true,
               temporary_terminal: true,
             },
@@ -2490,7 +2250,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -2499,7 +2258,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -2508,7 +2266,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: false,
               off: true,
               temporary_terminal: true,
             },
@@ -2523,7 +2280,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               temporary_terminal: true,
               off: true,
             },
@@ -2532,7 +2288,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               temporary_terminal: true,
               off: true,
             },
@@ -2542,7 +2297,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: false,
               temporary_terminal: true,
               off: true,
             },
@@ -2557,7 +2311,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -2566,7 +2319,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -2581,7 +2333,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -2590,7 +2341,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -2599,7 +2349,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: false,
               off: true,
               temporary_terminal: true,
             },
@@ -2614,7 +2363,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -2624,7 +2372,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -2640,7 +2387,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -2650,7 +2396,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -2665,7 +2410,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -2674,7 +2418,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -2689,7 +2432,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -2698,7 +2440,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -2707,7 +2448,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: false,
               off: true,
               temporary_terminal: true,
             },
@@ -2722,7 +2462,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -2731,7 +2470,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -2746,7 +2484,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -2755,7 +2492,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -2764,7 +2500,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: false,
               off: true,
               temporary_terminal: true,
             },
@@ -2779,7 +2514,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -2788,7 +2522,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -2803,7 +2536,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -2812,7 +2544,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -2821,7 +2552,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: false,
               off: true,
               temporary_terminal: true,
             },
@@ -2837,7 +2567,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -2847,7 +2576,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -2857,7 +2585,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -2867,7 +2594,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -2876,7 +2602,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: false,
               off: true,
               temporary_terminal: true,
             },
@@ -2891,7 +2616,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -2900,7 +2624,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -2915,7 +2638,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -2924,7 +2646,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -2939,7 +2660,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -2948,7 +2668,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -2963,7 +2682,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -2972,7 +2690,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -2987,7 +2704,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -2996,7 +2712,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -3011,7 +2726,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -3020,7 +2734,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -3035,7 +2748,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -3044,7 +2756,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -3059,7 +2770,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -3068,7 +2778,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -3083,7 +2792,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -3092,7 +2800,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -3107,7 +2814,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -3116,7 +2822,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -3131,7 +2836,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -3140,7 +2844,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -3155,7 +2858,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -3164,7 +2866,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -3179,7 +2880,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -3188,7 +2888,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -3203,7 +2902,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -3212,7 +2910,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -3228,7 +2925,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: true,
               off: true,
               temporary_terminal: true,
             },
@@ -3239,7 +2935,6 @@ const stationConfig: {
   },
 
   Busway: {
-    batchModes: { auto: true, headway: false, off: true },
     stations: [
       {
         id: 'SDUD',
@@ -3255,7 +2950,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: false,
               off: true,
               temporary_terminal: true,
             },
@@ -3265,7 +2959,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: false,
               off: true,
               temporary_terminal: true,
             },
@@ -3275,7 +2968,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: false,
               off: true,
               temporary_terminal: true,
             },
@@ -3285,7 +2977,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: false,
               off: true,
               temporary_terminal: true,
             },
@@ -3295,7 +2986,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: false,
               off: true,
               temporary_terminal: true,
             },
@@ -3305,7 +2995,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: false,
               off: true,
               temporary_terminal: true,
             },
@@ -3326,7 +3015,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: false,
               off: true,
               temporary_terminal: true,
             },
@@ -3336,7 +3024,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: false,
               off: true,
               temporary_terminal: true,
             },
@@ -3357,7 +3044,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: false,
               off: true,
               temporary_terminal: true,
             },
@@ -3367,7 +3053,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: false,
               off: true,
               temporary_terminal: true,
             },
@@ -3383,7 +3068,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: false,
               off: true,
               temporary_terminal: true,
             },
@@ -3393,7 +3077,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: false,
               off: true,
               temporary_terminal: true,
             },
@@ -3409,7 +3092,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: false,
               off: true,
               temporary_terminal: true,
             },
@@ -3430,7 +3112,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: false,
               off: true,
               temporary_terminal: true,
             },
@@ -3440,7 +3121,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: false,
               off: true,
               temporary_terminal: true,
             },
@@ -3461,7 +3141,6 @@ const stationConfig: {
             modes: {
               auto: true,
               custom: true,
-              headway: false,
               off: true,
               temporary_terminal: true,
             },

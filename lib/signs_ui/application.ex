@@ -33,7 +33,6 @@ defmodule SignsUi.Application do
   defp set_runtime_config do
     Config.update_env(:aws_signs_bucket, System.get_env("AWS_SIGNS_BUCKET"))
     Config.update_env(:aws_signs_path, System.get_env("AWS_SIGNS_PATH"))
-    Config.update_env(:aws_signs_stops_path, System.get_env("AWS_SIGNS_STOPS_PATH"))
     Config.update_env(:messages_api_keys, System.get_env("MESSAGES_API_KEYS"))
     Config.update_env(:sentry, :dsn, System.get_env("SENTRY_DSN"))
     Config.update_env(:sentry, :environment_name, System.get_env("SENTRY_ENV"))
