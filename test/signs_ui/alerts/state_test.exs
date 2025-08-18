@@ -89,7 +89,7 @@ defmodule SignsUi.Alerts.StateTest do
 
       expected = Display.format_state(new_state)
 
-      assert_broadcast("new_alert_state", expected, 500)
+      assert_broadcast "new_alert_state", ^expected, 500
     end
   end
 end
