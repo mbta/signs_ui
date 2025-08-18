@@ -26,13 +26,6 @@ defmodule SignsUi.Config.SignTest do
       assert from_json("Sign", values) == expected
     end
 
-    test "builds a Sign struct in 'headway' mode from json" do
-      values = %{"mode" => "headway", "expires" => @expires}
-      {:ok, expires_dt, 0} = DateTime.from_iso8601(@expires)
-      expected = %Sign{id: "Sign", config: %{mode: :headway, expires: expires_dt, alert_id: nil}}
-      assert from_json("Sign", values) == expected
-    end
-
     test "builds a Sign struct in 'static text' mode from json" do
       values = %{
         "mode" => "static_text",
@@ -78,22 +71,6 @@ defmodule SignsUi.Config.SignTest do
     test "serializes an Auto sign" do
       sign = %Sign{id: "sign", config: %{mode: :auto}}
       assert to_json(sign) == %{"id" => "sign", "mode" => "auto"}
-    end
-
-    test "serializes a Headway sign" do
-      {:ok, expires_dt, 0} = DateTime.from_iso8601(@expires)
-
-      sign = %Sign{
-        id: "sign",
-        config: %{mode: :headway, expires: expires_dt, alert_id: nil}
-      }
-
-      assert to_json(sign) == %{
-               "id" => "sign",
-               "mode" => "headway",
-               "expires" => @expires,
-               "alert_id" => nil
-             }
     end
 
     test "serializes an Off sign" do

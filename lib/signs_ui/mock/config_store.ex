@@ -4,8 +4,6 @@ defmodule SignsUi.Mock.ConfigStore do
   def write(_) do
   end
 
-  def write_stops(_), do: nil
-
   def read do
     %{
       "signs" => %{

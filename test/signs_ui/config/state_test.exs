@@ -19,7 +19,6 @@ defmodule SignsUi.Config.StateTest do
                configured_headways: _,
                scus_migrated: _,
                sign_groups: _,
-               sign_stops: _,
                signs: _
              } = get_all(signs_server)
     end

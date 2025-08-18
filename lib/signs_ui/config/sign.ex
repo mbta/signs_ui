@@ -1,10 +1,5 @@
 defmodule SignsUi.Config.Sign do
-  @moduledoc """
-  Represents how a given sign on the page can be configured. A sign can be
-  in auto mode (in which case it will show predictions, if available), or
-  headway mode, off, or in static text mode, which allows PIOs to set a
-  custom message.
-  """
+  @moduledoc "Represents how a given sign on the page can be configured."
 
   require Logger
 
@@ -17,12 +12,6 @@ defmodule SignsUi.Config.Sign do
 
   @type auto :: %{
           mode: :auto
-        }
-
-  @type headway :: %{
-          mode: :headway,
-          expires: expires_on() | nil,
-          alert_id: String.t() | nil
         }
 
   @type off :: %{
@@ -41,7 +30,7 @@ defmodule SignsUi.Config.Sign do
 
   @type t :: %__MODULE__{
           id: id(),
-          config: auto() | headway() | off() | static_text()
+          config: auto() | off() | static_text()
         }
 
   @spec enabled?(t()) :: boolean()
@@ -78,17 +67,6 @@ defmodule SignsUi.Config.Sign do
   @spec from_json(String.t(), map()) :: t()
   def from_json(sign_id, %{"mode" => "auto"}) do
     %__MODULE__{id: sign_id, config: %{mode: :auto}}
-  end
-
-  def from_json(sign_id, %{"mode" => "headway"} = config) do
-    %__MODULE__{
-      id: sign_id,
-      config: %{
-        mode: :headway,
-        expires: expiration_from_string(config["expires"]),
-        alert_id: config["alert_id"]
-      }
-    }
   end
 
   def from_json(sign_id, %{"mode" => "off"} = config) do
@@ -142,15 +120,6 @@ defmodule SignsUi.Config.Sign do
     %{
       "id" => sign.id,
       "mode" => "off",
-      "expires" => expiration_to_iso8601(sign.config.expires),
-      "alert_id" => sign.config.alert_id
-    }
-  end
-
-  def to_json(%__MODULE__{config: %{mode: :headway}} = sign) do
-    %{
-      "id" => sign.id,
-      "mode" => "headway",
       "expires" => expiration_to_iso8601(sign.config.expires),
       "alert_id" => sign.config.alert_id
     }

@@ -37,7 +37,6 @@ defmodule SignsUi.Config.Writer do
          configured_headways: configured_headways,
          chelsea_bridge_announcements: chelsea_bridge_announcements,
          sign_groups: sign_groups,
-         sign_stops: sign_stops,
          scus_migrated: scus_migrated
        }) do
     config_store = Application.get_env(:signs_ui, :config_store)
@@ -54,27 +53,5 @@ defmodule SignsUi.Config.Writer do
       pretty: true
     )
     |> config_store.write()
-
-    for {%{stop_id: stop_id, route_id: route_id, direction_id: direction_id}, ids} <- sign_stops do
-      %{
-        stop_id: stop_id,
-        route_id: route_id,
-        direction_id: direction_id,
-        predictions:
-          if Enum.any?(ids, fn id ->
-               case signs[id] do
-                 nil -> false
-                 sign -> sign.config.mode == :headway
-               end
-             end) do
-            "flagged"
-          else
-            "normal"
-          end
-      }
-    end
-    |> then(&%{"stops" => &1})
-    |> Jason.encode!(pretty: true)
-    |> config_store.write_stops()
   end
 end

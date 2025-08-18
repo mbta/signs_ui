@@ -6,12 +6,7 @@ import SignTextInput from './SignTextInput';
 import SetExpiration from './SetExpiration';
 import SignDisplay from './SignDisplay';
 
-type SignModeOptions =
-  | 'auto'
-  | 'headway'
-  | 'off'
-  | 'static_text'
-  | 'temporary_terminal';
+type SignModeOptions = 'auto' | 'off' | 'static_text' | 'temporary_terminal';
 
 function fontSize(signId: string) {
   if (
@@ -38,13 +33,6 @@ function makeConfig(mode: SignModeOptions): SignConfig {
       expires: null,
       line1: '',
       line2: '',
-    };
-  }
-
-  if (mode === 'headway') {
-    return {
-      mode: 'headway',
-      expires: null,
     };
   }
 
@@ -103,7 +91,6 @@ interface SignPanelProps {
   modes: {
     auto: boolean;
     custom: boolean;
-    headway: boolean;
     temporary_terminal: boolean;
     off: boolean;
   };
@@ -124,7 +111,6 @@ function SignPanel({
   modes = {
     auto: true,
     custom: true,
-    headway: true,
     temporary_terminal: true,
     off: true,
   },
@@ -203,7 +189,6 @@ function SignPanel({
                 onChange={handleModeSelect}
               >
                 {modes.auto && <option value="auto">Auto</option>}
-                {modes.headway && <option value="headway">Headways</option>}
                 {modes.custom && <option value="static_text">Custom</option>}
                 {modes.temporary_terminal && (
                   <option value="temporary_terminal">Temporary Terminal</option>

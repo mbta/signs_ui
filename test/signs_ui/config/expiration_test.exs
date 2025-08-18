@@ -65,30 +65,6 @@ defmodule SignsUi.Config.ExpirationTest do
             config: %{mode: :auto},
             id: "250"
           },
-          "460" => %Sign{
-            config: %{
-              alert_id: nil,
-              expires: nil,
-              mode: :headway
-            },
-            id: "460"
-          },
-          "898" => %Sign{
-            config: %{
-              alert_id: "1234",
-              expires: nil,
-              mode: :headway
-            },
-            id: "898"
-          },
-          "925" => %Sign{
-            config: %{
-              alert_id: "326",
-              expires: nil,
-              mode: :headway
-            },
-            id: "925"
-          },
           "793" => %Sign{
             id: "793",
             config: %{
@@ -154,10 +130,6 @@ defmodule SignsUi.Config.ExpirationTest do
         )
 
       expected_signs = %{
-        "925" => %Sign{
-          id: "925",
-          config: %{mode: :auto}
-        },
         "471" => %Sign{
           id: "471",
           config: %{mode: :auto}

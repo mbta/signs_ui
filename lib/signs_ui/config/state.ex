@@ -12,14 +12,11 @@ defmodule SignsUi.Config.State do
   alias SignsUi.Config.Utilities
   alias SignsUi.Signs
 
-  @sl_waterfront_route_ids ["741", "742", "743", "746"]
-
   @type t :: %{
           signs: %{Config.Sign.id() => Config.Sign.t()},
           configured_headways: ConfiguredHeadways.t(),
           chelsea_bridge_announcements: String.t(),
           sign_groups: SignGroups.t(),
-          sign_stops: map(),
           scus_migrated: %{String.t() => boolean()}
         }
 
@@ -86,7 +83,7 @@ defmodule SignsUi.Config.State do
     config_store = Application.get_env(:signs_ui, :config_store)
     response = config_store.read() |> Jason.decode!()
 
-    {sign_stops, scu_ids} = Signs.Config.get() |> parse_signs_config()
+    scu_ids = for %{scu_id: scu_id} <- Signs.Config.get(), uniq: true, do: scu_id
     scu_lookup = Map.get(response, "scus_migrated", %{})
 
     state = %{
@@ -100,7 +97,6 @@ defmodule SignsUi.Config.State do
         |> ConfiguredHeadways.parse_configured_headways_json(),
       chelsea_bridge_announcements: Map.get(response, "chelsea_bridge_announcements", "off"),
       sign_groups: response |> Map.get("sign_groups", %{}) |> SignGroups.from_json(),
-      sign_stops: sign_stops,
       scus_migrated: Map.new(scu_ids, &{&1, Map.get(scu_lookup, &1, false)})
     }
 
@@ -208,73 +204,6 @@ defmodule SignsUi.Config.State do
     )
 
     new_state
-  end
-
-  defp parse_signs_config(signs_json) do
-    sl_sign_stops =
-      for %{id: id, configs: configs} <- signs_json,
-          %{sources: sources} <- configs,
-          %{stop_id: stop_id, route_id: route_id, direction_id: direction_id}
-          when route_id in @sl_waterfront_route_ids <- sources,
-          reduce: %{} do
-        acc ->
-          Map.update(
-            acc,
-            %{stop_id: stop_id, route_id: route_id, direction_id: direction_id},
-            [id],
-            &[id | &1]
-          )
-      end
-
-    subway_sign_stops =
-      for %{id: id, source_config: %{sources: sources}} <- signs_json,
-          %{stop_id: stop_id, routes: routes, direction_id: direction_id} <- sources,
-          route_id <- routes,
-          reduce: sl_sign_stops do
-        acc ->
-          Map.update(
-            acc,
-            %{stop_id: stop_id, route_id: route_id, direction_id: direction_id},
-            [id],
-            &[id | &1]
-          )
-      end
-
-    include_all_bidirectional_signs =
-      for %{id: id, source_config: [_ | _] = source_config} <- signs_json,
-          %{sources: sources} <- source_config,
-          %{stop_id: stop_id, routes: routes, direction_id: direction_id} <- sources,
-          route_id <- routes,
-          reduce: subway_sign_stops do
-        acc ->
-          Map.update(
-            acc,
-            %{stop_id: stop_id, route_id: route_id, direction_id: direction_id},
-            [id],
-            &[id | &1]
-          )
-      end
-
-    singular_bidirectionals =
-      Enum.group_by(
-        include_all_bidirectional_signs,
-        fn {stop, signs} -> {stop.route_id, signs} end,
-        &elem(&1, 0)
-      )
-      |> Enum.filter(fn {_, stops} ->
-        Enum.uniq_by(stops, & &1.direction_id) |> length() > 1
-      end)
-      |> Enum.reduce(%{}, fn {{_, signs}, stops}, acc ->
-        Enum.into(stops, acc, fn stop -> {stop, signs} end)
-      end)
-
-    scu_ids =
-      for %{scu_id: scu_id} <- signs_json,
-          uniq: true do
-        scu_id
-      end
-
-    {Map.merge(subway_sign_stops, singular_bidirectionals), scu_ids}
   end
 
   defp schedule_clean(pid, ms) do

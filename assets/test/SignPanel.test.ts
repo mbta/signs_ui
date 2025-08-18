@@ -56,7 +56,6 @@ function customModeSignProps(): SignPanelProps {
     modes: {
       auto: true,
       custom: true,
-      headway: true,
       off: true,
       temporary_terminal: true,
     },
@@ -79,7 +78,6 @@ function customModeSignPropsWithStaticContent(): SignPanelProps {
     modes: {
       auto: true,
       custom: true,
-      headway: true,
       off: true,
       temporary_terminal: true,
     },
@@ -131,7 +129,6 @@ test('does not show messages that have expired', () => {
   const modes = {
     auto: true,
     custom: true,
-    headway: true,
     off: true,
     temporary_terminal: true,
   };
@@ -182,7 +179,6 @@ test('does not show select in read-only mode', () => {
   const modes = {
     auto: true,
     custom: true,
-    headway: true,
     off: true,
     temporary_terminal: true,
   };
@@ -226,7 +222,6 @@ test('shows the mode the sign is in in read-only mode', () => {
   const modes = {
     auto: true,
     off: true,
-    headway: true,
     custom: true,
     temporary_terminal: true,
   };
@@ -268,7 +263,6 @@ test('does show select when not in read-only mode', () => {
   const modes = {
     auto: true,
     custom: true,
-    headway: true,
     off: true,
     temporary_terminal: true,
   };
@@ -301,17 +295,6 @@ test.each([
     {
       auto: true,
       static_text: false,
-      headway: false,
-      off: false,
-      temporary_terminal: false,
-    },
-  ],
-  [
-    { auto: true, headway: true },
-    {
-      auto: true,
-      static_text: false,
-      headway: true,
       off: false,
       temporary_terminal: false,
     },
@@ -321,7 +304,6 @@ test.each([
     {
       auto: false,
       static_text: true,
-      headway: false,
       off: false,
       temporary_terminal: false,
     },
@@ -331,7 +313,6 @@ test.each([
     {
       auto: false,
       static_text: false,
-      headway: false,
       off: true,
       temporary_terminal: false,
     },
@@ -343,7 +324,6 @@ test.each([
     expected: {
       auto: boolean;
       static_text: boolean;
-      headway: boolean;
       off: boolean;
       temporary_terminal: boolean;
     },
@@ -360,7 +340,6 @@ test.each([
     const readOnly = false;
     const modes: ZoneConfig['modes'] = {
       auto: false,
-      headway: false,
       custom: false,
       off: false,
       temporary_terminal: false,
@@ -475,7 +454,6 @@ test('shows the return to auto time field if sign can be set to auto', () => {
   const modes = {
     auto: true,
     custom: true,
-    headway: true,
     off: true,
     temporary_terminal: true,
   };
@@ -502,7 +480,7 @@ test('shows the return to auto time field if sign can be set to auto', () => {
   expect(screen.getByText('Schedule return to "Auto"')).toBeInTheDocument();
 });
 
-test('does not show the return to auto time field if sign can be set to auto', () => {
+test('does not show the return to auto time field if sign cannot be set to auto', () => {
   const now = new Date('2019-01-15T20:15:00Z').valueOf();
   const fresh = new Date(now + 5000).toLocaleString();
   const currentTime = now + 2000;
@@ -516,7 +494,6 @@ test('does not show the return to auto time field if sign can be set to auto', (
   const modes = {
     auto: false,
     custom: false,
-    headway: false,
     off: true,
     temporary_terminal: true,
   };
@@ -557,7 +534,6 @@ test('shows clock even when no other content is present', () => {
   const modes = {
     auto: true,
     custom: true,
-    headway: true,
     off: true,
     temporary_terminal: true,
   };
@@ -677,7 +653,6 @@ test('does not save changes to backend until Apply is pressed', async () => {
       modes: {
         auto: true,
         custom: true,
-        headway: true,
         off: true,
         temporary_terminal: true,
       },
@@ -736,7 +711,6 @@ test("allows setting custom text for signs with no 'Auto' mode", async () => {
       modes: {
         auto: false,
         custom: true,
-        headway: false,
         off: true,
         temporary_terminal: false,
       },
