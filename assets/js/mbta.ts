@@ -1860,7 +1860,7 @@ const stationConfig: { [key: string]: { stations: StationConfig[] } } = {
         zones: {
           e: {
             modes: {
-              auto: false,
+              auto: true,
               custom: true,
               off: true,
               temporary_terminal: false,
@@ -1874,7 +1874,7 @@ const stationConfig: { [key: string]: { stations: StationConfig[] } } = {
         zones: {
           e: {
             modes: {
-              auto: false,
+              auto: true,
               custom: true,
               off: true,
               temporary_terminal: false,
@@ -1904,7 +1904,7 @@ const stationConfig: { [key: string]: { stations: StationConfig[] } } = {
         zones: {
           e: {
             modes: {
-              auto: false,
+              auto: true,
               custom: true,
               off: true,
               temporary_terminal: false,
@@ -1920,7 +1920,7 @@ const stationConfig: { [key: string]: { stations: StationConfig[] } } = {
           },
           m: {
             modes: {
-              auto: false,
+              auto: true,
               custom: true,
               off: true,
               temporary_terminal: false,
