@@ -16,6 +16,7 @@ interface SignTextProps {
   line1: string;
   line2: string;
   announcement?: boolean;
+  short?: boolean;
 }
 
 function SignText({
@@ -23,9 +24,11 @@ function SignText({
   line1,
   line2,
   announcement,
+  short,
 }: SignTextProps): JSX.Element | null {
   return (
     <div className="sign_text--container">
+      {short && !announcement && <span className="sign_text--divider" />}
       <div className={cx('sign_text--line', { centered: !!announcement })}>
         {announcement ? line1 : padToClock(line1, time)}
       </div>

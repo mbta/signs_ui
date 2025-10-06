@@ -6,6 +6,7 @@ import { lineDisplayText } from './helpers';
 interface SignDisplayProps {
   content: SingleSignContent;
   currentTime: number;
+  short?: boolean;
 }
 
 type VisualEvent = {
@@ -13,7 +14,7 @@ type VisualEvent = {
   value: { top: string; bottom: string; duration: number } | null;
 };
 
-function SignDisplay({ currentTime, content }: SignDisplayProps) {
+function SignDisplay({ currentTime, content, short }: SignDisplayProps) {
   const [initialTime] = React.useState(currentTime);
 
   const sequenceAudio = (audio: Audio, startTimestamp: number) => {
@@ -58,6 +59,7 @@ function SignDisplay({ currentTime, content }: SignDisplayProps) {
       line2={line2}
       time={currentTime}
       announcement={!!currentPage}
+      short={short}
     />
   );
 }
