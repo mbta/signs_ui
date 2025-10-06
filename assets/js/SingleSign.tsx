@@ -54,6 +54,7 @@ function SingleSign({ signContent }: SingleSignProps): JSX.Element {
       <SignDisplay
         content={currentSignContent}
         currentTime={currentTime + serverTimeOffset}
+        short={signContent.sign_id.startsWith('SCOU-')}
       />
     </div>
   );

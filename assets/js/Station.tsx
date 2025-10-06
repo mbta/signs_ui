@@ -71,6 +71,7 @@ function makeSign(
         signGroup={signGroup}
         ungroupSign={ungroupMe}
         readOnly={readOnly}
+        short={config.id === 'SCOU'}
       />
     );
   }

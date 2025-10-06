@@ -103,6 +103,7 @@ interface SignPanelProps {
   signGroup?: SignGroup;
   ungroupSign?: () => void;
   readOnly: boolean;
+  short?: boolean;
 }
 
 function SignPanel({
@@ -123,6 +124,7 @@ function SignPanel({
   signGroup,
   ungroupSign,
   readOnly,
+  short,
 }: SignPanelProps): JSX.Element {
   const [signConfig, setSignConfig] = React.useState(initialSignConfig);
   const [hasCustomChanges, setHasCustomChanges] = React.useState(false);
@@ -199,7 +201,11 @@ function SignPanel({
           )}
         </div>
         <div className="viewer--sign_text">
-          <SignDisplay content={signContent} currentTime={currentTime} />
+          <SignDisplay
+            content={signContent}
+            currentTime={currentTime}
+            short={short}
+          />
         </div>
       </div>
 

@@ -1,6 +1,7 @@
 .sign_text--container {
   background-color: rgb(45, 45, 45);
   padding-left: 0.5em;
+  position: relative;
 }
 
 .sign_text--line {
@@ -14,4 +15,11 @@
 
 .sign_text--line.centered {
   text-align: center;
+}
+
+.sign_text--divider {
+  position: absolute;
+  left: 186px;
+  height: 100%;
+  border-left: 1px dashed rgb(206, 206, 206);
 }
