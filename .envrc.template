@@ -6,3 +6,6 @@ export API_V3_ORIGIN=https://api-dev-green.mbtace.com
 # Access key for allowing updates from external applications, e.g. realtime_signs. Optional.
 # Uncomment to allow connections using the specified key.
 #export MESSAGES_API_KEYS=realtime_signs:a6975e41192b888c
+
+# Secret key for Phoenix. Required.
+export SECRET_KEY_BASE=BeBbcXbnLkr+WNuywdr1SIdPzwx1yUZhdWOdCIFT0NQNL1CrzvtzHqzTvhWKBLMC

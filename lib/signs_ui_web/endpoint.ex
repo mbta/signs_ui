@@ -53,27 +53,4 @@ defmodule SignsUiWeb.Endpoint do
   )
 
   plug(SignsUiWeb.Router)
-
-  @doc """
-  Callback invoked for dynamically configuring the endpoint.
-
-  It receives the endpoint configuration and checks if
-  configuration should be loaded from the system environment.
-  """
-  def init(_key, config) do
-    if config[:load_from_system_env] do
-      port = System.get_env("PORT") || raise "expected the PORT environment variable to be set"
-
-      signs_ui_host =
-        System.get_env("SIGNS_UI_HOST") ||
-          raise "expected the SIGNS_UI_HOST environment variable to be set"
-
-      {:ok,
-       config
-       |> Keyword.put(:http, [:inet6, port: port])
-       |> put_in([:url, :host], signs_ui_host)}
-    else
-      {:ok, config}
-    end
-  end
 end
