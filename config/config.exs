@@ -46,7 +46,6 @@ config :phoenix, :json_library, Jason
 config :sentry,
   enable_source_code_context: true,
   root_source_code_paths: [File.cwd!()],
-  included_environments: ~w(dev prod),
   in_app_module_allow_list: [SignsUi, SignsUiWeb]
 
 config :elixir, :time_zone_database, Tzdata.TimeZoneDatabase

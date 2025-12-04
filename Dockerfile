@@ -30,7 +30,7 @@ WORKDIR /root
 # add frontend assets compiled in node container, required by phx.digest
 COPY --from=assets-builder /root/priv/static ./priv/static
 
-RUN mix do compile --force, phx.digest, release
+RUN mix do compile --force, phx.digest, sentry.package_source_code, release
 
 # the one the elixir image was built with
 FROM hexpm/erlang:27.3.4-debian-bookworm-20250520-slim
