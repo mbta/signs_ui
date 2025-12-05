@@ -14,7 +14,7 @@ defmodule SignsUiWeb.Endpoint do
     at: "/",
     from: :signs_ui,
     gzip: false,
-    only: ~w(css fonts images js favicon.ico robots.txt vendor)
+    only: SignsUiWeb.static_paths()
   )
 
   # Code reloading can be explicitly enabled under the
