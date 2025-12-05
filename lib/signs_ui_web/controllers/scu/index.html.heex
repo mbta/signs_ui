@@ -21,10 +21,10 @@
           <td>
             <%= if !assigns[:read_only_view] do %>
               <% new_text = if(migrated, do: "legacy", else: "new") %>
-              <form action="" method="post" data-scu-form data-prompt="Change <%= scu_id %> to <%= new_text %> application?">
-                <input type="hidden" name="_csrf_token" value="<%= Phoenix.Controller.get_csrf_token() %>" />
-                <input type="hidden" name="scu_id" value="<%= scu_id %>" />
-                <button class="btn btn-sm btn-outline-secondary" name="migrated" value="<%= if migrated do %>false<% else %>true<% end %>">
+              <form action="" method="post" data-scu-form data-prompt={"Change #{scu_id} to #{new_text} application?"}>
+                <input type="hidden" name="_csrf_token" value={get_csrf_token()} />
+                <input type="hidden" name="scu_id" value={scu_id} />
+                <button class="btn btn-sm btn-outline-secondary" name="migrated" value={to_string(!migrated)}>
                   Change to <%= new_text %> application
                 </button>
               </form>
