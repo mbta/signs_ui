@@ -35,7 +35,9 @@ defmodule SignsUiWeb.MessagesController do
     sign_groups = config |> Map.fetch!(:sign_groups) |> SignGroups.by_route()
     sign_out_path = SignsUiWeb.Router.Helpers.auth_path(conn, :logout, "keycloak")
 
-    render(conn, "index.html",
+    conn
+    |> put_layout(html: {SignsUiWeb.Layouts, :app})
+    |> render(
       alerts: alerts,
       signs: signs,
       sign_configs: sign_configs,

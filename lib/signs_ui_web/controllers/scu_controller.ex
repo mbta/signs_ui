@@ -6,7 +6,9 @@ defmodule SignsUiWeb.ScuController do
       SignsUi.Config.State.get_all().scus_migrated
       |> Enum.sort_by(&elem(&1, 0))
 
-    render(conn, "index.html", layout: {SignsUiWeb.LayoutView, "scu.html"}, scus: scus)
+    conn
+    |> put_layout(html: {SignsUiWeb.Layouts, :scu})
+    |> render(scus: scus)
   end
 
   def update(conn, %{"migrated" => migrated, "scu_id" => scu_id}) do

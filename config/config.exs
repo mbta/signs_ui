@@ -5,7 +5,7 @@ config :signs_ui, SignsUiWeb.Endpoint,
   url: [host: "localhost"],
   http: [port: 4000],
   secret_key_base: "local_secret_key_base_at_least_64_bytes_________________________________",
-  render_errors: [view: SignsUiWeb.ErrorView, accepts: ~w(html json)],
+  render_errors: [formats: [html: SignsUiWeb.ErrorHTML], layout: false],
   pubsub_server: SignsUi.PubSub,
   server: true
 

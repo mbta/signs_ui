@@ -16,6 +16,7 @@ defmodule SignsUiWeb.SingleSignController do
       policy <>
         " frame-ancestors #{:signs_ui |> Application.get_env(SignsUiWeb.Endpoint) |> Keyword.get(:screenplay_base_url)};"
     )
-    |> render("single_sign.html", layout: {SignsUiWeb.LayoutView, "single_sign.html"}, sign: sign)
+    |> put_layout(html: {SignsUiWeb.Layouts, :single_sign})
+    |> render(sign: sign)
   end
 end

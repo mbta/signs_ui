@@ -7,6 +7,6 @@ defmodule SignsUiWeb.UnauthorizedController do
 
     conn
     |> put_status(403)
-    |> render("index.html", sign_out_path: sign_out_path)
+    |> render(sign_out_path: sign_out_path)
   end
 end
