@@ -44,7 +44,7 @@ defmodule SignsUi.Mixfile do
       {:dialyxir, "~> 1.4.4", only: [:dev, :test], runtime: false},
       {:ex_aws_s3, "~> 2.0"},
       {:ex_aws, "~> 2.0"},
-      {:gettext, "~> 0.11"},
+      {:gettext, "~> 1.0"},
       {:gen_stage, "~> 1.0"},
       {:castore, "~> 1.0"},
       {:guardian_phoenix, "~> 2.0"},
