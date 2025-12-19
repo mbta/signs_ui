@@ -1,5 +1,3 @@
-/* eslint-disable camelcase */
-
 type Zone = 'n' | 'e' | 's' | 'w' | 'c' | 'm';
 
 type ZoneConfig = {

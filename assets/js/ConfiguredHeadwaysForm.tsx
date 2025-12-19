@@ -7,9 +7,6 @@ import { faEdit, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { timePeriodConfig } from './mbta';
 import { ConfiguredHeadways } from './types';
 
-/* eslint-disable camelcase */
-/* eslint-disable react/jsx-props-no-spreading */
-
 type Inputs = {
   branches: {
     id: string;
@@ -93,7 +90,7 @@ function ConfiguredHeadwaysForm({
   const isEnabled = React.useMemo(
     () => branches.some((branch) => !!configuredHeadways[branch.id]),
     [branches, configuredHeadways],
-  ); // eslint-disable-line max-len
+  );
 
   const [inEditMode, setInEditMode] = React.useState(!isEnabled);
 

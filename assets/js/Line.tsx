@@ -17,8 +17,6 @@ import {
 } from './types';
 import { arincToRealtimeId } from './helpers';
 
-/* eslint-disable camelcase */
-
 function name(line: string) {
   if (line === 'Red') {
     return 'Red Line';

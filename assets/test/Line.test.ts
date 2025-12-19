@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { render, screen, within, act } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import userEvent, { UserEvent } from '@testing-library/user-event';
 
 import Line from '../js/Line';
 import {
@@ -10,7 +10,6 @@ import {
   SignContent,
   StationConfig,
 } from '../js/types';
-import { UserEvent } from '@testing-library/user-event/dist/types/setup/setup';
 
 async function setAllToAuto(user: UserEvent) {
   await user.click(screen.getByText('All to auto'));

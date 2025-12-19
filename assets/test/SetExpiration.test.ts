@@ -4,8 +4,6 @@ import SetExpiration from '../js/SetExpiration';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-
 test('Can set the expiration time', async () => {
   const user = userEvent.setup();
   const dates: (Date | null)[] = [];
@@ -66,7 +64,7 @@ test('Can clear the expiration time', async () => {
   expect(dates[0]).toBe(null);
 });
 
-test('Deselecting return to auto clears the expiration ', async () => {
+test('Deselecting return to auto clears the expiration', async () => {
   const user = userEvent.setup();
   const dates: (Date | null)[] = [];
   const alerts: (string | null)[] = [];

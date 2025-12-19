@@ -2,7 +2,7 @@ import * as React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import SignPanel, { SignModeOptions, SignPanelProps } from '../js/SignPanel';
+import SignPanel, { SignPanelProps } from '../js/SignPanel';
 import {
   ZoneConfig,
   SignConfig,
@@ -371,12 +371,8 @@ test.each([
       .getAllByRole('option')
       .map((option) => option.getAttribute('value'));
 
-    (Object.keys(expected) as Array<SignModeOptions>).forEach((mode) => {
-      if (expected[mode] && expected[mode] === true) {
-        expect(options.includes(mode)).toBeTruthy();
-      } else {
-        expect(options.includes(mode)).toBeFalsy();
-      }
+    Object.entries(expected).forEach(([mode, present]) => {
+      expect(options.includes(mode)).toEqual(present);
     });
   },
 );

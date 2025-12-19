@@ -5,9 +5,6 @@ import ConfiguredHeadwaysForm, {
   ConfiguredHeadwaysFormProps,
 } from '../js/ConfiguredHeadwaysForm';
 
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-/* eslint-disable camelcase */
-
 let branches: ConfiguredHeadwaysFormProps['branches'];
 let timePeriods: ConfiguredHeadwaysFormProps['timePeriods'];
 let readOnly: ConfiguredHeadwaysFormProps['readOnly'];
