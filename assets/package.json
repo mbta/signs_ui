@@ -25,8 +25,8 @@
     "lint:check": "eslint",
     "typecheck": "tsc --noEmit",
     "check": "npm run typecheck && npm run lint:check && npm run format:check",
-    "format": "prettier --write \"{.,**}/*.{js,json,ts,tsx,css,scss}\"",
-    "format:check": "prettier --check \"{.,**}/*.{js,json,ts,tsx,css,scss}\"",
+    "format": "prettier --write --list-different .",
+    "format:check": "prettier --check .",
     "start": "npm run watch",
     "test": "node scripts/tester.js",
     "watch": "webpack --mode development --watch"

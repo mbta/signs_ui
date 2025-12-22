@@ -7,7 +7,7 @@ module.exports = function (env) {
     entry: {
       app: './js/app.ts',
       single_sign: './js/SingleSignApp.tsx',
-      scu: './js/scu.ts'
+      scu: './js/scu.ts',
     },
     output: {
       path: path.resolve(__dirname, '../priv/static/js'),
