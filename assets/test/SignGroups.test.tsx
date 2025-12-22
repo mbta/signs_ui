@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { render, screen, within } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import userEvent, { UserEvent } from '@testing-library/user-event';
 import SignGroups from '../js/SignGroups';
 import { RouteSignGroupsWithDeletions } from '../js/types';
-import { UserEvent } from '@testing-library/user-event/dist/types/setup/setup';
 
 async function openNewGroupForm(user: UserEvent) {
   await user.click(screen.getByRole('button', { name: 'Create' }));
@@ -93,7 +92,7 @@ beforeAll(() => {
 
 test('can create a sign group', async () => {
   const user = userEvent.setup();
-  let signGroupSubmissions: Array<SignGroupUpdate> = [];
+  const signGroupSubmissions: Array<SignGroupUpdate> = [];
   const line = 'Red';
   const currentTime = 1622149913;
 
@@ -140,7 +139,7 @@ test('can create a sign group', async () => {
 
 test('can cancel creating a sign group', async () => {
   const user = userEvent.setup();
-  let signGroupSubmissions: Array<SignGroupUpdate> = [];
+  const signGroupSubmissions: Array<SignGroupUpdate> = [];
 
   render(
     React.createElement(SignGroups, {
@@ -173,7 +172,7 @@ test('requires selecting at least one sign', async () => {
       currentTime: 1622149913,
       alerts: {},
       signGroups: {},
-      setSignGroups: (line, signGroups) => {},
+      setSignGroups: () => {},
       readOnly: false,
     }),
   );
@@ -188,7 +187,7 @@ test('requires selecting at least one sign', async () => {
 
 test('can edit an existing sign group', async () => {
   const user = userEvent.setup();
-  let signGroupSubmissions: Array<SignGroupUpdate> = [];
+  const signGroupSubmissions: Array<SignGroupUpdate> = [];
   const line = 'Blue';
   const groupKey = '1622149900';
 

@@ -12,8 +12,6 @@ import {
 } from './types';
 import { defaultZoneLabel, arincToRealtimeId } from './helpers';
 
-/* eslint-disable camelcase */
-
 function zoneDescription(stationConfig: StationConfig, zone: Zone) {
   const zoneConfig = stationConfig.zones[zone];
 
