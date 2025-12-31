@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { render, waitFor, screen, act } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import ConfiguredHeadwaysForm, {
   ConfiguredHeadwaysFormProps,
@@ -45,7 +45,7 @@ function renderWrapper() {
 describe('With Multi-sign Headway not enabled', () => {
   test('Can enable multi-sign headways when form is complete', async () => {
     const user = userEvent.setup();
-    const { container } = render(
+    render(
       React.createElement(ConfiguredHeadwaysForm, {
         branches,
         readOnly,
@@ -55,72 +55,27 @@ describe('With Multi-sign Headway not enabled', () => {
       }),
     );
 
-    await act(async () => {
-      await user.type(
-        container.querySelector(
-          'input[name="branches.[0].morning.range_low"]',
-        )!,
-        '2',
-      );
-      await user.type(
-        container.querySelector(
-          'input[name="branches.[0].morning.range_high"]',
-        )!,
-        '5',
-      );
-      await user.type(
-        container.querySelector(
-          'input[name="branches.[0].evening.range_low"]',
-        )!,
-        '2',
-      );
-      await user.type(
-        container.querySelector(
-          'input[name="branches.[0].evening.range_high"]',
-        )!,
-        '5',
-      );
-      await user.type(
-        container.querySelector(
-          'input[name="branches.[1].morning.range_low"]',
-        )!,
-        '5',
-      );
-      await user.type(
-        container.querySelector(
-          'input[name="branches.[1].morning.range_high"]',
-        )!,
-        '10',
-      );
-      await user.type(
-        container.querySelector(
-          'input[name="branches.[1].evening.range_low"]',
-        )!,
-        '5',
-      );
+    await user.click(screen.getByRole('button', { name: 'edit' }));
+    await user.type(screen.getByLabelText('Branch 1 Morning low'), '2');
+    await user.type(screen.getByLabelText('Branch 1 Morning high'), '5');
+    await user.type(screen.getByLabelText('Branch 1 Evening low'), '2');
+    await user.type(screen.getByLabelText('Branch 1 Evening high'), '5');
+    await user.type(screen.getByLabelText('Branch Morning low'), '5');
+    await user.type(screen.getByLabelText('Branch Morning high'), '10');
+    await user.type(screen.getByLabelText('Branch Evening low'), '5');
+    await user.type(screen.getByLabelText('Branch Evening high'), '10');
 
-      await user.type(
-        container.querySelector(
-          'input[name="branches.[1].evening.range_high"]',
-        )!,
-        '10',
-      );
+    await user.click(screen.getByRole('button', { name: 'Apply' }));
 
-      await user.tab();
-      await user.click(screen.getByRole('button', { name: 'Apply' }));
-    });
-
-    await waitFor(() => {
-      expect(setConfiguredHeadways).toHaveBeenCalledWith({
-        branch_1: {
-          morning: { range_low: 2, range_high: 5 },
-          evening: { range_low: 2, range_high: 5 },
-        },
-        branch_2: {
-          morning: { range_low: 5, range_high: 10 },
-          evening: { range_low: 5, range_high: 10 },
-        },
-      });
+    expect(setConfiguredHeadways).toHaveBeenCalledWith({
+      branch_1: {
+        morning: { range_low: 2, range_high: 5 },
+        evening: { range_low: 2, range_high: 5 },
+      },
+      branch_2: {
+        morning: { range_low: 5, range_high: 10 },
+        evening: { range_low: 5, range_high: 10 },
+      },
     });
   });
 });
@@ -152,16 +107,12 @@ describe('With Multi-sign Headway enabled', () => {
   });
 
   test('Form is initially open', async () => {
-    await act(async () => {
-      renderWrapper();
-    });
+    renderWrapper();
     expect(screen.getByRole('form')).toBeVisible();
   });
 
   test('Inputs are initially disabled', async () => {
-    await act(async () => {
-      renderWrapper();
-    });
+    renderWrapper();
 
     const inputs = screen.queryAllByRole('input');
     inputs.forEach((input) => {
@@ -172,9 +123,7 @@ describe('With Multi-sign Headway enabled', () => {
   test('Clicking button enables inputs', async () => {
     const user = userEvent.setup();
     renderWrapper();
-    await act(async () => {
-      await user.click(screen.getByRole('button', { name: 'edit' }));
-    });
+    await user.click(screen.getByRole('button', { name: 'edit' }));
 
     const inputs = screen.queryAllByRole('input');
     inputs.forEach((input) => {
@@ -194,26 +143,14 @@ describe('With Multi-sign Headway enabled', () => {
       }),
     );
 
-    await act(async () => {
-      await user.click(screen.getByRole('button', { name: 'edit' }));
-      await waitFor(() => {
-        expect(container.querySelector('input[disabled]')).toEqual(null);
-      });
+    await user.click(screen.getByRole('button', { name: 'edit' }));
+    expect(container.querySelector('input[disabled]')).toEqual(null);
 
-      await user.clear(
-        container.querySelector(
-          'input[name="branches.[0].morning.range_high"]',
-        )!,
-      );
-      await user.type(
-        container.querySelector(
-          'input[name="branches.[0].morning.range_high"]',
-        )!,
-        '8',
-      );
+    const input = screen.getByLabelText('Branch 1 Morning high');
+    await user.clear(input);
+    await user.type(input, '8');
 
-      await user.click(screen.getByRole('button', { name: 'Apply' }));
-    });
+    await user.click(screen.getByRole('button', { name: 'Apply' }));
 
     expect(setConfiguredHeadways).toHaveBeenCalledWith({
       branch_1: {
@@ -241,34 +178,17 @@ describe('With Multi-sign Headway enabled', () => {
       }),
     );
 
-    await act(async () => {
-      await user.click(screen.getByRole('button', { name: 'edit' }));
-      await waitFor(() => {
-        expect(container.querySelector('input[disabled]')).toEqual(null);
-      });
+    await user.click(screen.getByRole('button', { name: 'edit' }));
+    expect(container.querySelector('input[disabled]')).toEqual(null);
 
-      await user.type(
-        container.querySelector(
-          'input[name="branches.[0].morning.range_high"]',
-        )!,
-        '8',
-      );
+    await user.type(screen.getByLabelText('Branch 1 Morning high'), '8');
 
-      expect(
-        await screen.findByRole('button', { name: 'Apply' }),
-      ).not.toBeDisabled();
+    expect(
+      await screen.findByRole('button', { name: 'Apply' }),
+    ).not.toBeDisabled();
 
-      await user.click(screen.getByRole('button', { name: 'cancel' }));
-    });
-    await waitFor(() => {
-      expect(
-        (
-          container.querySelector(
-            'input[name="branches.[0].morning.range_high"]',
-          ) as HTMLInputElement
-        ).value,
-      ).toEqual('3');
-    });
+    await user.click(screen.getByRole('button', { name: 'cancel' }));
+    expect(screen.getByLabelText('Branch 1 Morning high')).toHaveValue(3);
     expect(await screen.findByRole('button', { name: 'edit' })).toBeDefined();
     expect(await screen.findByRole('button', { name: 'Apply' })).toBeDisabled();
   });
@@ -285,31 +205,16 @@ describe('With Multi-sign Headway enabled', () => {
       }),
     );
 
-    await act(async () => {
-      await user.click(screen.getByRole('button', { name: 'edit' }));
-      await waitFor(() => {
-        expect(container.querySelector('input[disabled]')).toEqual(null);
-      });
+    await user.click(screen.getByRole('button', { name: 'edit' }));
+    expect(container.querySelector('input[disabled]')).toEqual(null);
 
-      await user.type(
-        container.querySelector(
-          'input[name="branches.[0].morning.range_high"]',
-        )!,
-        '8',
-      );
+    await user.type(screen.getByLabelText('Branch 1 Morning high'), '8');
 
-      expect(
-        screen.queryByText('Error: All headway ranges must be valid.'),
-      ).toBeNull();
+    expect(
+      screen.queryByText('Error: All headway ranges must be valid.'),
+    ).toBeNull();
 
-      await user.type(
-        container.querySelector(
-          'input[name="branches.[0].morning.range_low"]',
-        )!,
-        '10',
-      );
-      await user.tab();
-    });
+    await user.type(screen.getByLabelText('Branch 1 Morning low'), '10');
 
     expect(
       screen.getByText('Error: All headway ranges must be valid.'),
