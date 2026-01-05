@@ -176,7 +176,7 @@ function ConfiguredHeadwaysForm({
             className="mr-2"
             id="apply"
             type="submit"
-            disabled={!isDirty || !isValid || !inEditMode}
+            disabled={!(isDirty && isValid && inEditMode)}
           >
             Apply
           </button>
