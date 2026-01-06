@@ -18,7 +18,7 @@ function SignTextInput({
   line2,
   onValidLine1Change,
   onValidLine2Change,
-}: SignTextInputProps): JSX.Element | null {
+}: SignTextInputProps) {
   const [showTipText, setShowTipText] = React.useState(false);
 
   const handleInput = (

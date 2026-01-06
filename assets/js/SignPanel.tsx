@@ -125,7 +125,7 @@ function SignPanel({
   ungroupSign,
   readOnly,
   short,
-}: SignPanelProps): JSX.Element {
+}: SignPanelProps) {
   const [signConfig, setSignConfig] = React.useState(initialSignConfig);
   const [hasCustomChanges, setHasCustomChanges] = React.useState(false);
   const [confirmingUngroup, setConfirmingUngroup] = React.useState(false);

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import * as Sentry from '@sentry/react';
 
 import '../css/app.css';
@@ -65,5 +65,5 @@ if (realtimeRoot) {
     },
     null,
   );
-  ReactDOM.render(viewerApp, realtimeRoot);
+  createRoot(realtimeRoot).render(viewerApp);
 }

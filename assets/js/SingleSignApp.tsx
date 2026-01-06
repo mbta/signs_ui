@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { SingleSignContent } from './types';
 import SingleSign from './SingleSign';
 
@@ -14,4 +14,6 @@ const { signContent } = window;
 const signText = React.createElement(SingleSign, {
   signContent,
 });
-ReactDOM.render(signText, root);
+if (root) {
+  createRoot(root).render(signText);
+}

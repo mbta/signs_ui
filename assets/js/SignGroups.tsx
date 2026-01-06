@@ -52,7 +52,7 @@ function ZoneSelector({
   selectedSigns,
   onSignChange,
   kind,
-}: ZoneSelectorProps): JSX.Element | null {
+}: ZoneSelectorProps) {
   const zoneConfig = config.zones[zone];
 
   if (
@@ -110,7 +110,7 @@ function SignGroupsForm({
   initialSignGroup,
   onApply,
   onCancel,
-}: SignGroupsFormProps): JSX.Element | null {
+}: SignGroupsFormProps) {
   const signIdsInOtherGroups = React.useMemo(() => {
     const signIds = new Set();
     Object.entries(signGroups).forEach(([key, signGroup]) => {
@@ -159,7 +159,7 @@ function SignGroupsForm({
   );
 
   const onSubmit = React.useCallback(
-    (event) => {
+    (event: React.FormEvent) => {
       event.preventDefault();
       onApply(signGroupKey, signGroup);
     },
@@ -361,7 +361,7 @@ function SignGroupsList({
   onEdit,
   line,
   setSignGroups,
-}: SignGroupsListProps): JSX.Element | null {
+}: SignGroupsListProps) {
   const groupCount = Object.keys(signGroups).length;
 
   return (
@@ -414,7 +414,7 @@ function SignGroups({
   signGroups,
   setSignGroups,
   readOnly,
-}: SignGroupsProps): JSX.Element | null {
+}: SignGroupsProps) {
   const newSignGroup: SignGroup = {
     sign_ids: [],
     line1: '',

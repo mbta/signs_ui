@@ -12,7 +12,7 @@ function AlertPickerPopup({
   alerts,
   onChange,
   setIsOpen,
-}: AlertPickerPopupProps): JSX.Element | null {
+}: AlertPickerPopupProps) {
   const alertIds = Object.keys(alerts);
   const [hoveredAlertId, setHoveredAlertId] = React.useState<string>(
     alertIds[0],
@@ -85,7 +85,7 @@ function AlertPicker({
   onChange,
   startOpen = false,
   disabled,
-}: AlertPickerProps): JSX.Element | null {
+}: AlertPickerProps) {
   // if alerts change out from under us, AlertPickerPopup should re-render,
   // since it relies on the presence of alerts.
   const popupKey = JSON.stringify(Object.keys(alerts).sort());
