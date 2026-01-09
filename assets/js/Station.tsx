@@ -103,7 +103,7 @@ function Station({
   signsToGroups,
   ungroupSign,
   readOnly,
-}: StationProps): JSX.Element {
+}: StationProps) {
   const zonePositions = config.zonePositions || {
     left: ['s', 'w'],
     center: ['c', 'm'],

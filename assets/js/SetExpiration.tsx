@@ -23,7 +23,7 @@ function SetExpiration({
   onDateChange,
   onAlertChange,
   showAlertSelector,
-}: SetExpirationProps): JSX.Element | null {
+}: SetExpirationProps) {
   const isDateTimeSelected = !!expires;
   const isAlertSelected = !!alertId;
   const isNoAlerts = Object.keys(alerts).length === 0;

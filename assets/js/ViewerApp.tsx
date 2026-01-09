@@ -243,7 +243,7 @@ class ViewerApp extends React.Component<
     });
   }
 
-  render(): JSX.Element {
+  render() {
     const {
       alerts,
       signs,

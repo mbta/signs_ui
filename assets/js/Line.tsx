@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Collapse, { Panel } from 'rc-collapse';
+import Collapse from 'rc-collapse';
 import Tabs from 'rc-tabs';
 import ConfiguredHeadwaysForm from './ConfiguredHeadwaysForm';
 import Station from './Station';
@@ -108,7 +108,7 @@ function Line({
   stationConfigs,
   signGroups,
   setSignGroups,
-}: LineProps): JSX.Element {
+}: LineProps) {
   const branches = branchConfig[line] || [];
 
   const stations: StationConfig[] =
@@ -225,47 +225,53 @@ function Line({
         />
       )}
       <h1>{name(line)}</h1>
-      <Collapse destroyInactivePanel>
-        <Panel header="Bulk Editing">
-          <Tabs
-            defaultActiveKey="groups"
-            tabBarStyle={{}}
-            id="tab-panel-container"
-            items={[
-              {
-                key: 'groups',
-                label: 'Sign Groups',
-                children: (
-                  <SignGroups
-                    line={line}
-                    currentTime={currentTime}
-                    alerts={alerts}
-                    signGroups={signGroups}
-                    setSignGroups={setSignGroups}
-                    readOnly={readOnly}
-                  />
-                ),
-              },
-              ...(branches.length > 0
-                ? [
-                    {
-                      key: 'headways',
-                      label: 'Set Headways',
-                      children: (
-                        <ConfiguredHeadwaysForm
-                          branches={branches}
-                          configuredHeadways={configuredHeadways}
-                          setConfiguredHeadways={setConfiguredHeadways}
-                          readOnly={readOnly}
-                        />
-                      ),
-                    },
-                  ]
-                : []),
-            ]}
-          />
-        </Panel>
-      </Collapse>
+      <Collapse
+        destroyInactivePanel
+        items={[
+          {
+            label: 'Bulk Editing',
+            children: (
+              <Tabs
+                defaultActiveKey="groups"
+                tabBarStyle={{}}
+                id="tab-panel-container"
+                items={[
+                  {
+                    key: 'groups',
+                    label: 'Sign Groups',
+                    children: (
+                      <SignGroups
+                        line={line}
+                        currentTime={currentTime}
+                        alerts={alerts}
+                        signGroups={signGroups}
+                        setSignGroups={setSignGroups}
+                        readOnly={readOnly}
+                      />
+                    ),
+                  },
+                  ...(branches.length > 0
+                    ? [
+                        {
+                          key: 'headways',
+                          label: 'Set Headways',
+                          children: (
+                            <ConfiguredHeadwaysForm
+                              branches={branches}
+                              configuredHeadways={configuredHeadways}
+                              setConfiguredHeadways={setConfiguredHeadways}
+                              readOnly={readOnly}
+                            />
+                          ),
+                        },
+                      ]
+                    : []),
+                ]}
+              />
+            ),
+          },
+        ]}
+      />
 
       {line === 'Silver' && (
         <label className="mt-1 mb-4">

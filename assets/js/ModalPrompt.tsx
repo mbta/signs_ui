@@ -4,7 +4,7 @@ interface ModalPromptProps {
   acceptText: string;
   onAccept: () => void;
   onCancel: () => void;
-  contents: JSX.Element;
+  contents: React.JSX.Element;
   elementId?: string;
 }
 
@@ -14,7 +14,7 @@ function ModalPrompt({
   onCancel,
   contents,
   elementId,
-}: ModalPromptProps): JSX.Element {
+}: ModalPromptProps) {
   const obscuredElement = elementId && document.getElementById(elementId);
   let top;
   let left;

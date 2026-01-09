@@ -43,7 +43,7 @@ function Viewer({
   chelseaBridgeAnnouncements,
   signGroups,
   setSignGroups,
-}: ViewerProps): JSX.Element {
+}: ViewerProps) {
   const routeSignGroups = React.useMemo(
     () => signGroups[line] || {},
     [line, signGroups],

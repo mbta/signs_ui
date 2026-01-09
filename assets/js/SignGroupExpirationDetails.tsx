@@ -6,7 +6,7 @@ export default function SignGroupExpirationDetails({
   group,
 }: {
   group: SignGroup;
-}): JSX.Element {
+}) {
   const expirationText = React.useMemo(() => {
     let text;
     if (group.expires) {

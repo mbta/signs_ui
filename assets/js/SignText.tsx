@@ -19,13 +19,7 @@ interface SignTextProps {
   short?: boolean;
 }
 
-function SignText({
-  time,
-  line1,
-  line2,
-  announcement,
-  short,
-}: SignTextProps): JSX.Element | null {
+function SignText({ time, line1, line2, announcement, short }: SignTextProps) {
   return (
     <div className="sign_text--container">
       {short && !announcement && <span className="sign_text--divider" />}

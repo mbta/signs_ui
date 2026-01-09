@@ -7,7 +7,7 @@ interface SingleSignProps {
   signContent: SingleSignContent;
 }
 
-function SingleSign({ signContent }: SingleSignProps): JSX.Element {
+function SingleSign({ signContent }: SingleSignProps) {
   const [currentTime, setTime] = React.useState(Date.now());
   const [serverTimeOffset, setServerTimeOffset] = React.useState(0);
   const [currentSignContent, setSignContent] = React.useState(signContent);

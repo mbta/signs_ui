@@ -24,7 +24,7 @@ export default function SignGroupItem({
   setSignGroups,
   readOnly,
   onEdit,
-}: SignGroupProps): JSX.Element {
+}: SignGroupProps) {
   return (
     <div className="sign_groups--group-item" data-testid={groupKey}>
       <SignText time={currentTime} line1={group.line1} line2={group.line2} />
