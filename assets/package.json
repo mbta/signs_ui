@@ -46,7 +46,7 @@
     "@types/react-dom": "^19.2.3",
     "classnames": "^2.5.1",
     "copy-webpack-plugin": "^11.0.0",
-    "css-loader": "^6.8.1",
+    "css-loader": "^7.1.2",
     "dateformat": "^5.0.3",
     "lodash": "^4.17.20",
     "mini-css-extract-plugin": "^2.9.4",
