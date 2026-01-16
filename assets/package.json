@@ -16,7 +16,7 @@
     "jest-environment-jsdom": "^29.5.0",
     "prettier": "^3.7.4",
     "rc-tabs": "^15.7.0",
-    "regenerator-runtime": "^0.13.7",
+    "regenerator-runtime": "^0.14.1",
     "resize-observer-polyfill": "^1.5.1",
     "typescript-eslint": "^8.50.0"
   },
