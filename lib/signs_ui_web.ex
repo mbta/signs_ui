@@ -17,7 +17,7 @@ defmodule SignsUiWeb do
   and import those modules here.
   """
 
-  def static_paths, do: ~w(css fonts images js favicon.ico robots.txt vendor)
+  def static_paths, do: ~w(assets fonts images favicon.ico robots.txt vendor)
 
   def controller do
     quote do

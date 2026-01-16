@@ -7,6 +7,7 @@
     "@testing-library/react": "^16.3.1",
     "@testing-library/user-event": "^14.6.1",
     "babel-jest": "^29.5.0",
+    "esbuild": "^0.27.2",
     "eslint": "^9.39.2",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-jest": "^29.12.1",
@@ -21,7 +22,7 @@
     "typescript-eslint": "^8.50.0"
   },
   "scripts": {
-    "deploy": "webpack --mode production",
+    "deploy": "node build.mjs deploy",
     "lint": "eslint --fix",
     "lint:check": "eslint",
     "typecheck": "tsc --noEmit",
@@ -29,8 +30,7 @@
     "format": "prettier --write --list-different .",
     "format:check": "prettier --check .",
     "start": "npm run watch",
-    "test": "node scripts/tester.js",
-    "watch": "webpack --mode development --watch"
+    "test": "node scripts/tester.js"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^7.1.0",
@@ -45,23 +45,16 @@
     "@types/react": "^19.2.3",
     "@types/react-dom": "^19.2.3",
     "classnames": "^2.5.1",
-    "copy-webpack-plugin": "^11.0.0",
-    "css-loader": "^6.8.1",
     "dateformat": "^5.0.3",
     "lodash": "^4.17.20",
-    "mini-css-extract-plugin": "^2.9.4",
     "phoenix": "^1.8.3",
     "phoenix_html": "^4.3.0",
     "rc-collapse": "^4.0.0",
     "react": "^19.2.3",
     "react-datepicker": "^9.1.0",
     "react-dom": "^19.2.3",
-    "source-map-loader": "^4.0.1",
     "ts-jest": "^29.1.0",
-    "ts-loader": "^9.4.4",
     "typescript": "^5.9.3",
-    "webpack": "^5.104.0",
-    "webpack-cli": "^6.0.1",
     "yup": "^1.7"
   },
   "jest": {
