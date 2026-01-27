@@ -9,7 +9,7 @@
 
     <title>MBTA Realtime Signs</title>
     <link rel="stylesheet" href={~p"/vendor/bootstrap.min.css"}>
-    <link rel="stylesheet" href={~p"/css/app.css"}>
+    <link rel="stylesheet" href={~p"/assets/app.css"}>
     <%= if Application.get_env(:sentry, :dsn) do %>
       <script>
         window.sentry = {
@@ -36,6 +36,6 @@
     <% else %>
       <script>window.readOnly = false;</script>
     <% end %>
-    <script src={~p"/js/app.js"}></script>
+    <script src={~p"/assets/app.js"}></script>
   </body>
 </html>

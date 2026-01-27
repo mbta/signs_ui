@@ -2,16 +2,14 @@ import Config
 
 # For development, we disable any cache and enable
 # debugging and code reloading.
-#
-# The watchers configuration can be used to run external
-# watchers to your application. For example, we use it
-# with brunch.io to recompile .js and .css sources.
 config :signs_ui, SignsUiWeb.Endpoint,
   http: [port: 5000],
   debug_errors: true,
   code_reloader: true,
   check_origin: false,
-  watchers: [npm: ["run", "watch", cd: Path.expand("../assets", __DIR__)]],
+  watchers: [
+    node: ["build.mjs", "watch", cd: Path.expand("../assets", __DIR__)]
+  ],
   screenplay_base_url: "localhost:4000/"
 
 # Watch static and templates for browser reloading.
