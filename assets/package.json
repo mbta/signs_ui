@@ -52,7 +52,7 @@
     "rc-collapse": "^4.0.0",
     "react": "^19.2.3",
     "react-datepicker": "^9.1.0",
-    "react-dom": "^19.2.3",
+    "react-dom": "^19.2.4",
     "ts-jest": "^29.1.0",
     "typescript": "^5.9.3",
     "yup": "^1.7"
