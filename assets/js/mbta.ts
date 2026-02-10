@@ -1850,6 +1850,20 @@ const stationConfig: { [key: string]: { stations: StationConfig[] } } = {
           },
         },
       },
+      {
+        id: 'MMAT',
+        name: 'Mattapan',
+        zones: {
+          n: {
+            modes: {
+              auto: true,
+              custom: true,
+              off: true,
+              temporary_terminal: true,
+            },
+          },
+        },
+      },
     ],
   },
   Silver: {
@@ -3063,15 +3077,6 @@ const stationConfig: { [key: string]: { stations: StationConfig[] } } = {
         id: 'MMAT',
         name: 'Mattapan',
         zones: {
-          n: {
-            label: 'South',
-            modes: {
-              auto: true,
-              custom: true,
-              off: true,
-              temporary_terminal: true,
-            },
-          },
           s: {
             label: 'North',
             modes: {
