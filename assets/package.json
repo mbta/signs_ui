@@ -64,6 +64,7 @@
     "setupFilesAfterEnv": [
       "./scripts/jest-setup.ts"
     ],
+    "globalSetup": "./scripts/global-setup.ts",
     "preset": "ts-jest",
     "transform": {
       "^.+\\.(j|t)sx?$": "ts-jest"
