@@ -3,7 +3,9 @@ updates:
 - package-ecosystem: mix
   directory: "/"
   schedule:
-    interval: weekly
+    interval: "weekly"
+    day: "monday"
+    time: "10:00"
   cooldown:
     default-days: 7
   open-pull-requests-limit: 10
@@ -15,7 +17,9 @@ updates:
 - package-ecosystem: npm
   directory: "/assets"
   schedule:
-    interval: weekly
+      interval: "weekly"
+      day: "monday"
+      time: "10:00"
   cooldown:
     default-days: 7
   open-pull-requests-limit: 10
