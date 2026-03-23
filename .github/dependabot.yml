@@ -11,15 +11,15 @@ updates:
   open-pull-requests-limit: 10
   groups:
     mix-minor:
-    update-types:
-      - "patch"
-      - "minor"
+      update-types:
+        - "patch"
+        - "minor"
 - package-ecosystem: npm
   directory: "/assets"
   schedule:
-      interval: "weekly"
-      day: "monday"
-      time: "10:00"
+    interval: "weekly"
+    day: "monday"
+    time: "10:00"
   cooldown:
     default-days: 7
   open-pull-requests-limit: 10
