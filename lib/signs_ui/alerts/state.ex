@@ -19,32 +19,21 @@ defmodule SignsUi.Alerts.State do
     GenServer.start_link(__MODULE__, [], opts)
   end
 
-  @spec active_alert_ids(SignsUi.Alerts.State) :: MapSet.t(Alert.id())
-  def active_alert_ids(pid \\ __MODULE__) do
-    GenServer.call(pid, :active_alert_ids)
+  @spec active_alert_ids(:ets.table()) :: MapSet.t(Alert.id())
+  def active_alert_ids(table \\ :alerts) do
+    get_alerts(table) |> Map.keys() |> MapSet.new()
   end
 
-  @spec all(SignsUi.Alerts.State) :: Display.t()
-  def all(pid \\ __MODULE__) do
-    GenServer.call(pid, :all)
+  @spec all(:ets.table()) :: Display.t()
+  def all(table \\ :alerts) do
+    get_alerts(table) |> Display.format_state()
   end
 
   @impl GenServer
   def init(_) do
+    :ets.new(:alerts, [:named_table, read_concurrency: true])
     send(self(), :update)
-    {:ok, %{}}
-  end
-
-  @impl GenServer
-  def handle_call(:active_alert_ids, _from, state) do
-    alert_ids = state |> Map.keys() |> MapSet.new()
-
-    {:reply, alert_ids, state}
-  end
-
-  @impl GenServer
-  def handle_call(:all, _from, state) do
-    {:reply, Display.format_state(state), state}
+    {:ok, %{table: :alerts, last_modified: nil}}
   end
 
   @impl GenServer
@@ -52,12 +41,15 @@ defmodule SignsUi.Alerts.State do
     v3_api = Application.get_env(:signs_ui, :v3_api)
 
     state =
-      case v3_api.fetch_alerts() do
-        {:ok, []} ->
+      case v3_api.fetch_alerts(state.last_modified) do
+        {:ok, :not_modified} ->
+          state
+
+        {:ok, [], _last_modified} ->
           Logger.info("empty_alerts_response: keeping current state.")
           state
 
-        {:ok, alerts} ->
+        {:ok, alerts, last_modified} ->
           new_state =
             for alert <- alerts,
                 valid_route_type?(alert),
@@ -73,7 +65,8 @@ defmodule SignsUi.Alerts.State do
           )
 
           Logger.info(["alert_state_updated ", inspect(new_state)])
-          new_state
+          :ets.insert(state.table, {:value, new_state})
+          %{state | last_modified: last_modified}
 
         :error ->
           state
@@ -140,5 +133,12 @@ defmodule SignsUi.Alerts.State do
 
   defp schedule_update(pid, ms) do
     Process.send_after(pid, :update, ms)
+  end
+
+  defp get_alerts(table) do
+    case :ets.lookup(table, :value) do
+      [{:value, value}] -> value
+      _ -> %{}
+    end
   end
 end

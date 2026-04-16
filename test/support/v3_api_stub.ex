@@ -4,9 +4,9 @@ defmodule SignsUi.V3ApiStub do
   Configurable to return different responses.
   """
 
-  def fetch_alerts do
+  def fetch_alerts(_) do
     case Process.get(:v3_api_stub_response) do
-      nil -> {:ok, []}
+      nil -> {:ok, [], nil}
       response -> response
     end
   end
@@ -15,7 +15,7 @@ defmodule SignsUi.V3ApiStub do
   Configure the stub to return specific alerts data.
   """
   def will_return(alerts_data) do
-    Process.put(:v3_api_stub_response, {:ok, alerts_data})
+    Process.put(:v3_api_stub_response, {:ok, alerts_data, nil})
   end
 
   @doc """
