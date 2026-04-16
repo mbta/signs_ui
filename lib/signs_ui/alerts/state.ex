@@ -50,7 +50,7 @@ defmodule SignsUi.Alerts.State do
           state
 
         {:ok, alerts, last_modified} ->
-          new_state =
+          new_value =
             for alert <- alerts,
                 valid_route_type?(alert),
                 parsed_alert = parse_alert(alert),
@@ -61,11 +61,11 @@ defmodule SignsUi.Alerts.State do
           SignsUiWeb.Endpoint.broadcast!(
             "alerts:all",
             "new_alert_state",
-            Display.format_state(new_state)
+            Display.format_state(new_value)
           )
 
-          Logger.info(["alert_state_updated ", inspect(new_state)])
-          :ets.insert(state.table, {:value, new_state})
+          Logger.info(["alert_state_updated ", inspect(new_value)])
+          :ets.insert(state.table, {:value, new_value})
           %{state | last_modified: last_modified}
 
         :error ->
