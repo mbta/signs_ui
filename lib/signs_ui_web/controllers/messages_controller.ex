@@ -172,8 +172,14 @@ defmodule SignsUiWeb.MessagesController do
   end
 
   defp decode_zones(zones) do
-    {Enum.at(zones, 0) |> String.split("-") |> List.first(),
-     MapSet.new(zones, &(String.split(&1, "-") |> List.last()))}
+    case Enum.at(zones, 0) do
+      nil ->
+        {nil, MapSet.new()}
+
+      zone ->
+        {String.split(zone, "-") |> List.first(),
+         MapSet.new(zones, &(String.split(&1, "-") |> List.last()))}
+    end
   end
 
   defp parse_visual_data(conn) do

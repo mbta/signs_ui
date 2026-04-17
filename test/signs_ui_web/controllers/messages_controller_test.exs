@@ -141,6 +141,48 @@ defmodule SignsUiWeb.MessagesControllerTest do
         sign_id: "BAIR-e"
       })
     end
+
+    test "play", %{conn: conn} do
+      subscribe_and_join!(socket(), SignsUiWeb.SignsChannel, "signs:all", %{})
+
+      conn
+      |> add_api_req_header()
+      |> post(messages_path(conn, :play), %{
+        "zones" => ["BAIR-e"],
+        "visual_data" => %{
+          "pages" => [%{"top" => "top", "bottom" => "bottom", "duration" => 6}]
+        },
+        "audio_data" => [%{"type" => "chime"}],
+        "expiration" => 180
+      })
+
+      assert_broadcast("sign_update", %{
+        audios: [
+          %{
+            station: "BAIR",
+            zones: ["e"],
+            visual_data: %{pages: [%{top: "top", bottom: "bottom", duration: 6}]}
+          }
+        ],
+        sign_id: "BAIR-e"
+      })
+    end
+
+    test "ignores messages with no zones", %{conn: conn} do
+      subscribe_and_join!(socket(), SignsUiWeb.SignsChannel, "signs:all", %{})
+
+      assert %{status: 200} =
+               conn
+               |> add_api_req_header()
+               |> post(messages_path(conn, :play), %{
+                 "zones" => [],
+                 "visual_data" => nil,
+                 "audio_data" => [%{"type" => "chime"}],
+                 "expiration" => 180
+               })
+
+      refute_broadcast("sign_update", %{})
+    end
   end
 
   defp add_api_req_header(conn) do
