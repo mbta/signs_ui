@@ -15,11 +15,11 @@
     "eslint-plugin-react": "^7.37.5",
     "jest": "^30.3.0",
     "jest-environment-jsdom": "^30.3.0",
-    "prettier": "^3.8.2",
+    "prettier": "^3.8.3",
     "rc-tabs": "^15.7.0",
     "regenerator-runtime": "^0.14.1",
     "resize-observer-polyfill": "^1.5.1",
-    "typescript-eslint": "^8.58.1"
+    "typescript-eslint": "^8.58.2"
   },
   "scripts": {
     "deploy": "node build.mjs deploy",
@@ -35,9 +35,9 @@
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^7.2.0",
     "@fortawesome/free-solid-svg-icons": "^7.2.0",
-    "@fortawesome/react-fontawesome": "^3.3.0",
-    "@sentry/browser": "^10.48.0",
-    "@sentry/react": "^10.48.0",
+    "@fortawesome/react-fontawesome": "^3.3.1",
+    "@sentry/browser": "^10.49.0",
+    "@sentry/react": "^10.49.0",
     "@types/dateformat": "^5.0.3",
     "@types/jest": "^30.0.0",
     "@types/lodash": "^4.17.24",
@@ -54,7 +54,7 @@
     "react-datepicker": "^9.1.0",
     "react-dom": "^19.2.5",
     "ts-jest": "^29.4.9",
-    "typescript": "^6.0.2",
+    "typescript": "^6.0.3",
     "yup": "^1.7"
   },
   "jest": {
