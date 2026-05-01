@@ -30,6 +30,27 @@ config :signs_ui, SignsUiWeb.AuthManager,
   issuer: "signs_ui",
   secret_key: "test key"
 
+config :ueberauth, Ueberauth,
+  providers: [
+    keycloak:
+      {Ueberauth.Strategy.FakeOidcc,
+       [
+         auto_redirect: true,
+         client_id: "dev-client",
+         roles: ["signs-ui-admin"],
+         ttl: System.system_time(:second) + 60 * 60
+       ]}
+  ]
+
+config :ueberauth_oidcc,
+  providers: [
+    keycloak: [
+      issuer: :keycloak_issuer,
+      client_id: "dev-client",
+      client_secret: "fake-secret"
+    ]
+  ]
+
 # Do not include metadata nor timestamps in development logs
 config :logger, :console, format: "[$level] $message\n"
 

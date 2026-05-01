@@ -17,7 +17,14 @@ config :signs_ui, SignsUiWeb.AuthManager,
 
 config :ueberauth, Ueberauth,
   providers: [
-    keycloak: {SignsUi.Ueberauth.Strategy.Fake, [roles: []]}
+    keycloak:
+      {Ueberauth.Strategy.FakeOidcc,
+       [
+         auto_redirect: true,
+         client_id: "test-client",
+         roles: [],
+         ttl: System.system_time(:second) + 60 * 60
+       ]}
   ]
 
 config :ueberauth_oidcc,
