@@ -6,7 +6,7 @@ defmodule SignsUiWeb.AuthControllerTest do
   describe "callback" do
     test "redirects on success and saves refresh token", %{conn: conn} do
       conn =
-        get(conn, "/auth/keycloak/callback?email=user@test.com&roles[]=[]")
+        get(conn, ~p"/auth/keycloak/callback?email=user@test.com&roles[]=[]")
 
       response = html_response(conn, 302)
 
@@ -34,7 +34,7 @@ defmodule SignsUiWeb.AuthControllerTest do
         |> assign(:ueberauth_failure, %Ueberauth.Failure{
           errors: [%Ueberauth.Failure.Error{message_key: "bad_state"}]
         })
-        |> get("/auth/keycloak")
+        |> get(~p"/auth/keycloak")
 
       response = response(conn, 302)
 

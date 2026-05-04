@@ -25,6 +25,8 @@ defmodule SignsUiWeb.ConnCase do
 
       # The default endpoint for testing
       @endpoint SignsUiWeb.Endpoint
+
+      use SignsUiWeb, :verified_routes
     end
   end
 
