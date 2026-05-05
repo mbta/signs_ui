@@ -37,8 +37,7 @@ config :ueberauth, Ueberauth,
        [
          auto_redirect: true,
          client_id: "dev-client",
-         roles: ["signs-ui-admin"],
-         ttl: System.system_time(:second) + 60 * 60
+         roles: ["signs-ui-admin"]
        ]}
   ]
 

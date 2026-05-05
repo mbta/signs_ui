@@ -22,8 +22,7 @@ config :ueberauth, Ueberauth,
        [
          auto_redirect: true,
          client_id: "test-client",
-         roles: [],
-         ttl: System.system_time(:second) + 60 * 60
+         roles: []
        ]}
   ]
 
