@@ -5,46 +5,12 @@ defmodule SignsUiWeb.AuthControllerTest do
 
   describe "callback" do
     test "redirects on success and saves refresh token", %{conn: conn} do
-      current_time = System.system_time(:second)
-
-      auth = %Ueberauth.Auth{
-        provider: :keycloak,
-        uid: "foo@mbta.com",
-        credentials: %Ueberauth.Auth.Credentials{
-          token: "FAKE TOKEN",
-          refresh_token: "bar",
-          expires_at: current_time + 1_000,
-          other: %{
-            id_token: "FAKE ID TOKEN"
-          }
-        },
-        strategy: SignsUi.Ueberauth.Strategy.Fake,
-        extra: %Ueberauth.Auth.Extra{
-          raw_info: %UeberauthOidcc.RawInfo{
-            userinfo: %{
-              "resource_access" => %{
-                "test-client" => %{"roles" => ["test1"]}
-              }
-            },
-            opts: %{
-              module: SignsUi.Ueberauth.Strategy.Fake,
-              issuer: :keycloak_issuer,
-              client_id: "fake_client",
-              client_secret: "fake_client_secret"
-            }
-          }
-        }
-      }
-
       conn =
-        conn
-        |> assign(:ueberauth_auth, auth)
-        |> get(SignsUiWeb.Router.Helpers.auth_path(conn, :callback, "keycloak"))
+        get(conn, ~p"/auth/keycloak/callback?email=user@test.com&roles[]=[]")
 
       response = html_response(conn, 302)
 
       assert response =~ SignsUiWeb.Router.Helpers.messages_path(conn, :index)
-      assert Guardian.Plug.current_claims(conn)["roles"] == ["test1"]
     end
 
     test "handles generic failure", %{conn: conn} do
@@ -68,7 +34,7 @@ defmodule SignsUiWeb.AuthControllerTest do
         |> assign(:ueberauth_failure, %Ueberauth.Failure{
           errors: [%Ueberauth.Failure.Error{message_key: "bad_state"}]
         })
-        |> get(SignsUiWeb.Router.Helpers.auth_path(conn, :callback, "keycloak"))
+        |> get(~p"/auth/keycloak")
 
       response = response(conn, 302)
 

@@ -27,20 +27,6 @@ config :logger, :console,
 config :logger,
   backends: [:console, Sentry.LoggerBackend]
 
-config :ueberauth, Ueberauth,
-  providers: [
-    keycloak: {SignsUi.Ueberauth.Strategy.Fake, []}
-  ]
-
-config :ueberauth_oidcc,
-  providers: [
-    keycloak: [
-      issuer: :keycloak_issuer,
-      client_id: "dev-client",
-      client_secret: "fake-secret"
-    ]
-  ]
-
 config :phoenix, :json_library, Jason
 
 config :sentry,
