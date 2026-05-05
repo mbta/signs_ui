@@ -35,7 +35,6 @@ config :ueberauth, Ueberauth,
     keycloak:
       {Ueberauth.Strategy.FakeOidcc,
        [
-         auto_redirect: true,
          client_id: "dev-client",
          roles: ["signs-ui-admin"]
        ]}
