@@ -58,7 +58,7 @@ defmodule SignsUi.Mixfile do
       {:phoenix_pubsub, "~> 2.2"},
       {:phoenix, "~> 1.8.7"},
       {:plug_cowboy, "~> 2.3"},
-      {:sentry, "~> 11.0"},
+      {:sentry, "~> 13.0"},
       {:sobelow, "~> 0.8", only: :dev},
       {:tzdata, "~> 1.1"},
       {:ueberauth, "~> 0.10"},
