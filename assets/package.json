@@ -19,7 +19,7 @@
     "rc-tabs": "^15.7.0",
     "regenerator-runtime": "^0.14.1",
     "resize-observer-polyfill": "^1.5.1",
-    "typescript-eslint": "^8.59.0"
+    "typescript-eslint": "^8.59.1"
   },
   "scripts": {
     "deploy": "node build.mjs deploy",
@@ -36,8 +36,8 @@
     "@fortawesome/fontawesome-svg-core": "^7.2.0",
     "@fortawesome/free-solid-svg-icons": "^7.2.0",
     "@fortawesome/react-fontawesome": "^3.3.1",
-    "@sentry/browser": "^10.50.0",
-    "@sentry/react": "^10.50.0",
+    "@sentry/browser": "^10.51.0",
+    "@sentry/react": "^10.51.0",
     "@types/dateformat": "^5.0.3",
     "@types/jest": "^30.0.0",
     "@types/lodash": "^4.17.24",
