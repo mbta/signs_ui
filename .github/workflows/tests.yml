@@ -67,4 +67,4 @@ jobs:
         run: npm run check --prefix assets
       - name: JS tests
         run: npm run test --prefix assets
-      - uses: mbta/actions/dialyzer@v2
+      - uses: mbta/actions/dialyzer@v2.17
