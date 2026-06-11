@@ -24,6 +24,7 @@ defmodule SignsUi.Config.Sign do
           mode: :static_text,
           line1: String.t(),
           line2: String.t(),
+          audio_text: String.t() | nil,
           expires: expires_on() | nil,
           alert_id: String.t() | nil
         }
@@ -87,6 +88,7 @@ defmodule SignsUi.Config.Sign do
         mode: :static_text,
         line1: config["line1"],
         line2: config["line2"],
+        audio_text: config["audio_text"],
         expires: expiration_from_string(config["expires"]),
         alert_id: config["alert_id"]
       }
@@ -131,6 +133,7 @@ defmodule SignsUi.Config.Sign do
       "mode" => "static_text",
       "line1" => sign.config.line1,
       "line2" => sign.config.line2,
+      "audio_text" => sign.config.audio_text,
       "expires" => expiration_to_iso8601(sign.config.expires),
       "alert_id" => sign.config.alert_id
     }

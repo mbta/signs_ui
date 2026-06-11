@@ -6,3 +6,12 @@
 .custom_text_input--error-text {
   color: #ff0000;
 }
+
+.custom_text_input--review-button {
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: #007bff;
+  text-decoration: underline;
+  cursor: pointer;
+}

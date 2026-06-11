@@ -4,32 +4,37 @@ function isValidText(text: string) {
   return !/[^a-zA-Z0-9,/!@()': +]/.test(text);
 }
 
-interface SignTextInputProps {
-  signID: string;
+type SignTextValue = {
   line1: string;
   line2: string;
-  onValidLine1Change: (line1: string) => void;
-  onValidLine2Change: (line2: string) => void;
+  audio_text: string;
+};
+
+interface SignTextInputProps {
+  signID: string;
+  value: SignTextValue;
+  onChange: (value: SignTextValue) => void;
 }
 
-function SignTextInput({
-  signID,
-  line1,
-  line2,
-  onValidLine1Change,
-  onValidLine2Change,
-}: SignTextInputProps) {
+const deriveAudioText = (value: SignTextValue) =>
+  [value.line1, value.line2].filter((x) => x).join(' ');
+
+function SignTextInput({ signID, value, onChange }: SignTextInputProps) {
   const [showTipText, setShowTipText] = React.useState(false);
+  const [modifyAudio, setModifyAudio] = React.useState(
+    value.audio_text !== deriveAudioText(value),
+  );
+  const [reviewingAudio, setReviewingAudio] = React.useState<string>();
 
-  const handleInput = (
-    evt: React.FormEvent<HTMLInputElement>,
-    onValid: (line: string) => void,
-  ): void => {
-    const text = evt.currentTarget.value;
-
+  const handleInput = (text: string, field: 'line1' | 'line2') => {
     if (isValidText(text)) {
       setShowTipText(false);
-      onValid(text);
+      const newValue = { ...value, [field]: text };
+      onChange(
+        modifyAudio
+          ? newValue
+          : { ...newValue, audio_text: deriveAudioText(newValue) },
+      );
     } else {
       setShowTipText(true);
     }
@@ -59,8 +64,8 @@ function SignTextInput({
           type="text"
           maxLength={maxLengthLine1}
           size={maxLengthLine1}
-          value={line1}
-          onChange={(evt) => handleInput(evt, onValidLine1Change)}
+          value={value.line1}
+          onChange={(e) => handleInput(e.target.value, 'line1')}
           alt="Line one custom text input"
         />
       </div>
@@ -71,11 +76,54 @@ function SignTextInput({
           type="text"
           maxLength={maxLengthLine2}
           size={maxLengthLine2}
-          value={line2}
-          onChange={(evt) => handleInput(evt, onValidLine2Change)}
+          value={value.line2}
+          onChange={(e) => handleInput(e.target.value, 'line2')}
           alt="Line two custom text input"
         />
       </div>
+      <label className="d-block mb-0">
+        <input
+          type="checkbox"
+          checked={modifyAudio}
+          onChange={(e) => {
+            const newModifyAudio = e.target.checked;
+            setModifyAudio(newModifyAudio);
+            if (!newModifyAudio) {
+              onChange({ ...value, audio_text: deriveAudioText(value) });
+            }
+          }}
+        />{' '}
+        Modify Audio Readout
+      </label>
+      {modifyAudio && (
+        <div>
+          <input
+            type="text"
+            value={value.audio_text}
+            onChange={(e) => onChange({ ...value, audio_text: e.target.value })}
+            alt="Custom audio text input"
+          />
+        </div>
+      )}
+      {reviewingAudio === undefined ? (
+        <button
+          className="custom_text_input--review-button"
+          onClick={() => setReviewingAudio(value.audio_text)}
+        >
+          Review Audio
+        </button>
+      ) : (
+        <>
+          <div>Reviewing audio...</div>
+          {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
+          <audio
+            src={`/preview_audio?text=${encodeURIComponent(reviewingAudio)}`}
+            autoPlay
+            onEnded={() => setReviewingAudio(undefined)}
+            onError={() => setReviewingAudio(undefined)}
+          />
+        </>
+      )}
     </div>
   );
 }

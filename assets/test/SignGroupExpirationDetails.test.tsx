@@ -16,6 +16,7 @@ test('shows the sign group expiration date if one is configured', () => {
     sign_ids: ['id'],
     line1: 'custom',
     line2: 'text',
+    audio_text: 'custom text',
     expires: '2021-01-01T23:00:00Z',
     alert_id: null,
   });
@@ -28,6 +29,7 @@ test('shows the sign group alert ID if one is configured', () => {
     sign_ids: ['id'],
     line1: 'custom',
     line2: 'text',
+    audio_text: 'custom text',
     expires: null,
     alert_id: '456123',
   });
@@ -40,6 +42,7 @@ test('shows "manually" if the group has neither alert ID nor date', () => {
     sign_ids: ['id'],
     line1: 'custom',
     line2: 'text',
+    audio_text: 'custom text',
     expires: null,
     alert_id: null,
   });

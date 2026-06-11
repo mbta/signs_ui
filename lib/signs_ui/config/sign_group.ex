@@ -9,7 +9,7 @@ defmodule SignsUi.Config.SignGroup do
 
   @derive Jason.Encoder
   @enforce_keys [:route_id]
-  defstruct @enforce_keys ++ [:line1, :line2, :expires, :alert_id, sign_ids: []]
+  defstruct @enforce_keys ++ [:line1, :line2, :audio_text, :expires, :alert_id, sign_ids: []]
 
   @type route_id() :: String.t()
   @type t() :: %__MODULE__{
@@ -17,6 +17,7 @@ defmodule SignsUi.Config.SignGroup do
           route_id: route_id(),
           line1: String.t() | nil,
           line2: String.t() | nil,
+          audio_text: String.t() | nil,
           expires: DateTime.t() | nil,
           alert_id: Alert.id() | nil
         }
@@ -44,6 +45,7 @@ defmodule SignsUi.Config.SignGroup do
       route_id: map["route_id"],
       line1: map["line1"],
       line2: map["line2"],
+      audio_text: map["audio_text"],
       expires: expiration_from_iso8601(map["expires"]),
       alert_id: map["alert_id"]
     }

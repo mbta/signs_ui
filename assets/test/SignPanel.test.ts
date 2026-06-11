@@ -567,6 +567,7 @@ test('shows info about the group if the sign is grouped', () => {
     sign_ids: ['id'],
     line1: 'custom',
     line2: 'text',
+    audio_text: 'custom text',
     expires: null,
     alert_id: '123456',
   };
@@ -584,6 +585,7 @@ test('allows ungrouping the sign if it is grouped', async () => {
     sign_ids: ['id'],
     line1: 'custom',
     line2: 'text',
+    audio_text: 'custom text',
     expires: null,
     alert_id: null,
   };
@@ -609,6 +611,7 @@ test('allows backing out of the ungrouping prompt', async () => {
     sign_ids: ['id'],
     line1: 'custom',
     line2: 'text',
+    audio_text: 'custom text',
     expires: null,
     alert_id: null,
   };
@@ -670,6 +673,10 @@ test('does not save changes to backend until Apply is pressed', async () => {
   );
   await user.type(screen.getByAltText('Line one custom text input'), 'line1');
   await user.type(screen.getByAltText('Line two custom text input'), 'line2');
+  await user.click(screen.getByLabelText('Modify Audio Readout'));
+  const audio_text = screen.getByAltText('Custom audio text input');
+  await user.clear(audio_text);
+  await user.type(audio_text, 'audio text');
   await user.click(screen.getByLabelText('Schedule return to "Auto"'));
   await user.click(screen.getByLabelText('Date and time'));
   await user.click(
@@ -686,6 +693,7 @@ test('does not save changes to backend until Apply is pressed', async () => {
       mode: 'static_text',
       line1: 'line1',
       line2: 'line2',
+      audio_text: 'audio text',
       expires: null,
       alert_id: 'alert1',
     },
@@ -742,6 +750,7 @@ test("allows setting custom text for signs with no 'Auto' mode", async () => {
       mode: 'static_text',
       line1: 'line1',
       line2: 'line2',
+      audio_text: 'line1 line2',
       expires: null,
     },
   ]);

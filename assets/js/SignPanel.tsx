@@ -141,16 +141,6 @@ function SignPanel({
     setConfig(config);
   }
 
-  function handleInputLine1(newText: string): void {
-    setSignConfig({ ...signConfig, line1: newText });
-    setHasCustomChanges(true);
-  }
-
-  function handleInputLine2(newText: string): void {
-    setSignConfig({ ...signConfig, line2: newText });
-    setHasCustomChanges(true);
-  }
-
   function handleModeSelect(event: React.ChangeEvent<HTMLSelectElement>): void {
     const value = event.target.value as SignModeOptions;
     const newConfig = makeConfig(value);
@@ -217,10 +207,15 @@ function SignPanel({
             </div>
             <SignTextInput
               signID={realtimeId}
-              line1={signConfig.line1 || ''}
-              line2={signConfig.line2 || ''}
-              onValidLine1Change={handleInputLine1}
-              onValidLine2Change={handleInputLine2}
+              value={{
+                line1: signConfig.line1 || '',
+                line2: signConfig.line2 || '',
+                audio_text: signConfig.audio_text ?? '',
+              }}
+              onChange={(value) => {
+                setSignConfig({ ...signConfig, ...value });
+                setHasCustomChanges(true);
+              }}
             />
           </div>
         )}
