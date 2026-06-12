@@ -17,7 +17,7 @@ interface SignTextInputProps {
 }
 
 const deriveAudioText = (value: SignTextValue) =>
-  [value.line1, value.line2].filter((x) => x).join(' ');
+  [value.line1, value.line2].filter((x) => x.trim()).join(' ');
 
 function SignTextInput({ signID, value, onChange }: SignTextInputProps) {
   const [showTipText, setShowTipText] = React.useState(false);
