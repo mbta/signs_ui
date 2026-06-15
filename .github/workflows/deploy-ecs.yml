@@ -26,7 +26,7 @@ jobs:
       ECS_SERVICE: signs-ui-${{ github.event.inputs.environment || 'dev'}}
 
     steps:
-      - uses: actions/checkout@v6.0.2
+      - uses: actions/checkout@v6.0.3
       - id: metadata
         uses: mbta/actions/commit-metadata@v2
       - uses: mbta/actions/build-push-ecr@v2
