@@ -2521,28 +2521,6 @@ const stationConfig: { [key: string]: { stations: StationConfig[] } } = {
         },
       },
       {
-        id: 'GSYM',
-        name: 'Symphony',
-        zones: {
-          e: {
-            modes: {
-              auto: true,
-              custom: true,
-              off: true,
-              temporary_terminal: true,
-            },
-          },
-          w: {
-            modes: {
-              auto: true,
-              custom: true,
-              off: true,
-              temporary_terminal: true,
-            },
-          },
-        },
-      },
-      {
         id: 'GAUD',
         name: 'Hynes',
         zones: {
