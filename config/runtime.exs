@@ -4,6 +4,8 @@ if config_env() != :test do
   config :signs_ui,
     api_v3_url: System.fetch_env!("API_V3_ORIGIN"),
     api_v3_key: System.get_env("API_V3_KEY"),
+    watts_url: System.fetch_env!("WATTS_URL"),
+    watts_api_key: System.fetch_env!("WATTS_API_KEY"),
     messages_api_keys: System.get_env("MESSAGES_API_KEYS", "")
 
   screenplay_base_url =

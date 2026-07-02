@@ -38,6 +38,7 @@ type SignConfig = {
   alert_id?: string | null;
   line1?: string;
   line2?: string;
+  audio_text?: string | null;
 };
 
 type SignConfigs = { [id: string]: SignConfig };
@@ -92,6 +93,7 @@ type SignGroup = {
   sign_ids: string[];
   line1: string;
   line2: string;
+  audio_text: string | null;
   expires: string | null;
   alert_id: string | null;
 };

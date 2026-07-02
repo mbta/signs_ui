@@ -9,3 +9,8 @@ export API_V3_ORIGIN=https://api-dev-green.mbtace.com
 
 # Secret key for Phoenix. Required.
 export SECRET_KEY_BASE=BeBbcXbnLkr+WNuywdr1SIdPzwx1yUZhdWOdCIFT0NQNL1CrzvtzHqzTvhWKBLMC
+
+# URL and access key for Watts. Required. The dev key can be found in the shared 1Password vault,
+# in the "Watts Dev API key" entry.
+export WATTS_URL=https://watts-dev.mbtace.com
+#export WATTS_API_KEY=

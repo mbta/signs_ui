@@ -31,6 +31,7 @@ defmodule SignsUi.Config.SignTest do
         "mode" => "static_text",
         "line1" => "line1 text",
         "line2" => "line2 text",
+        "audio_text" => "line1 text line2 text",
         "expires" => @expires
       }
 
@@ -43,6 +44,7 @@ defmodule SignsUi.Config.SignTest do
           expires: expires_dt,
           line1: "line1 text",
           line2: "line2 text",
+          audio_text: "line1 text line2 text",
           alert_id: nil
         }
       }
@@ -95,6 +97,7 @@ defmodule SignsUi.Config.SignTest do
           expires: expires_dt,
           line1: "l1",
           line2: "l2",
+          audio_text: "l1 l2",
           alert_id: nil
         }
       }
@@ -105,6 +108,7 @@ defmodule SignsUi.Config.SignTest do
                "expires" => @expires,
                "line1" => "l1",
                "line2" => "l2",
+               "audio_text" => "l1 l2",
                "alert_id" => nil
              }
     end

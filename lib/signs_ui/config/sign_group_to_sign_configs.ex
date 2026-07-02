@@ -43,6 +43,7 @@ defmodule SignsUi.Config.SignGroupToSignConfigs do
       new_sign_group.sign_ids,
       new_sign_group.line1,
       new_sign_group.line2,
+      new_sign_group.audio_text,
       new_sign_group.expires,
       new_sign_group.alert_id
     )
@@ -55,6 +56,7 @@ defmodule SignsUi.Config.SignGroupToSignConfigs do
         new_group.sign_ids,
         new_group.line1,
         new_group.line2,
+        new_group.audio_text,
         new_group.expires,
         new_group.alert_id
       )
@@ -86,13 +88,14 @@ defmodule SignsUi.Config.SignGroupToSignConfigs do
           Enumerable.t(),
           String.t(),
           String.t(),
+          String.t(),
           Sign.expires_on() | nil,
           String.t() | nil
         ) ::
           %{
             Sign.id() => Sign.t()
           }
-  defp set_signs_to_static_text(sign_ids, line1, line2, expires, alert_id) do
+  defp set_signs_to_static_text(sign_ids, line1, line2, audio_text, expires, alert_id) do
     Map.new(sign_ids, fn sign_id ->
       {
         sign_id,
@@ -102,6 +105,7 @@ defmodule SignsUi.Config.SignGroupToSignConfigs do
             mode: :static_text,
             line1: line1,
             line2: line2,
+            audio_text: audio_text,
             expires: expires,
             alert_id: alert_id
           }

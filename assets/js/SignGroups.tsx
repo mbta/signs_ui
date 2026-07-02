@@ -288,14 +288,12 @@ function SignGroupsForm({
               <div>
                 <SignTextInput
                   signID="sign_group"
-                  line1={signGroup.line1}
-                  line2={signGroup.line2}
-                  onValidLine1Change={(line1) =>
-                    setSignGroup({ ...signGroup, line1 })
-                  }
-                  onValidLine2Change={(line2) =>
-                    setSignGroup({ ...signGroup, line2 })
-                  }
+                  value={{
+                    line1: signGroup.line1,
+                    line2: signGroup.line2,
+                    audio_text: signGroup.audio_text ?? '',
+                  }}
+                  onChange={(value) => setSignGroup({ ...signGroup, ...value })}
                 />
               </div>
               <div>
@@ -419,6 +417,7 @@ function SignGroups({
     sign_ids: [],
     line1: '',
     line2: '',
+    audio_text: '',
     expires: null,
     alert_id: null,
   };

@@ -76,6 +76,7 @@ defmodule SignsUiWeb.Router do
     ])
 
     post("/scu", ScuController, :update)
+    get("/preview_audio", PageController, :preview_audio)
   end
 
   scope "/", SignsUiWeb do
