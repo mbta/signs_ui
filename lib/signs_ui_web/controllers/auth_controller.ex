@@ -33,7 +33,7 @@ defmodule SignsUiWeb.AuthController do
         %{assigns: %{ueberauth_failure: %Ueberauth.Failure{errors: errors}}} = conn,
         _params
       ) do
-    Logger.error("ueberauth_failure #{inspect(errors)}")
+    Logger.warning("ueberauth_failure #{inspect(errors)}")
 
     if error?(errors, "bad_state") do
       reauthenticate(conn)
