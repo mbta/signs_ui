@@ -40,14 +40,13 @@ defmodule SignsUi.Alerts.State do
   def handle_info(:update, state) do
     v3_api = Application.get_env(:signs_ui, :v3_api)
 
-    state =
+    {result, last_modified, logs} =
       case v3_api.fetch_alerts(state.last_modified) do
         {:ok, :not_modified} ->
-          state
+          {:ok, state.last_modified, "not_modified"}
 
         {:ok, [], _last_modified} ->
-          Logger.info("empty_alerts_response: keeping current state.")
-          state
+          {:ok, state.last_modified, "empty_response"}
 
         {:ok, alerts, last_modified} ->
           new_value =
@@ -64,16 +63,16 @@ defmodule SignsUi.Alerts.State do
             Display.format_state(new_value)
           )
 
-          Logger.info(["alert_state_updated ", inspect(new_value)])
           :ets.insert(state.table, {:value, new_value})
-          %{state | last_modified: last_modified}
+          {:ok, last_modified, "alerts=#{inspect(new_value)}"}
 
-        :error ->
-          state
+        {:error, value} ->
+          {:error, state.last_modified, "value=#{inspect(value)}"}
       end
 
+    Logger.info("fetch_alerts: result=#{result} #{logs}")
     schedule_update(self(), 5_000)
-    {:noreply, state}
+    {:noreply, %{state | last_modified: last_modified}}
   end
 
   defp valid_route_type?(alert) do

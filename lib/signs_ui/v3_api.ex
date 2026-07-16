@@ -5,7 +5,8 @@ defmodule SignsUi.V3Api do
 
   require Logger
 
-  @spec fetch_alerts(String.t() | nil) :: {:ok, [map()]} | :error
+  @spec fetch_alerts(String.t() | nil) ::
+          {:ok, [map()], String.t()} | {:ok, :not_modified} | {:error, term()}
   def fetch_alerts(last_modified) do
     url = "#{Application.get_env(:signs_ui, :api_v3_url)}/alerts"
 
@@ -22,17 +23,8 @@ defmodule SignsUi.V3Api do
       {:ok, %HTTPoison.Response{status_code: 304}} ->
         {:ok, :not_modified}
 
-      {:ok, %HTTPoison.Response{status_code: status_code}} ->
-        Logger.error("HTTP error, status=#{status_code}")
-        :error
-
-      {:error, reason} ->
-        Logger.error([
-          "alerts_fetch_failed, reason=",
-          inspect(reason)
-        ])
-
-        :error
+      {_, result} ->
+        {:error, result}
     end
   end
 end

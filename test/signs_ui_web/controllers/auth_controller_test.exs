@@ -15,7 +15,7 @@ defmodule SignsUiWeb.AuthControllerTest do
 
     test "handles generic failure", %{conn: conn} do
       log =
-        capture_log([level: :error], fn ->
+        capture_log([level: :warning], fn ->
           conn =
             conn
             |> assign(:ueberauth_failure, %Ueberauth.Failure{})
