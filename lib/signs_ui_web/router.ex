@@ -85,7 +85,6 @@ defmodule SignsUiWeb.Router do
 
   scope "/", SignsUiWeb do
     pipe_through([:api])
-    post("/messages", MessagesController, :create)
     post("/background", MessagesController, :background)
     post("/message", MessagesController, :play)
   end

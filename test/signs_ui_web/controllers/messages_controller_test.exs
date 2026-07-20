@@ -3,13 +3,6 @@ defmodule SignsUiWeb.MessagesControllerTest do
   use SignsUiWeb.ConnCase
   import ExUnit.CaptureLog
 
-  @update_attrs %{
-    "MsgType" => "SignContent",
-    "c" => ["e120~m2-\"Bowdoin 4 min\""],
-    "sta" => "BGOV",
-    "uid" => 22
-  }
-
   describe "index" do
     @tag :authenticated
     test "lists all messages", %{conn: conn} do
@@ -58,73 +51,6 @@ defmodule SignsUiWeb.MessagesControllerTest do
   end
 
   describe "create messages" do
-    test "responds with 201 and logs the access", %{conn: conn} do
-      log =
-        capture_log([level: :info], fn ->
-          conn =
-            conn
-            |> add_api_req_header()
-            |> post(messages_path(conn, :create), @update_attrs)
-
-          assert response(conn, 201)
-        end)
-
-      assert log =~ "messages_api_user=test_user_2"
-    end
-
-    test "responds with 201 when receiving an unknown message type", %{conn: conn} do
-      conn =
-        conn
-        |> add_api_req_header()
-        |> post(messages_path(conn, :create), %{"MsgType" => "Unknown"})
-
-      assert response(conn, 201) =~ "Ignoring unknown message."
-    end
-
-    test "responds with 201 but logs a warnings when message can't be parsed", %{conn: conn} do
-      log =
-        capture_log([level: :warn], fn ->
-          conn =
-            conn
-            |> add_api_req_header()
-            |> post(messages_path(conn, :create), %{
-              "MsgType" => "SignContent",
-              "sta" => "BGOV",
-              "c" => ["e100~~~"]
-            })
-
-          assert response(conn, 201)
-        end)
-
-      assert log =~ "could_not_process"
-    end
-
-    test "responds with the 401 when the key is invalid", %{conn: conn} do
-      conn =
-        conn
-        |> post(messages_path(conn, :create), @update_attrs)
-
-      assert response(conn, 401)
-    end
-
-    test "creates audio messages", %{conn: conn} do
-      subscribe_and_join!(socket(), SignsUiWeb.SignsChannel, "signs:all", %{})
-
-      conn
-      |> add_api_req_header()
-      |> post(messages_path(conn, :create), %{
-        "MsgType" => "AdHoc",
-        "msg" => "This is a message",
-        "typ" => "0",
-        "sta" => "RDAV000100",
-        "tim" => "500"
-      })
-
-      assert_broadcast("sign_update", %{
-        audios: [%{station: "RDAV", visual_data: %{pages: [%{top: "This is a message"}]}}]
-      })
-    end
-
     test "background", %{conn: conn} do
       subscribe_and_join!(socket(), SignsUiWeb.SignsChannel, "signs:all", %{})
 
