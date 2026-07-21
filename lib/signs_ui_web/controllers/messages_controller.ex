@@ -58,56 +58,6 @@ defmodule SignsUiWeb.MessagesController do
     assign(conn, :laboratory_features, laboratory_features)
   end
 
-  @spec create(Plug.Conn.t(), map()) :: Plug.Conn.t()
-  def create(conn, %{"MsgType" => "SignContent", "c" => commands, "sta" => station} = _params) do
-    Enum.each(commands, fn command_string ->
-      with {:ok, sign_content} <- SignContent.new(station, command_string),
-           :ok <- State.process_message(sign_content) do
-        :ok
-      else
-        _err ->
-          Logger.warning("could_not_process command #{inspect(command_string)}")
-      end
-    end)
-
-    send_resp(conn, 201, "")
-  end
-
-  def create(conn, %{"MsgType" => "Canned"} = _params) do
-    send_resp(conn, 201, "")
-  end
-
-  def create(
-        conn,
-        %{
-          "MsgType" => "AdHoc",
-          "msg" => message,
-          "typ" => av_type_code,
-          "sta" => station_and_zones,
-          "tim" => timeout
-        }
-      ) do
-    {station, zones} = Utilities.Common.parse_station_and_zones(station_and_zones)
-
-    %SignsUi.Messages.Audio{
-      timestamp: DateTime.utc_now() |> DateTime.to_unix(:millisecond),
-      visual_data:
-        if Utilities.Common.parse_av_type(av_type_code) == :audio_visual do
-          paginate_text(message) |> format_pages()
-        end,
-      zones: MapSet.new(zones),
-      station: station,
-      expiration: String.to_integer(timeout)
-    }
-    |> State.process_message()
-
-    send_resp(conn, 201, "")
-  end
-
-  def create(conn, _params) do
-    send_resp(conn, 201, "Ignoring unknown message.")
-  end
-
   def background(conn, _params) do
     with {:ok, zones} <- parse_zones(conn, "zones"),
          {station, zones} = decode_zones(zones),
@@ -219,40 +169,5 @@ defmodule SignsUiWeb.MessagesController do
       num when is_integer(num) -> {:ok, num}
       _ -> {:error, "invalid expiration"}
     end
-  end
-
-  defp paginate_text(text, max_length \\ 24) do
-    String.split(text)
-    |> Stream.chunk_while(
-      nil,
-      fn word, acc ->
-        if is_nil(acc) do
-          {:cont, word}
-        else
-          new_acc = acc <> " " <> word
-
-          if String.length(new_acc) > max_length do
-            {:cont, acc, word}
-          else
-            {:cont, new_acc}
-          end
-        end
-      end,
-      fn
-        nil -> {:cont, nil}
-        acc -> {:cont, acc, nil}
-      end
-    )
-    |> Stream.chunk_every(2, 2, [""])
-    |> Enum.map(fn [top, bottom] -> {top, bottom, 3} end)
-  end
-
-  defp format_pages(pages) do
-    %{
-      pages:
-        Enum.map(pages, fn {top, bottom, duration} ->
-          %{top: top, bottom: bottom, duration: duration}
-        end)
-    }
   end
 end

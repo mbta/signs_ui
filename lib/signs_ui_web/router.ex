@@ -62,7 +62,6 @@ defmodule SignsUiWeb.Router do
     ])
 
     get("/viewer", MessagesController, :index)
-    get("/scu", ScuController, :index)
   end
 
   scope "/", SignsUiWeb do
@@ -75,7 +74,6 @@ defmodule SignsUiWeb.Router do
       :put_user_token
     ])
 
-    post("/scu", ScuController, :update)
     get("/preview_audio", PageController, :preview_audio)
   end
 
@@ -85,7 +83,6 @@ defmodule SignsUiWeb.Router do
 
   scope "/", SignsUiWeb do
     pipe_through([:api])
-    post("/messages", MessagesController, :create)
     post("/background", MessagesController, :background)
     post("/message", MessagesController, :play)
   end

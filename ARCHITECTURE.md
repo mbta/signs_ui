@@ -11,7 +11,6 @@ Signs UI is a web app used in a few ways:
 2. To configure what "mode" a sign is in
 3. To tie sign content to the expiration of an alert or a datetime
 4. To manage headway configurations
-5. To manage SCU migration status
 
 Like Realtime Signs, throughout this app when we talk about a "sign" it could actually represent
 multiple physical signs in the field, all behaving identically. In ARINC terminology a sign is a
@@ -33,7 +32,7 @@ all the signs.
 ### Config
 
 When the application starts up, it reads a JSON file saved in S3 at `mbta-signs/config.json` (or `mbta-signs-dev`) to initialize `SignsUi.Config.State`. When users
-of Signs UI make configuration changes, such as changing a sign mode (e.g., from "auto" to "off"), the internal state is updated, and the updated state is written back to the JSON file in S3. (see [`SignsUi.Config.Writer`](/lib/signs_ui/config/writer.ex)). The same occurs when a sign is configured to expire in association with the expiration of an alert or datetime, headway values or groups are updated, or an SCU is migrated.
+of Signs UI make configuration changes, such as changing a sign mode (e.g., from "auto" to "off"), the internal state is updated, and the updated state is written back to the JSON file in S3. (see [`SignsUi.Config.Writer`](/lib/signs_ui/config/writer.ex)). The same occurs when a sign is configured to expire in association with the expiration of an alert or datetime, or headway values or groups are updated.
 
 The primary way Signs UI interacts with Realtime Signs and other clients is via the aforementioned JSON file saved in S3. Clients typically poll the file for changes.
 

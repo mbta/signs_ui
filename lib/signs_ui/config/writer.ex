@@ -36,8 +36,7 @@ defmodule SignsUi.Config.Writer do
          signs: signs,
          configured_headways: configured_headways,
          chelsea_bridge_announcements: chelsea_bridge_announcements,
-         sign_groups: sign_groups,
-         scus_migrated: scus_migrated
+         sign_groups: sign_groups
        }) do
     config_store = Application.get_env(:signs_ui, :config_store)
 
@@ -47,8 +46,7 @@ defmodule SignsUi.Config.Writer do
         "configured_headways" =>
           Config.ConfiguredHeadways.format_configured_headways_for_json(configured_headways),
         "chelsea_bridge_announcements" => chelsea_bridge_announcements,
-        "sign_groups" => sign_groups,
-        "scus_migrated" => scus_migrated
+        "sign_groups" => sign_groups
       },
       pretty: true
     )

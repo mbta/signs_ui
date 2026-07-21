@@ -17,7 +17,6 @@ defmodule SignsUi.Config.StateTest do
       assert %{
                chelsea_bridge_announcements: _,
                configured_headways: _,
-               scus_migrated: _,
                sign_groups: _,
                signs: _
              } = get_all(signs_server)
