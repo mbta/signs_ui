@@ -10,14 +10,12 @@ defmodule SignsUi.Config.State do
   alias SignsUi.Config.Sign
   alias SignsUi.Config.SignGroups
   alias SignsUi.Config.Utilities
-  alias SignsUi.Signs
 
   @type t :: %{
           signs: %{Config.Sign.id() => Config.Sign.t()},
           configured_headways: ConfiguredHeadways.t(),
           chelsea_bridge_announcements: String.t(),
-          sign_groups: SignGroups.t(),
-          scus_migrated: %{String.t() => boolean()}
+          sign_groups: SignGroups.t()
         }
 
   def start_link(opts \\ []) do
@@ -72,19 +70,11 @@ defmodule SignsUi.Config.State do
     GenStage.call(pid, {:update_sign_groups, changes})
   end
 
-  @spec update_scu(GenStage.stage(), String.t(), boolean()) :: :ok
-  def update_scu(pid \\ __MODULE__, id, migrated) do
-    GenStage.call(pid, {:update_scu, id, migrated})
-  end
-
   @impl true
   def init(_) do
     schedule_clean(self(), 60_000)
     config_store = Application.get_env(:signs_ui, :config_store)
     response = config_store.read() |> Jason.decode!()
-
-    scu_ids = for %{scu_id: scu_id} <- Signs.Config.get(), uniq: true, do: scu_id
-    scu_lookup = Map.get(response, "scus_migrated", %{})
 
     state = %{
       signs:
@@ -96,8 +86,7 @@ defmodule SignsUi.Config.State do
         |> Map.get("configured_headways", %{})
         |> ConfiguredHeadways.parse_configured_headways_json(),
       chelsea_bridge_announcements: Map.get(response, "chelsea_bridge_announcements", "off"),
-      sign_groups: response |> Map.get("sign_groups", %{}) |> SignGroups.from_json(),
-      scus_migrated: Map.new(scu_ids, &{&1, Map.get(scu_lookup, &1, false)})
+      sign_groups: response |> Map.get("sign_groups", %{}) |> SignGroups.from_json()
     }
 
     {:producer, state}
@@ -128,11 +117,6 @@ defmodule SignsUi.Config.State do
     new_sign_group_state = save_sign_group_changes(changes, old_state)
     new_state = save_sign_config_changes(sign_config_changes, new_sign_group_state)
     {:reply, {:ok, new_state}, [new_state], new_state}
-  end
-
-  def handle_call({:update_scu, id, migrated}, _from, state) do
-    state = update_in(state, [:scus_migrated], &Map.replace(&1, id, migrated))
-    {:reply, :ok, [state], state}
   end
 
   @impl true

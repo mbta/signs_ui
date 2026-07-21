@@ -6,7 +6,6 @@ const opts = {
   entryPoints: [
     { out: 'app', in: 'js/app.ts' },
     { out: 'single_sign', in: 'js/SingleSignApp.tsx' },
-    { out: 'scu', in: 'js/scu.ts' },
   ],
   bundle: true,
   outdir: '../priv/static/assets',
