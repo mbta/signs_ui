@@ -22,7 +22,7 @@ config :signs_ui, SignsUiWeb.AuthManager, secret_key: {System, :get_env, ["SIGNS
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
-  metadata: [:messages_api_user, :user_id, :request_id, :remote_ip]
+  metadata: [:messages_api_user, :request_id, :remote_ip]
 
 config :logger,
   backends: [:console, Sentry.LoggerBackend]
