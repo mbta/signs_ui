@@ -40,8 +40,8 @@ defmodule SignsUi.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:credo, "~> 1.4", only: [:dev, :test], runtime: false},
-      {:dialyxir, "~> 1.4.4", only: [:dev, :test], runtime: false},
+      {:credo, "~> 1.7.6", only: [:dev, :test], runtime: false},
+      {:dialyxir, "~> 1.4.7", only: [:dev, :test], runtime: false},
       {:ex_aws_s3, "~> 2.0"},
       {:ex_aws, "~> 2.0"},
       {:gettext, "~> 1.0"},
@@ -51,6 +51,7 @@ defmodule SignsUi.Mixfile do
       {:guardian, "~> 2.0"},
       {:httpoison, "~> 2.0"},
       {:jason, "~> 1.4.0"},
+      {:logger_backends, "~> 1.0"},
       {:phoenix_html, "~> 4.3"},
       {:phoenix_live_reload, "~> 1.6.1", only: :dev},
       {:phoenix_live_view, "~> 1.2.4"},
