@@ -3,8 +3,6 @@ defmodule SignsUi.V3Api do
   Provides a lightweight interface to the V3 API.
   """
 
-  require Logger
-
   @spec fetch_alerts(String.t() | nil) ::
           {:ok, [map()], String.t()} | {:ok, :not_modified} | {:error, term()}
   def fetch_alerts(last_modified) do

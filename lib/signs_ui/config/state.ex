@@ -3,7 +3,6 @@ defmodule SignsUi.Config.State do
     Keeps an internal state of all the signs
   """
   use GenStage
-  require Logger
 
   alias SignsUi.Config
   alias SignsUi.Config.ConfiguredHeadways

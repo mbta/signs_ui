@@ -1,6 +1,5 @@
 defmodule SignsUiWeb.AuthControllerTest do
   use SignsUiWeb.ConnCase
-  require Logger
   import ExUnit.CaptureLog
 
   describe "callback" do
