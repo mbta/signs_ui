@@ -1,5 +1,5 @@
 <div id="app"></div>
 
-<% sign_data = Base.encode64(Jason.encode!(@sign)) %>
+<% sign_data = Base.encode64(JSON.encode!(@sign)) %>
 
 <script>window.signContent = JSON.parse(atob("<%= sign_data %>"))</script>

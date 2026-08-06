@@ -24,10 +24,7 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:messages_api_user, :request_id, :remote_ip]
 
-config :logger,
-  backends: [:console, Sentry.LoggerBackend]
-
-config :phoenix, :json_library, Jason
+config :phoenix, :json_library, JSON
 
 config :sentry,
   enable_source_code_context: true,

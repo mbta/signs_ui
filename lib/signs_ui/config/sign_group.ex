@@ -7,7 +7,7 @@ defmodule SignsUi.Config.SignGroup do
   alias SignsUi.Alerts.Alert
   alias SignsUi.Config.Sign
 
-  @derive Jason.Encoder
+  @derive JSON.Encoder
   @enforce_keys [:route_id]
   defstruct @enforce_keys ++ [:line1, :line2, :audio_text, :expires, :alert_id, sign_ids: []]
 

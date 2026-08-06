@@ -1,7 +1,6 @@
 defmodule SignsUi.Config.ExpirationTest do
   use ExUnit.Case
   import ExUnit.CaptureLog
-  require Logger
   alias SignsUi.Signs.Sign
   alias SignsUi.Config.Sign
 

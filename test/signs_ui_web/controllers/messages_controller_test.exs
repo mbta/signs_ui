@@ -1,7 +1,6 @@
 defmodule SignsUiWeb.MessagesControllerTest do
   use SignsUiWeb.ChannelCase
   use SignsUiWeb.ConnCase
-  import ExUnit.CaptureLog
 
   describe "index" do
     @tag :authenticated
@@ -52,7 +51,12 @@ defmodule SignsUiWeb.MessagesControllerTest do
 
   describe "create messages" do
     test "background", %{conn: conn} do
-      subscribe_and_join!(socket(), SignsUiWeb.SignsChannel, "signs:all", %{})
+      subscribe_and_join!(
+        socket(SignsUiWeb.UserSocket),
+        SignsUiWeb.SignsChannel,
+        "signs:all",
+        %{}
+      )
 
       conn
       |> add_api_req_header()
@@ -69,7 +73,12 @@ defmodule SignsUiWeb.MessagesControllerTest do
     end
 
     test "play", %{conn: conn} do
-      subscribe_and_join!(socket(), SignsUiWeb.SignsChannel, "signs:all", %{})
+      subscribe_and_join!(
+        socket(SignsUiWeb.UserSocket),
+        SignsUiWeb.SignsChannel,
+        "signs:all",
+        %{}
+      )
 
       conn
       |> add_api_req_header()
@@ -95,7 +104,12 @@ defmodule SignsUiWeb.MessagesControllerTest do
     end
 
     test "ignores messages with no zones", %{conn: conn} do
-      subscribe_and_join!(socket(), SignsUiWeb.SignsChannel, "signs:all", %{})
+      subscribe_and_join!(
+        socket(SignsUiWeb.UserSocket),
+        SignsUiWeb.SignsChannel,
+        "signs:all",
+        %{}
+      )
 
       assert %{status: 200} =
                conn

@@ -6,7 +6,7 @@ defmodule SignsUiWeb.ChelseaBridgeAnnouncementsChannelTest do
   setup do
     socket =
       subscribe_and_join!(
-        socket(),
+        socket(SignsUiWeb.UserSocket),
         SignsUiWeb.ChelseaBridgeAnnouncementsChannel,
         "chelseaBridgeAnnouncements:all",
         %{}
