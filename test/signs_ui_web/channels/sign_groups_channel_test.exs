@@ -4,7 +4,14 @@ defmodule SignsUiWeb.SignGroupsChannelTest do
   alias Test.Support.Helpers
 
   setup do
-    socket = subscribe_and_join!(socket(), SignsUiWeb.SignGroupsChannel, "signGroups:all", %{})
+    socket =
+      subscribe_and_join!(
+        socket(SignsUiWeb.UserSocket),
+        SignsUiWeb.SignGroupsChannel,
+        "signGroups:all",
+        %{}
+      )
+
     %{socket: socket}
   end
 
