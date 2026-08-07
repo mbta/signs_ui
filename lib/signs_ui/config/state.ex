@@ -3,7 +3,6 @@ defmodule SignsUi.Config.State do
     Keeps an internal state of all the signs
   """
   use GenStage
-  require Logger
 
   alias SignsUi.Config
   alias SignsUi.Config.ConfiguredHeadways
@@ -74,7 +73,7 @@ defmodule SignsUi.Config.State do
   def init(_) do
     schedule_clean(self(), 60_000)
     config_store = Application.get_env(:signs_ui, :config_store)
-    response = config_store.read() |> Jason.decode!()
+    response = config_store.read() |> JSON.decode!()
 
     state = %{
       signs:

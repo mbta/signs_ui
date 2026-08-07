@@ -1,5 +1,4 @@
 defmodule SignsUiWeb.MessagesController do
-  require Logger
   use SignsUiWeb, :controller
 
   alias SignsUi.Config.SignGroups
