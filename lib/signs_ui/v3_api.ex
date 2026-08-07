@@ -16,7 +16,7 @@ defmodule SignsUi.V3Api do
 
     case HTTPoison.get(url, headers, params) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body, headers: headers}} ->
-        {:ok, Jason.decode!(body) |> Map.get("data", []), Map.new(headers)["last-modified"]}
+        {:ok, JSON.decode!(body) |> Map.get("data", []), Map.new(headers)["last-modified"]}
 
       {:ok, %HTTPoison.Response{status_code: 304}} ->
         {:ok, :not_modified}

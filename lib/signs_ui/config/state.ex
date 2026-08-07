@@ -73,7 +73,7 @@ defmodule SignsUi.Config.State do
   def init(_) do
     schedule_clean(self(), 60_000)
     config_store = Application.get_env(:signs_ui, :config_store)
-    response = config_store.read() |> Jason.decode!()
+    response = config_store.read() |> JSON.decode!()
 
     state = %{
       signs:
