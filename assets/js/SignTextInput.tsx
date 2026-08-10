@@ -1,9 +1,5 @@
 import * as React from 'react';
 
-function isValidText(text: string) {
-  return !/[^a-zA-Z0-9,/!@()': +]/.test(text);
-}
-
 type SignTextValue = {
   line1: string;
   line2: string;
@@ -20,24 +16,18 @@ const deriveAudioText = (value: SignTextValue) =>
   [value.line1, value.line2].filter((x) => x.trim()).join(' ');
 
 function SignTextInput({ signID, value, onChange }: SignTextInputProps) {
-  const [showTipText, setShowTipText] = React.useState(false);
   const [modifyAudio, setModifyAudio] = React.useState(
     value.audio_text !== deriveAudioText(value),
   );
   const [reviewingAudio, setReviewingAudio] = React.useState<string>();
 
   const handleInput = (text: string, field: 'line1' | 'line2') => {
-    if (isValidText(text)) {
-      setShowTipText(false);
-      const newValue = { ...value, [field]: text };
-      onChange(
-        modifyAudio
-          ? newValue
-          : { ...newValue, audio_text: deriveAudioText(newValue) },
-      );
-    } else {
-      setShowTipText(true);
-    }
+    const newValue = { ...value, [field]: text };
+    onChange(
+      modifyAudio
+        ? newValue
+        : { ...newValue, audio_text: deriveAudioText(newValue) },
+    );
   };
 
   const shorterWidthSigns = [
@@ -50,11 +40,20 @@ function SignTextInput({ signID, value, onChange }: SignTextInputProps) {
   const maxLengthLine1 = shorterWidthSigns.includes(signID) ? 16 : 18;
   const maxLengthLine2 = shorterWidthSigns.includes(signID) ? 16 : 24;
 
+  const invalidCharacters = new Set(
+    [...(value.line1 + value.line2).matchAll(/[^ -~áéíóúüñÉÑ¿¡]/g)].map(
+      (r) => r[0],
+    ),
+  );
+
   return (
     <div>
-      {showTipText && (
+      {!!invalidCharacters.size && (
         <small className="custom_text_input--error-text">
-          You may use letters, numbers, and: /,!@():&quot;
+          The following characters are not permitted and must be replaced:{' '}
+          {Array.from(invalidCharacters)
+            .map((char) => `'${char}'`)
+            .join(', ')}
         </small>
       )}
       <div>
