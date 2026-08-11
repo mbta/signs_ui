@@ -41,6 +41,9 @@ config :laboratory,
     http_only: true
   ]
 
+config :ex_aws,
+  json_codec: JSON
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{config_env()}.exs"
