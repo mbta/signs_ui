@@ -1,5 +1,4 @@
 defmodule SignsUiWeb.SingleSignController do
-  require Logger
   use SignsUiWeb, :controller
 
   alias SignsUi.Signs.State

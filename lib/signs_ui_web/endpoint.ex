@@ -34,7 +34,7 @@ defmodule SignsUiWeb.Endpoint do
     parsers: [:urlencoded, :multipart, :json],
     pass: ["*/*"],
     body_reader: {RealtimeSignsBodyReader, :read_body, []},
-    json_decoder: Jason
+    json_decoder: JSON
   )
 
   plug(Sentry.PlugContext)

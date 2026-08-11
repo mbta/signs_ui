@@ -2,7 +2,7 @@ defmodule SignsUiWeb.SingleSignSocketTest do
   use SignsUiWeb.ChannelCase
 
   setup do
-    %{socket: socket()}
+    %{socket: socket(SignsUiWeb.UserSocket)}
   end
 
   describe "connect/2" do

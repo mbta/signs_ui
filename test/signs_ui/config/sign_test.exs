@@ -61,7 +61,7 @@ defmodule SignsUi.Config.SignTest do
       }
 
       log =
-        capture_log([level: :warn], fn ->
+        capture_log([level: :warning], fn ->
           assert from_json("Sign", values) == expected
         end)
 

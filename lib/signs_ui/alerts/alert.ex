@@ -3,7 +3,7 @@ defmodule SignsUi.Alerts.Alert do
   Represents an alert.
   """
 
-  @derive Jason.Encoder
+  @derive JSON.Encoder
   defstruct [:id, :created_at, :service_effect, :route]
 
   @type id :: String.t()

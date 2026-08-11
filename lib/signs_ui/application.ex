@@ -4,6 +4,8 @@ defmodule SignsUi.Application do
   use Application
 
   def start(_type, _args) do
+    LoggerBackends.add(Sentry.LoggerBackend)
+
     children = [
       # Start the PubSub system
       {Phoenix.PubSub, name: SignsUi.PubSub},

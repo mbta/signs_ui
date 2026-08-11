@@ -24,6 +24,6 @@ defmodule SignsUi.Config.Utilities do
     |> :code.priv_dir()
     |> Path.join("arinc_to_realtime.json")
     |> File.read!()
-    |> Jason.decode!()
+    |> JSON.decode!()
   end
 end

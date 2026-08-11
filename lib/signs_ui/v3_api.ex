@@ -3,8 +3,6 @@ defmodule SignsUi.V3Api do
   Provides a lightweight interface to the V3 API.
   """
 
-  require Logger
-
   @spec fetch_alerts(String.t() | nil) ::
           {:ok, [map()], String.t()} | {:ok, :not_modified} | {:error, term()}
   def fetch_alerts(last_modified) do
@@ -18,7 +16,7 @@ defmodule SignsUi.V3Api do
 
     case HTTPoison.get(url, headers, params) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body, headers: headers}} ->
-        {:ok, Jason.decode!(body) |> Map.get("data", []), Map.new(headers)["last-modified"]}
+        {:ok, JSON.decode!(body) |> Map.get("data", []), Map.new(headers)["last-modified"]}
 
       {:ok, %HTTPoison.Response{status_code: 304}} ->
         {:ok, :not_modified}

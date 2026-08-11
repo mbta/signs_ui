@@ -4,7 +4,14 @@ defmodule SignsUiWeb.HeadwaysChannelTest do
   alias Test.Support.Helpers
 
   setup do
-    socket = subscribe_and_join!(socket(), SignsUiWeb.HeadwaysChannel, "headways:all", %{})
+    socket =
+      subscribe_and_join!(
+        socket(SignsUiWeb.UserSocket),
+        SignsUiWeb.HeadwaysChannel,
+        "headways:all",
+        %{}
+      )
+
     %{socket: socket}
   end
 

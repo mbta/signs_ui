@@ -3,7 +3,6 @@ defmodule SignsUiWeb.SignGroupsChannel do
   Channel for changing sign groups.
   """
   use Phoenix.Channel
-  require Logger
   import SignsUiWeb.SocketAuth
 
   @impl Phoenix.Channel

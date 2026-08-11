@@ -49,6 +49,6 @@ defmodule SignsUi.Mock.ConfigStore do
       "chelsea_bridge_announcements" => "auto",
       "sign_groups" => %{}
     }
-    |> Jason.encode!()
+    |> JSON.encode!()
   end
 end
