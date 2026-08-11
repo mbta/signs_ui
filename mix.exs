@@ -10,7 +10,8 @@ defmodule SignsUi.Mixfile do
       start_permanent: Mix.env() == :prod,
       test_coverage: [tool: LcovEx],
       dialyzer: [plt_add_apps: [:ex_unit, :laboratory]],
-      deps: deps()
+      deps: deps(),
+      listeners: [Phoenix.CodeReloader]
     ]
   end
 
@@ -50,7 +51,6 @@ defmodule SignsUi.Mixfile do
       {:guardian_phoenix, "~> 2.0"},
       {:guardian, "~> 2.0"},
       {:httpoison, "~> 2.0"},
-      {:jason, "~> 1.4.0"},
       {:logger_backends, "~> 1.0"},
       {:phoenix_html, "~> 4.3"},
       {:phoenix_live_reload, "~> 1.6.1", only: :dev},
