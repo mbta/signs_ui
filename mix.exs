@@ -53,7 +53,7 @@ defmodule SignsUi.Mixfile do
       {:httpoison, "~> 2.0"},
       {:logger_backends, "~> 1.0"},
       {:phoenix_html, "~> 4.3"},
-      {:phoenix_live_reload, "~> 1.6.1", only: :dev},
+      {:phoenix_live_reload, "~> 1.7.0", only: :dev},
       {:phoenix_live_view, "~> 1.2.4"},
       {:phoenix_pubsub, "~> 2.2"},
       {:phoenix, "~> 1.8.7"},
