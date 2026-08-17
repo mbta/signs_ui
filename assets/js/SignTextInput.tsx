@@ -12,8 +12,20 @@ interface SignTextInputProps {
   onChange: (value: SignTextValue) => void;
 }
 
-const deriveAudioText = (value: SignTextValue) =>
-  [value.line1, value.line2].filter((x) => x.trim()).join(' ');
+const abbreviations = [
+  { regex: /\bOL\b/gi, value: 'Orange Line' },
+  { regex: /\bBL\b/gi, value: 'Blue Line' },
+  { regex: /\bRL\b/gi, value: 'Red Line' },
+  { regex: /\bGL\b/gi, value: 'Green Line' },
+  { regex: /\bsvc\b/gi, value: 'service' },
+];
+
+const deriveAudioText = (value: SignTextValue) => {
+  const str = [value.line1, value.line2].filter((x) => x.trim()).join(' ');
+  return abbreviations.reduce((acc, { regex, value }) => {
+    return acc.replaceAll(regex, value);
+  }, str);
+};
 
 function SignTextInput({ signID, value, onChange }: SignTextInputProps) {
   const [modifyAudio, setModifyAudio] = React.useState(
@@ -94,16 +106,16 @@ function SignTextInput({ signID, value, onChange }: SignTextInputProps) {
         />{' '}
         Modify Audio Readout
       </label>
-      {modifyAudio && (
-        <div>
-          <input
-            type="text"
-            value={value.audio_text}
-            onChange={(e) => onChange({ ...value, audio_text: e.target.value })}
-            alt="Custom audio text input"
-          />
-        </div>
-      )}
+      <div>
+        <input
+          type="text"
+          className="w-100"
+          disabled={!modifyAudio}
+          value={value.audio_text}
+          onChange={(e) => onChange({ ...value, audio_text: e.target.value })}
+          alt="Custom audio text input"
+        />
+      </div>
       {reviewingAudio === undefined ? (
         <button
           className="custom_text_input--review-button"
