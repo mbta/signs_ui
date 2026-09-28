@@ -54,7 +54,7 @@
     "react-datepicker": "^9.1.0",
     "react-dom": "^19.3.0",
     "ts-jest": "^29.4.12",
-    "typescript": "^6.0.3",
+    "typescript": "^7.0.2",
     "yup": "^1.7"
   },
   "jest": {
