@@ -1,6 +1,19 @@
 name: Deploy to ECS
 
 on:
+  workflow_call:
+    inputs:
+      environment:
+        type: string
+        required: true
+    secrets:
+      AWS_ROLE_ARN:
+        required: true
+      DOCKER_REPO:
+        required: true
+      SLACK_WEBHOOK:
+        required: true
+
   workflow_dispatch:
     inputs:
       environment:
@@ -13,7 +26,7 @@ on:
 permissions: {}
 
 concurrency:
-  group: ${{ github.event.inputs.environment || 'dev'}}
+  group: ${{ inputs.environment || 'dev' }}
   cancel-in-progress: true
 
 jobs:
@@ -23,10 +36,10 @@ jobs:
     permissions:
       contents: read # Needed to check out the repository
       id-token: write # Needed to authenticate against AWS
-    environment: ${{ github.event.inputs.environment || 'dev'}}
+    environment: ${{ inputs.environment || 'dev' }}
     env:
       ECS_CLUSTER: signs-ui
-      ECS_SERVICE: signs-ui-${{ github.event.inputs.environment || 'dev'}}
+      ECS_SERVICE: signs-ui-${{ inputs.environment || 'dev' }}
 
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
