@@ -36,7 +36,7 @@
     "@fortawesome/fontawesome-svg-core": "^7.3.1",
     "@fortawesome/free-solid-svg-icons": "^7.3.1",
     "@fortawesome/react-fontawesome": "^3.5.0",
-    "@sentry/browser": "^10.75.0",
+    "@sentry/browser": "^11.1.0",
     "@sentry/react": "^10.75.0",
     "@types/dateformat": "^5.0.3",
     "@types/jest": "^30.0.0",
