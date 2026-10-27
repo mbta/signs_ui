@@ -1,5 +1,5 @@
 # first, get the elixir dependencies within an elixir container
-FROM hexpm/elixir:1.20.2-erlang-29.0.2-debian-bookworm-20260623-slim AS elixir-builder
+FROM hexpm/elixir:1.20.4-erlang-29.1.2-debian-bookworm-20261020-slim AS elixir-builder
 
 ENV LANG="C.UTF-8" MIX_ENV="prod"
 

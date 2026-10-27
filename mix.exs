@@ -41,13 +41,17 @@ defmodule SignsUi.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:castore, "~> 1.0"},
+      # `certifi` is transitively required by `ex_aws` -> `hackney`. Override it in response to
+      # the eMudhra CA compromise. If/when either of the two dependencies are upgraded to use
+      # `certifi@2.18.0+`, we can remove this.
+      {:certifi, "2.18.0", override: true},
       {:credo, "~> 1.7.6", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 1.4.7", only: [:dev, :test], runtime: false},
       {:ex_aws_s3, "~> 2.0"},
       {:ex_aws, "~> 2.0"},
       {:gettext, "~> 1.0"},
       {:gen_stage, "~> 1.0"},
-      {:castore, "~> 1.0"},
       {:guardian_phoenix, "~> 2.0"},
       {:guardian, "~> 2.0"},
       {:httpoison, "~> 2.0"},
