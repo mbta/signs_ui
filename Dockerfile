@@ -1,5 +1,10 @@
+ARG DEBIAN_VERSION=20261020
+ARG ELIXIR_VERSION=1.20.4
+ARG ERLANG_VERSION=29.1.2
+ARG NODE_VERSION=22.23.4
+
 # first, get the elixir dependencies within an elixir container
-FROM hexpm/elixir:1.20.2-erlang-29.0.2-debian-bookworm-20260623-slim AS elixir-builder
+FROM hexpm/elixir:${ELIXIR_VERSION}-erlang-${ERLANG_VERSION}-debian-bookworm-${DEBIAN_VERSION}-slim AS elixir-builder
 
 ENV LANG="C.UTF-8" MIX_ENV="prod"
 
@@ -13,7 +18,7 @@ RUN apt-get update && \
 RUN mix do local.hex --force, local.rebar --force, deps.get --only prod
 
 # next, build the frontend assets within a node.js container
-FROM node:22.18.0 AS assets-builder
+FROM node:${NODE_VERSION} AS assets-builder
 
 WORKDIR /root
 ADD . .
@@ -34,7 +39,7 @@ COPY --from=assets-builder /root/priv/static ./priv/static
 RUN mix do compile --force, phx.digest, sentry.package_source_code, release
 
 # the one the elixir image was built with
-FROM hexpm/erlang:27.3.4-debian-bookworm-20250520-slim
+FROM hexpm/erlang:${ERLANG_VERSION}-debian-bookworm-${DEBIAN_VERSION}-slim
 
 WORKDIR /root
 EXPOSE 4000
