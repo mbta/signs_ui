@@ -38,6 +38,8 @@ defmodule SignsUi.Alerts.State do
 
   @impl GenServer
   def handle_info(:update, state) do
+    existing_alerts = get_alerts(state.table)
+
     v3_api = Application.get_env(:signs_ui, :v3_api)
 
     {result, last_modified, logs} =
@@ -53,6 +55,7 @@ defmodule SignsUi.Alerts.State do
             for alert <- alerts,
                 valid_route_type?(alert),
                 parsed_alert = parse_alert(alert),
+                mode_and_effect_unchanged?(existing_alerts, parsed_alert),
                 into: %{} do
               {parsed_alert.id, parsed_alert}
             end
@@ -85,24 +88,40 @@ defmodule SignsUi.Alerts.State do
     |> Enum.uniq()
   end
 
+  @spec mode_and_effect_unchanged?(map(), Alert.multi_route()) :: boolean()
+  defp mode_and_effect_unchanged?(existing_alerts, alert) do
+    case Map.get(existing_alerts, alert.id) do
+      nil ->
+        true
+
+      existing ->
+        not is_nil(existing.route_types) and not is_nil(alert.route_types) and
+          MapSet.equal?(existing.route_types, alert.route_types) and
+          existing.service_effect == alert.service_effect
+    end
+  end
+
   @spec parse_alert(map()) :: Alert.multi_route()
   defp parse_alert(alert) do
-    {created_at, service_effect, routes} = parse_attributes(alert["attributes"])
+    {created_at, service_effect, routes, route_types} = parse_attributes(alert["attributes"])
 
     %{
       id: alert["id"],
       created_at: created_at,
       service_effect: service_effect,
-      affected_routes: routes
+      affected_routes: routes,
+      route_types: route_types
     }
   end
 
   @spec parse_attributes(nil | map()) ::
-          {DateTime.t() | nil, String.t() | nil, MapSet.t(Alert.route_id()) | nil}
-  defp parse_attributes(nil), do: {nil, nil, nil}
+          {DateTime.t() | nil, String.t() | nil, MapSet.t(Alert.route_id()) | nil,
+           MapSet.t(Alert.route_type()) | nil}
+  defp parse_attributes(nil), do: {nil, nil, nil, nil}
 
   defp parse_attributes(attributes) do
-    {get_created_at(attributes), attributes["service_effect"], parse_routes(attributes)}
+    {get_created_at(attributes), attributes["service_effect"], parse_routes(attributes),
+     parse_route_types(attributes)}
   end
 
   @spec get_created_at(map()) :: DateTime.t() | nil
@@ -127,6 +146,13 @@ defmodule SignsUi.Alerts.State do
   defp parse_routes(attributes) do
     attributes
     |> get_in([Access.key("informed_entity", []), Access.all(), "route"])
+    |> MapSet.new()
+  end
+
+  @spec parse_route_types(map()) :: MapSet.t(Alert.route_type())
+  defp parse_route_types(attributes) do
+    attributes
+    |> get_in([Access.key("informed_entity", []), Access.all(), "route_type"])
     |> MapSet.new()
   end
 
