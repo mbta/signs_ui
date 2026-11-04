@@ -132,7 +132,23 @@ class ViewerApp extends React.Component<
     });
 
     alertsChannel.on('new_alert_state', (alertState) => {
-      this.setState({ alerts: alertState });
+      this.setState({ alerts: alertState }, () => {
+        const { alerts, signConfigs } = this.state;
+        const alertIds = Object.values(alerts).flatMap((current) =>
+          Object.keys(current),
+        );
+        Object.values(signConfigs).map((signConfig) => {
+          if (
+            typeof signConfig.alert_id === 'string' &&
+            !alertIds.includes(signConfig.alert_id)
+          ) {
+            return { ...signConfig, alert_id: null, mode: 'auto' };
+          }
+          return signConfig;
+        });
+
+        this.setConfigs(signConfigs);
+      });
     });
 
     signGroupsChannel.on('new_sign_groups_state', (signGroupState) => {
