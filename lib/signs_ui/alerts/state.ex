@@ -55,7 +55,7 @@ defmodule SignsUi.Alerts.State do
             for alert <- alerts,
                 valid_route_type?(alert),
                 parsed_alert = parse_alert(alert),
-                mode_and_effect_unchanged?(existing_alerts, parsed_alert),
+                alert_unchanged?(existing_alerts, parsed_alert),
                 into: %{} do
               {parsed_alert.id, parsed_alert}
             end
@@ -88,18 +88,30 @@ defmodule SignsUi.Alerts.State do
     |> Enum.uniq()
   end
 
-  @spec mode_and_effect_unchanged?(t(), Alert.multi_route()) :: boolean()
-  defp mode_and_effect_unchanged?(existing_alerts, alert) do
+  @spec alert_unchanged?(t(), Alert.multi_route()) :: boolean()
+  defp alert_unchanged?(existing_alerts, alert) do
     case Map.get(existing_alerts, alert.id) do
       nil ->
         true
 
       existing ->
-        not is_nil(existing.route_types) and not is_nil(alert.route_types) and
-          MapSet.equal?(existing.route_types, alert.route_types) and
-          existing.service_effect == alert.service_effect
+        route_type_or_service_effect_same?(existing, alert)
     end
   end
+
+  @spec route_type_or_service_effect_same?(Alert.multi_route(), Alert.multi_route()) :: boolean()
+  defp route_type_or_service_effect_same?(
+         %{
+           route_types: %MapSet{} = existing_route_types,
+           service_effect: existing_service_effect
+         },
+         %{route_types: %MapSet{} = route_types, service_effect: service_effect}
+       )
+       when is_binary(existing_service_effect) do
+    MapSet.equal?(existing_route_types, route_types) and existing_service_effect == service_effect
+  end
+
+  defp route_type_or_service_effect_same?(_, _), do: false
 
   @spec parse_alert(map()) :: Alert.multi_route()
   defp parse_alert(alert) do
