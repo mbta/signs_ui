@@ -88,7 +88,7 @@ defmodule SignsUi.Alerts.State do
     |> Enum.uniq()
   end
 
-  @spec mode_and_effect_unchanged?(map(), Alert.multi_route()) :: boolean()
+  @spec mode_and_effect_unchanged?(t(), Alert.multi_route()) :: boolean()
   defp mode_and_effect_unchanged?(existing_alerts, alert) do
     case Map.get(existing_alerts, alert.id) do
       nil ->
@@ -160,6 +160,7 @@ defmodule SignsUi.Alerts.State do
     Process.send_after(pid, :update, ms)
   end
 
+  @spec get_alerts(:ets.tab()) :: t() | %{}
   defp get_alerts(table) do
     case :ets.lookup(table, :value) do
       [{:value, value}] -> value
