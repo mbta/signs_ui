@@ -95,7 +95,9 @@ defmodule SignsUi.Alerts.State do
         true
 
       existing ->
-        route_type_or_service_effect_same?(existing, alert)
+        same? = route_type_or_service_effect_same?(existing, alert)
+        if not same?, do: Logger.info("alert_changed: #{alert.id}")
+        same?
     end
   end
 
