@@ -96,7 +96,13 @@ defmodule SignsUi.Alerts.State do
 
       existing ->
         same? = route_type_or_service_effect_same?(existing, alert)
-        if not same?, do: Logger.info("alert_changed: #{alert.id}")
+
+        if not same?,
+          do:
+            Logger.info(
+              "sign_set_to_auto: Sign set to auto after changes to alert id #{alert.id}"
+            )
+
         same?
     end
   end
