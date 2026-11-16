@@ -19,7 +19,7 @@
     "rc-tabs": "^15.7.0",
     "regenerator-runtime": "^0.14.1",
     "resize-observer-polyfill": "^1.5.1",
-    "typescript-eslint": "^8.72.0"
+    "typescript-eslint": "^8.72.1"
   },
   "scripts": {
     "deploy": "node build.mjs deploy",
@@ -48,7 +48,7 @@
     "dateformat": "^5.0.5",
     "lodash": "^4.18.1",
     "phoenix": "^1.8.16",
-    "phoenix_html": "^4.3.0",
+    "phoenix_html": "^4.4.0",
     "rc-collapse": "^4.0.0",
     "react": "^19.3.1",
     "react-datepicker": "^9.1.0",
