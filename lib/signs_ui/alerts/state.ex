@@ -100,7 +100,7 @@ defmodule SignsUi.Alerts.State do
         if not same?,
           do:
             Logger.info(
-              "sign_set_to_auto: Sign set to auto after changes to alert id #{alert.id}"
+              "sign_set_to_auto: Sign set to auto after changes to alert_id=#{alert.id}"
             )
 
         same?
