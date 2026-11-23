@@ -44,7 +44,7 @@ defmodule SignsUi.Mixfile do
       # `certifi` is transitively required by `ex_aws` -> `hackney`. Override it in response to
       # the eMudhra CA compromise. If/when either of the two dependencies are upgraded to use
       # `certifi@2.18.0+`, we can remove this.
-      {:certifi, "2.18.0", override: true},
+      {:certifi, "2.19.0", override: true},
       {:credo, "~> 1.7.6", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 1.4.7", only: [:dev, :test], runtime: false},
       {:ex_aws_s3, "~> 2.0"},
@@ -56,7 +56,7 @@ defmodule SignsUi.Mixfile do
       {:httpoison, "~> 2.0"},
       {:logger_backends, "~> 1.0"},
       {:phoenix_html, "~> 4.3"},
-      {:phoenix_live_reload, "~> 1.6.1", only: :dev},
+      {:phoenix_live_reload, "~> 1.7.0", only: :dev},
       {:phoenix_live_view, "~> 1.2.4"},
       {:phoenix_pubsub, "~> 2.2"},
       {:phoenix, "~> 1.8.7"},
